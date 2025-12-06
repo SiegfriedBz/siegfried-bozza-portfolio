@@ -16,6 +16,7 @@ import { TypographyH3 } from "@/app/_components/typography/h3";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { ExternalLinkIcon, MoveRightIcon } from "lucide-react";
+import { TypographyH4 } from "@/app/_components/typography/h4";
 
 type Props = ComponentProps<typeof Card> & {
 	project: Project;
@@ -41,7 +42,8 @@ export const ProjectCard: FC<Props> = (props) => {
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-8 flex-1">
 					<CardHeader>
 						<CardTitle>
-							<TypographyH3>{title}</TypographyH3>
+							<TypographyH3 className="tracking-wide text-balance">{title.h1}</TypographyH3>
+							<TypographyH4 className="tracking-wide text-balance">{title.h2}</TypographyH4>
 						</CardTitle>
 					</CardHeader>
 
@@ -49,7 +51,7 @@ export const ProjectCard: FC<Props> = (props) => {
 						<CardDescription>{description.short}</CardDescription>
 						
 						<ul className="flex flex-wrap gap-2">
-							{stack.map((s) => {
+							{stack?.all?.map((s) => {
 								return (
 									<li key={`${slug}-${s}`}>
 										<StackBadge stack={s as STACK} />

@@ -33,10 +33,10 @@ export const Navbar: FC = () => {
 
 				<Button variant="outline" className="cursor-pointer" asChild>
 					<Link
-						href="/work"
+						href="/projects"
 						className="inline-flex justify-between items-center gap-x-2"
 					>
-						<Grid2x2Icon /> Work
+						<Grid2x2Icon /> Projects
 					</Link>
 				</Button>
 
