@@ -1,15 +1,37 @@
 export type Project = {
 	slug: string;
-	title: string;
+	year: number;
+	title: {
+		h1: string,
+		h2: string,
+	}
 	description: {
 		short: string;
-		extended: string;
+		overview: string;
 	};
+
+	features: {
+		key: string,
+		description: string
+	}[]
+	
+	challenges: string
+	outcome: string
+	
+	stack: {
+		all: string[]
+		main:  {
+			key: string,
+			description: string
+		}[]
+	};
+
+	images: string[];
+	gifs: string[];
+
 	links: {
 		page: string;
 		live: string;
 		github: string;
 	};
-	images: string[];
-	stack: string[];
 };
