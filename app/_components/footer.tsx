@@ -23,7 +23,7 @@ export const Footer: FC = () => {
 						<Image src="/logos/github.png" width={24} height={24} alt="logo github"/>
 					</Tooltip>
 				</a>
-				<a href={process.env.NEXT_PUBLIC_GITHUB ?? ""}>
+				<a href={process.env.NEXT_PUBLIC_LINKEDIN ?? ""}>
 					<Tooltip desc="LinkedIn">
 						<Image src="/logos/linkedin.png" width={24} height={24} alt="logo linkedin"/>
 					</Tooltip>
