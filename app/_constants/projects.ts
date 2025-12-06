@@ -1,0 +1,110 @@
+import type { Project } from "@/app/_types/project";
+import { STACK } from "./stack";
+
+export const PROJECTS: Project[] = [
+	{
+		slug: "gavl",
+		title: "GavL - fullstack auctions platform with Realtime updates and Stripe Checkout",
+		description: {
+			short: "Powered by Next.js, Supabase & Stripe",
+			extended:
+				"Fullstack auctions platform server side filter / sort / pagination",
+		},
+		links: {
+			page: "/projects/gavl",
+			live: process.env.NEXT_PUBLIC_GAVL_LIVE ?? "",
+			github: process.env.NEXT_PUBLIC_GAVL_GITHUB ?? "",
+		},
+		images: [
+			"/images/projects/gavl/gavl-table.png",
+			"/images/projects/gavl/gavl-landing.png",
+		],
+		stack: [
+			STACK.TYPESCRIPT,
+			STACK.REACT,
+			STACK.NEXT,
+			STACK.ZOD,
+			STACK.RHF,
+			STACK.TANSTACK_TABLE,
+			STACK.SUPABASE,
+			STACK.STRIPE,
+			STACK.JEST,
+			STACK.SHADCN,
+			STACK.TAILWIND,
+		],
+	},
+	{
+		slug: "bet2gether",
+		title: "Bet2Gether - Web3 fullstack asset prices prediction game",
+		description: {
+			short: "Powered by Next.js, Solidity, Ethereum, Chainlink & Tenderly.",
+			extended: "a web3 fullstack prediction game trust-minimized asset prices prediction game",
+		},
+		links: {
+			page: "/projects/bet2gether",
+			live: process.env.NEXT_PUBLIC_BET2GETHER_LIVE ?? "",
+			github: process.env.NEXT_PUBLIC_BET2GETHER_GITHUB ?? "",
+		},
+		images: [
+			"/images/projects/bet2gether/bet2gether-landing-create.png",
+			"/images/projects/bet2gether/bet2gether-bet.png",
+			"/images/projects/bet2gether/bet2gether-claim.png",
+			"/images/projects/bet2gether/bet2gether-nft.png",
+		],
+		stack: [
+			STACK.TYPESCRIPT,
+			STACK.REACT,
+			STACK.NEXT,
+			STACK.ZOD,
+			STACK.RHF,
+			STACK.TANSTACK_TABLE,
+			STACK.TANSTACK_QUERY,
+			STACK.SOLIDITY,
+			STACK.FOUNDRY,
+			STACK.WAGMI,
+			STACK.RAINBOW_KIT,
+			STACK.VIEM,
+			STACK.CHAINLINK,
+			STACK.TENDERLY,
+			STACK.ALCHEMY,
+			STACK.IPFS,
+			STACK.SHADCN,
+			STACK.TAILWIND,
+		],
+	},
+	{
+		slug: "forge",
+		title: "Forge - Web3 fullstack NFT minting game with Websockets",
+		description: {
+			short: "Powered by Next.js, Solidity & Ethereum.",
+			extended: "Fullstack web3 ERC1155 game platform",
+		},
+		links: {
+			page: "/projects/forge",
+			live: process.env.NEXT_PUBLIC_FORGE_LIVE ?? "",
+			github: process.env.NEXT_PUBLIC_FORGE_GITHUB ?? "",
+		},
+		images: [
+			"/images/projects/forge/forge-forge.png",
+			"/images/projects/forge/forge-landing.png",
+			"/images/projects/forge/forge-mint.png",
+		],
+		stack: [
+			STACK.TYPESCRIPT,
+			STACK.REACT,
+			STACK.NEXT,
+			STACK.ZOD,
+			STACK.RHF,
+			STACK.TANSTACK_TABLE,
+			STACK.SOLIDITY,
+			STACK.FOUNDRY,
+			STACK.WAGMI,
+			STACK.RAINBOW_KIT,
+			STACK.VIEM,
+			STACK.ALCHEMY,
+			STACK.IPFS,
+			STACK.SHADCN,
+			STACK.TAILWIND,
+		],
+	},
+];
