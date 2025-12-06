@@ -10,7 +10,7 @@ export const TypographyH1: FC<PropsWithChildren<Props>> = (props) => {
 		<h1
 			{...rest}
 			className={cn(
-				"scroll-m-20 text-center text-5xl md:text-7xl font-extrabold tracking-tight drop-shadow-sm text-balance",
+				"scroll-m-20 text-center text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight drop-shadow-sm text-balance",
 				className,
 			)}
 		>

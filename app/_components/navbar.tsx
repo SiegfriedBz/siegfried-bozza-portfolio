@@ -5,18 +5,18 @@ import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { ToggleThemeButton } from "./toggle-theme-button";
 
-const Navbar: FC = () => {
+export const Navbar: FC = () => {
 	return (
-		<div className="absolute top-8 left-1/2 -translate-x-1/2 flex gap-8">
+		<div className="fixed z-999 top-8 left-1/2 -translate-x-1/2 flex gap-8 bg-background rounded-l-full rounded-r-full">
 			<ButtonGroup>
 				<Button
 					variant="outline"
 					size="icon"
-					className="rounded-full cursor-pointer"
+					className="rounded-full p-2 cursor-pointer"
 					asChild
 				>
 					<Link href="/">
-						<span className="inline-flex justify-between items-center bg-muted p-1 rounded-full">
+						<span className="inline-flex justify-between items-center rounded-full bg-muted p-1">
 							<HouseIcon />
 						</span>
 					</Link>
@@ -45,5 +45,3 @@ const Navbar: FC = () => {
 		</div>
 	);
 };
-
-export default Navbar;
