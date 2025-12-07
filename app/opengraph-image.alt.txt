@@ -1,0 +1,1 @@
+Siegfried Bozza's Portfolio - Full-Stack Developer with React, Next.js, and Solidity. Built GavL Auctions (real-time bidding platform), Bet2Gether (Chainlink automation), and Forge (ERC-1155 games). Open to remote roles in Web2/Web3.
