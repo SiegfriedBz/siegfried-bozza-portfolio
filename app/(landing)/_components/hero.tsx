@@ -35,7 +35,7 @@ export const Hero = () => {
 				"
 			>
 				<Link
-					href="/work"
+					href="/projects"
 					className="rounded-lg inline-flex justify-between items-center"
 				>
 					<span className="
