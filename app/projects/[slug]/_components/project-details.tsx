@@ -25,11 +25,11 @@ export const ProjectDetails: FC<Props> = (props) => {
       {...rest}
       className={cn(className, "flex flex-col justify-center gap-8")}
       >
-        <TypographyH1 className="tracking-wide text-balance">{title.h1}</TypographyH1>
-        <TypographyH2 className="tracking-wide text-balance">{title.h2}</TypographyH2>
+        <TypographyH1 className="tracking-wider text-balance">{title.h1}</TypographyH1>
+        <TypographyH2 className="-mt-4 tracking-wider text-balance">{title.h2}</TypographyH2>
 
         {/* Avatar */}
-        <div className="flex justify-center items-center gap-x-8 -mt-2 mb-8">
+        <div className="flex justify-center items-center gap-x-6 sm:gap-x-8 mb-4">
           <SiegAvatar />
           <span className="text-accent-blue font-bold">Siegfried Bozza</span>
         </div>
