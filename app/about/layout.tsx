@@ -9,7 +9,7 @@ const Layout:FC<PropsWithChildren> =(props) => {
       <div className="relative 
         flex flex-col items-center justify-center 
         text-center 
-        pt-32
+        pt-32 pb-16
         px-4
         gap-8
       "
