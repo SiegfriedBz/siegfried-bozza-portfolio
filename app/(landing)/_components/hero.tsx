@@ -6,19 +6,20 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { SiegAvatar } from "../../_components/sieg-avatar";
 import { TypographyH1 } from "../../_components/typography/h1";
+import { LightGlow } from "@/app/_components/light-glow";
 
 export const Hero = () => {
 	return (
 		<section
-			className="
-        relative flex flex-col items-center justify-center text-center 
+			className="relative 
+				flex flex-col items-center justify-center text-center 
         sm:py-54 px-4 overflow-hidden
         min-h-svh
         animate-fade-in
       "
 		>
 			{/* Light glow behind the title */}
-			<div className="absolute inset-0 -top-54 pointer-events-none opacity-40 bg-[radial-gradient(ellipse_at_center,#1f398e,transparent_60%)]" />
+			<LightGlow />
 
 			<Button
 				asChild

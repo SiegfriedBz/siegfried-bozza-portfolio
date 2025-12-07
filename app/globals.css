@@ -44,6 +44,7 @@
 	--radius-xl: calc(var(--radius) + 4px);
 
 	--color-accent-blue: var(--accent-blue);
+	--color-accent-violet: var(--accent-violet);
 }
 
 :root {
@@ -80,7 +81,8 @@
 	--sidebar-border: oklch(0.922 0 0);
 	--sidebar-ring: oklch(0.708 0 0);
 
-	--accent-blue: rgb(4, 91, 156);
+	--accent-blue: #045b9c;
+	--accent-violet: #1f398e;
 }
 
 .dark {
@@ -116,7 +118,8 @@
 	--sidebar-border: oklch(1 0 0 / 10%);
 	--sidebar-ring: oklch(0.556 0 0);
 
-	--accent-blue: rgb(170, 255, 255);
+	--accent-blue: #aaffff;
+	--accent-violet: #1f398e;
 }
 
 @layer base {
@@ -124,6 +127,6 @@
 		@apply border-border outline-ring/50;
 	}
 	body {
-		@apply bg-background text-foreground;
+		@apply scroll-smooth bg-background text-foreground;
 	}
 }
