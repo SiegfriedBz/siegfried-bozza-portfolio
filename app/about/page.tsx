@@ -4,12 +4,12 @@ import { TypographyH1 } from "../_components/typography/h1";
 import { TypographyH2 } from "../_components/typography/h2";
 import { TypographyH6 } from "../_components/typography/h6";
 import { AboutSidebar } from "./_components/about-sidebar";
-import { EarthIcon } from "lucide-react";
+import {  EarthIcon } from "lucide-react";
 import { BadgeExternalLinks } from "./_components/badge-external-links";
-import { TypographyH4 } from "../_components/typography/h4";
 import { TypographyH5 } from "../_components/typography/h5";
 import { StackBadge } from "../_components/stack-badge";
 import { STACK } from "../_constants/stack";
+import { BookCallBadge } from "./_components/book-call-badge";
 
 export default function Page() {
 	return (
@@ -24,28 +24,36 @@ export default function Page() {
 			>
 				<div className="flex z-10 flex-col gap-y-4 justify-center items-center lg:fixed lg:top-1/4 lg:-translate-y-1/4 col-span-1">
 					<SiegAvatar className="size-44 sm:size-32"/>
-					<div className="flex gap-x-4 items-center">
-						<EarthIcon className="text-accent-blue size-5"/>
+					
+					<div className="flex gap-x-3 items-center">
+						<EarthIcon className="text-amber-500 size-5"/>
 						<TypographyH6 className="font-semibold">EU</TypographyH6>
 					</div>
+					
 					<TypographyH6 className="font-semibold -mt-2">Flexible worldwide relocation</TypographyH6>
+					
 					<div className="flex gap-x-6">
 						<Badge className="font-bold">French</Badge>
 						<Badge className="font-bold">English</Badge>
 					</div>
 				</div>
 	
-				<div className="z-10 flex flex-col gap-2 items-start col-span-1 max-lg:mt-16 lg:col-span-4 lg:col-start-2">
+				<div className="z-10 flex flex-col gap-2 items-center lg:items-start col-span-1 max-lg:mt-16 lg:col-span-4 lg:col-start-2">
+					<BookCallBadge />
+
 					<TypographyH1>Siegfried Bozza</TypographyH1>
 					<TypographyH2 className="text-muted-foreground">React & Next.js Fullstack Developer</TypographyH2>
 					
-					<div className="my-2">
+					<div className="mt-4 mb-6">
 						<BadgeExternalLinks />
 					</div>
 
 					<div className="flex flex-col items-start gap-y-12 text-left">
-						<TypographyH5>I&apos;m a full-stack developer with a background in molecular biology and civil engineering. I&apos;ve worked in Canada, France, and Switzerland, and build efficient, maintainable applications with <span className="font-extrabold">React</span> and <span className="font-extrabold">Next.js</span>. 
-							<span className="inline-block">I enjoy exploring Web3 and thrive in multicultural, dynamic environments.</span>
+						<TypographyH5>
+							I&apos;m a <span className="font-extrabold">full-stack developer</span> with a background in molecular biology and civil engineering. 
+							<span className="inline-block">I build efficient, maintainable applications with <span className="font-extrabold">React</span> and <span className="font-extrabold">Next.js</span>, and 
+							I&apos;m passionate about <span className="font-extrabold">exploring Web3</span> — especially <span className="font-extrabold">dApps, DeFi, and smart contracts</span>.</span>
+							I&apos;ve worked in Canada, France, and Switzerland, and <span className="font-extrabold">thrive in multicultural, dynamic environments</span>.
 						</TypographyH5>
 
 						{/* Work Experience */}
