@@ -47,7 +47,7 @@ export const ProjectCard: FC<Props> = (props) => {
 						</CardTitle>
 					</CardHeader>
 
-					<div className="flex flex-col gap-2 px-6">
+					<div className="flex flex-col gap-2 px-4">
 						<CardDescription>{description.short}</CardDescription>
 						
 						<ul className="flex flex-wrap gap-2">

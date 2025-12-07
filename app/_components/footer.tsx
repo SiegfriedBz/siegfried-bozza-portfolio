@@ -4,6 +4,8 @@ import type { FC } from "react";
 import { Tooltip } from "./tooltip";
 import { TypographyH6 } from "./typography/h6";
 import Image from "next/image";
+import { LuGithub, LuLinkedin } from "react-icons/lu";
+
 
 export const Footer: FC = () => {
 	return (
@@ -18,19 +20,19 @@ export const Footer: FC = () => {
 			</div>
 
 			<div className="flex items-center gap-x-4">
-				<a href={process.env.NEXT_PUBLIC_GITHUB ?? ""}>
+				<a href={process.env.NEXT_PUBLIC_GITHUB ?? ""} target="_blank" rel="noopener noreferrer" className="group">
 					<Tooltip desc="Github">
-						<Image src="/logos/github.png" width={24} height={24} alt="logo github"/>
+						<LuGithub className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200"/>
 					</Tooltip>
 				</a>
-				<a href={process.env.NEXT_PUBLIC_LINKEDIN ?? ""}>
+				<a href={process.env.NEXT_PUBLIC_LINKEDIN ?? ""} target="_blank" rel="noopener noreferrer" className="group">
 					<Tooltip desc="LinkedIn">
-						<Image src="/logos/linkedin.png" width={24} height={24} alt="logo linkedin"/>
+						<LuLinkedin className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200"/>
 					</Tooltip>
 				</a>
-				<a href={`mailto:${process.env.NEXT_PUBLIC_MAIL_TO ?? ""}`}>
+				<a href={`mailto:${process.env.NEXT_PUBLIC_MAIL_TO ?? ""}`} target="_blank" rel="noopener noreferrer" className="group">
 					<Tooltip desc="Email">
-						<MailIcon className="w-5 h-5" />
+						<MailIcon className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200"/>
 					</Tooltip>
 				</a>
 			</div>

@@ -1,5 +1,8 @@
+import { ProjectCarousel } from "@/app/_components/project-carousel"
+import { ProjectLinks } from "@/app/_components/project-links"
 import { SiegAvatar } from "@/app/_components/sieg-avatar"
 import { StackBadge } from "@/app/_components/stack-badge"
+import { TextSplit } from "@/app/_components/text-split"
 import { TypographyH1 } from "@/app/_components/typography/h1"
 import { TypographyH2 } from "@/app/_components/typography/h2"
 import { TypographyH3 } from "@/app/_components/typography/h3"
@@ -8,7 +11,6 @@ import { STACK } from "@/app/_constants/stack"
 import { Project } from "@/app/_types/project"
 import { Card, CardContent } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
-import Image from "next/image"
 import { ComponentProps, FC } from "react"
 
 type Props = ComponentProps<"div"> & { project: Project }
@@ -16,7 +18,7 @@ type Props = ComponentProps<"div"> & { project: Project }
 export const ProjectDetails: FC<Props> = (props) => {
   const { project, className, ...rest}  = props
 
-  const {title, description, features, stack, challenges, outcome, images, links} = project
+  const {title, description, features, stack, challenges, outcome, images, gifs, links} = project
 
   return (
     <div 
@@ -32,17 +34,15 @@ export const ProjectDetails: FC<Props> = (props) => {
           <span className="text-accent-blue font-bold">Siegfried Bozza</span>
         </div>
 
+      {/* ProjectLinks */}
+        <ProjectLinks 
+          className="self-center"
+          github={links.github} 
+          live={links.live} 
+        />
+
         {/* Carousel */}
-        <Card>
-          <CardContent className="relative w-full aspect-video rounded-lg overflow-hidden">
-						<Image 
-              src="/images/projects/gavl/gifs/gavl-bid-2-users.gif" 
-              fill 
-              alt="project image" 
-              className="object-cover" 
-            />
-					</CardContent>
-        </Card>
+        <ProjectCarousel images={[...images, ...gifs]} />
 
         {/* Overview */}
         <Card>
@@ -50,7 +50,7 @@ export const ProjectDetails: FC<Props> = (props) => {
             <div className="text-left space-y-2">
               <TypographyH3>Overview</TypographyH3>
               <TypographyP>
-                {description.overview}
+                <TextSplit text={description.overview} />
               </TypographyP>
             </div>
           </CardContent>
@@ -111,7 +111,7 @@ export const ProjectDetails: FC<Props> = (props) => {
             <div className="text-left space-y-2">
               <TypographyH3>Challenges and Learnings</TypographyH3>
               <TypographyP>
-                {challenges}
+                <TextSplit text={challenges} />
               </TypographyP>
             </div>
           </CardContent>
@@ -123,12 +123,18 @@ export const ProjectDetails: FC<Props> = (props) => {
             <div className="text-left space-y-2">
               <TypographyH3>Outcome</TypographyH3>
               <TypographyP>
-                {outcome}
+                <TextSplit text={outcome} />
               </TypographyP>
             </div>
           </CardContent>
         </Card>
 
+        {/* ProjectLinks */}
+        <ProjectLinks 
+          className="self-center"
+          github={links.github} 
+          live={links.live} 
+        />
     </div>
   )
 }

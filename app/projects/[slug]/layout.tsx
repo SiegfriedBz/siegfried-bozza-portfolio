@@ -17,7 +17,7 @@ export default function Layout({
         relative 
 				flex flex-col items-center justify-center 
 				text-center 
-        pt-32 pb-16 px-6 overflow-hidden
+        pt-32 pb-16 px-4 overflow-hidden
         min-h-svh
 				gap-8
       "
