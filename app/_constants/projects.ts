@@ -62,8 +62,6 @@ export const PROJECTS: Project[] = [
 		, 
 
 		outcome: `GavL delivers a complete, production-style experience for running real-time auctions with seamless UI, robust backend workflows, multilingual support, and secure payment processing.
-			\nThe platform demonstrates strong full-stack capabilities across real-time systems, domain-driven backend design, and polished user experience. It also serves as a foundation for additional features such as automated validation, auction categories, and advanced analytics.
-			\nOverall, the project showcases readiness for professional roles involving complex web applications, real-time interactions, and scalable Next.js architectures.
 			`
 		,
 					
@@ -191,12 +189,12 @@ export const PROJECTS: Project[] = [
 			Designing a trust-minimized game flow required coordinating multiple Chainlink services (Price Feeds, Automation, VRF). 
 			\nReal-time updates introduced complexity around selective query refetching and event-driven UI state. 
 			\nAdditionally, implementing and testing payout logic, NFT minting, and hybrid off-chain automation demanded careful 
-			isolation of contract logic and comprehensive Foundry test coverage.
+			isolation of contract logic and Foundry test coverage.
 		`,
 
 		outcome: `
 			Bet2Gether became a fully functional end-to-end prediction platform deployed on Sepolia, with automated resolutions, fair pricing, real-time UI updates, and provably random NFT rewards. 
-			\nIt allowed me to build and rigorously test Solidity contracts, design a scalable React architecture, experiment with Tenderly Web3 Actions, and implement advanced event-driven workflows. 
+			\nIt allowed me to build and test Solidity contracts, design a scalable React architecture, experiment with Tenderly Web3 Actions, and implement advanced event-driven workflows. 
 			\nThe project significantly deepened my experience with decentralized game mechanics and full-stack Web3 development.
 		`,
 		
@@ -278,7 +276,7 @@ export const PROJECTS: Project[] = [
 			short: "A Web3 ERC-1155 crafting game where players mint, burn, trade, and forge tokens using fully on-chain rules, real-time events, and extensively tested Solidity contracts.",
 			overview: `
 				Forge is an on-chain token crafting game built around ERC-1155 assets, where players mint basic tokens, burn combinations to forge rare items, and trade tokens through an enforced smart-contract system. 
-				\nThe frontend is a fully reactive Next.js dApp that updates in real time using Alchemy WebSockets and custom event listeners.
+				\nThe frontend is a Next.js dApp that updates in real time using Alchemy WebSockets and custom event listeners.
 				\nI built Forge to practice end-to-end Web3 development: designing smart-contract architectures, implementing item-crafting rules, achieving 100% Foundry test coverage, and creating a modern, performant UI with wallet connectivity, and event-driven data refresh strategies.
 			`,
 		},
@@ -307,7 +305,7 @@ export const PROJECTS: Project[] = [
 			{
 				key: "100% Contract Test Coverage",
 				description:
-					"All smart contracts are tested with Foundry, with full line, branch, and function coverage across FToken and Forge.",
+					"All smart contracts are tested with Foundry.",
 			},
 			{
 				key: "Verified Smart Contracts",
@@ -325,8 +323,8 @@ export const PROJECTS: Project[] = [
 
 		outcome: `
 			Forge became a complete on-chain game deployed on Sepolia with verified contracts, real-time event syncing, and a polished dApp supporting minting, burning, crafting, and trading. 
-			\nThe project strengthened my understanding of Solidity contract composition, Foundry testing patterns, ERC-1155 design, and event-driven React architectures. 
-			\nIt stands as a full-stack Web3 project demonstrating smart-contract engineering and modern frontend development.
+			\nBuilt before my Bet2Gether project, this project strengthened my understanding of Solidity contract composition, Foundry testing patterns, ERC-1155 design, and event-driven React architectures. 
+			\nIt stands as a full-stack Web3 project from smart-contract engineering to frontend development.
 		`,
 
 		stack: {
