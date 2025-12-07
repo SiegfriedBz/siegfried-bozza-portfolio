@@ -8,7 +8,7 @@ const Layout:FC<PropsWithChildren> =(props) => {
     <div className="relative max-w-5xl mx-auto
 				flex flex-col items-center justify-center 
 				text-center 
-        pt-32 pb-16 px-4 overflow-hidden
+        pt-32 pb-8 px-4 overflow-hidden
         min-h-svh
 				gap-8
     ">
