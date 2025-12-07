@@ -12,7 +12,7 @@ export const Hero = () => {
 		<section
 			className="
         relative flex flex-col items-center justify-center text-center 
-        sm:py-54 px-6 overflow-hidden
+        sm:py-54 px-4 overflow-hidden
         min-h-svh
         animate-fade-in
       "

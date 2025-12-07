@@ -29,5 +29,4 @@ const Page: FC<Props> = async (props) => {
 	</main>;
 }
 
-
 export default Page
