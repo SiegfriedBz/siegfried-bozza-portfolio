@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { PROJECTS } from "@/app/_constants/projects";
-import { ProjectCard } from "./project-card";
+import { ProjectCard } from "../(landing)/_components/project-card";
 
 export const Projects: FC = () => {
 	return (

@@ -1,4 +1,4 @@
-import { Projects } from "../(landing)/_components/projects";
+import { Projects } from "../_components/projects";
 
 export default function Page() {
 	return (

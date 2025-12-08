@@ -68,9 +68,9 @@ export default function Page() {
 								<div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum officiis totam maiores porro voluptatibus quisquam consequuntur nesciunt ipsa delectus, fugit tempore ratione earum necessitatibus odit quam omnis, architecto repellendus neque maxime inventore voluptate explicabo deserunt! Molestiae eum ratione voluptatum a ea, quisquam nesciunt natus modi dolor possimus eius facilis veniam itaque beatae provident cum fugiat iste ipsa officia iure. Iste cum qui reprehenderit iusto aliquam laboriosam repellat voluptatum excepturi nobis cupiditate, hic sint modi tenetur exercitationem corporis consequuntur consectetur cumque et sed sequi mollitia ipsa tempore ipsum quia. Laboriosam accusantium beatae incidunt obcaecati numquam optio itaque iusto ullam necessitatibus soluta iste similique earum sequi illo dignissimos, quod cum quisquam cupiditate suscipit vel eveniet veritatis saepe placeat! Nobis, illum enim repellat id dignissimos libero quae adipisci quasi. Nulla est id hic! Nostrum eum sint labore nobis ut, quisquam, laudantium accusamus deserunt reiciendis sed aliquid distinctio natus rerum. Alias cum facilis, harum at unde autem ipsa quaerat itaque, distinctio eos suscipit delectus necessitatibus, animi quibusdam voluptate illo fugiat cupiditate obcaecati eaque vitae quae? Ratione tempore aliquid eos deleniti delectus? Animi possimus quibusdam omnis ipsum fugit earum, sapiente saepe, debitis illo perspiciatis voluptatum eveniet? Architecto atque, necessitatibus sunt porro dicta, incidunt, deleniti asperiores accusantium quas facere corrupti veniam tempora minus explicabo itaque? Officiis dolorum deserunt delectus? Numquam quos odit eligendi ratione, ea velit eos blanditiis eaque esse!</div>
 						</div>
 
-						{/* Skills */}
+						{/* Technical Skills */}
 						<div id={"skills"} className="scroll-mt-24">
-							<TypographyH2>Skills</TypographyH2>
+							<TypographyH2>Technical skills</TypographyH2>
 
 							<ul className="flex flex-wrap gap-2">
 								{Object.values(STACK)?.map((s) => {

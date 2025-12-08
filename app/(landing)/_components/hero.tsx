@@ -13,7 +13,7 @@ export const Hero = () => {
 		<section
 			className="relative 
 				flex flex-col items-center justify-center text-center 
-        sm:py-54 px-4 overflow-hidden
+        pt-20 lg:pt-32 xl:pt-12 px-4 overflow-hidden
         min-h-svh
         animate-fade-in
       "
@@ -23,8 +23,10 @@ export const Hero = () => {
 
 			<Button
 				asChild
-				className="
-					relative overflow-hidden border bg-background 
+				className="relative 
+					overflow-hidden 
+					border 
+					bg-background 
 					dark:bg-input/30 
 					border-border dark:border-accent-blue
 					group mb-8 shadow-lg 
@@ -38,8 +40,7 @@ export const Hero = () => {
 					href="/projects"
 					className="rounded-lg inline-flex justify-between items-center"
 				>
-					<span className="
-						font-bold 
+					<span className="font-bold 
 						text-accent-blue
 						group-hover:text-white
 						dark:group-hover:text-background 
@@ -49,8 +50,8 @@ export const Hero = () => {
 					</span>
 					{/* sliding background layer */}
 					<span
-						className="
-							absolute inset-0 
+						className="absolute 
+							inset-0 
 							bg-accent-blue
 							-translate-x-full
 							group-hover:translate-x-0
@@ -61,32 +62,38 @@ export const Hero = () => {
 				</Link>
 			</Button>
 
-			<TypographyH1 className="relative z-10 drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]">
-				{"From Biology & Engineering to JavaScript Web Development."
-					.split(" ")
-					.map((word, index) => (
-						<motion.span
-							// biome-ignore lint/suspicious/noArrayIndexKey: static
-							key={index}
-							initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
-							animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-							transition={{
-								duration: 0.35,
-								delay: index * 0.08,
-								ease: "easeOut",
-							}}
-							className="mx-2 inline-block"
-						>
-							{word}
-						</motion.span>
-					))}
+			<TypographyH1 
+				className="z-10 
+
+					drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]
+				"
+				>
+					{"From Biology & Engineering to JavaScript Web Development."
+						.split(" ")
+						.map((word, index) => (
+							<motion.span
+								// biome-ignore lint/suspicious/noArrayIndexKey: static
+								key={index}
+								initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
+								animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+								transition={{
+									duration: 0.35,
+									delay: index * 0.08,
+									ease: "easeOut",
+								}}
+								className="mx-2 inline-block"
+							>
+								{word}
+							</motion.span>
+						))
+					}
 			</TypographyH1>
 
 			<motion.p
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ duration: 0.3, delay: 0.8 }}
-				className="relative mt-2 z-10 mx-auto max-w-xl py-4 text-center text-lg md:text-xl font-normal text-muted-foreground"
+				className="relative mt-2 z-10 mx-auto max-w-xl pt-4 text-center text-lg md:text-xl font-normal text-muted-foreground"
 			>
 				I&apos;m <span className="font-bold">Siegfried</span>, I build clean,
 				efficient user experiences with{" "}
@@ -104,7 +111,7 @@ export const Hero = () => {
 				initial={{ opacity: 0 }}
 				animate={{ opacity: 1 }}
 				transition={{ duration: 0.3, delay: 1 }}
-				className="relative z-10 mt-10 flex flex-wrap items-center justify-center gap-4"
+				className="relative z-10 mt-8 lg:mt-12 flex flex-wrap items-center justify-center gap-4"
 			>
 				<Button
 					asChild
