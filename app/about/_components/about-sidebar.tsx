@@ -17,7 +17,7 @@ const items = [
     url: "#education",
   },
   {
-    title: "Skills",
+    title: "Technical skills",
     url: "#skills",
   },
 ];

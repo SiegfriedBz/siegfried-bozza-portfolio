@@ -59,7 +59,7 @@ export const StackBadge: FC<Props> = ({ stack }) => {
   if (!record.logo) return <Badge className="h-8">{record.name}</Badge>;
 
   return (
-    <div className="relative h-10 w-12 sm:h-12 sm:w-14 flex items-center justify-center">
+    <div className="relative h-8 w-10 sm:h-12 sm:w-14 flex items-center justify-center">
       <Image
         src={record.logo}
         alt={record.name}
