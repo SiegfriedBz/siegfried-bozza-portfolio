@@ -56,30 +56,25 @@ export default function Page() {
             <TypographyH5>
               I&apos;m a{" "}
               <span className="font-extrabold">full-stack developer</span> with
-              a background in molecular biology and civil engineering.
+              a background in molecular biology and civil engineering. I&apos;ve
+              worked in Canada, France, and Switzerland, and{" "}
+              <span className="font-extrabold">
+                thrive in multicultural, dynamic environments
+              </span>
+              .
               <span className="inline-block">
                 I build efficient, maintainable applications with{" "}
                 <span className="font-extrabold">React</span> and{" "}
                 <span className="font-extrabold">Next.js</span>, and I&apos;m
                 passionate about{" "}
-                <span className="font-extrabold">exploring Web3</span> —
-                especially{" "}
-                <span className="font-extrabold">
-                  dApps, DeFi, and smart contracts
-                </span>
-                .
+                <span className="font-extrabold">exploring Web3</span>.
               </span>
-              I&apos;ve worked in Canada, France, and Switzerland, and{" "}
-              <span className="font-extrabold">
-                thrive in multicultural, dynamic environments
-              </span>
-              .
             </TypographyH5>
 
             {/* Work Experience */}
             <div id={"work"} className="scroll-mt-24">
               <TypographyH2>Work Experience</TypographyH2>
-              <div>
+              <TypographyH5>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum
                 officiis totam maiores porro voluptatibus quisquam consequuntur
                 nesciunt ipsa delectus, fugit tempore ratione earum
@@ -93,28 +88,13 @@ export default function Page() {
                 consectetur cumque et sed sequi mollitia ipsa tempore ipsum
                 quia. Laboriosam accusantium beatae incidunt obcaecati numquam
                 optio itaque iusto ullam necessitatibus soluta iste similique
-                earum sequi illo dignissimos, quod cum quisquam cupiditate
-                suscipit vel eveniet veritatis saepe placeat! Nobis, illum enim
-                repellat id dignissimos libero quae adipisci quasi. Nulla est id
-                hic! Nostrum eum sint labore nobis ut, quisquam, laudantium
-                accusamus deserunt reiciendis sed aliquid distinctio natus
-                rerum. Alias cum facilis, harum at unde autem ipsa quaerat
-                itaque, distinctio eos suscipit delectus necessitatibus, animi
-                quibusdam voluptate illo fugiat cupiditate obcaecati eaque vitae
-                quae? Ratione tempore aliquid eos deleniti delectus? Animi
-                possimus quibusdam omnis ipsum fugit earum, sapiente saepe,
-                debitis illo perspiciatis voluptatum eveniet? Architecto atque,
-                necessitatibus sunt porro dicta, incidunt, deleniti asperiores
-                accusantium quas facere corrupti veniam tempora minus explicabo
-                itaque? Officiis dolorum deserunt delectus? Numquam quos odit
-                eligendi ratione, ea velit eos blanditiis eaque esse!
-              </div>
+              </TypographyH5>
             </div>
 
             {/* Education */}
             <div id={"education"} className="scroll-mt-24">
               <TypographyH2>Education</TypographyH2>
-              <div>
+              <TypographyH5>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum
                 officiis totam maiores porro voluptatibus quisquam consequuntur
                 nesciunt ipsa delectus, fugit tempore ratione earum
@@ -128,22 +108,7 @@ export default function Page() {
                 consectetur cumque et sed sequi mollitia ipsa tempore ipsum
                 quia. Laboriosam accusantium beatae incidunt obcaecati numquam
                 optio itaque iusto ullam necessitatibus soluta iste similique
-                earum sequi illo dignissimos, quod cum quisquam cupiditate
-                suscipit vel eveniet veritatis saepe placeat! Nobis, illum enim
-                repellat id dignissimos libero quae adipisci quasi. Nulla est id
-                hic! Nostrum eum sint labore nobis ut, quisquam, laudantium
-                accusamus deserunt reiciendis sed aliquid distinctio natus
-                rerum. Alias cum facilis, harum at unde autem ipsa quaerat
-                itaque, distinctio eos suscipit delectus necessitatibus, animi
-                quibusdam voluptate illo fugiat cupiditate obcaecati eaque vitae
-                quae? Ratione tempore aliquid eos deleniti delectus? Animi
-                possimus quibusdam omnis ipsum fugit earum, sapiente saepe,
-                debitis illo perspiciatis voluptatum eveniet? Architecto atque,
-                necessitatibus sunt porro dicta, incidunt, deleniti asperiores
-                accusantium quas facere corrupti veniam tempora minus explicabo
-                itaque? Officiis dolorum deserunt delectus? Numquam quos odit
-                eligendi ratione, ea velit eos blanditiis eaque esse!
-              </div>
+              </TypographyH5>
             </div>
 
             {/* Technical Skills */}

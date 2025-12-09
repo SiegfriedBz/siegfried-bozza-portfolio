@@ -1,4 +1,7 @@
+import { ExternalLinkIcon } from "lucide-react";
+import Link from "next/link";
 import type { ComponentProps, FC } from "react";
+import { LuGithub } from "react-icons/lu";
 import { ProjectCarousel } from "@/app/_components/project-carousel";
 import { ProjectLinks } from "@/app/_components/project-links";
 import { SiegAvatar } from "@/app/_components/sieg-avatar";
@@ -30,10 +33,25 @@ export const ProjectDetails: FC<Props> = (props) => {
     links,
   } = project;
 
+  const linksTo = [
+    {
+      href: links.github,
+      title: "Github",
+      icon: LuGithub,
+      as: "a" as const,
+    },
+    {
+      href: links.live,
+      title: "Live",
+      icon: ExternalLinkIcon,
+      as: "a" as const,
+    },
+  ];
+
   return (
     <div
       {...rest}
-      className={cn(className, "flex flex-col justify-center gap-8")}
+      className={cn(className, "z-10 flex flex-col justify-center gap-8")}
     >
       <TypographyH1 className="tracking-wider text-balance">
         {title.h1}
@@ -49,11 +67,7 @@ export const ProjectDetails: FC<Props> = (props) => {
       </div>
 
       {/* ProjectLinks */}
-      <ProjectLinks
-        className="self-center"
-        github={links.github}
-        live={links.live}
-      />
+      <ProjectLinks className="self-center" links={linksTo} />
 
       {/* Carousel */}
       <ProjectCarousel images={[...images, ...gifs]} />
@@ -144,11 +158,7 @@ export const ProjectDetails: FC<Props> = (props) => {
       </Card>
 
       {/* ProjectLinks */}
-      <ProjectLinks
-        className="self-center"
-        github={links.github}
-        live={links.live}
-      />
+      <ProjectLinks className="self-center" links={linksTo} />
     </div>
   );
 };
