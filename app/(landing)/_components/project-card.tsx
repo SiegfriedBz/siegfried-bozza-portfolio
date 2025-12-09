@@ -2,6 +2,7 @@ import { ExternalLinkIcon, MoveRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { ComponentProps, FC } from "react";
+import { ProjectLinks } from "@/app/_components/project-links";
 import { StackBadge } from "@/app/_components/stack-badge";
 import { TypographyH3 } from "@/app/_components/typography/h3";
 import { TypographyH4 } from "@/app/_components/typography/h4";
@@ -29,6 +30,21 @@ export const ProjectCard: FC<Props> = (props) => {
 
   const [img] = images;
 
+  const linksTo = [
+    {
+      href: links.page,
+      title: "Case study",
+      icon: MoveRightIcon,
+      as: Link,
+    },
+    {
+      href: links.live,
+      title: "Live demo",
+      icon: ExternalLinkIcon,
+      as: "a" as const,
+    },
+  ];
+
   return (
     <Card
       {...rest}
@@ -42,17 +58,19 @@ export const ProjectCard: FC<Props> = (props) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-8 flex-1">
           <CardHeader>
             <CardTitle>
-              <TypographyH3 className="tracking-wide text-balance">
+              <TypographyH3 className="tracking-wide text-balance text-left">
                 {title.h1}
               </TypographyH3>
-              <TypographyH4 className="tracking-wide text-balance">
+              <TypographyH4 className="tracking-wide text-balance text-left opacity-85">
                 {title.h2}
               </TypographyH4>
             </CardTitle>
           </CardHeader>
 
-          <div className="flex flex-col gap-2 px-4">
-            <CardDescription>{description.short}</CardDescription>
+          <div className="flex flex-col gap-4 px-6 ">
+            <CardDescription className="text-left">
+              {description.short}
+            </CardDescription>
 
             <ul className="flex flex-wrap gap-2">
               {stack?.all?.map((s) => {
@@ -64,26 +82,9 @@ export const ProjectCard: FC<Props> = (props) => {
               })}
             </ul>
 
-            <Separator className="my-4" />
-            <CardFooter className="md:self-end flex flex-wrap gap-x-8 gap-y-4">
-              <Link
-                href={links.page}
-                className="group flex items-center gap-x-2"
-              >
-                <span className="text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200">
-                  Read case study
-                </span>{" "}
-                <MoveRightIcon className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200" />
-              </Link>
-              <Link
-                href={links.live}
-                className="group flex items-center gap-x-2"
-              >
-                <span className="text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200">
-                  View Live project
-                </span>{" "}
-                <ExternalLinkIcon className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200" />
-              </Link>
+            <Separator className="my-2" />
+            <CardFooter className="self-center">
+              <ProjectLinks links={linksTo} />
             </CardFooter>
           </div>
         </div>

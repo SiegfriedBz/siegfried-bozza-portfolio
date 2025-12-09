@@ -10,7 +10,7 @@ export const TypographyH5: FC<PropsWithChildren<Props>> = (props) => {
     <h5
       {...rest}
       className={cn(
-        "text-sm sm:text-base md:text-lg font-semibold tracking-tight",
+        "text-sm sm:text-base md:text-lg font-semibold tracking-wide",
         className,
       )}
     >
