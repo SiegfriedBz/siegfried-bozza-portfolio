@@ -13,7 +13,7 @@ import { TypographyH3 } from "@/app/_components/typography/h3";
 import { TypographyP } from "@/app/_components/typography/p";
 import type { STACK } from "@/app/_constants/stack";
 import type { Project } from "@/app/_types/project";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 type Props = ComponentProps<"div"> & { project: Project };
@@ -107,7 +107,12 @@ export const ProjectDetails: FC<Props> = (props) => {
       <Card>
         <CardContent>
           <div className="text-left space-y-8">
-            <TypographyH3>Technologies Used</TypographyH3>
+            <div className="text-left space-y-4">
+              <TypographyH3>Technologies Used</TypographyH3>
+              <CardDescription className="text-left">
+                {description.short}
+              </CardDescription>
+            </div>
 
             <ul className="flex flex-wrap gap-2">
               {stack?.all?.map((s) => {

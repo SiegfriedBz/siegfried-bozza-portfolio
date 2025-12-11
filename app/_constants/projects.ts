@@ -11,11 +11,12 @@ export const PROJECTS: Project[] = [
     },
 
     description: {
-      short: "Powered by Next.js, Supabase & Stripe.",
-      overview: `GavL is a full-stack, real-time auction platform built to simulate a production-grade system handling live bidding, secure payments, multi-user notifications, and auction lifecycle management.
-					\nDeveloped with Next.js, TypeScript, Supabase, Stripe, and Shadcn/UI, the project demonstrates end-to-end workflows including authentication, server-side filtering, responsive UI, and multilingual support (French, English, German).
-					\nThe platform was designed as a deep dive into real-time state synchronization, backend workflows, and a scalable domain-driven architecture.
-				`,
+      short: "Next.js + Supabase + Stripe for live auctions.",
+      overview: `
+        GavL is a full-stack auction platform built to simulate a production-grade system.
+        It integrates Next.js, Supabase, and Stripe to handle live bidding, secure payments, and multilingual support (French, English, German).
+        The project emphasizes real-time workflows, scalable architecture, a seamless user experience and a responsive design optimized for all devices
+      `,
     },
 
     features: [
@@ -27,22 +28,22 @@ export const PROJECTS: Project[] = [
       {
         key: "End-to-End Auction Lifecycle",
         description:
-          "Creation, editing, bidding, automatic closure (CRON + Edge Function), winner notifications, and payment completion.",
+          "Creation, editing, bidding, automatic closure (CRON + Edge Functions), winner notifications, and payment completion.",
       },
       {
         key: "Stripe Payments",
         description:
-          "Secure checkout flow with webhook handling to update payment status server-side.",
+          "Secure checkout flow with webhook handling for server-side payment status updates.",
       },
       {
         key: "Notification System",
         description:
-          "Instant alerts for bids, auction wins, and payments across connected clients.",
+          "Instant alerts for bids, auction wins, and payments across all connected clients.",
       },
       {
         key: "Server-Side Table Filtering",
         description:
-          "URL-driven filters, sorting, and pagination using nuqs for consistent server-client results",
+          "URL-driven filters, sorting, and pagination using nuqs for consistent server-client synchronization.",
       },
       {
         key: "Multilingual UI",
@@ -52,22 +53,24 @@ export const PROJECTS: Project[] = [
       {
         key: "Responsive Design",
         description:
-          "Optimized layouts for mobile and desktop with smooth transitions using Suspense and skeleton loaders.",
+          "Optimized layouts for mobile and desktop with Suspense and skeleton loaders for smooth transitions.",
       },
       {
-        key: "Analytics Dashboard",
+        key: "Dashboards",
         description:
-          "User-specific and global stats with charts, totals, and payment summaries.",
+          "User-specific and global statistics, including charts, totals, and payment summaries.",
       },
     ],
-    challenges: `One of the main challenges was designing a robust multi-user real-time workflow while keeping business logic clean and maintainable. 
-			\nAdopting a domain-driven structure helped isolate concerns and made it easier to scale features such as notifications, payment updates, and automatic auction closure.
-			\nIntegrating Stripe securely required careful handling of RLS policies and webhook flows.
-			\nThe project deepened my skills in Next.js App Router, Supabase Realtime, server actions, and production-like workflows.
-		`,
+    challenges: `
+        Key challenges included designing a robust real-time multi-user workflow while maintaining clean, maintainable logic.
+        A domain-driven structure helped isolate concerns and scale features like notifications and payments.
+        Secure Stripe integration required careful handling of RLS policies and webhook flows.
+        The project deepened my expertise in Next.js App Router, Supabase Realtime, and production-grade workflows.
+    `,
 
-    outcome: `GavL delivers a complete, production-style experience for running real-time auctions with seamless UI, robust backend workflows, multilingual support, and secure payment processing.
-			`,
+    outcome: `
+			GavL delivers a complete, production-style auction experience with seamless real-time UI, robust backend workflows, multilingual support, and secure payment processing.
+      `,
 
     stack: {
       all: [
@@ -148,25 +151,25 @@ export const PROJECTS: Project[] = [
     },
     description: {
       short:
-        "A trust-minimized prediction game for crypto asset price movements, powered by Solidity, Chainlink, Tenderly, and a fully reactive Next.js UI.",
+        " Next.js + Solidity + Chainlink + Tenderly for decentralized prediction games.",
       overview: `
-			Bet2Gether is a decentralized prediction game where players bet ETH on real-time crypto price movements. 
-			\nThe platform ensures transparent and tamper-resistant outcomes using Chainlink Price Feeds, automates game resolution with Chainlink Automation (Keepers), and distributes provably fair NFT rewards using Chainlink VRF. 
-			\nI built this DApp to explore trust-minimized game mechanics, real-time event-driven UIs, and hybrid on-chain/off-chain automation using Tenderly Web3 Actions. 
-			\nPlayers can create or join games, place bets, claim rewards, and earn ERC-1155 NFT rewards through a fully self-contained smart-contract system.
-			`,
+        Bet2Gether is a decentralized prediction game where players bet ETH on crypto price movements (ETH, BTC, LINK, DAI).
+        Built with Next.js, Solidity, Chainlink, and Tenderly, it ensures transparent outcomes, automated payouts, and provably fair NFT rewards.
+        The project explores trust-minimized mechanics, real-time on-chain event-driven UIs, and hybrid on-chain/off-chain automation.
+        Players can create or join games, place bets, claim rewards, and earn ERC-1155 NFT rewards.
+      `,
     },
 
     features: [
       {
         key: "Trust-Minimized Prediction Games",
         description:
-          "Players bet on whether crypto asset prices (ETH, BTC, LINK, DAI) will rise or fall, with all pricing secured by Chainlink Price Feeds.",
+          "Players bet on crypto price movements, with all pricing secured by Chainlink Price Feeds.",
       },
       {
         key: "Automated Game Resolution",
         description:
-          "Chainlink Automation (Keepers) resolves games at their deadline without any admin intervention.",
+          "Chainlink Automation (Keepers) resolves games at their deadline without admin intervention.",
       },
       {
         key: "Provably Fair NFT Rewards",
@@ -176,32 +179,34 @@ export const PROJECTS: Project[] = [
       {
         key: "Real-Time Updates",
         description:
-          "The UI reacts instantly to new games, bets, resolutions, and NFT rewards through Alchemy WebSockets and contract event listeners.",
+          "UI reacts instantly to new games, bets, and resolutions via Alchemy WebSockets and contract event listeners (Wagmi).",
       },
       {
-        key: "Smart Contracts Testing (Foundry)",
+        key: "Hybrid On-Chain/Off-Chain Automation",
         description:
-          "Solidity contracts implemented with Foundry and backed by a test suite with detailed line, branch, and function coverage.",
+          "Tenderly Web3 Actions mint NFT rewards based on on-chain events, exploring off-chain automation.",
       },
       {
-        key: "Hybrid On-Chain / Off-Chain Automation",
+        key: "Smart Contract Testing",
+        description: "Solidity contracts tested with Foundry.",
+      },
+      {
+        key: "Verified Smart Contracts",
         description:
-          "Tenderly Web3 Actions mint NFT rewards based on on-chain events (used to explore off-chain automation patterns).",
+          "Deployed to Sepolia and automatically verified on Etherscan for transparency.",
       },
     ],
 
     challenges: `
-			Designing a trust-minimized game flow required coordinating multiple Chainlink services (Price Feeds, Automation, VRF). 
-			\nReal-time updates introduced complexity around selective query refetching and event-driven UI state. 
-			\nAdditionally, implementing and testing payout logic, NFT minting, and hybrid off-chain automation demanded careful 
-			isolation of contract logic.
+		Key challenges included coordinating multiple Chainlink services (Price Feeds, Automation, VRF) for trust-minimized game flow.
+    Real-time updates required selective query refetching and event-driven UI state management.
+    Implementing payout logic, NFT minting, and hybrid automation demanded careful isolation of contract logic.
 		`,
 
     outcome: `
-			Bet2Gether became a fully functional end-to-end prediction platform deployed on Sepolia, with automated resolutions, fair pricing, real-time UI updates, and provably random NFT rewards. 
-			\nIt allowed me to build and test Solidity contracts, design a scalable React architecture, experiment with Tenderly Web3 Actions, and implement advanced event-driven workflows. 
-			\nThe project significantly deepened my experience with decentralized game mechanics and full-stack Web3 development.
-		`,
+      Bet2Gether is a fully functional crypto-assets price prediction platform deployed on Sepolia, featuring decentralized game mechanics, automated game resolution and payouts, provably fair NFT rewards, and real-time UI updates.
+      The project deepened my expertise in Solidity, Chainlink, and full-stack Web3 development.
+    `,
 
     stack: {
       all: [
@@ -243,7 +248,7 @@ export const PROJECTS: Project[] = [
         {
           key: "Alchemy WebSockets",
           description:
-            "Live updates for new games, bets, resolutions, and on-chain events.",
+            "Live updates for new games, bets, resolutions and NFT rewards.",
         },
       ],
     },
@@ -278,53 +283,53 @@ export const PROJECTS: Project[] = [
     },
     description: {
       short:
-        "A Web3 ERC-1155 crafting game where players mint, burn, trade, and forge tokens using on-chain enforced rules and real-time events.",
+        " Next.js + Solidity for on-chain ERC-1155 token crafting and trading.",
       overview: `
-				Forge is an on-chain token crafting game built around ERC-1155 assets, where players mint basic tokens, burn combinations to forge rare items, and trade tokens through an enforced smart-contract system. 
-				\nThe frontend is a Next.js dApp that updates in real time using Alchemy WebSockets and custom event listeners.
-				\nI built Forge to practice end-to-end Web3 development: designing smart-contract architectures, implementing item-crafting rules, achieving 100% Foundry test coverage, and creating a performant UI with wallet connectivity, and on-chain event-driven data refresh strategies.
-			`,
+      Forge is an on-chain crafting game where players mint, burn, and trade ERC-1155 tokens using smart-contract enforced rules.
+      Built with Solidity and Next.js, it features real-time UI updates via Alchemy WebSockets, 100% Foundry test coverage, and verified contracts on Sepolia.
+      The project explores end-to-end Web3 development: contract architecture, game logic, and event-driven UI synchronization.			`,
     },
 
     features: [
       {
         key: "On-Chain Crafting System (ERC-1155)",
         description:
-          "Players mint basic tokens and forge rare items by burning specific token combinations, enforced entirely by Solidity game logic.",
+          "Players mint basic tokens and forge rare items by burning combinations, enforced entirely by Solidity logic.",
       },
       {
         key: "Cooldown-Based Minting",
         description:
-          "Each player has an enforced minting cooldown for basic tokens, preventing spam and balancing gameplay.",
+          "Enforced minting cooldowns prevent spam and balance gameplay.",
       },
       {
         key: "Event-Driven UI Updates",
         description:
-          "The dApp listens to mint, burn, forge, and trade events via Alchemy WebSockets to synchronize the UI state.",
+          "Real-time syncing of mint, burn, forge, and trade events via Alchemy WebSockets.",
       },
       {
         key: "100% Contract Test Coverage",
-        description: "All smart contracts are tested with Foundry.",
+        description:
+          "All smart contracts tested with Foundry for full line, branch, and function coverage.",
       },
       {
         key: "Verified Smart Contracts",
         description:
-          "Contracts deployed to Sepolia are automatically verified on Etherscan for transparency and auditability.",
+          "Deployed to Sepolia and automatically verified on Etherscan for transparency.",
       },
     ],
-
     challenges: `
-			Designing a clean and extensible crafting system required carefully encoding minting rules, burn requirements, 
-			and cooldown mechanics directly into smart contracts. 
-			\nAchieving 100% Foundry test coverage demanded detailed scenario testing across minting, forging, burning, and trading logic. 
-			\nReal-time UI updates introduced challenges around selective React Query refetching.
-		`,
-
+    Key challenges included encoding crafting rules, cooldowns, and burn mechanics into smart contracts.
+    Achieving 100% Foundry test coverage required detailed scenario testing for all game logic.
+    Real-time UI updates demanded careful handling of React Query refetching and event listeners.
+  `,
     outcome: `
-			Forge became a complete on-chain game deployed on Sepolia with verified contracts, real-time event syncing, and a polished dApp supporting minting, burning, crafting, and trading. 
-			\nBuilt before my Bet2Gether project, this project strengthened my understanding of Solidity contract composition, Foundry testing patterns, ERC-1155 design, and event-driven React architectures. 
-			\nIt stands as a full-stack Web3 project from smart-contract engineering to frontend development.
-		`,
+    Forge is a complete on-chain game deployed on Sepolia, featuring:
+    - ERC-1155 token crafting, trading, and real-time event syncing.
+    - Verified contracts and a polished dApp with wallet connectivity.
+    - Full-stack Web3 development from Solidity to event-driven UI.
+
+    Built before my Bet2Gether DApp, this project strengthened my skills in contract composition, Foundry testing, and ERC-1155 design.
+  `,
 
     stack: {
       all: [

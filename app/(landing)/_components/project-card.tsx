@@ -48,10 +48,10 @@ export const ProjectCard: FC<Props> = (props) => {
   return (
     <Card
       {...rest}
-      className={cn("max-w-5xl mx-auto", className, "bg-transparent")}
+      className={cn("max-w-5xl mx-auto", className, "bg-transparent pt-0")}
     >
       <div className="flex flex-col gap-8">
-        <CardContent className="relative w-full aspect-video rounded-lg overflow-hidden">
+        <CardContent className="relative w-full aspect-video rounded-xl overflow-hidden">
           <Image src={img} fill alt="project image" className="object-cover" />
         </CardContent>
 
