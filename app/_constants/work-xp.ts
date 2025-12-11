@@ -38,7 +38,7 @@ export const WORK_EXPERIENCE: WorkExperience = [
     to: "08/2024",
     description: [
       "Developed **Next.js/React apps** with MongoDB.",
-      "Contributed to **DeXter-on-Radix** (open-source DApp) using **GitHub**.",
+      "Contributed to **DeXter-on-Radix** (open-source DApp).",
     ],
     link: {
       href: process.env.NEXT_PUBLIC_PORTFOLIO_2024_URL ?? "",
