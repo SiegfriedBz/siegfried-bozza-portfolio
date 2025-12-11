@@ -42,9 +42,13 @@ export default function Page() {
 
         <div className="z-10 flex flex-col gap-2 items-center lg:items-start col-span-1 max-sm:mt-0 max-lg:mt-16 lg:col-span-4 lg:col-start-2">
           <div className="max-sm:min-h-[32svh]">
-            <BookCallBadge />
+            <div className="flex justify-center lg:justify-start">
+              <BookCallBadge />
+            </div>
 
-            <TypographyH1 className="my-2">Siegfried Bozza</TypographyH1>
+            <TypographyH1 className="my-2 lg:text-left">
+              Siegfried Bozza
+            </TypographyH1>
             <TypographyH2 className="text-muted-foreground">
               <span className="inline-block">React & Next.js</span>{" "}
               <span className="inline-block max-sm:w-full">

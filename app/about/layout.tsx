@@ -15,7 +15,7 @@ const Layout: FC<PropsWithChildren> = (props) => {
       "
       >
         {/* Light glow */}
-        <LightGlow />
+        <LightGlow className="max-sm:-top-52 sm-top-32 bottom-0 h-224 w-screen" />
 
         {children}
       </div>
