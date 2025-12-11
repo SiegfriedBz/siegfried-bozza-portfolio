@@ -1,5 +1,7 @@
 import { EarthIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { SiegAvatar } from "../_components/sieg-avatar";
 import { StackBadge } from "../_components/stack-badge";
 import { TypographyH1 } from "../_components/typography/h1";
@@ -8,8 +10,11 @@ import { TypographyH5 } from "../_components/typography/h5";
 import { TypographyH6 } from "../_components/typography/h6";
 import { STACK } from "../_constants/stack";
 import { AboutSidebar } from "./_components/about-sidebar";
+import { AllSkillsBadges } from "./_components/all-skills-badges";
 import { BadgeExternalLinks } from "./_components/badge-external-links";
 import { BookCallBadge } from "./_components/book-call-badge";
+import { Education } from "./_components/education";
+import { WorkXP } from "./_components/work-xp";
 
 export default function Page() {
   return (
@@ -61,8 +66,8 @@ export default function Page() {
             <BadgeExternalLinks />
           </div>
 
-          <div className="flex flex-col items-start gap-y-12 text-left">
-            <TypographyH5>
+          <div className="flex flex-col items-start gap-y-12 max-sm:px-4 text-left">
+            <TypographyH5 className="">
               I&apos;m a{" "}
               <span className="font-extrabold">full-stack developer</span> with
               a background in molecular biology and civil engineering. I&apos;ve
@@ -80,59 +85,28 @@ export default function Page() {
               </span>
             </TypographyH5>
 
+            <Separator className="-mt-2 hidden dark:inline-block" />
+
             {/* Work Experience */}
             <div id={"work"} className="scroll-mt-24">
               <TypographyH2>Work Experience</TypographyH2>
-              <TypographyH5>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum
-                officiis totam maiores porro voluptatibus quisquam consequuntur
-                nesciunt ipsa delectus, fugit tempore ratione earum
-                necessitatibus odit quam omnis, architecto repellendus neque
-                maxime inventore voluptate explicabo deserunt! Molestiae eum
-                ratione voluptatum a ea, quisquam nesciunt natus modi dolor
-                possimus eius facilis veniam itaque beatae provident cum fugiat
-                iste ipsa officia iure. Iste cum qui reprehenderit iusto aliquam
-                laboriosam repellat voluptatum excepturi nobis cupiditate, hic
-                sint modi tenetur exercitationem corporis consequuntur
-                consectetur cumque et sed sequi mollitia ipsa tempore ipsum
-                quia. Laboriosam accusantium beatae incidunt obcaecati numquam
-                optio itaque iusto ullam necessitatibus soluta iste similique
-              </TypographyH5>
+              <WorkXP />
             </div>
+
+            <Separator className="-mt-2 hidden dark:inline-block" />
 
             {/* Education */}
             <div id={"education"} className="scroll-mt-24">
               <TypographyH2>Education</TypographyH2>
-              <TypographyH5>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum
-                officiis totam maiores porro voluptatibus quisquam consequuntur
-                nesciunt ipsa delectus, fugit tempore ratione earum
-                necessitatibus odit quam omnis, architecto repellendus neque
-                maxime inventore voluptate explicabo deserunt! Molestiae eum
-                ratione voluptatum a ea, quisquam nesciunt natus modi dolor
-                possimus eius facilis veniam itaque beatae provident cum fugiat
-                iste ipsa officia iure. Iste cum qui reprehenderit iusto aliquam
-                laboriosam repellat voluptatum excepturi nobis cupiditate, hic
-                sint modi tenetur exercitationem corporis consequuntur
-                consectetur cumque et sed sequi mollitia ipsa tempore ipsum
-                quia. Laboriosam accusantium beatae incidunt obcaecati numquam
-                optio itaque iusto ullam necessitatibus soluta iste similique
-              </TypographyH5>
+              <Education />
             </div>
+
+            <Separator className="-mt-2 hidden dark:inline-block" />
 
             {/* Technical Skills */}
             <div id={"skills"} className="scroll-mt-24">
               <TypographyH2>Technical skills</TypographyH2>
-
-              <ul className="flex flex-wrap gap-2">
-                {Object.values(STACK)?.map((s) => {
-                  return (
-                    <li key={s}>
-                      <StackBadge stack={s as STACK} />
-                    </li>
-                  );
-                })}
-              </ul>
+              <AllSkillsBadges />
             </div>
           </div>
         </div>
