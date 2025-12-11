@@ -10,7 +10,7 @@ export const TypographyH2: FC<PropsWithChildren<Props>> = (props) => {
     <h2
       {...rest}
       className={cn(
-        "scroll-m-20 pb-2 text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight first:mt-0",
+        "scroll-m-20 pb-2 text-xl sm:text-2xl md:text-3xl lg:text-4xl font-semibold tracking-tight first:mt-0",
         className,
       )}
     >

@@ -11,10 +11,10 @@ export const EDUCATION: Education = [
   {
     id: 1,
     year: "2025",
-    title: "Solidity Bootcamp",
+    title: "Advanced Solidity Bootcamp",
     location: "Remote",
     description:
-      "Metana: 5-month intensive program on Solidity, EVM, Foundry, security, and oracles",
+      "Metana: 5-month program on Solidity, EVM, Foundry, security, and oracles.",
   },
   {
     id: 2,
@@ -22,34 +22,35 @@ export const EDUCATION: Education = [
     title: "Full-Stack Web Development Bootcamp",
     location: "Zurich, Switzerland",
     description:
-      "Le Wagon: Covered HTML, CSS, JavaScript, React, Rails, and Git in a 2-month immersive bootcamp.",
+      "Le Wagon: 2-month intensive bootcamp covering HTML/CSS, JavaScript, React, Rails, and Git.",
   },
   {
     id: 3,
-    year: "2022-2023",
-    title: "Blockchain Technologies",
+    year: "2021-2023",
+    title: "MSc Blockchain Technologies",
     location: "Remote",
     link: {
-      href: process.env.NEXT_PUBLIC_FMT ?? "",
-      label: "🎲 A Smart Contract Approach to No-Loss Gaming",
+      href: process.env.NEXT_PUBLIC_FMT_URL ?? "",
+      label: "🎲 Read my article on No-Loss Gaming",
     },
-    description: `UB / Barcelona: "Masters degree" in blockchain technologies, smart contracts, EVM, and dApp development.`,
+    description:
+      "UB/Barcelona: Focused on blockchain, smart contracts, and dApp development.",
   },
   {
     id: 4,
     year: "2012",
     title: "M.Eng. Civil Engineering",
     location: "France",
-    description: `École des Mines: Civil & Environmental Engineering. 
-      Technical problem-solving skills I now apply to coding.`,
+    description:
+      "École des Mines: Civil and environmental engineering curriculum.",
   },
   {
     id: 5,
     year: "2001",
     title: "M.Sc. Molecular Biology",
     location: "France",
-    description: `University of Montpellier: Molecular Biology and Genetics. 
-      Systems thinking—skills I now apply to coding.`,
+    description:
+      "University of Montpellier: Molecular biology and genetics curriculum.",
   },
   {
     id: 6,
