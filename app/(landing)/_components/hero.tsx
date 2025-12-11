@@ -22,14 +22,15 @@ export const Hero = () => {
       <LightGlow />
 
       <Button
+        variant={"outline"}
         asChild
         className="relative 
 					overflow-hidden 
 					border 
-					bg-background 
+					bg-accent-glow/25
 					dark:bg-input/30 
 					border-border dark:border-accent-blue
-					group mb-8 shadow-lg 
+					group mb-8
 					
 					transition-all duration-300
 					hover:dark:shadow-sm
@@ -42,7 +43,7 @@ export const Hero = () => {
         >
           <span
             className="font-bold 
-						text-accent-blue
+						dark:text-accent-blue
 						group-hover:text-white
 						dark:group-hover:text-background 
 						transition-all z-1 duration-300
