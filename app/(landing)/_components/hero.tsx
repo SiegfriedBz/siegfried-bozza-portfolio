@@ -70,11 +70,11 @@ export const Hero = () => {
 					drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]
 				"
       >
-        {"From Biology & Engineering to JavaScript Web Development."
+        {"From Biology & Engineering to Full-Stack Web Development."
           .split(" ")
           .map((word, index) => (
             <motion.span
-              // biome-ignore lint/suspicious/noArrayIndexKey: static
+              // biome-ignore lint/suspicious/noArrayIndexKey: static array
               key={index}
               initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
               animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
