@@ -11,6 +11,7 @@ const Layout: FC<PropsWithChildren> = (props) => {
         flex flex-col items-center justify-center 
         text-center 
         max-sm:pt-[8svh] sm:pt-32 pb-8
+        overflow-hidden
         px-4
       "
       >

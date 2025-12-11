@@ -4,7 +4,6 @@ import type { ComponentProps, FC } from "react";
 import type { IconType } from "react-icons/lib";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
-import { cn } from "@/lib/utils";
 
 type Base = {
   href: string;

@@ -1,19 +1,17 @@
 import { EarthIcon } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { SiegAvatar } from "../_components/sieg-avatar";
-import { StackBadge } from "../_components/stack-badge";
 import { TypographyH1 } from "../_components/typography/h1";
 import { TypographyH2 } from "../_components/typography/h2";
 import { TypographyH5 } from "../_components/typography/h5";
 import { TypographyH6 } from "../_components/typography/h6";
-import { STACK } from "../_constants/stack";
 import { AboutSidebar } from "./_components/about-sidebar";
 import { AllSkillsBadges } from "./_components/all-skills-badges";
 import { BadgeExternalLinks } from "./_components/badge-external-links";
 import { BookCallBadge } from "./_components/book-call-badge";
 import { Education } from "./_components/education";
+import { SelfIntro } from "./_components/self-intro";
 import { WorkXP } from "./_components/work-xp";
 
 export default function Page() {
@@ -62,50 +60,32 @@ export default function Page() {
             </TypographyH2>
           </div>
 
-          <div className="mb-4">
+          <div className="mt-2 mb-4">
             <BadgeExternalLinks />
           </div>
 
           <div className="flex flex-col items-start gap-y-12 max-sm:px-4 text-left">
-            <TypographyH5 className="">
-              I&apos;m a{" "}
-              <span className="font-extrabold">full-stack developer</span> with
-              a background in molecular biology and civil engineering. I&apos;ve
-              worked in Canada, France, and Switzerland, and{" "}
-              <span className="font-extrabold">
-                thrive in multicultural, dynamic environments
-              </span>
-              .
-              <span className="inline-block">
-                I build efficient, maintainable applications with{" "}
-                <span className="font-extrabold">React</span> and{" "}
-                <span className="font-extrabold">Next.js</span>, and I&apos;m
-                passionate about{" "}
-                <span className="font-extrabold">exploring Web3</span>.
-              </span>
-            </TypographyH5>
-
-            <Separator className="-mt-2 hidden dark:inline-block" />
+            <SelfIntro />
 
             {/* Work Experience */}
             <div id={"work"} className="scroll-mt-24">
-              <TypographyH2>Work Experience</TypographyH2>
               <WorkXP />
             </div>
 
-            <Separator className="-mt-2 hidden dark:inline-block" />
+            <Separator className="-mt-2 hidden dark:inline-block dark:sm:hidden" />
 
             {/* Education */}
             <div id={"education"} className="scroll-mt-24">
-              <TypographyH2>Education</TypographyH2>
               <Education />
             </div>
 
-            <Separator className="-mt-2 hidden dark:inline-block" />
+            <Separator className="-mt-2 hidden dark:inline-block dark:sm:hidden" />
 
             {/* Technical Skills */}
             <div id={"skills"} className="scroll-mt-24">
-              <TypographyH2>Technical skills</TypographyH2>
+              <TypographyH2 className="font-extrabold">
+                Technical skills
+              </TypographyH2>
               <AllSkillsBadges />
             </div>
           </div>
