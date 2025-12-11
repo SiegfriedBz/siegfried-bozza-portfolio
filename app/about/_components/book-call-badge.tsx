@@ -7,13 +7,12 @@ export const BookCallBadge: FC = () => {
   return (
     <Badge
       variant="outline"
-      className="
-						group
+      className="group
 						border border-accent-blue/50
 						ps-3 py-1.5
 						mb-4
 						rounded-l-full rounded-r-full
-						dark:bg-linear-to-r dark:from-accent-violet dark:to-transparent
+						dark:bg-linear-to-r dark:from-accent-glow dark:to-transparent
 					"
     >
       <span className="inline-flex items-center">

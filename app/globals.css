@@ -43,7 +43,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 
   --color-accent-blue: var(--accent-blue);
-  --color-accent-violet: var(--accent-violet);
+  --color-accent-glow: var(--accent-glow);
 }
 
 :root {
@@ -81,7 +81,7 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   --accent-blue: #045b9c;
-  --accent-violet: #1f398e;
+  --accent-glow: #aaffff;
 }
 
 .dark {
@@ -118,7 +118,7 @@
   --sidebar-ring: oklch(0.556 0 0);
 
   --accent-blue: #aaffff;
-  --accent-violet: #1f398e;
+  --accent-glow: #1f398e;
 }
 
 @layer base {
