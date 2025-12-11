@@ -10,9 +10,8 @@ const Layout: FC<PropsWithChildren> = (props) => {
         className="relative 
         flex flex-col items-center justify-center 
         text-center 
-        pt-32 pb-8
+        max-sm:pt-[8svh] sm:pt-32 pb-8
         px-4
-        gap-8
       "
       >
         {/* Light glow */}

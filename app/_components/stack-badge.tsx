@@ -36,7 +36,7 @@ const stackMap: Partial<Record<STACK, StackRecord>> = {
 
   [STACK.SOLIDITY]: { logo: "/logos/solidity.png", name: "Solidity" },
   [STACK.FOUNDRY]: { logo: "/logos/foundry.png", name: "Foundry" },
-  [STACK.WAGMI]: { logo: "/logos/wagmi.svg", name: "Wagmi" },
+  [STACK.WAGMI]: { logo: "/logos/wagmi.png", name: "Wagmi" },
   [STACK.VIEM]: { logo: "/logos/viem.png", name: "Viem" },
 
   [STACK.RAINBOW_KIT]: { logo: "/logos/rainbow-kit.png", name: "RainbowKit" },

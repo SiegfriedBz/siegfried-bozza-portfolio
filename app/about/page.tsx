@@ -19,10 +19,10 @@ export default function Page() {
       {/* introduction */}
       <div
         id={"introduction"}
-        className="sm:ml-32 2xl:ml-0 grid grid-cols-1 lg:grid-cols-5 gap-x-64 min-h-svh
-				scroll-mt-32"
+        className="sm:ml-32 2xl:ml-0 grid grid-cols-1 lg:grid-cols-5 gap-x-64
+				scroll-mt-26 sm:scroll-mt-32"
       >
-        <div className="flex z-10 flex-col gap-y-4 justify-center items-center lg:fixed lg:top-1/4 lg:-translate-y-1/4 col-span-1">
+        <div className="max-sm:min-h-[60svh] gap-y-4 flex z-10 flex-col  justify-center items-center lg:fixed lg:top-1/4 lg:-translate-y-1/4 col-span-1">
           <SiegAvatar className="size-44 sm:size-32" />
 
           <div className="flex gap-x-3 items-center">
@@ -40,15 +40,20 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="z-10 flex flex-col gap-2 items-center lg:items-start col-span-1 max-lg:mt-16 lg:col-span-4 lg:col-start-2">
-          <BookCallBadge />
+        <div className="z-10 flex flex-col gap-2 items-center lg:items-start col-span-1 max-sm:mt-0 max-lg:mt-16 lg:col-span-4 lg:col-start-2">
+          <div className="max-sm:min-h-[32svh]">
+            <BookCallBadge />
 
-          <TypographyH1>Siegfried Bozza</TypographyH1>
-          <TypographyH2 className="text-muted-foreground">
-            React & Next.js Fullstack Developer
-          </TypographyH2>
+            <TypographyH1 className="my-2">Siegfried Bozza</TypographyH1>
+            <TypographyH2 className="text-muted-foreground">
+              <span className="inline-block">React & Next.js</span>{" "}
+              <span className="inline-block max-sm:w-full">
+                Fullstack Developer
+              </span>
+            </TypographyH2>
+          </div>
 
-          <div className="mt-4 mb-6">
+          <div className="mb-4">
             <BadgeExternalLinks />
           </div>
 
