@@ -3,6 +3,143 @@ import { STACK } from "./stack";
 
 export const PROJECTS: Project[] = [
   {
+    slug: "bioverify",
+    year: 2026,
+    title: {
+      h1: "BioVerify",
+      h2: "DeSci Protocol — Durable AI Agents for Scientific Integrity",
+    },
+
+    description: {
+      short:
+        "DeSci protocol — Next.js + Solidity + LangGraph + Inngest for decentralized peer review.",
+      overview: `
+        BioVerify is a decentralized science (DeSci) protocol that replaces opaque, slow, and biased traditional peer review with stateful AI agents and on-chain game theory.
+        Scientists stake collateral to submit research, autonomous agents screen for plagiarism via Exa AI neural search and Gemini structured output, Chainlink VRF selects unbiased reviewers, and cryptographic consensus settles stakes — creating an immutable, economically enforced pipeline for scientific truth.
+        The contract uses a getter-less, event-sourced design: all state mutations emit events projected off-chain into a Neon Postgres read model via Alchemy Notify webhooks, powering all frontend queries with zero on-chain reads.
+      `,
+    },
+
+    features: [
+      {
+        key: "Stake & Submit",
+        description:
+          "Scientists upload research manifests to IPFS (Pinata) and submit on-chain with a collateral stake and submission fee.",
+      },
+      {
+        key: "AI Forensic Screening",
+        description:
+          "A LangGraph Submission Agent fetches the abstract from IPFS, runs a neural search against academic literature via Exa AI, and produces a structured Gemini LLM verdict. Plagiarism triggers immediate on-chain slashing.",
+      },
+      {
+        key: "VRF Reviewer Selection",
+        description:
+          "If the submission passes AI screening, Chainlink VRF selects N peer reviewers from the staked pool using cryptographically verifiable randomness. The highest-reputation reviewer is assigned as Senior Reviewer.",
+      },
+      {
+        key: "Human-in-the-Loop Peer Review",
+        description:
+          "Selected reviewers submit EIP-712-signed verdicts through the frontend. Each review resumes the LangGraph Review Agent's HITL interrupt. Conflicting verdicts escalate to the Senior Reviewer for a tie-break.",
+      },
+      {
+        key: "On-Chain Settlement",
+        description:
+          "The agent partitions reviewers into honest (aligned with the final decision) and negligent (opposed), then settles on-chain: honest reviewers are rewarded, negligent reviewers are slashed, and the publisher's stake is returned or forfeited.",
+      },
+      {
+        key: "Event-Driven CQRS Architecture",
+        description:
+          "Getter-less contract design — all state mutations emit events, projected off-chain via Alchemy Notify webhooks into a Neon Postgres read model (Drizzle ORM) with optimistic concurrency control.",
+      },
+      {
+        key: "Durable Agent Orchestration",
+        description:
+          "Inngest provides durable execution (automatic retries, wait-for-event, fan-out) while LangGraph manages agent lifecycle with checkpointers, enabling workflows to pause for days during peer review and resume exactly where they left off.",
+      },
+    ],
+
+    challenges: `
+        Key challenges included orchestrating durable AI agents across asynchronous human review cycles — LangGraph checkpointers allow the workflow to pause for days and resume at the exact HITL interrupt.
+        Designing the getter-less, event-sourced contract required careful coordination between on-chain event emissions and off-chain Postgres projections via Alchemy Notify webhooks.
+        Coordinating Inngest's durable execution layer with LangGraph's agent lifecycle demanded precise separation of logic state (LangGraph) from execution durability (Inngest retries, wait-for-event, fan-out).
+    `,
+
+    outcome: `
+        BioVerify delivers a full DeSci pipeline deployed on Base Sepolia and Ethereum Sepolia — from stake-and-submit through AI forensic screening, VRF reviewer selection, human-in-the-loop peer review, to on-chain settlement with economic enforcement.
+        The project demonstrates end-to-end integration of stateful AI agents, durable execution, and smart contract game theory for scientific integrity.
+    `,
+
+    stack: {
+      all: [
+        STACK.TYPESCRIPT,
+        STACK.REACT,
+        STACK.NEXT,
+        STACK.ZOD,
+        STACK.TANSTACK_QUERY,
+        STACK.SOLIDITY,
+        STACK.FOUNDRY,
+        STACK.WAGMI,
+        STACK.VIEM,
+        STACK.CHAINLINK,
+        STACK.ALCHEMY,
+        STACK.IPFS,
+        STACK.SHADCN,
+        STACK.TAILWIND,
+        STACK.INNGEST,
+        STACK.LANGGRAPH,
+        STACK.GEMINI,
+        STACK.EXA_AI,
+        STACK.DRIZZLE,
+        STACK.NEON,
+      ],
+      main: [
+        {
+          key: "Solidity + Foundry + Chainlink VRF",
+          description:
+            "BioVerifyV3 smart contract with staking, slashing, VRF-based reviewer selection, and on-chain settlement. 100% branch coverage.",
+        },
+        {
+          key: "Next.js + wagmi + Reown AppKit",
+          description:
+            "DApp frontend with wallet integration, EIP-712 typed data signing, and real-time event-driven UI.",
+        },
+        {
+          key: "LangGraph.js + Gemini + Exa AI",
+          description:
+            "Stateful AI agents for submission forensics (plagiarism detection via neural search) and review orchestration with HITL interrupts.",
+        },
+        {
+          key: "Inngest",
+          description:
+            "Durable execution layer — automatic retries for on-chain commands, wait-for-event logic, and fan-out orchestration.",
+        },
+        {
+          key: "Drizzle ORM + Neon Postgres",
+          description:
+            "Event-sourced CQRS read model with optimistic concurrency control, powering all frontend queries.",
+        },
+        {
+          key: "Alchemy Notify",
+          description:
+            "HMAC-verified webhooks projecting contract events into the off-chain read model in real time.",
+        },
+      ],
+    },
+
+    images: [
+      "/projects/bioverify/images/bioverify_publications.jpg",
+      "/projects/bioverify/images/bioverify_landing.jpg",
+    ],
+
+    gifs: [],
+
+    links: {
+      page: "/projects/bioverify",
+      live: process.env.NEXT_PUBLIC_BIOVERIFY_LIVE ?? "",
+      github: process.env.NEXT_PUBLIC_BIOVERIFY_GITHUB ?? "",
+    },
+  },
+  {
     slug: "gavl",
     year: 2025,
     title: {
@@ -69,7 +206,7 @@ export const PROJECTS: Project[] = [
     `,
 
     outcome: `
-			GavL delivers a complete, production-style auction experience with seamless real-time UI, robust backend workflows, multilingual support, and secure payment processing.
+      GavL delivers a complete, production-style auction experience with seamless real-time UI, robust backend workflows, multilingual support, and secure payment processing.
       `,
 
     stack: {
@@ -198,10 +335,10 @@ export const PROJECTS: Project[] = [
     ],
 
     challenges: `
-		Key challenges included coordinating multiple Chainlink services (Price Feeds, Automation, VRF) for trust-minimized game flow.
+    Key challenges included coordinating multiple Chainlink services (Price Feeds, Automation, VRF) for trust-minimized game flow.
     Real-time updates required selective query refetching and event-driven UI state management.
     Implementing payout logic, NFT minting, and hybrid automation demanded careful isolation of contract logic.
-		`,
+    `,
 
     outcome: `
       Bet2Gether is a fully functional crypto-assets price prediction platform deployed on Sepolia, featuring decentralized game mechanics, automated game resolution and payouts, provably fair NFT rewards, and real-time UI updates.
@@ -287,7 +424,7 @@ export const PROJECTS: Project[] = [
       overview: `
       Forge is an on-chain crafting game where players mint, burn, and trade ERC-1155 tokens using smart-contract enforced rules.
       Built with Solidity and Next.js, it features real-time UI updates via Alchemy WebSockets, 100% Foundry test coverage, and verified contracts on Sepolia.
-      The project explores end-to-end Web3 development: contract architecture, game logic, and event-driven UI synchronization.			`,
+      The project explores end-to-end Web3 development: contract architecture, game logic, and event-driven UI synchronization.     `,
     },
 
     features: [
