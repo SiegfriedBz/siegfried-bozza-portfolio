@@ -44,6 +44,13 @@ const stackMap: Partial<Record<STACK, StackRecord>> = {
   [STACK.TENDERLY]: { logo: "/logos/tenderly.png", name: "Tenderly" },
   [STACK.ALCHEMY]: { logo: "/logos/alchemy.png", name: "Alchemy" },
   [STACK.IPFS]: { logo: "/logos/ipfs.svg", name: "IPFS" },
+
+  [STACK.INNGEST]: { logo: "/logos/inngest.png", name: "Inngest" },
+  [STACK.EXA_AI]: { logo: "/logos/exa-ai.png", name: "Exa AI" },
+  [STACK.GEMINI]: { logo: "/logos/gemini.png", name: "Gemini" },
+  [STACK.LANGGRAPH]: { logo: "/logos/langgraph.png", name: "LangGraph" },
+  [STACK.DRIZZLE]: { logo: "/logos/drizzle.png", name: "Drizzle" },
+  [STACK.NEON]: { logo: "/logos/neon.png", name: "Neon" },
 };
 
 type Props = {
