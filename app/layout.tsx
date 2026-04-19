@@ -17,9 +17,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Siegfried Bozza | Full-Stack Dev (React/Next.js + Web3)",
+  title: "Siegfried Bozza | Full-Stack Developer — React, Next.js, Web3 & AI Agents",
   description:
-    "Full-Stack Developer with React, Next.js, and Solidity. Built GavL Auctions (real-time bidding platform), Bet2Gether (Chainlink automation), and Forge (ERC-1155 games). Open to remote roles in Web2/Web3.",
+    "Full-Stack Developer specializing in React, Next.js, TypeScript, and Solidity. Creator of BioVerify — a DeSci protocol with durable AI agents (LangGraph, Inngest), Chainlink VRF, and on-chain staking for decentralized peer review. Also built GavL (real-time auctions with Supabase & Stripe), Bet2Gether (Chainlink-powered prediction games), and Forge (ERC-1155 crafting DApp). Open to remote roles in Web2, Web3, and AI.",
+  keywords: [
+    "Siegfried Bozza",
+    "Full-Stack Developer",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Solidity",
+    "Web3",
+    "DeSci",
+    "BioVerify",
+    "AI Agents",
+    "LangGraph",
+    "Inngest",
+    "Chainlink",
+    "Foundry",
+    "wagmi",
+    "viem",
+    "Drizzle ORM",
+    "Neon Postgres",
+    "Supabase",
+    "Tailwind CSS",
+    "shadcn/ui",
+    "DApp",
+    "decentralized science",
+    "peer review",
+    "smart contracts",
+  ],
 };
 
 export default function RootLayout({
@@ -28,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased px-4 sm:px-16 mx-auto gap-8`}
       >
