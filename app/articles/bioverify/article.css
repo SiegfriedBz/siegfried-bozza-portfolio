@@ -1,0 +1,615 @@
+/* Scoped BioVerify article — diagram SVG + prose helpers (does not touch globals.css tokens) */
+
+.bioverify-font-scope {
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.bioverify-article .diag-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Diagram node boxes — dark-theme faithful colors; light mode slightly softened backgrounds */
+.bioverify-article .dn-teal rect {
+  fill: #ecfdf5;
+  stroke: #14b8a6;
+  stroke-width: 0.8;
+}
+.dark .bioverify-article .dn-teal rect {
+  fill: #0d3b35;
+  stroke: #2dd4bf;
+}
+
+.bioverify-article .dn-teal text {
+  fill: #0f766e;
+}
+.dark .bioverify-article .dn-teal text {
+  fill: #2dd4bf;
+}
+
+.bioverify-article .dn-blue rect {
+  fill: #eff6ff;
+  stroke: #3b82f6;
+  stroke-width: 0.8;
+}
+.dark .bioverify-article .dn-blue rect {
+  fill: #0d2240;
+  stroke: #58a6ff;
+}
+
+.bioverify-article .dn-blue text {
+  fill: #2563eb;
+}
+.dark .bioverify-article .dn-blue text {
+  fill: #58a6ff;
+}
+
+.bioverify-article .dn-amber rect {
+  fill: #fffbeb;
+  stroke: #eab308;
+  stroke-width: 0.8;
+}
+.dark .bioverify-article .dn-amber rect {
+  fill: #2e1f05;
+  stroke: #f0b429;
+}
+
+.bioverify-article .dn-amber text {
+  fill: #ca8a04;
+}
+.dark .bioverify-article .dn-amber text {
+  fill: #f0b429;
+}
+
+.bioverify-article .dn-purple rect {
+  fill: #faf5ff;
+  stroke: #a855f7;
+  stroke-width: 0.8;
+}
+.dark .bioverify-article .dn-purple rect {
+  fill: #1e1535;
+  stroke: #a78bfa;
+}
+
+.bioverify-article .dn-purple text {
+  fill: #9333ea;
+}
+.dark .bioverify-article .dn-purple text {
+  fill: #a78bfa;
+}
+
+.bioverify-article .dn-coral rect {
+  fill: #fef2f2;
+  stroke: #f87171;
+  stroke-width: 0.8;
+}
+.dark .bioverify-article .dn-coral rect {
+  fill: #2e100d;
+  stroke: #e05c4b;
+}
+
+.bioverify-article .dn-coral text {
+  fill: #dc2626;
+}
+.dark .bioverify-article .dn-coral text {
+  fill: #e05c4b;
+}
+
+.bioverify-article .dn-green rect {
+  fill: #ecfdf5;
+  stroke: #22c55e;
+  stroke-width: 0.8;
+}
+.dark .bioverify-article .dn-green rect {
+  fill: #0d2e12;
+  stroke: #3fb950;
+}
+
+.bioverify-article .dn-green text {
+  fill: #15803d;
+}
+.dark .bioverify-article .dn-green text {
+  fill: #3fb950;
+}
+
+.bioverify-article .dn-gray rect {
+  fill: #f4f4f5;
+  stroke: #71717a;
+  stroke-width: 0.8;
+}
+.dark .bioverify-article .dn-gray rect {
+  fill: #1a2030;
+  stroke: #8b949e; /* Scoped BioVerify article — diagram SVG + prose helpers (does not touch globals.css tokens) */
+
+  .bioverify-font-scope {
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  }
+
+  .bioverify-article .diag-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Diagram node boxes — dark-theme faithful colors; light mode slightly softened backgrounds */
+  .bioverify-article .dn-teal rect {
+    fill: #ecfdf5;
+    stroke: #14b8a6;
+    stroke-width: 0.8;
+  }
+  .dark .bioverify-article .dn-teal rect {
+    fill: #0d3b35;
+    stroke: #2dd4bf;
+  }
+
+  .bioverify-article .dn-teal text {
+    fill: #0f766e;
+  }
+  .dark .bioverify-article .dn-teal text {
+    fill: #2dd4bf;
+  }
+
+  .bioverify-article .dn-blue rect {
+    fill: #eff6ff;
+    stroke: #3b82f6;
+    stroke-width: 0.8;
+  }
+  .dark .bioverify-article .dn-blue rect {
+    fill: #0d2240;
+    stroke: #58a6ff;
+  }
+
+  .bioverify-article .dn-blue text {
+    fill: #2563eb;
+  }
+  .dark .bioverify-article .dn-blue text {
+    fill: #58a6ff;
+  }
+
+  .bioverify-article .dn-amber rect {
+    fill: #fffbeb;
+    stroke: #eab308;
+    stroke-width: 0.8;
+  }
+  .dark .bioverify-article .dn-amber rect {
+    fill: #2e1f05;
+    stroke: #f0b429;
+  }
+
+  .bioverify-article .dn-amber text {
+    fill: #ca8a04;
+  }
+  .dark .bioverify-article .dn-amber text {
+    fill: #f0b429;
+  }
+
+  .bioverify-article .dn-purple rect {
+    fill: #faf5ff;
+    stroke: #a855f7;
+    stroke-width: 0.8;
+  }
+  .dark .bioverify-article .dn-purple rect {
+    fill: #1e1535;
+    stroke: #a78bfa;
+  }
+
+  .bioverify-article .dn-purple text {
+    fill: #9333ea;
+  }
+  .dark .bioverify-article .dn-purple text {
+    fill: #a78bfa;
+  }
+
+  .bioverify-article .dn-coral rect {
+    fill: #fef2f2;
+    stroke: #f87171;
+    stroke-width: 0.8;
+  }
+  .dark .bioverify-article .dn-coral rect {
+    fill: #2e100d;
+    stroke: #e05c4b;
+  }
+
+  .bioverify-article .dn-coral text {
+    fill: #dc2626;
+  }
+  .dark .bioverify-article .dn-coral text {
+    fill: #e05c4b;
+  }
+
+  .bioverify-article .dn-green rect {
+    fill: #ecfdf5;
+    stroke: #22c55e;
+    stroke-width: 0.8;
+  }
+  .dark .bioverify-article .dn-green rect {
+    fill: #0d2e12;
+    stroke: #3fb950;
+  }
+
+  .bioverify-article .dn-green text {
+    fill: #15803d;
+  }
+  .dark .bioverify-article .dn-green text {
+    fill: #3fb950;
+  }
+
+  .bioverify-article .dn-gray rect {
+    fill: #f4f4f5;
+    stroke: #71717a;
+    stroke-width: 0.8;
+  }
+  .dark .bioverify-article .dn-gray rect {
+    fill: #1a2030;
+    stroke: #8b949e;
+  }
+
+  .bioverify-article .dn-gray text {
+    fill: #52525b;
+  }
+  .dark .bioverify-article .dn-gray text {
+    fill: #8b949e;
+  }
+
+  .bioverify-article .band-teal {
+    fill: none;
+    stroke: #14b8a6;
+    stroke-width: 0.8;
+    stroke-dasharray: 5 3;
+  }
+  .dark .bioverify-article .band-teal {
+    stroke: #2dd4bf;
+  }
+
+  .bioverify-article .band-amber {
+    fill: none;
+    stroke: #eab308;
+    stroke-width: 0.8;
+    stroke-dasharray: 5 3;
+  }
+  .dark .bioverify-article .band-amber {
+    stroke: #f0b429;
+  }
+
+  .bioverify-article .band-green {
+    fill: none;
+    stroke: #22c55e;
+    stroke-width: 0.8;
+    stroke-dasharray: 5 3;
+  }
+  .dark .bioverify-article .band-green {
+    stroke: #3fb950;
+  }
+
+  .bioverify-article .band-blue {
+    fill: none;
+    stroke: #3b82f6;
+    stroke-width: 0.8;
+    stroke-dasharray: 5 3;
+  }
+  .dark .bioverify-article .band-blue {
+    stroke: #58a6ff;
+  }
+
+  .bioverify-article .band-coral {
+    fill: none;
+    stroke: #f87171;
+    stroke-width: 1;
+    stroke-dasharray: 5 3;
+  }
+  .dark .bioverify-article .band-coral {
+    stroke: #e05c4b;
+  }
+
+  .bioverify-article .band-label-teal {
+    fill: #0f766e;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+  }
+  .dark .bioverify-article .band-label-teal {
+    fill: #2dd4bf;
+  }
+
+  .bioverify-article .band-label-amber {
+    fill: #ca8a04;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+  }
+  .dark .bioverify-article .band-label-amber {
+    fill: #f0b429;
+  }
+
+  .bioverify-article .band-label-green {
+    fill: #15803d;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+  }
+  .dark .bioverify-article .band-label-green {
+    fill: #3fb950;
+  }
+
+  .bioverify-article .band-label-blue {
+    fill: #2563eb;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+  }
+  .dark .bioverify-article .band-label-blue {
+    fill: #58a6ff;
+  }
+
+  .bioverify-article .band-label-coral {
+    fill: #dc2626;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+  }
+  .dark .bioverify-article .band-label-coral {
+    fill: #e05c4b;
+  }
+
+  .bioverify-article .node-title {
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+
+  .bioverify-article .node-sub {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 9.5px;
+    opacity: 0.75;
+  }
+
+  .bioverify-article .arr-line {
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  .bioverify-article .leader-line {
+    fill: none;
+    stroke: #a1a1aa;
+    stroke-width: 0.6;
+    stroke-dasharray: 3 3;
+  }
+  .dark .bioverify-article .leader-line {
+    stroke: #8b949e;
+  }
+
+  /* Inline prose links inside article */
+  .bioverify-article .article-prose a {
+    color: #0d9488;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(13, 148, 136, 0.45);
+    transition: border-color 0.2s;
+  }
+  .bioverify-article .article-prose a:hover {
+    border-color: #0d9488;
+  }
+  .dark .bioverify-article .article-prose a {
+    color: #2dd4bf;
+    border-bottom-color: #1a7a6e;
+  }
+  .dark .bioverify-article .article-prose a:hover {
+    border-color: #2dd4bf;
+  }
+
+  .bioverify-article .article-prose code {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.8125rem;
+    background: oklch(0.97 0 0);
+    color: #0d9488;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid oklch(0.922 0 0);
+  }
+  .dark .bioverify-article .article-prose code {
+    background: #1e2530;
+    color: #2dd4bf;
+    border-color: rgba(139, 148, 158, 0.15);
+  }
+
+  .bioverify-article .article-prose strong {
+    font-weight: 500;
+    color: oklch(0.145 0 0);
+  }
+  .dark .bioverify-article .article-prose strong {
+    color: #e6edf3;
+  }
+
+  .bioverify-article .article-prose em {
+    font-style: italic;
+    color: oklch(0.556 0 0);
+  }
+  .dark .bioverify-article .article-prose em {
+    color: #b0bac4;
+  }
+}
+
+.bioverify-article .dn-gray text {
+  fill: #52525b;
+}
+.dark .bioverify-article .dn-gray text {
+  fill: #8b949e;
+}
+
+.bioverify-article .band-teal {
+  fill: none;
+  stroke: #14b8a6;
+  stroke-width: 0.8;
+  stroke-dasharray: 5 3;
+}
+.dark .bioverify-article .band-teal {
+  stroke: #2dd4bf;
+}
+
+.bioverify-article .band-amber {
+  fill: none;
+  stroke: #eab308;
+  stroke-width: 0.8;
+  stroke-dasharray: 5 3;
+}
+.dark .bioverify-article .band-amber {
+  stroke: #f0b429;
+}
+
+.bioverify-article .band-green {
+  fill: none;
+  stroke: #22c55e;
+  stroke-width: 0.8;
+  stroke-dasharray: 5 3;
+}
+.dark .bioverify-article .band-green {
+  stroke: #3fb950;
+}
+
+.bioverify-article .band-blue {
+  fill: none;
+  stroke: #3b82f6;
+  stroke-width: 0.8;
+  stroke-dasharray: 5 3;
+}
+.dark .bioverify-article .band-blue {
+  stroke: #58a6ff;
+}
+
+.bioverify-article .band-coral {
+  fill: none;
+  stroke: #f87171;
+  stroke-width: 1;
+  stroke-dasharray: 5 3;
+}
+.dark .bioverify-article .band-coral {
+  stroke: #e05c4b;
+}
+
+.bioverify-article .band-label-teal {
+  fill: #0f766e;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+}
+.dark .bioverify-article .band-label-teal {
+  fill: #2dd4bf;
+}
+
+.bioverify-article .band-label-amber {
+  fill: #ca8a04;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+}
+.dark .bioverify-article .band-label-amber {
+  fill: #f0b429;
+}
+
+.bioverify-article .band-label-green {
+  fill: #15803d;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+}
+.dark .bioverify-article .band-label-green {
+  fill: #3fb950;
+}
+
+.bioverify-article .band-label-blue {
+  fill: #2563eb;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+}
+.dark .bioverify-article .band-label-blue {
+  fill: #58a6ff;
+}
+
+.bioverify-article .band-label-coral {
+  fill: #dc2626;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+}
+.dark .bioverify-article .band-label-coral {
+  fill: #e05c4b;
+}
+
+.bioverify-article .node-title {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.bioverify-article .node-sub {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 9.5px;
+  opacity: 0.75;
+}
+
+.bioverify-article .arr-line {
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.bioverify-article .leader-line {
+  fill: none;
+  stroke: #a1a1aa;
+  stroke-width: 0.6;
+  stroke-dasharray: 3 3;
+}
+.dark .bioverify-article .leader-line {
+  stroke: #8b949e;
+}
+
+/* Inline prose links inside article */
+.bioverify-article .article-prose a {
+  color: #0d9488;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(13, 148, 136, 0.45);
+  transition: border-color 0.2s;
+}
+.bioverify-article .article-prose a:hover {
+  border-color: #0d9488;
+}
+.dark .bioverify-article .article-prose a {
+  color: #2dd4bf;
+  border-bottom-color: #1a7a6e;
+}
+.dark .bioverify-article .article-prose a:hover {
+  border-color: #2dd4bf;
+}
+
+.bioverify-article .article-prose code {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+  background: oklch(0.97 0 0);
+  color: #0d9488;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid oklch(0.922 0 0);
+}
+.dark .bioverify-article .article-prose code {
+  background: #1e2530;
+  color: #2dd4bf;
+  border-color: rgba(139, 148, 158, 0.15);
+}
+
+.bioverify-article .article-prose strong {
+  font-weight: 500;
+  color: oklch(0.145 0 0);
+}
+.dark .bioverify-article .article-prose strong {
+  color: #e6edf3;
+}
+
+.bioverify-article .article-prose em {
+  font-style: italic;
+  color: oklch(0.556 0 0);
+}
+.dark .bioverify-article .article-prose em {
+  color: #b0bac4;
+}
