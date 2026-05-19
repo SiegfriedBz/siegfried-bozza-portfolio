@@ -4,7 +4,6 @@ Personal site and digital resume: **Next.js 16**, **React 19**, **Tailwind CSS v
 
 **Live:** [siegfried-bozza-portfolio-next.vercel.app](https://siegfried-bozza-portfolio-next.vercel.app)
 
-![Open Graph](https://github.com/user-attachments/assets/c2a68c34-6bb0-4525-86d2-f4cb3097c056)
 
 ## Features
 
