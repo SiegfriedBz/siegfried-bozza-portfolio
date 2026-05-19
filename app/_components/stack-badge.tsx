@@ -1,9 +1,9 @@
+import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import type { FC } from "react";
-import { Badge } from "@/components/ui/badge";
 import { STACK } from "../_constants/stack";
 
-type StackRecord = {
+export type StackRecord = {
   logo?: string;
   name: string;
 };
@@ -28,11 +28,19 @@ const stackMap: Partial<Record<STACK, StackRecord>> = {
 
   [STACK.SHADCN]: { logo: "/logos/shadcn.png", name: "shadcn/ui" },
   [STACK.TAILWIND]: { logo: "/logos/tailwind.svg", name: "Tailwind CSS" },
+  [STACK.LINGUI]: { logo: "/logos/lingui.png", name: "Lingui" },
+  [STACK.NUQS]: { logo: "/logos/nuqs.png", name: "nuqs" },
+  [STACK.RECHARTS]: { logo: "/logos/recharts.png", name: "Recharts" },
+  [STACK.FRAMER_MOTION]: { name: "Motion (Framer Motion)" },
 
   [STACK.SUPABASE]: { logo: "/logos/supabase.png", name: "Supabase" },
   [STACK.STRIPE]: { logo: "/logos/stripe.svg", name: "Stripe" },
 
+  [STACK.MONGODB]: { name: "MongoDB" },
+
   [STACK.JEST]: { logo: "/logos/jest.svg", name: "Jest" },
+  [STACK.VITEST]: { logo: "/logos/vitest.png", name: "Vitest" },
+  [STACK.CYPRESS]: { logo: "/logos/cypress.png", name: "Cypress" },
 
   [STACK.SOLIDITY]: { logo: "/logos/solidity.png", name: "Solidity" },
   [STACK.FOUNDRY]: { logo: "/logos/foundry.png", name: "Foundry" },
@@ -40,7 +48,12 @@ const stackMap: Partial<Record<STACK, StackRecord>> = {
   [STACK.VIEM]: { logo: "/logos/viem.png", name: "Viem" },
 
   [STACK.RAINBOW_KIT]: { logo: "/logos/rainbow-kit.png", name: "RainbowKit" },
+  [STACK.REOWN]: { logo: "/logos/reown.png", name: "Reown" },
   [STACK.CHAINLINK]: { logo: "/logos/chainlink.svg", name: "Chainlink" },
+  [STACK.OPEN_ZEPPELIN]: {
+    logo: "/logos/open-zeppelin.png",
+    name: "OpenZeppelin",
+  },
   [STACK.TENDERLY]: { logo: "/logos/tenderly.png", name: "Tenderly" },
   [STACK.ALCHEMY]: { logo: "/logos/alchemy.png", name: "Alchemy" },
   [STACK.IPFS]: { logo: "/logos/ipfs.svg", name: "IPFS" },
@@ -52,6 +65,9 @@ const stackMap: Partial<Record<STACK, StackRecord>> = {
   [STACK.DRIZZLE]: { logo: "/logos/drizzle.png", name: "Drizzle" },
   [STACK.NEON]: { logo: "/logos/neon.png", name: "Neon" },
 };
+
+export const getStackRecord = (stack: STACK): StackRecord | undefined =>
+  stackMap[stack];
 
 type Props = {
   stack: STACK;

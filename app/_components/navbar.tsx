@@ -1,8 +1,13 @@
-import { CircleUserRoundIcon, Grid2x2Icon, HouseIcon } from "lucide-react";
-import Link from "next/link";
-import type { FC } from "react";
 import { Button } from "@/components/ui/button";
 import { ButtonGroup } from "@/components/ui/button-group";
+import {
+  CircleUserRoundIcon,
+  Grid2x2Icon,
+  HouseIcon,
+  NewspaperIcon,
+} from "lucide-react";
+import Link from "next/link";
+import type { FC } from "react";
 import { ToggleThemeButton } from "./toggle-theme-button";
 
 export const Navbar: FC = () => {
@@ -27,7 +32,7 @@ export const Navbar: FC = () => {
             href="/about"
             className="inline-flex justify-between items-center gap-x-2"
           >
-            <CircleUserRoundIcon /> About
+            <CircleUserRoundIcon className="max-[374px]:hidden" /> About
           </Link>
         </Button>
 
@@ -36,7 +41,16 @@ export const Navbar: FC = () => {
             href="/projects"
             className="inline-flex justify-between items-center gap-x-2"
           >
-            <Grid2x2Icon /> Projects
+            <Grid2x2Icon className="max-[374px]:hidden" /> Projects
+          </Link>
+        </Button>
+
+        <Button variant="outline" className="cursor-pointer" asChild>
+          <Link
+            href="/articles"
+            className="inline-flex justify-between items-center gap-x-2"
+          >
+            <NewspaperIcon className="max-[374px]:hidden" /> Articles
           </Link>
         </Button>
 
