@@ -1,25 +1,25 @@
-import { SITE_NAME } from "@/app/_lib/site-metadata";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
-import { EarthIcon } from "lucide-react";
-import type { Metadata } from "next";
-import { SiegAvatar } from "../_components/sieg-avatar";
-import { TypographyH1 } from "../_components/typography/h1";
-import { TypographyH2 } from "../_components/typography/h2";
-import { TypographyH6 } from "../_components/typography/h6";
-import { AboutSidebar } from "./_components/about-sidebar";
-import { AllSkillsBadges } from "./_components/all-skills-badges";
-import { BadgeExternalLinks } from "./_components/badge-external-links";
-import { BookCallBadge } from "./_components/book-call-badge";
-import { EarlierCareer } from "./_components/earlier-career";
-import { Education } from "./_components/education";
-import { FeaturedProjects } from "./_components/featured-projects";
-import { SelfIntro } from "./_components/self-intro";
-import { WorkXP } from "./_components/work-xp";
+import { SITE_NAME } from "@/app/_lib/site-metadata"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
+import { EarthIcon } from "lucide-react"
+import type { Metadata } from "next"
+import { SiegAvatar } from "../_components/sieg-avatar"
+import { TypographyH1 } from "../_components/typography/h1"
+import { TypographyH2 } from "../_components/typography/h2"
+import { TypographyH6 } from "../_components/typography/h6"
+import { AboutSidebar } from "./_components/about-sidebar"
+import { AllSkillsBadges } from "./_components/all-skills-badges"
+import { BadgeExternalLinks } from "./_components/badge-external-links"
+import { BookCallBadge } from "./_components/book-call-badge"
+import { EarlierCareer } from "./_components/earlier-career"
+import { Education } from "./_components/education"
+import { FeaturedProjects } from "./_components/featured-projects"
+import { SelfIntro } from "./_components/self-intro"
+import { WorkXP } from "./_components/work-xp"
 
-const ABOUT_TITLE = `About | ${SITE_NAME}`;
+const ABOUT_TITLE = `About | ${SITE_NAME}`
 const ABOUT_DESCRIPTION =
-  "M.Sc. Molecular Biology · M.Eng. Civil Engineering · 2+ years pro software. BioVerify DeSci case study, Prismo full-stack, open to remote or global relocation.";
+  "M.Sc. Molecular Biology · M.Eng. Civil Engineering · 2+ years pro software. BioVerify DeSci case study, Prismo full-stack, open to remote or global relocation."
 
 export const metadata: Metadata = {
   title: ABOUT_TITLE,
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
     title: ABOUT_TITLE,
     description: ABOUT_DESCRIPTION,
   },
-};
+}
 
 export default function Page() {
   return (
@@ -51,7 +51,7 @@ export default function Page() {
           </div>
 
           <TypographyH6 className="font-semibold -mt-2">
-            Remote-first · Open to relocation · Available immediately
+            Open to global relocation
           </TypographyH6>
 
           <div className="flex gap-x-6">
@@ -87,7 +87,7 @@ export default function Page() {
 
               <p className="mt-1 max-w-2xl text-center text-xs leading-relaxed text-muted-foreground sm:text-sm lg:text-left">
                 Prior 15 years in molecular biology research and environmental
-                engineering · building full-stack software since 2022
+                engineering · building <span className="text-foreground">full-stack software since 2022</span>
               </p>
 
               <div className="mt-2 mb-4">
@@ -135,5 +135,5 @@ export default function Page() {
         </div>
       </div>
     </main>
-  );
+  )
 }
