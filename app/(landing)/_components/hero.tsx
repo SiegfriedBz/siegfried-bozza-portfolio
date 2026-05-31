@@ -1,13 +1,13 @@
-"use client";
+"use client"
 
-import { LightGlow } from "@/app/_components/light-glow";
-import { CV_HREF } from "@/app/_constants/cv";
-import { Button } from "@/components/ui/button";
-import { ChevronRightIcon, FileDownIcon } from "lucide-react";
-import { motion } from "motion/react";
-import Link from "next/link";
-import { SiegAvatar } from "../../_components/sieg-avatar";
-import { TypographyH1 } from "../../_components/typography/h1";
+import { LightGlow } from "@/app/_components/light-glow"
+import { CV_HREF } from "@/app/_constants/cv"
+import { Button } from "@/components/ui/button"
+import { ChevronRightIcon, FileDownIcon } from "lucide-react"
+import { motion } from "motion/react"
+import Link from "next/link"
+import { SiegAvatar } from "../../_components/sieg-avatar"
+import { TypographyH1 } from "../../_components/typography/h1"
 
 export const Hero = () => {
   return (
@@ -50,7 +50,7 @@ export const Hero = () => {
       {/* Middle: H1 + bio */}
       <motion.div className="flex w-full min-h-0 max-w-4xl flex-col items-center gap-3 text-center sm:gap-6 md:gap-10 [@media(max-height:640px)]:gap-2 [@media(max-height:480px)]:gap-1">
         <TypographyH1 className="z-10 -translate-y-0.5 max-[374px]:text-2xl text-3xl drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] sm:-translate-y-[3px] sm:text-4xl md:-translate-y-1 md:text-5xl lg:text-5xl xl:text-6xl">
-          {"Full-stack engineer. Web3 and AI integrations."
+          {"Full-Stack Engineer · Web3 & AI Agents"
             .split(" ")
             .map((word, index) => (
               <motion.span
@@ -76,33 +76,55 @@ export const Hero = () => {
           transition={{ duration: 0.3, delay: 0.8 }}
           className="relative z-10 mx-auto max-w-xl px-1 text-center text-sm font-normal leading-relaxed text-muted-foreground sm:max-w-2xl sm:text-sm md:text-base lg:text-lg [@media(max-height:640px)]:text-xs [@media(max-height:480px)]:max-w-md"
         >
-          Engineer with a non-linear path:{" "}
-          <span className="font-bold text-accent-foreground">M.Sc.</span>{" "}
-          Molecular Biology +{" "}
-          <span className="font-bold text-accent-foreground">M.Eng.</span> Civil
-          &amp; Environmental Engineering (
-          <span className="font-bold text-accent-foreground">France</span>) —
-          roughly fifteen years in research and field engineering (
-          <span className="font-bold text-accent-foreground">France</span>,{" "}
-          <span className="font-bold text-accent-foreground">Canada</span>,{" "}
-          <span className="font-bold text-accent-foreground">Switzerland</span>)
-          — then{" "}
+          I have been building{" "}
           <span className="font-bold text-accent-foreground">
-            Full-Stack Engineer
-          </span>{" "}
-          (since 2022). Today I build{" "}
+            software since 2022
+          </span>,{" "}
+          following fifteen years in molecular biology research
+          (<span className="font-bold text-accent-foreground">M.Sc.</span>)
+          {" "} and environmental engineering (<span className="font-bold text-accent-foreground">M.Eng.</span>){" "}
+          across {" "}
+          <span className="font-bold text-accent-foreground">Canada</span>,{" "}
+          <span className="font-bold text-accent-foreground">France</span>,{" "}and {" "}
+          <span className="font-bold text-accent-foreground">Switzerland</span>.
+          {" "}
+
+          Today I build{" "}
+          <span className="font-bold text-accent-foreground">
+            production Web2 systems
+          </span>
+          ,{" "}
           <span className="font-bold text-accent-foreground">
             decentralized applications
           </span>
-          , event-driven backends, and{" "}
-          <span className="font-bold text-accent-foreground">agentic</span>{" "}
-          DApps — mostly with{" "}
-          <span className="font-bold text-accent-foreground">Solidity</span>,{" "}
-          <span className="font-bold text-accent-foreground">Foundry</span>,{" "}
-          <span className="font-bold text-accent-foreground">Chainlink</span>,{" "}
-          <span className="font-bold text-accent-foreground">LangGraph</span>,{" "}
-          <span className="font-bold text-accent-foreground">Next.js</span>, and{" "}
-          <span className="font-bold text-accent-foreground">Supabase</span>.
+          , and{" "}
+          <span className="font-bold text-accent-foreground">
+            agentic backends
+          </span>{" "}
+          — mainly with{" "}
+          <span className="font-bold text-accent-foreground">
+            Next.js
+          </span>,{" "}
+          <span className="font-bold text-accent-foreground">
+            TypeScript
+          </span>,{" "}
+          <span className="font-bold text-accent-foreground">
+            Supabase
+          </span>,{" "}
+          <span className="font-bold text-accent-foreground">
+            Foundry
+          </span>,{" "}
+          <span className="font-bold text-accent-foreground">
+            Solidity
+          </span>,{" "}
+          <span className="font-bold text-accent-foreground">
+            Chainlink
+          </span>,{" "} and {" "}
+          <span className="font-bold text-accent-foreground">
+            LangGraph
+          </span>.
+
+
         </motion.p>
       </motion.div>
 
@@ -167,5 +189,5 @@ export const Hero = () => {
         </motion.div>
       </motion.div>
     </section>
-  );
-};
+  )
+}
