@@ -1,37 +1,37 @@
-import { TypographyP } from "@/app/_components/typography/p";
-import { BIOVERIFY_LINKS } from "@/app/_constants/projects";
-import type { FC } from "react";
-import { ArticleCta } from "./article-cta";
-import { ArticleFooterLinks } from "./article-footer-links";
-import { ArticleGif } from "./article-gif";
-import { ArticleHeader } from "./article-header";
-import { CalloutCard } from "./callout-card";
-import { DiagramWrap } from "./diagram-wrap";
-import { Figure1EventPipeline } from "./diagrams/figure-1-event-pipeline";
-import { Figure2SubmissionAgent } from "./diagrams/figure-2-submission-agent";
-import { Figure3Vrf } from "./diagrams/figure-3-vrf";
-import { Figure4ReviewAgent } from "./diagrams/figure-4-review-agent";
-import { OutcomesTable } from "./outcomes-table";
-import { PhaseCard } from "./phase-card";
-import { PullQuote } from "./pull-quote";
-import { RecapCard } from "./recap-card";
-import { TechTag } from "./tech-tag";
-import { TldrCard } from "./tldr-card";
+import { TypographyP } from "@/app/_components/typography/p"
+import { BIOVERIFY_LINKS } from "@/app/_constants/projects"
+import type { FC } from "react"
+import { ArticleCta } from "./article-cta"
+import { ArticleFooterLinks } from "./article-footer-links"
+import { ArticleGif } from "./article-gif"
+import { ArticleHeader } from "./article-header"
+import { CalloutCard } from "./callout-card"
+import { DiagramWrap } from "./diagram-wrap"
+import { Figure1EventPipeline } from "./diagrams/figure-1-event-pipeline"
+import { Figure2SubmissionAgent } from "./diagrams/figure-2-submission-agent"
+import { Figure3Vrf } from "./diagrams/figure-3-vrf"
+import { Figure4ReviewAgent } from "./diagrams/figure-4-review-agent"
+import { OutcomesTable } from "./outcomes-table"
+import { PhaseCard } from "./phase-card"
+import { PullQuote } from "./pull-quote"
+import { RecapCard } from "./recap-card"
+import { TechTag } from "./tech-tag"
+import { TldrCard } from "./tldr-card"
 
 const h2 =
-  "mb-5 mt-14 border-b border-border pb-3 font-[family-name:var(--font-serif)] text-[clamp(1.5rem,4vw,1.75rem)] font-normal leading-snug text-foreground first:mt-0 dark:border-white/10";
+  "mb-5 mt-14 border-b border-border pb-3 font-[family-name:var(--font-serif)] text-[clamp(1.5rem,4vw,1.75rem)] font-normal leading-snug text-foreground first:mt-0 dark:border-white/10"
 
 const h3 =
-  "mb-3.5 mt-9 text-[15px] font-medium uppercase tracking-wide text-accent-blue dark:text-[#2dd4bf]";
+  "mb-3.5 mt-9 text-[15px] font-medium uppercase tracking-wide text-accent-blue dark:text-[#2dd4bf]"
 
 const dashList =
-  "mb-6 list-none space-y-2 pl-0 [&>li]:relative [&>li]:pl-6 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:text-teal-600 [&>li]:before:content-['—'] dark:[&>li]:before:text-[#2dd4bf]";
+  "mb-6 list-none space-y-2 pl-0 [&>li]:relative [&>li]:pl-6 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:text-teal-600 [&>li]:before:content-['—'] dark:[&>li]:before:text-[#2dd4bf]"
 
 export const BioVerifyArticle: FC = () => {
-  const BIOVERIFY_GITHUB = BIOVERIFY_LINKS.github;
-  const BIOVERIFY_LIVE = BIOVERIFY_LINKS.live;
+  const BIOVERIFY_GITHUB = BIOVERIFY_LINKS.github
+  const BIOVERIFY_LIVE = BIOVERIFY_LINKS.live
   const TELEGRAM_URL =
-    process.env.NEXT_PUBLIC_BIOVERIFY_TELEGRAM_URL?.trim() ?? "";
+    process.env.NEXT_PUBLIC_BIOVERIFY_TELEGRAM_URL?.trim() ?? ""
 
   return (
     <>
@@ -85,8 +85,7 @@ export const BioVerifyArticle: FC = () => {
         </TypographyP>
 
         <PullQuote>
-          &quot;Truth on-chain, orchestration off-chain — with humans making
-          every verdict call.&quot;
+          &quot;Truth on-chain, orchestration off-chain — with humans involved in verdict calls.&quot;
         </PullQuote>
 
         <h2 className={h2}>Why decentralised peer review — and why now</h2>
@@ -1143,5 +1142,5 @@ export const BioVerifyArticle: FC = () => {
         <ArticleFooterLinks />
       </div>
     </>
-  );
-};
+  )
+}
