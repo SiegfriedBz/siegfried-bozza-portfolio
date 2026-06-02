@@ -1,10 +1,10 @@
-import { MoveRightIcon } from "lucide-react";
-import Link from "next/link";
-import type { FC } from "react";
+import { MoveRightIcon } from "lucide-react"
+import Link from "next/link"
+import type { FC } from "react"
 
 type Props = {
-  className?: string;
-};
+  className?: string
+}
 
 export const ArticleHeader: FC<Props> = () => {
   return (
@@ -16,7 +16,7 @@ export const ArticleHeader: FC<Props> = () => {
         When the Chain Is Not Enough: Building a Full-Stack Agentic DApp
       </h1>
       <p className="font-[family-name:var(--font-serif)] text-xl italic leading-snug text-muted-foreground">
-        A DeSci peer-review case study, told as a user journey — where every
+        A multi-chain DeSci peer-review case study, told as a user journey — where every
         step in the workflow introduces the piece of the stack that makes it
         possible.
       </p>
@@ -32,5 +32,5 @@ export const ArticleHeader: FC<Props> = () => {
         .
       </p>
     </header>
-  );
-};
+  )
+}

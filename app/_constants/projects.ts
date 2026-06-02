@@ -19,7 +19,7 @@ const bioVerifyProject: Project = {
   title: {
     h1: "BioVerify",
     h2: "DeSci Peer-Review — Chainlink VRF & Durable AI Agents for Scientific Integrity",
-    short: "Agentic DeSci Case Study",
+    short: "Multi-chain Agentic DeSci Case Study",
   },
 
   description: {

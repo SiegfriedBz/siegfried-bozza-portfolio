@@ -19,7 +19,7 @@ import { WorkXP } from "./_components/work-xp"
 
 const ABOUT_TITLE = `About | ${SITE_NAME}`
 const ABOUT_DESCRIPTION =
-  "M.Sc. Molecular Biology · M.Eng. Civil Engineering · 2+ years pro software. BioVerify DeSci case study, Prismo full-stack, open to remote or global relocation."
+  "Full-stack engineer · Next.js, TypeScript, Web3 · Renuo AG & Prismo.io · open to remote or global relocation."
 
 export const metadata: Metadata = {
   title: ABOUT_TITLE,
@@ -60,7 +60,7 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="z-10 flex flex-col gap-2 items-center lg:items-start col-span-1 max-sm:mt-0 max-lg:mt-8 lg:col-span-4 lg:col-start-2">
+        <div className="z-10 flex flex-col gap-2 items-center lg:items-start col-span-1 max-sm:mt-0 max-lg:mt-8 lg:col-span-4 lg:col-start-2 2xl:ml-8">
           <div className="flex flex-col gap-y-12 max-sm:px-4 text-left w-full">
             <div
               id="introduction"
@@ -84,11 +84,6 @@ export default function Page() {
                   </span>
                 </TypographyH2>
               </div>
-
-              <p className="mt-1 max-w-2xl text-center text-xs leading-relaxed text-muted-foreground sm:text-sm lg:text-left">
-                Prior 15 years in molecular biology research and environmental
-                engineering · building <span className="text-foreground">full-stack software since 2022</span>
-              </p>
 
               <div className="mt-2 mb-4">
                 <BadgeExternalLinks />
