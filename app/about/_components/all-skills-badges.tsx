@@ -51,6 +51,7 @@ const CATEGORIES: { label: string; items: STACK[] }[] = [
       STACK.ALCHEMY,
       STACK.TENDERLY,
       STACK.IPFS,
+      STACK.ORIGINTRAIL,
     ],
   },
   {

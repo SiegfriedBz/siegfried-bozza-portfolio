@@ -1,6 +1,7 @@
 import type { IconName } from "@/app/_constants/icons";
 
 export type FeaturedCategory =
+  | "Web3 Backend & Infrastructure"
   | "Web3 Architecture & Coordination"
   | "Smart Contract Patterns & Testing"
   | "Full-Stack Web2";

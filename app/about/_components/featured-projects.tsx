@@ -7,6 +7,7 @@ import { MoveRightIcon } from "lucide-react";
 import Link from "next/link";
 
 const CATEGORY_ORDER: FeaturedCategory[] = [
+  "Web3 Backend & Infrastructure",
   "Web3 Architecture & Coordination",
   "Smart Contract Patterns & Testing",
   "Full-Stack Web2",
