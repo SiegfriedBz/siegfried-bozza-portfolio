@@ -1,7 +1,7 @@
+import type { FC } from "react";
 import { getStackRecord, StackBadge } from "@/app/_components/stack-badge";
 import { STACK } from "@/app/_constants/stack";
 import { Badge } from "@/components/ui/badge";
-import type { FC } from "react";
 
 const CATEGORIES: { label: string; items: STACK[] }[] = [
   {

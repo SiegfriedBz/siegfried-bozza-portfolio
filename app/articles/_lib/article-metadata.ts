@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { getArticle } from "@/app/_constants/articles";
-import { SITE_NAME } from "@/app/_lib/site-metadata";
+import { DEFAULT_OG_IMAGES, SITE_NAME } from "@/app/_lib/site-metadata";
 
 export const articleMetadata = (slug: string): Metadata => {
   const article = getArticle(slug);
   const images = article.cover
     ? [{ url: article.cover, alt: article.title }]
-    : undefined;
+    : DEFAULT_OG_IMAGES;
 
   return {
     title: `${article.title} | ${SITE_NAME}`,
@@ -21,13 +21,13 @@ export const articleMetadata = (slug: string): Metadata => {
       publishedTime: article.date,
       authors: [SITE_NAME],
       tags: article.tags,
-      ...(images ? { images } : {}),
+      images,
     },
     twitter: {
       card: "summary_large_image",
       title: article.title,
       description: article.subtitle,
-      ...(images ? { images: images.map((i) => i.url) } : {}),
+      images: images.map((i) => i.url),
     },
   };
 };

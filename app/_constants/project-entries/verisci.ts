@@ -191,7 +191,7 @@ The project is mostly evidence of engineering habits: decisions recorded in ADRs
   },
 
   images: ["/projects/verisci/images/verisci-landing.png"],
-  gifs: [],
+  videos: [],
 
   featured: {
     category: "Web3 Backend & Infrastructure",

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ComponentProps, FC } from "react";
 import { LuGithub } from "react-icons/lu";
+import { posterFor } from "@/app/_components/autoplay-video";
 import { ProjectLinks } from "@/app/_components/project-links";
 import { StackBadge } from "@/app/_components/stack-badge";
 import { TerminalCover } from "@/app/_components/terminal-cover";
@@ -28,9 +29,11 @@ type Props = ComponentProps<typeof Card> & {
 export const ProjectCard: FC<Props> = (props) => {
   const { project, className, ...rest } = props;
 
-  const { slug, title, description, images, terminal, stack, links } = project;
+  const { slug, title, description, images, videos, terminal, stack, links } =
+    project;
 
   const [img] = images;
+  const [video] = videos;
 
   const linksTo = [
     {
@@ -81,6 +84,13 @@ export const ProjectCard: FC<Props> = (props) => {
             />
           ) : terminal ? (
             <TerminalCover title={terminal.title} lines={terminal.lines} />
+          ) : video ? (
+            <Image
+              src={posterFor(video)}
+              fill
+              alt={`${title.h1} — screen recording`}
+              className="object-cover"
+            />
           ) : null}
         </CardContent>
 

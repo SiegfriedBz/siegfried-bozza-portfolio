@@ -168,7 +168,7 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
   },
 
   images: [],
-  gifs: [],
+  videos: [],
 
   featured: {
     category: "Web3 Backend & Infrastructure",

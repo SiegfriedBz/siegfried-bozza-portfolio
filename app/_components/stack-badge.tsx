@@ -1,6 +1,6 @@
-import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 import type { FC } from "react";
+import { Badge } from "@/components/ui/badge";
 import { STACK } from "../_constants/stack";
 
 export type StackRecord = {
