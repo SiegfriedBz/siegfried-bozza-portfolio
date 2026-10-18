@@ -37,6 +37,9 @@ const stackMap: Partial<Record<STACK, StackRecord>> = {
   [STACK.STRIPE]: { logo: "/logos/stripe.svg", name: "Stripe" },
 
   [STACK.MONGODB]: { name: "MongoDB" },
+  [STACK.NODE]: { name: "Node.js" },
+  [STACK.HONO]: { name: "Hono" },
+  [STACK.SQLITE]: { name: "SQLite" },
   [STACK.UPSTASH]: { name: "Upstash" },
 
   [STACK.JEST]: { logo: "/logos/jest.svg", name: "Jest" },

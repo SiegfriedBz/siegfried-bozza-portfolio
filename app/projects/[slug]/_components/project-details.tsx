@@ -3,6 +3,7 @@ import { ProjectLinks } from "@/app/_components/project-links";
 import { RichText } from "@/app/_components/rich-text";
 import { SiegAvatar } from "@/app/_components/sieg-avatar";
 import { StackBadge } from "@/app/_components/stack-badge";
+import { TerminalCover } from "@/app/_components/terminal-cover";
 import { TypographyH1 } from "@/app/_components/typography/h1";
 import { TypographyH2 } from "@/app/_components/typography/h2";
 import { TypographyH3 } from "@/app/_components/typography/h3";
@@ -38,6 +39,7 @@ export const ProjectDetails: FC<Props> = (props) => {
     constructionPeriod,
     images,
     videos,
+    terminal,
     links,
   } = project;
 
@@ -95,7 +97,17 @@ export const ProjectDetails: FC<Props> = (props) => {
       <ProjectLinks className="self-center" links={linksTo} />
 
       {/* Carousel */}
-      <ProjectCarousel images={images} videos={videos} projectName={title.h1} />
+      {images.length + videos.length > 0 ? (
+        <ProjectCarousel
+          images={images}
+          videos={videos}
+          projectName={title.h1}
+        />
+      ) : terminal ? (
+        <div className="aspect-video w-full">
+          <TerminalCover title={terminal.title} lines={terminal.lines} />
+        </div>
+      ) : null}
 
       {diagram ? (
         <ProjectDiagramCard

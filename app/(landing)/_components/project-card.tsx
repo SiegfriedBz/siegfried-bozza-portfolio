@@ -1,9 +1,11 @@
-import { ExternalLinkIcon, MoveRightIcon } from "lucide-react";
+import { ExternalLinkIcon, MoveRightIcon, NewspaperIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { ComponentProps, FC } from "react";
+import { LuGithub } from "react-icons/lu";
 import { ProjectLinks } from "@/app/_components/project-links";
 import { StackBadge } from "@/app/_components/stack-badge";
+import { TerminalCover } from "@/app/_components/terminal-cover";
 import { TypographyH3 } from "@/app/_components/typography/h3";
 import { TypographyH4 } from "@/app/_components/typography/h4";
 import type { STACK } from "@/app/_constants/stack";
@@ -26,7 +28,7 @@ type Props = ComponentProps<typeof Card> & {
 export const ProjectCard: FC<Props> = (props) => {
   const { project, className, ...rest } = props;
 
-  const { slug, title, description, images, stack, links } = project;
+  const { slug, title, description, images, terminal, stack, links } = project;
 
   const [img] = images;
 
@@ -37,13 +39,30 @@ export const ProjectCard: FC<Props> = (props) => {
       icon: MoveRightIcon,
       as: Link,
     },
-    {
-      href: links.live,
-      title: "Live demo",
-      icon: ExternalLinkIcon,
-      as: "a" as const,
-    },
-  ];
+    ...(links.article
+      ? [
+          {
+            href: links.article.href,
+            title: "Article",
+            icon: NewspaperIcon,
+            as: Link,
+          },
+        ]
+      : []),
+    links.live
+      ? {
+          href: links.live,
+          title: "Live demo",
+          icon: ExternalLinkIcon,
+          as: "a" as const,
+        }
+      : {
+          href: links.github,
+          title: "GitHub",
+          icon: LuGithub,
+          as: "a" as const,
+        },
+  ].filter((l) => l.href.trim().length > 0);
 
   return (
     <Card
@@ -51,8 +70,18 @@ export const ProjectCard: FC<Props> = (props) => {
       className={cn("max-w-5xl mx-auto", className, "bg-transparent pt-0")}
     >
       <div className="flex flex-col gap-8">
-        <CardContent className="relative w-full aspect-video rounded-xl overflow-hidden">
-          <Image src={img} fill alt="project image" className="object-cover" />
+        <CardContent className="relative w-full aspect-video rounded-xl overflow-hidden px-0">
+          {img ? (
+            <Image
+              src={img}
+              fill
+              alt={`${title.h1} — screenshot`}
+              sizes="(min-width: 1024px) 1024px, 100vw"
+              className="object-cover"
+            />
+          ) : terminal ? (
+            <TerminalCover title={terminal.title} lines={terminal.lines} />
+          ) : null}
         </CardContent>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-8 flex-1">

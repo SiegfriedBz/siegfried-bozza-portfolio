@@ -58,6 +58,11 @@ export type Project = {
   images: string[];
   /** Screen recordings (.mp4). A same-name .jpg next to each file is used as the poster. */
   videos: string[];
+  /** Cover for projects without a UI (e.g. a backend service): a short terminal transcript. */
+  terminal?: {
+    title: string;
+    lines: string[];
+  };
 
   links: {
     page: string;

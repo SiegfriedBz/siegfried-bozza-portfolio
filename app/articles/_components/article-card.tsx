@@ -1,11 +1,13 @@
-import type { Article } from "@/app/_types/article";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 import { MoveRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
+import { TerminalCover } from "@/app/_components/terminal-cover";
+import { PROJECTS } from "@/app/_constants/projects";
+import type { Article } from "@/app/_types/article";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 type Props = {
   article: Article;
@@ -14,6 +16,9 @@ type Props = {
 
 export const ArticleCard: FC<Props> = ({ article, className }) => {
   const { title, subtitle, excerpt, date, href, cover, tags } = article;
+  const terminal = PROJECTS.find(
+    (p) => p.slug === article.relatedProjectSlug,
+  )?.terminal;
 
   return (
     <Card
@@ -35,6 +40,14 @@ export const ArticleCard: FC<Props> = ({ article, className }) => {
             <div
               className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/90 via-transparent to-transparent"
               aria-hidden
+            />
+          </div>
+        ) : terminal ? (
+          <div className="aspect-[16/7] w-full overflow-hidden">
+            <TerminalCover
+              title={terminal.title}
+              lines={terminal.lines}
+              className="rounded-none border-0"
             />
           </div>
         ) : (
