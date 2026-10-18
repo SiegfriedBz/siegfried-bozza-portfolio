@@ -1,4 +1,5 @@
 import type { Project } from "@/app/_types/project"
+import { verisciProject } from "./project-entries/verisci"
 import { STACK } from "./stack"
 
 const bioVerifyGithub = process.env.NEXT_PUBLIC_BIOVERIFY_GITHUB ?? ""
@@ -240,6 +241,7 @@ const bioVerifyProject: Project = {
 export const BIOVERIFY_LINKS = bioVerifyProject.links
 
 export const PROJECTS: Project[] = [
+  verisciProject,
   bioVerifyProject,
 
   {

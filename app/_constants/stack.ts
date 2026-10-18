@@ -24,6 +24,7 @@ export enum STACK {
   DRIZZLE = "DRIZZLE",
   NEON = "NEON",
   MONGODB = "MONGODB",
+  UPSTASH = "UPSTASH",
   // web3 specific
   SOLIDITY = "SOLIDITY",
   FOUNDRY = "FOUNDRY",
@@ -36,4 +37,5 @@ export enum STACK {
   TENDERLY = "TENDERLY",
   ALCHEMY = "ALCHEMY",
   IPFS = "IPFS",
+  ORIGINTRAIL = "ORIGINTRAIL",
 }

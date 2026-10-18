@@ -37,6 +37,7 @@ const stackMap: Partial<Record<STACK, StackRecord>> = {
   [STACK.STRIPE]: { logo: "/logos/stripe.svg", name: "Stripe" },
 
   [STACK.MONGODB]: { name: "MongoDB" },
+  [STACK.UPSTASH]: { name: "Upstash" },
 
   [STACK.JEST]: { logo: "/logos/jest.svg", name: "Jest" },
   [STACK.VITEST]: { logo: "/logos/vitest.png", name: "Vitest" },
@@ -57,6 +58,7 @@ const stackMap: Partial<Record<STACK, StackRecord>> = {
   [STACK.TENDERLY]: { logo: "/logos/tenderly.png", name: "Tenderly" },
   [STACK.ALCHEMY]: { logo: "/logos/alchemy.png", name: "Alchemy" },
   [STACK.IPFS]: { logo: "/logos/ipfs.svg", name: "IPFS" },
+  [STACK.ORIGINTRAIL]: { name: "OriginTrail DKG" },
 
   [STACK.INNGEST]: { logo: "/logos/inngest.png", name: "Inngest" },
   [STACK.EXA_AI]: { logo: "/logos/exa-ai.png", name: "Exa AI" },

@@ -31,7 +31,6 @@ export const ArticleCard: FC<Props> = ({ article, className }) => {
               fill
               className="object-cover opacity-90 transition-opacity duration-300 group-hover:opacity-100"
               sizes="(max-width: 768px) 100vw, 50vw"
-              unoptimized
             />
             <div
               className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/90 via-transparent to-transparent"
