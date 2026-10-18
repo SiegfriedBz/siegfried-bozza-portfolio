@@ -1,4 +1,5 @@
 import {
+  DEFAULT_OG_IMAGES,
   DEFAULT_TITLE,
   SITE_DESCRIPTION_LONG,
   SITE_DESCRIPTION_SHORT,
@@ -12,11 +13,13 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION_SHORT,
   alternates: { canonical: "/" },
   openGraph: {
+    images: DEFAULT_OG_IMAGES,
     title: DEFAULT_TITLE,
     description: SITE_DESCRIPTION_LONG,
     url: "/",
   },
   twitter: {
+    images: DEFAULT_OG_IMAGES.map((i) => i.url),
     title: DEFAULT_TITLE,
     description: SITE_DESCRIPTION_LONG,
   },

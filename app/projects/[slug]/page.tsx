@@ -1,8 +1,8 @@
-import { BIOVERIFY_ARTICLE_HERO, PROJECTS } from "@/app/_constants/projects";
-import { SITE_NAME } from "@/app/_lib/site-metadata";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { FC } from "react";
+import { BIOVERIFY_ARTICLE_HERO, PROJECTS } from "@/app/_constants/projects";
+import { DEFAULT_OG_IMAGES, SITE_NAME } from "@/app/_lib/site-metadata";
 import { ProjectDetails } from "./_components/project-details";
 
 type Params = { slug: string };
@@ -40,13 +40,15 @@ export async function generateMetadata({
       title,
       description,
       url: `/projects/${slug}`,
-      ...(ogImage ? { images: [{ url: ogImage, alt: project.title.h1 }] } : {}),
+      images: ogImage
+        ? [{ url: ogImage, alt: project.title.h1 }]
+        : DEFAULT_OG_IMAGES,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      ...(ogImage ? { images: [ogImage] } : {}),
+      images: ogImage ? [ogImage] : DEFAULT_OG_IMAGES.map((i) => i.url),
     },
   };
 }

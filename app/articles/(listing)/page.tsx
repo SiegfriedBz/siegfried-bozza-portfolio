@@ -1,17 +1,20 @@
-import { ARTICLES } from "@/app/_constants/articles";
-import { ArticlesList } from "@/app/articles/_components/articles-list";
 import type { Metadata } from "next";
+import { ARTICLES } from "@/app/_constants/articles";
+import { DEFAULT_OG_IMAGES } from "@/app/_lib/site-metadata";
+import { ArticlesList } from "@/app/articles/_components/articles-list";
 
 export const metadata: Metadata = {
   title: "Articles | Siegfried Bozza",
   description: "Case studies from projects I've built.",
   openGraph: {
+    images: DEFAULT_OG_IMAGES,
     title: "Articles | Siegfried Bozza",
     description: "Case studies from projects I've built.",
     type: "website",
     url: "/articles",
   },
   twitter: {
+    images: DEFAULT_OG_IMAGES.map((i) => i.url),
     card: "summary_large_image",
     title: "Articles | Siegfried Bozza",
     description: "Case studies from projects I've built.",

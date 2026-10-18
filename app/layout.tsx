@@ -5,6 +5,7 @@ import { Footer } from "./_components/footer";
 import { Navbar } from "./_components/navbar";
 import {
   DEFAULT_KEYWORDS,
+  DEFAULT_OG_IMAGES,
   DEFAULT_TITLE,
   SITE_DESCRIPTION_LONG,
   SITE_DESCRIPTION_SHORT,
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION_SHORT,
   keywords: [...DEFAULT_KEYWORDS],
   openGraph: {
+    images: DEFAULT_OG_IMAGES,
     type: "website",
     title: DEFAULT_TITLE,
     description: SITE_DESCRIPTION_LONG,
@@ -25,6 +27,7 @@ export const metadata: Metadata = {
     siteName: "Siegfried Bozza",
   },
   twitter: {
+    images: DEFAULT_OG_IMAGES.map((i) => i.url),
     card: "summary_large_image",
     title: DEFAULT_TITLE,
     description: SITE_DESCRIPTION_LONG,

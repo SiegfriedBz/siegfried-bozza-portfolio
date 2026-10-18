@@ -1,5 +1,5 @@
-import { SITE_NAME } from "@/app/_lib/site-metadata";
 import type { Metadata } from "next";
+import { DEFAULT_OG_IMAGES, SITE_NAME } from "@/app/_lib/site-metadata";
 import { Projects } from "../_components/projects";
 
 const PROJECTS_TITLE = `Projects | ${SITE_NAME}`;
@@ -11,11 +11,13 @@ export const metadata: Metadata = {
   description: PROJECTS_DESCRIPTION,
   alternates: { canonical: "/projects" },
   openGraph: {
+    images: DEFAULT_OG_IMAGES,
     title: PROJECTS_TITLE,
     description: PROJECTS_DESCRIPTION,
     url: "/projects",
   },
   twitter: {
+    images: DEFAULT_OG_IMAGES.map((i) => i.url),
     title: PROJECTS_TITLE,
     description: PROJECTS_DESCRIPTION,
   },
