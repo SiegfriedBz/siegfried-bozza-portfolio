@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "next build --webpack",
     "start": "next start",
+    "check": "biome check --changed --since=develop --no-errors-on-unmatched",
+    "typecheck": "tsc --noEmit",
     "lint:check": "biome check",
     "lint:fix": "biome format --write"
   },
