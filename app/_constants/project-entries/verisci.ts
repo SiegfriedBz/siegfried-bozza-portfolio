@@ -11,7 +11,7 @@ export const verisciProject: Project = {
   constructionPeriod: "Aug–Oct 2026",
   title: {
     h1: "VeriSci",
-    h2: "Open Reproducibility Ratings for Life-Science Papers on the OriginTrail DKG and Base",
+    h2: "Open Reproducibility-Readiness Ratings for Life-Science Papers on the OriginTrail DKG and Base",
     short: "Retry-Safe DeSci Rating Pipeline",
   },
 

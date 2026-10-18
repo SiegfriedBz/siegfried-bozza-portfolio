@@ -12,7 +12,7 @@ export const BIOVERIFY_ARTICLE_HERO =
 const bioVerifyProject: Project = {
   slug: "bioverify",
   languages: ["TypeScript", "Solidity"],
-  constructionPeriod: "Mar–Apr 2026",
+  constructionPeriod: "Jan–Apr 2026",
   title: {
     h1: "BioVerify",
     h2: "DeSci Peer-Review — Chainlink VRF & Durable AI Agents for Scientific Integrity",
@@ -219,7 +219,7 @@ const bioVerifyProject: Project = {
     bullets: [
       "**Getter-less contract, event-sourced reads** — **BioVerifyV3** emits events instead of exposing view getters; **Alchemy Notify** delivers logs to an **HMAC-SHA256**-verified webhook that projects into **Neon Postgres** with optimistic concurrency — the frontend reads from the projection, not the chain.",
       "**Dual-agent pipeline** — a **Submission Agent** fetches the IPFS manifest and runs a neural search via **Exa AI** for plagiarism screening; a **Review Agent** manages multi-day human-in-the-loop peer review, with **LangGraph** checkpointers and **Inngest** durable execution so workflows survive serverless cold starts.",
-      "**Trust-minimized reviewer selection** — after screening passes, **Chainlink VRF** provides cryptographically verifiable randomness to pick peer reviewers from the staked pool — no operator or contract owner can influence who reviews a submission.",
+      "**Trust-minimized reviewer selection** — after screening passes, **Chainlink VRF** draws peer reviewers from the staked pool with verifiable randomness, so the operator cannot hand-pick who reviews a given submission.",
     ],
   },
 
@@ -445,7 +445,7 @@ export const PROJECTS: Project[] = [
     featured: {
       category: "Web3 Architecture & Coordination",
       summary:
-        "A proof-of-concept for running prediction markets where settlement is decentralized and tamper-resistant, staying outside any operator's hands: Chainlink Price Feeds set the price at deadline, Automation triggers resolution, and VRF randomizes ERC-1155 rewards.",
+        "A proof-of-concept prediction market that settles without an operator: Chainlink Automation triggers resolution, Chainlink Price Feeds supply the price, and VRF randomizes ERC-1155 rewards. The deployed contract still has an oracle-timing weakness, documented under Known limitations.",
       bullets: [
         "**Automation-driven resolution** — **Chainlink Automation** calls **performUpkeep** so eligible rounds move without a human operator clicking resolve.",
         "**Verifiable inputs** — **Chainlink Price Feeds** for settlement prices and **Chainlink VRF v2.5** for unpredictable **ERC-1155** reward ids.",
@@ -461,7 +461,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "forge",
     languages: ["TypeScript", "Solidity"],
-    constructionPeriod: "Oct–Nov 2025",
+    constructionPeriod: "Nov 2025",
     title: {
       h1: "Forge",
       h2: "ERC-1155 Token-Composition",

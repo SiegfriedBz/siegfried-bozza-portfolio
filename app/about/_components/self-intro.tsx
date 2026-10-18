@@ -16,7 +16,7 @@ const PROJECTS =
   "On my own time I build Web3 systems end to end, mostly the off-chain half that smart contracts depend on:";
 
 const PROJECT_BULLETS = [
-  "**VeriSci** — open quality ratings for life-science papers: records on the **OriginTrail DKG**, scores on-chain, and every write safe to retry",
+  "**VeriSci** — open reproducibility-readiness ratings for life-science papers: records on the **OriginTrail DKG**, scores on-chain, and every write safe to retry",
   "**Wallet Watcher** — a custody-backend slice: HD wallets, an append-only ledger and exactly-once withdrawals with **viem**",
   "**BioVerify** — peer review as a coordination game: **Chainlink VRF** reviewer selection, on-chain stakes and slashes, and multi-day human-in-the-loop agents (**LangGraph** + **Inngest**)",
   "Smaller studies: **Bet2Gether** (Chainlink-settled prediction market), **Forge** (atomic ERC-1155 crafting) and **GavL** (real-time auctions with Supabase and Stripe)",
