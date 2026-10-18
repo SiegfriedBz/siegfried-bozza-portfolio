@@ -1,13 +1,12 @@
-import { CV_HREF, CV_LABEL } from "@/app/_constants/cv";
-import { Badge } from "@/components/ui/badge";
 import { FileDownIcon, MailIcon } from "lucide-react";
 import type { FC } from "react";
 import { LuGithub, LuLinkedin } from "react-icons/lu";
+import { CV_HREF, CV_LABEL } from "@/app/_constants/cv";
+import { PROFILE_LINKS } from "@/app/_constants/links";
+import { Badge } from "@/components/ui/badge";
 
 export const BadgeExternalLinks: FC = () => {
-  const github = process.env.NEXT_PUBLIC_GITHUB?.trim() ?? "";
-  const linkedin = process.env.NEXT_PUBLIC_LINKEDIN?.trim() ?? "";
-  const mailTo = process.env.NEXT_PUBLIC_MAIL_TO?.trim() ?? "";
+  const { github, linkedin, email: mailTo } = PROFILE_LINKS;
 
   return (
     <div className="flex flex-wrap items-center justify-center lg:justify-start gap-x-3 gap-y-2 max-[374px]:gap-x-2">

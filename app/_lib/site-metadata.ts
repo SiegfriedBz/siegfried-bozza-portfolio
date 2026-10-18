@@ -1,6 +1,5 @@
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  "https://siegfried-bozza-portfolio-next.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.siegfriedbozza.com";
 
 export const SITE_NAME = "Siegfried Bozza";
 

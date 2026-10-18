@@ -1,9 +1,10 @@
-import { BIOVERIFY_LINKS } from "@/app/_constants/projects";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import type { FC } from "react";
+import { PROFILE_LINKS } from "@/app/_constants/links";
+import { BIOVERIFY_LINKS } from "@/app/_constants/projects";
+import { cn } from "@/lib/utils";
 
-const LINKEDIN = process.env.NEXT_PUBLIC_LINKEDIN ?? "";
+const LINKEDIN = PROFILE_LINKS.linkedin;
 
 const BASE_SEPOLIA =
   "https://sepolia.basescan.org/address/0x76654c2cdadcf869e78928f0785797b6be20f11b";

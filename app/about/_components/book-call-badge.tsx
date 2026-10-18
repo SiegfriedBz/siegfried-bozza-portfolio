@@ -1,10 +1,11 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ChevronRightIcon, ClipboardClockIcon } from "lucide-react";
 import type { FC } from "react";
+import { PROFILE_LINKS } from "@/app/_constants/links";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 export const BookCallBadge: FC = () => {
-  const calendly = process.env.NEXT_PUBLIC_CALENDLY_LINK?.trim() ?? "";
+  const { calendly } = PROFILE_LINKS;
 
   if (!calendly) {
     return null;

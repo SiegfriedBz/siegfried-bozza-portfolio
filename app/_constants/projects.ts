@@ -1,17 +1,12 @@
 import type { Project } from "@/app/_types/project"
 import { STACK } from "./stack"
 
-const bioVerifyGithub = process.env.NEXT_PUBLIC_BIOVERIFY_GITHUB ?? ""
+const bioVerifyGithub = "https://github.com/SiegfriedBz/BioVerify_Agentic_DApp"
 
 /** Bundled article hero + OG fallback (works with next/image without remotePatterns). */
 export const BIOVERIFY_ARTICLE_HERO =
   "/projects/bioverify/images/bioverify_landing.jpg"
 
-const bioVerifyOgImage = (() => {
-  const env = process.env.NEXT_PUBLIC_BIOVERIFY_OG_IMAGE?.trim() ?? ""
-  if (env.startsWith("/")) return env
-  return BIOVERIFY_ARTICLE_HERO
-})()
 
 const bioVerifyProject: Project = {
   slug: "bioverify",
@@ -233,9 +228,9 @@ const bioVerifyProject: Project = {
       label: "Read the BioVerify article",
       iconName: "dna",
     },
-    live: process.env.NEXT_PUBLIC_BIOVERIFY_LIVE ?? "",
+    live: "https://bio-verify-ai-dapp.vercel.app",
     github: bioVerifyGithub,
-    ogImage: bioVerifyOgImage,
+    ogImage: BIOVERIFY_ARTICLE_HERO,
     architectureDoc: bioVerifyGithub
       ? `${bioVerifyGithub}/blob/main/docs/architecture.md`
       : "",
@@ -249,7 +244,7 @@ export const PROJECTS: Project[] = [
 
   {
     slug: "bet2gether",
-    constructionPeriod: "Nov–Dec 2025",
+    constructionPeriod: "Oct–Nov 2025",
     title: {
       h1: "Bet2Gether",
       h2: "Autonomous Chainlink Oracle-Driven Settlement",
@@ -261,7 +256,7 @@ export const PROJECTS: Project[] = [
       problem:
         "Prediction markets only stay interesting when settlement is credibly neutral. Operator-settled designs ask you to trust whoever calls resolve and picks the price. Permissionless on-chain designs still need something to trigger resolution at the deadline — if only winners call it, timing becomes gameable; if a single bot runs it, trust shifts to that operator. Random rewards driven by block metadata or admin-picked tokenIds are easy to bias or predict.",
       solution:
-        "Once a round opens, settlement and reward draws are encoded as state transitions tied to oracle inputs — no operator step after that. **PredictionPool** reads **Chainlink Price Feeds** at the deadline; **Chainlink Automation** calls **performUpkeep**; **Chainlink VRF v2.5** supplies verifiable randomness for **ERC-1155** reward tokenIds; a **Tenderly Web3 Action** can bridge resolution events to a gated mint when the round creator wins.",
+        "Once a round opens, settlement and reward draws are encoded as state transitions tied to oracle inputs — no operator step after that. **PredictionPool** reads **Chainlink Price Feeds** when the round resolves; **Chainlink Automation** calls **performUpkeep**; **Chainlink VRF v2.5** supplies verifiable randomness for **ERC-1155** reward tokenIds; a **Tenderly Web3 Action** can bridge resolution events to a gated mint when the round creator wins.",
       overview: `
         Bet2Gether is a small prediction-market case study on **Ethereum Sepolia**. Rounds resolve from an allow-listed **Chainlink Price Feed** when the pool's resolve step runs after the deadline — the settlement price is whatever the feed returns at resolution time, not an ad hoc admin choice.
         **PredictionPool** implements **AutomationCompatibleInterface**: **checkUpkeep** flags due rounds and **performUpkeep** resolves them. **PredictionPoolToken** mints randomized **ERC-1155** collectibles via **VRFConsumerBaseV2Plus**; a **Tenderly Web3 Action** listens for **PredictionPool_RoundResolved** and, when configured logic applies, calls **mint** with **MINTER_ROLE** protection.
@@ -335,7 +330,7 @@ export const PROJECTS: Project[] = [
       "**Deployment:** Ethereum Sepolia — PredictionPool & PredictionPoolToken verified on Etherscan",
       "**Sepolia addresses:** [PredictionPool](https://sepolia.etherscan.io/address/0x51A0a7561dEbA056C1cDF5aB4c369Db686c77EF6) · [PredictionPoolToken](https://sepolia.etherscan.io/address/0xddd3c73caE8541FC6Ea119C1BffC5B6547D33eCf)",
       "**Chainlink:** Price Feeds (settlement), Automation (**performUpkeep**), VRF v2.5 (ERC-1155 reward randomness)",
-      "**Settlement:** Price feed at deadline — not an operator-chosen number",
+      "**Settlement:** Chainlink Price Feed answer read at resolution — not an operator-chosen number (see the oracle limitation below)",
       "**Real-time UI:** Alchemy WebSockets + wagmi listeners",
       "**Coverage caveat:** Branch coverage measures how much branching ran under tests — not total logical completeness. README snapshot: **PredictionPool** ~89.5% lines / ~77.8% branches; **PredictionPoolToken** ~85.7% lines / ~25.0% branches (see repo for latest `forge coverage`).",
     ],
@@ -343,6 +338,7 @@ export const PROJECTS: Project[] = [
       "Oracle-driven settlement, hybrid on/off-chain automation, event-driven UI architecture.",
 
     limitations: [
+      "**Oracle timing and staleness (deployed version)** — The deployed **PredictionPool** reads `latestRoundData()` when `performUpkeep` runs and ignores `updatedAt`. `performUpkeep` is permissionless, so anyone can resolve a round after its deadline and the settlement price depends on *when* that call lands, not on the price at `round.end`; a stale answer would also be accepted. The fix is to walk back with `getRoundData` to the last answer at or before the deadline and to bound staleness against the feed heartbeat.",
       "**Testnet only** — Deployed on **Ethereum Sepolia** for experimentation, not mainnet money at risk.",
       "**Tenderly bridge** — The Web3 Action is an off-chain automation path with its own trust assumptions; minting is gated by **MINTER_ROLE** on **PredictionPoolToken**.",
     ],
@@ -453,8 +449,8 @@ export const PROJECTS: Project[] = [
 
     links: {
       page: "/projects/bet2gether",
-      live: process.env.NEXT_PUBLIC_BET2GETHER_LIVE ?? "",
-      github: process.env.NEXT_PUBLIC_BET2GETHER_GITHUB ?? "",
+      live: "https://bet2gether-alpha.vercel.app",
+      github: "https://github.com/SiegfriedBz/Bet2Gether-DApp",
     },
   },
   {
@@ -644,8 +640,8 @@ export const PROJECTS: Project[] = [
 
     links: {
       page: "/projects/forge",
-      live: process.env.NEXT_PUBLIC_FORGE_LIVE ?? "",
-      github: process.env.NEXT_PUBLIC_FORGE_GITHUB ?? "",
+      live: "https://forge-tokens.vercel.app",
+      github: "https://github.com/SiegfriedBz/Forge-DApp",
     },
   },
   {
@@ -840,8 +836,8 @@ export const PROJECTS: Project[] = [
 
     links: {
       page: "/projects/gavl",
-      live: process.env.NEXT_PUBLIC_GAVL_LIVE ?? "",
-      github: process.env.NEXT_PUBLIC_GAVL_GITHUB ?? "",
+      live: "https://next-auctions.vercel.app/en",
+      github: "https://github.com/SiegfriedBz/Next-Auctions",
     },
   },
 ]
