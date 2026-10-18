@@ -17,7 +17,7 @@ Personal site and digital resume: **Next.js 16**, **React 19**, **Tailwind CSS v
 
 | Area | Packages |
 |------|-----------|
-| Framework | `next@16.0.7`, `react@19.2.0` |
+| Framework | `next@16.4.2`, `react@19.3.1` |
 | Styling | `tailwindcss@^4`, `tw-animate-css`, `class-variance-authority` |
 | UI | Radix primitives, `lucide-react`, `embla-carousel-react` |
 | Content | `mermaid@^11` (diagrams), `motion@^12` |
