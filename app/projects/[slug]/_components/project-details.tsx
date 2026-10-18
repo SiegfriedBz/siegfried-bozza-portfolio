@@ -90,7 +90,7 @@ export const ProjectDetails: FC<Props> = (props) => {
 
       {/* Avatar */}
       <div className="flex justify-center items-center gap-x-6 sm:gap-x-8 mb-4">
-        <SiegAvatar />
+        <SiegAvatar alt="" />
         <span className="text-accent-blue font-bold">Siegfried Bozza</span>
       </div>
 

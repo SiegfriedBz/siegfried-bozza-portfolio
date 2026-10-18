@@ -43,6 +43,7 @@ export const metadata: Metadata = {
     description: ABOUT_DESCRIPTION,
     url: "/about",
     siteName: SITE_NAME,
+    type: "profile",
   },
   twitter: {
     images: DEFAULT_OG_IMAGES.map((i) => i.url),

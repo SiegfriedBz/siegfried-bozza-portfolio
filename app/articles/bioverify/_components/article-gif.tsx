@@ -8,12 +8,14 @@ type Props = {
   alt: string;
   label: string;
   caption: ReactNode;
+  /** Intrinsic height of the recording; all of them are 800 px wide. */
+  height: number;
   className?: string;
 };
 
-/** Captioned demo recording (formerly a GIF — now MP4, ~85% lighter). */
+/** Captioned demo recording (formerly a GIF; the MP4s are about 72% lighter). */
 export const ArticleGif: FC<Props> = (props) => {
-  const { src, alt, label, caption, className } = props;
+  const { src, alt, label, caption, height, className } = props;
 
   return (
     <figure
@@ -30,7 +32,13 @@ export const ArticleGif: FC<Props> = (props) => {
         {label}
       </div>
       <div className="overflow-hidden rounded-lg border border-border/60">
-        <AutoplayVideo src={src} label={alt} className="h-auto" />
+        <AutoplayVideo
+          src={src}
+          label={alt}
+          width={800}
+          height={height}
+          className="h-auto"
+        />
       </div>
       <figcaption className="mt-4 px-4 text-center font-[family-name:var(--font-serif)] text-sm italic leading-relaxed text-muted-foreground">
         {caption}

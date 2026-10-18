@@ -47,6 +47,7 @@ export async function generateMetadata({
       description,
       url: `/projects/${slug}`,
       siteName: SITE_NAME,
+      type: "website",
       images: ogImage
         ? [{ url: ogImage, alt: project.title.h1 }]
         : DEFAULT_OG_IMAGES,

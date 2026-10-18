@@ -7,6 +7,9 @@ type Props = {
   src: string;
   /** Accessible description of what the recording shows. */
   label: string;
+  /** Intrinsic size: reserves the box before the poster loads (no layout shift). */
+  width?: number;
+  height?: number;
   className?: string;
 };
 
@@ -18,7 +21,7 @@ export const posterFor = (src: string) => src.replace(/\.mp4$/, ".jpg");
  * screen (preload="none", poster set lazily), and it pauses when scrolled or swiped away.
  */
 export const AutoplayVideo: FC<Props> = (props) => {
-  const { src, label, className } = props;
+  const { src, label, width, height, className } = props;
   const ref = useRef<HTMLVideoElement>(null);
   // The poster is an image download too: fetch it only once the video is near the
   // viewport (off-screen carousel slides would otherwise all load at page load).
@@ -49,9 +52,11 @@ export const AutoplayVideo: FC<Props> = (props) => {
     ).matches;
     if (reduceMotion) return;
 
+    // Play only while at least half of the video is on screen. isIntersecting alone
+    // would start it at the first visible pixel and pause it only once fully gone.
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.intersectionRatio >= 0.5) {
           video.play().catch(() => {
             // Autoplay can be refused (e.g. low-power mode); controls remain usable.
           });
@@ -72,6 +77,8 @@ export const AutoplayVideo: FC<Props> = (props) => {
       src={src}
       poster={near ? posterFor(src) : undefined}
       aria-label={label}
+      width={width}
+      height={height}
       muted
       loop
       playsInline

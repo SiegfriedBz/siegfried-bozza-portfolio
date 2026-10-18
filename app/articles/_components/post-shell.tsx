@@ -59,7 +59,7 @@ export const PostShell: FC<Props> = ({ article, children }) => {
 
         <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
           <span className="inline-flex items-center gap-2">
-            <SiegAvatar className="size-7" />
+            <SiegAvatar className="size-7" alt="" />
             <Link
               href="/about"
               className="font-medium text-foreground underline-offset-4 hover:underline"

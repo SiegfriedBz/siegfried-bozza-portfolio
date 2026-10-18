@@ -24,7 +24,7 @@ export const Projects: FC<Props> = ({ heading }) => {
       <ul className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
         {PROJECTS.map((p) => (
           <li key={p.slug}>
-            <ProjectCard project={p} />
+            <ProjectCard project={p} titleAs={heading ? "h3" : "h2"} />
           </li>
         ))}
       </ul>

@@ -4,7 +4,7 @@ import {
   FileDownIcon,
 } from "lucide-react";
 import Link from "next/link";
-import type { CSSProperties, FC } from "react";
+import { type CSSProperties, type FC, Fragment } from "react";
 import { LightGlow } from "@/app/_components/light-glow";
 import { SiegAvatar } from "@/app/_components/sieg-avatar";
 import { CV_HREF } from "@/app/_constants/cv";
@@ -42,16 +42,19 @@ export const Hero: FC<Props> = ({ proof }) => {
         <p className="font-mono text-sm text-accent-blue">Siegfried Bozza</p>
 
         <h1 className="text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+          {/* Real spaces between the inline-block words, so the H1 text reads
+              "Full-Stack Web3 Engineer" to crawlers and screen readers. */}
           {ROLE.split(" ").map((word, index, all) => (
-            <span
-              // biome-ignore lint/suspicious/noArrayIndexKey: static words
-              key={index}
-              className="hero-word"
-              style={{ "--i": index } as CSSProperties}
-            >
-              {word}
-              {index < all.length - 1 ? "\u00a0" : null}
-            </span>
+            // biome-ignore lint/suspicious/noArrayIndexKey: static words
+            <Fragment key={index}>
+              <span
+                className="hero-word"
+                style={{ "--i": index } as CSSProperties}
+              >
+                {word}
+              </span>
+              {index < all.length - 1 ? " " : null}
+            </Fragment>
           ))}
         </h1>
 
@@ -87,7 +90,7 @@ export const Hero: FC<Props> = ({ proof }) => {
             </Button>
             <Button asChild size="lg" variant="outline">
               <Link href="/about">
-                <SiegAvatar className="size-5" />
+                <SiegAvatar className="size-5" alt="" />
                 About me
               </Link>
             </Button>

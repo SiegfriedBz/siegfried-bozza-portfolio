@@ -17,10 +17,12 @@ const MAX_CHIPS = 6;
 
 type Props = ComponentProps<typeof Card> & {
   project: Project;
+  /** h3 under a section H2 (landing); h2 straight under the page H1 (/projects). */
+  titleAs?: "h2" | "h3";
 };
 
 export const ProjectCard: FC<Props> = (props) => {
-  const { project, className, ...rest } = props;
+  const { project, titleAs: Title = "h3", className, ...rest } = props;
 
   const { slug, title, description, images, videos, terminal, stack, links } =
     project;
@@ -106,14 +108,14 @@ export const ProjectCard: FC<Props> = (props) => {
 
       <div className="flex flex-1 flex-col gap-3 p-5 sm:p-6">
         <div className="flex flex-col gap-1">
-          <h3 className="text-xl font-semibold tracking-tight">
+          <Title className="text-xl font-semibold tracking-tight">
             <Link
               href={links.page}
               className="hover:underline underline-offset-4"
             >
               {title.h1}
             </Link>
-          </h3>
+          </Title>
           <p className="text-sm font-medium text-muted-foreground">
             {title.short ?? title.h2}
           </p>
