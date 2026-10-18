@@ -4,8 +4,9 @@ export const SITE_URL = "https://www.siegfriedbozza.com";
 export const SITE_NAME = "Siegfried Bozza";
 
 /**
- * Positioning — single source of truth. Hero, About, metadata, OG image and
- * manifest all read from here, so the CV / GitHub / LinkedIn copy should match it.
+ * Positioning. The hero, the About header, metadata, JSON-LD, llms.txt, the OG image and
+ * the manifest read it. The About prose, the CV and the GitHub/LinkedIn copy say the same
+ * things in their own words, so change them together.
  */
 export const ROLE = "Full-Stack Web3 Engineer";
 
@@ -17,9 +18,9 @@ export const CORE_STACK = ["TypeScript", "Solidity", "Node.js", "Next.js"];
 export const AVAILABILITY = {
   headline: "Open to full-time remote roles",
   detail:
-    "Based in France (CET), used to async, cross-timezone teams, and open to relocation.",
+    "Currently in France (CET). I can work from anywhere and I'm used to async teams across time zones.",
   /** Short form for the About header. */
-  location: "France (CET) · open to relocation",
+  location: "France (CET) · location-independent",
 };
 
 /**
@@ -28,7 +29,7 @@ export const AVAILABILITY = {
  * Keep it factual and current.
  */
 export const PERSON_SUMMARY =
-  "I'm Siegfried Bozza, a Full-Stack Web3 Engineer based in Annecy, France, open to full-time remote roles. I build the off-chain systems that on-chain products depend on, in TypeScript and Solidity: event pipelines, wallet and settlement backends, durable AI-agent workflows and dApps. I've worked at Prismo.io since 2024. Before software I spent fifteen years in molecular-biology research and environmental engineering, living and working in France, Canada and Switzerland. My recent projects, VeriSci and BioVerify, are in decentralized science (DeSci).";
+  "I'm Siegfried Bozza, a Full-Stack Web3 Engineer based in Annecy, France, looking for a full-time remote role I can do from anywhere. I build the off-chain systems that on-chain products depend on, in TypeScript and Solidity: event pipelines, wallet and settlement backends, durable AI-agent workflows and dApps. I've worked at Prismo.io since 2024. Before software I spent fifteen years in molecular-biology research and environmental engineering, living and working in France, Canada and Switzerland. From mid-2023 to mid-2024 I studied full-stack and Web3 development while travelling, partly in Indonesia. My recent projects, VeriSci and BioVerify, are in decentralized science (DeSci).";
 
 export const DEFAULT_TITLE = `${SITE_NAME} | ${ROLE}`;
 

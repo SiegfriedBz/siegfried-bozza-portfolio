@@ -34,14 +34,14 @@ export const WORK_EXPERIENCE: WorkExperienceEntry[] = [
   },
   {
     id: 2,
-    company: "Freelance",
-    location: "France / Indonesia (Remote)",
-    position: "Full-Stack Developer",
+    company: "Independent study & open source",
+    location: "France / Indonesia",
+    position: "Full-Stack & Web3 Development",
     from: "07/2023",
     to: "08/2024",
     section: "software",
     description: [
-      "Developed **React/Next.js** applications styled with **Tailwind CSS** + **shadcn/ui** and animated with **Framer Motion**, backed by **MongoDB**, with unit and integration tests using **Jest**.",
+      "Studied full-stack and Web3 development while travelling, building my own **React/Next.js** projects with **Tailwind CSS**, **shadcn/ui**, **MongoDB** and **Jest** tests.",
       "Contributed front-end features to DeXter-on-Radix, an open-source order-book DEX: CSV order export, a stats widget, mobile navigation and a DaisyUI v4 upgrade.",
     ],
     link: {

@@ -255,6 +255,8 @@ The balance never misses funds; only the per-deposit detail is lost. On Sepolia 
 
 The suite has 156 tests in 12 files and runs with no network and no secrets.
 
+I typed the code myself, with Claude Code reviewing and explaining, except for the last branch, which Claude Code wrote at my request: the ledger endpoint, the self-send guard, the Multicall3 snapshot and the README rewrite ([PR #8](https://github.com/SiegfriedBz/wallet-watcher/pull/8)).
+
 | Area | Tests | What they prove |
 |---|---|---|
 | Request schemas | 42 | Amount formats, checksums, index range, self-send and unknown fields refused |

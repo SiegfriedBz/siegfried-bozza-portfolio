@@ -4,13 +4,13 @@ const ORIGIN =
   "I transitioned to software in **2022**, after an **M.Sc.** in Molecular Biology, an **M.Eng.** in Civil Engineering, three peer-reviewed publications, and roughly fifteen years across research and field engineering in **France**, **Canada**, and **Switzerland**.";
 
 const REALIZATION =
-  "Two fields, one realization. In the lab, peer review was opaque: reviewer identities hidden, incentives misaligned. In the field, compliance depended on individual diligence, not systemic enforcement. Integrity was optional in both.";
+  "Research and engineering showed me the same problem. In the lab, peer review was opaque: reviewers stayed anonymous and their incentives didn't match the work. In the field, compliance depended on each person's diligence. Neither system enforced integrity.";
 
 const WEB3_MOTIVATION =
-  "That's what drew me to software, and eventually to **Web3**, as infrastructure rather than speculation: a place where the audit trail doesn't belong to anyone and integrity is a property of the system, not a courtesy.";
+  "That's what drew me to software, and later to **Web3**. I'm interested in it as infrastructure: an audit trail that no single party owns, and rules that hold because the system enforces them.";
 
 const CAREER =
-  "I started at Renuo AG (agency, Zurich), then freelanced remotely from France and Bali. Since 2024 I've been a full-stack engineer at Prismo.io, a production SaaS where I work daily with **Next.js**, **TypeScript**, **Supabase**, CQRS and hexagonal architecture, with **Vitest** and **Cypress** gating merges.";
+  "I started at Renuo AG (agency, Zurich), then spent a year studying full-stack and Web3 development while travelling between France and Bali. Since August 2024 I've been a full-stack engineer at Prismo.io, a production SaaS. I work daily with **Next.js**, **TypeScript**, **Supabase**, CQRS and hexagonal architecture, and **Vitest** and **Cypress** tests have to pass before anything merges.";
 
 const PROJECTS =
   "On my own time I build Web3 systems end to end, on testnets so far, mostly the off-chain half that smart contracts depend on:";
@@ -23,7 +23,7 @@ const PROJECT_BULLETS = [
 ];
 
 const CLOSING =
-  "I'm looking for a **full-time remote** role on a Web3 or DeSci team, and I'm open to relocating. I'm used to async work across time zones. Wherever I land, I'll show up ready to build, and find a mountain or a wave on Sundays.";
+  "I'm looking for a **full-time remote** role on a Web3 or DeSci team. I can work from anywhere and I'm used to async work across time zones. Wherever I land, I'll show up ready to build, and find a mountain or a wave on Sundays.";
 
 export const SelfIntro = () => {
   return (
