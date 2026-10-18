@@ -33,6 +33,18 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Checks
+
+```bash
+pnpm check       # Biome on files changed since develop
+pnpm typecheck   # tsc --noEmit
+pnpm build       # production build, as on Vercel
+```
+
+CI (`.github/workflows/ci.yml`) runs the same three on every PR to `develop` or `main`.
+Working with Claude Code: see `CLAUDE.md` (workflow, content rules, hooks) and the
+`/plan-change` and `/review-branch` skills in `.claude/skills/`.
+
 ## Build
 
 ```bash
