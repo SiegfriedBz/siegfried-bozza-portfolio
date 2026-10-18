@@ -28,7 +28,7 @@ export const AVAILABILITY = {
  * Keep it factual and current.
  */
 export const PERSON_SUMMARY =
-  "I'm Siegfried Bozza, a Full-Stack Web3 Engineer based in Annecy, France, open to full-time remote roles. I build the off-chain systems that on-chain products depend on, in TypeScript and Solidity: event pipelines, wallet and settlement backends, durable AI-agent workflows and dApps. I've worked at Prismo.io since 2024. Before software I spent fifteen years in molecular-biology research and environmental engineering, and my recent projects, VeriSci and BioVerify, are in decentralized science (DeSci).";
+  "I'm Siegfried Bozza, a Full-Stack Web3 Engineer based in Annecy, France, open to full-time remote roles. I build the off-chain systems that on-chain products depend on, in TypeScript and Solidity: event pipelines, wallet and settlement backends, durable AI-agent workflows and dApps. I've worked at Prismo.io since 2024. Before software I spent fifteen years in molecular-biology research and environmental engineering, living and working in France, Canada and Switzerland. My recent projects, VeriSci and BioVerify, are in decentralized science (DeSci).";
 
 export const DEFAULT_TITLE = `${SITE_NAME} | ${ROLE}`;
 
@@ -38,7 +38,7 @@ export const SITE_DESCRIPTION_SHORT =
 
 /** Richer copy for Open Graph / Twitter. */
 export const SITE_DESCRIPTION_LONG =
-  "Full-Stack Web3 Engineer working in TypeScript and Solidity. I build the off-chain systems on-chain products depend on: VeriSci (open paper ratings on the OriginTrail DKG), Wallet Watcher (a custody backend slice with an append-only ledger and exactly-once withdrawals), BioVerify (agentic DeSci peer review with Chainlink VRF), plus Bet2Gether, Forge and GavL. Open to full-time remote roles.";
+  "Full-Stack Web3 Engineer working in TypeScript and Solidity. I build the off-chain systems on-chain products depend on. Personal projects, on testnets: VeriSci (open paper ratings on the OriginTrail DKG), Wallet Watcher (a custody backend slice with an append-only ledger, outflows booked exactly once), BioVerify (agentic DeSci peer review with Chainlink VRF), plus Bet2Gether, Forge and GavL. Open to full-time remote roles.";
 
 export const DEFAULT_KEYWORDS = [
   "Siegfried Bozza",

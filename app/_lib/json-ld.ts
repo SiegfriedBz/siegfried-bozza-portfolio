@@ -2,7 +2,6 @@ import { ARTICLES } from "@/app/_constants/articles";
 import { EDUCATION } from "@/app/_constants/education";
 import { PROFILE_LINKS } from "@/app/_constants/links";
 import { PROJECTS } from "@/app/_constants/projects";
-import { WORK_EXPERIENCE } from "@/app/_constants/work-xp";
 import {
   PERSON_SUMMARY,
   ROLE,
@@ -45,7 +44,8 @@ const KNOWS_ABOUT = [
 type Node = Record<string, unknown>;
 
 export const personNode = (): Node => {
-  const current = WORK_EXPERIENCE.find((w) => w.to === "Present");
+  // No worksFor: next to jobTitle it would read as "Web3 engineer at Prismo.io",
+  // and that role is a Web2 SaaS job (the bio says so in words).
   const schools = [...new Set(EDUCATION.map((e) => e.institution))];
 
   return {
@@ -57,9 +57,6 @@ export const personNode = (): Node => {
     url: `${base}/`,
     image: abs("/images/avatar.png"),
     sameAs: [PROFILE_LINKS.github, PROFILE_LINKS.linkedin],
-    ...(current
-      ? { worksFor: { "@type": "Organization", name: current.company } }
-      : {}),
     knowsAbout: KNOWS_ABOUT,
     alumniOf: schools.map((name) => ({
       "@type": "EducationalOrganization",

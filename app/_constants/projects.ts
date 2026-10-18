@@ -261,7 +261,7 @@ export const PROJECTS: Project[] = [
       problem:
         "Prediction markets only stay interesting when settlement is credibly neutral. Operator-settled designs ask you to trust whoever calls resolve and picks the price. Permissionless on-chain designs still need something to trigger resolution at the deadline — if only winners call it, timing becomes gameable; if a single bot runs it, trust shifts to that operator. Random rewards driven by block metadata or admin-picked tokenIds are easy to bias or predict.",
       solution:
-        "Once a round opens, settlement and reward draws are encoded as state transitions tied to oracle inputs — no operator step after that. **PredictionPool** reads **Chainlink Price Feeds** when the round resolves; **Chainlink Automation** calls **performUpkeep**; **Chainlink VRF v2.5** supplies verifiable randomness for **ERC-1155** reward tokenIds; a **Tenderly Web3 Action** can bridge resolution events to a gated mint when the round creator wins.",
+        "Once a round opens, settlement and reward draws are encoded as state transitions tied to oracle inputs — no operator step after that. **PredictionPool** reads **Chainlink Price Feeds** when the round resolves; **Chainlink Automation** calls **performUpkeep** after the deadline (the call is also open to anyone, which leaves the timing gap described under Known limitations); **Chainlink VRF v2.5** supplies verifiable randomness for **ERC-1155** reward tokenIds; a **Tenderly Web3 Action** can bridge resolution events to a gated mint when the round creator wins.",
       overview: `
         Bet2Gether is a small prediction-market case study on **Ethereum Sepolia**. Rounds resolve from an allow-listed **Chainlink Price Feed** when the pool's resolve step runs after the deadline — the settlement price is whatever the feed returns at resolution time, not an ad hoc admin choice.
         **PredictionPool** implements **AutomationCompatibleInterface**: **checkUpkeep** flags due rounds and **performUpkeep** resolves them. **PredictionPoolToken** mints randomized **ERC-1155** collectibles via **VRFConsumerBaseV2Plus**; a **Tenderly Web3 Action** listens for **PredictionPool_RoundResolved** and, when configured logic applies, calls **mint** with **MINTER_ROLE** protection.
@@ -335,7 +335,7 @@ export const PROJECTS: Project[] = [
       "**Deployment:** Ethereum Sepolia — PredictionPool & PredictionPoolToken verified on Etherscan",
       "**Sepolia addresses:** [PredictionPool](https://sepolia.etherscan.io/address/0x51A0a7561dEbA056C1cDF5aB4c369Db686c77EF6) · [PredictionPoolToken](https://sepolia.etherscan.io/address/0xddd3c73caE8541FC6Ea119C1BffC5B6547D33eCf)",
       "**Chainlink:** Price Feeds (settlement), Automation (**performUpkeep**), VRF v2.5 (ERC-1155 reward randomness)",
-      "**Settlement:** Chainlink Price Feed answer read at resolution — not an operator-chosen number (see the oracle limitation below)",
+      "**Settlement:** the Chainlink Price Feed's latest answer, read when the round is resolved (see the oracle limitation below)",
       "**Real-time UI:** Alchemy WebSockets + wagmi listeners",
       "**Coverage caveat:** Branch coverage measures how much branching ran under tests — not total logical completeness. README snapshot: **PredictionPool** ~89.5% lines / ~77.8% branches; **PredictionPoolToken** ~85.7% lines / ~25.0% branches (see repo for latest `forge coverage`).",
     ],
@@ -387,7 +387,7 @@ export const PROJECTS: Project[] = [
         {
           key: "Chainlink Services",
           description:
-            "Price Feeds for trustless pricing, Automation for game resolution, and VRF for NFT randomness.",
+            "Price Feeds for the settlement price, Automation to trigger resolution, and VRF for NFT randomness.",
         },
         {
           key: "Alchemy WebSockets",
@@ -417,9 +417,9 @@ export const PROJECTS: Project[] = [
 
     User ->> Pool: createRound(feed, target, betSide, duration)
     User ->> Pool: betOn(roundId, betSide)
-    CL_Auto ->> Pool: performUpkeep at round.end
+    CL_Auto ->> Pool: performUpkeep after round.end
     Pool ->> CL_Feed: latestRoundData (atomic settlement)
-    CL_Feed -->> Pool: verified price
+    CL_Feed -->> Pool: latest answer (updatedAt not checked)
     Pool ->> Pool: _resolveRound and emit PredictionPool_RoundResolved
     Pool -->> Tenderly: PredictionPool_RoundResolved (event)
     Tenderly ->> Token: mint(creatorIfWinner)

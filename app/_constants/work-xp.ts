@@ -42,11 +42,11 @@ export const WORK_EXPERIENCE: WorkExperienceEntry[] = [
     section: "software",
     description: [
       "Developed **React/Next.js** applications styled with **Tailwind CSS** + **shadcn/ui** and animated with **Framer Motion**, backed by **MongoDB**, with unit and integration tests using **Jest**.",
-      "Contributed **11 merged PRs** to DeXter-on-Radix, a community-built open-source order-book DEX: CSV order export, a stats widget, mobile navigation fixes, and a DaisyUI v4 upgrade — shipped asynchronously with a distributed team.",
+      "Contributed front-end features to DeXter-on-Radix, an open-source order-book DEX: CSV order export, a stats widget, mobile navigation and a DaisyUI v4 upgrade.",
     ],
     link: {
       href: "https://github.com/DeXter-on-Radix/website/pulls?q=is%3Apr+author%3ASiegfriedBz+is%3Amerged",
-      label: "View merged PRs on GitHub",
+      label: "My pull requests on GitHub",
     },
   },
   {

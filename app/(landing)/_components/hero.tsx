@@ -116,7 +116,7 @@ export const Hero: FC<Props> = ({ proof }) => {
           style={{ "--delay": "350ms" } as CSSProperties}
         >
           <h2 className="mb-3 text-sm font-medium text-muted-foreground">
-            Recent work
+            Personal projects, on testnets
           </h2>
           <ul className="flex flex-col gap-3">
             {proof.map((p) => (

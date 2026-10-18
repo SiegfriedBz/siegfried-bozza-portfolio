@@ -47,7 +47,7 @@ The repo documents its own limits (no confirmation depth, one withdrawal in flig
     {
       key: "Worst-Case Fee Check",
       description:
-        "A withdrawal is signed only if **balance ≥ value + gasLimit × maxFeePerGas**, on a balance, a pending-tag nonce, fees and a gas estimate read fresh from the chain. Otherwise the API returns **422** with the exact max sendable amount (one wei more is refused).",
+        "A withdrawal is signed only if **balance ≥ value + gasLimit × maxFeePerGas**, on a balance, a pending-tag nonce, fees and a gas estimate read fresh from the chain. Otherwise the API returns **422** with the max sendable amount. It is exact when the node can estimate gas (one wei more is refused). When the amount is at or above the balance the node may refuse to estimate, the code falls back to 21,000 gas, and the figure is an upper bound.",
     },
     {
       key: "Key Isolation and Least Privilege",
@@ -79,7 +79,7 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
     "**Worst-case fee bound** checked before signing: 0.000024728757984 ETH, against 0.000023183071527 ETH actually paid",
     "**One RPC call** reads every balance per poll round (Multicall3), plus one receipt lookup per pending withdrawal",
     "**Ledger matches chain:** wallet #0's on-chain balance on 18 Oct 2026 (476,816,928,473,000 wei) equals its last ledger row",
-    "**Max sendable exact to the wei:** the computed amount is accepted, one wei more is refused (tested)",
+    "**Max sendable exact to the wei when gas can be estimated:** the computed amount is accepted, one wei more is refused (tested); an upper bound when the node refuses to estimate",
   ],
 
   transferablePatterns:
