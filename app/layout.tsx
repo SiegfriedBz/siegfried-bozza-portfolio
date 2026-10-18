@@ -41,9 +41,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    // data-scroll-behavior: Next turns smooth scrolling off while it changes routes, so
+    // only in-page anchor jumps glide (scroll-behavior is set in globals.css).
     <html
       lang="en"
       className={`${GeistSans.variable} ${GeistMono.variable}`}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <body className="antialiased px-4 sm:px-16 mx-auto gap-8">

@@ -80,9 +80,6 @@ export default function Page() {
           <div className="flex flex-wrap justify-center gap-2">
             <Badge className="font-bold">French</Badge>
             <Badge className="font-bold">English</Badge>
-            <Badge variant="outline" className="font-bold">
-              German B1
-            </Badge>
           </div>
         </div>
 

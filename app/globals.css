@@ -132,7 +132,14 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply scroll-smooth bg-background text-foreground;
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Smooth anchor scrolling. It must sit on html (the element that scrolls), not body. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 

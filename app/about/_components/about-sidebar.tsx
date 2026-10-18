@@ -30,6 +30,10 @@ const items = [
     title: "Technical Skills",
     url: "#skills",
   },
+  {
+    title: "Short bio",
+    url: "#bio",
+  },
 ] as const;
 
 const sectionIds = items.map((item) => item.url.slice(1));
