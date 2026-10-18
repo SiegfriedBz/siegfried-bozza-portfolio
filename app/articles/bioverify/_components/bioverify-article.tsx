@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { TypographyP } from "@/app/_components/typography/p";
+import { BIOVERIFY_TELEGRAM_URL } from "@/app/_constants/links";
 import { BIOVERIFY_LINKS } from "@/app/_constants/projects";
 import { ArticleCta } from "./article-cta";
 import { ArticleFooterLinks } from "./article-footer-links";
@@ -30,8 +31,6 @@ const dashList =
 export const BioVerifyArticle: FC = () => {
   const BIOVERIFY_GITHUB = BIOVERIFY_LINKS.github;
   const BIOVERIFY_LIVE = BIOVERIFY_LINKS.live;
-  const TELEGRAM_URL =
-    process.env.NEXT_PUBLIC_BIOVERIFY_TELEGRAM_URL?.trim() ?? "";
 
   return (
     <>
@@ -688,18 +687,14 @@ export const BioVerifyArticle: FC = () => {
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           Anyone can also follow the public{" "}
-          {TELEGRAM_URL ? (
-            <a
-              href={TELEGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-teal-700 underline underline-offset-4 hover:underline dark:text-[#2dd4bf]"
-            >
-              BioVerify Telegram bot
-            </a>
-          ) : (
-            <strong>BioVerify Telegram bot</strong>
-          )}
+          <a
+            href={BIOVERIFY_TELEGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-teal-700 underline underline-offset-4 hover:underline dark:text-[#2dd4bf]"
+          >
+            BioVerify Telegram bot
+          </a>
           , which broadcasts contract state transitions in real time across both
           Base Sepolia and Ethereum Sepolia.
         </TypographyP>

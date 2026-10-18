@@ -21,10 +21,11 @@ read it). If proto reports the version is missing, ask the user to run
 
 ## Where things live
 
-- **Positioning** (role, pitch, stack, availability): `app/_lib/site-metadata.ts`. It is the
-  single source for the hero, About, page metadata and the OG image. When it changes, the CV
-  (a separate HTML source, outside the repo) and the GitHub/LinkedIn copy must change too:
-  say so in the PR.
+- **Positioning** (role, pitch, stack, availability, short bio): `app/_lib/site-metadata.ts`.
+  The hero, the About header, page metadata, JSON-LD, llms.txt and the OG image read it. The
+  About prose (`app/about/_components/self-intro.tsx`) says the same things in sentences, so
+  update it too. When it changes, the CV (a separate HTML source, outside the repo) and the
+  GitHub/LinkedIn copy must change as well: say so in the PR.
 - **Content**: `app/_constants/` (projects and `project-entries/`, work experience,
   education, articles, links). Public URLs are hardcoded there, never read from env vars.
 - **Articles**: `app/articles/(posts)/<slug>/content.mdx` plus a small `page.tsx`. MDX rules:
@@ -75,3 +76,5 @@ Branches: `<type>/<slug>` from `develop` (`feat`, `fix`, `perf`, `chore`, `conte
 - Env files other than `.env.example` are blocked for Read and Grep.
 - On stop: if TypeScript or MDX changed on the branch, `pnpm typecheck` must pass, or the
   stop is blocked with the errors (three attempts, then report instead).
+- The hooks need `jq` and only see the Edit, Write, Read and Grep tools. Shell commands are
+  not checked, so do not edit files through the shell on `develop` or `main` either.

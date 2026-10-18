@@ -6,9 +6,6 @@
       "Bash(pnpm typecheck)",
       "Bash(pnpm build)",
       "Bash(pnpm lint:check)",
-      "Bash(npx -y pnpm@10.15.0 check)",
-      "Bash(npx -y pnpm@10.15.0 typecheck)",
-      "Bash(npx -y pnpm@10.15.0 build)",
       "Bash(git status *)",
       "Bash(git diff *)",
       "Bash(git log *)"

@@ -73,7 +73,7 @@ export default function Page() {
           </div>
 
           <TypographyH6 className="font-semibold -mt-2 text-center text-muted-foreground">
-            France (CET) · open to relocation
+            {AVAILABILITY.location}
           </TypographyH6>
 
           <div className="flex flex-wrap justify-center gap-2">
@@ -102,7 +102,8 @@ export default function Page() {
                 <TypographyH2 className="text-center text-muted-foreground sm:text-xl md:text-2xl lg:text-3xl lg:text-left text-balance">
                   <span className="whitespace-nowrap">{ROLE}</span>{" "}
                   <span className="whitespace-nowrap">
-                    <span aria-hidden="true">·</span> TypeScript & Solidity
+                    <span aria-hidden="true">·</span>{" "}
+                    {CORE_STACK.slice(0, 2).join(" & ")}
                   </span>
                 </TypographyH2>
               </div>

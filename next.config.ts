@@ -15,8 +15,8 @@ const nextConfig: NextConfig = {
     ],
   },
   async headers() {
-    // Baseline hardening. No CSP yet: Mermaid and motion inject inline styles, so a
-    // useful policy needs nonces (see the SEO audit notes).
+    // Baseline hardening. No CSP yet: Mermaid injects inline styles, so a useful
+    // policy needs nonces (see the SEO audit notes).
     return [
       {
         source: "/:path*",

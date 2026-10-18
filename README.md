@@ -26,8 +26,7 @@ Personal site and digital resume: **Next.js 16**, **React 19**, **Tailwind CSS v
 ## Local development
 
 ```bash
-pnpm install
-cp .env.example .env.local   # optional — public links live in app/_constants
+pnpm install   # pnpm 10.34.6, pinned by "packageManager"
 pnpm dev
 ```
 
@@ -43,7 +42,7 @@ pnpm build       # production build, as on Vercel
 
 CI (`.github/workflows/ci.yml`) runs the same three on every PR to `develop` or `main`.
 Working with Claude Code: see `CLAUDE.md` (workflow, content rules, hooks) and the
-`/plan-change` and `/review-branch` skills in `.claude/skills/`.
+`/plan-change` and `/review-branch` skills in `.claude/skills/`. The hooks need `jq`.
 
 ## Build
 
@@ -54,7 +53,7 @@ pnpm start
 
 ## Deployment
 
-Configured for **Vercel**. Public URLs (profiles, demos, repos) are hardcoded in `app/_constants`, so no env vars are required; see `.env.example` for the optional ones.
+Configured for **Vercel**. The site URL and every public link (profiles, demos, repos) are hardcoded in `app/_lib/site-metadata.ts` and `app/_constants`, so no env vars are needed.
 
 Screen recordings live in `public/projects/<slug>/videos/` as H.264 MP4 with a same-name `.jpg` poster. To add one from a GIF:
 

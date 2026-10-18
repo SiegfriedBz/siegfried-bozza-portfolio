@@ -1,5 +1,5 @@
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.siegfriedbozza.com";
+/** Canonical origin. Hardcoded like every public URL, so previews canonicalize to production. */
+export const SITE_URL = "https://www.siegfriedbozza.com";
 
 export const SITE_NAME = "Siegfried Bozza";
 
@@ -18,6 +18,8 @@ export const AVAILABILITY = {
   headline: "Open to full-time remote roles",
   detail:
     "Based in France (CET), used to async, cross-timezone teams, and open to relocation.",
+  /** Short form for the About header. */
+  location: "France (CET) · open to relocation",
 };
 
 /**
