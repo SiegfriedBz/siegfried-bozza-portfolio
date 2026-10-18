@@ -42,12 +42,8 @@ export const WORK_EXPERIENCE: WorkExperienceEntry[] = [
     section: "software",
     description: [
       "Studied full-stack and Web3 development while travelling, building my own **React/Next.js** projects with **Tailwind CSS**, **shadcn/ui**, **MongoDB** and **Jest** tests.",
-      "Contributed front-end features to DeXter-on-Radix, an open-source order-book DEX: CSV order export, a stats widget, mobile navigation and a DaisyUI v4 upgrade.",
+      "Contributed [front-end features](https://github.com/DeXter-on-Radix/website/pulls?q=is%3Apr+author%3ASiegfriedBz+is%3Amerged) to DeXter-on-Radix, an open-source order-book DEX: CSV order export, a stats widget, mobile navigation and a DaisyUI v4 upgrade.",
     ],
-    link: {
-      href: "https://github.com/DeXter-on-Radix/website/pulls?q=is%3Apr+author%3ASiegfriedBz+is%3Amerged",
-      label: "My pull requests on GitHub",
-    },
   },
   {
     id: 3,
