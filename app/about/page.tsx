@@ -47,16 +47,19 @@ export default function Page() {
 
           <div className="flex gap-x-3 items-center">
             <EarthIcon className="text-amber-500 size-5" />
-            <TypographyH6 className="font-semibold">EU</TypographyH6>
+            <TypographyH6 className="font-semibold">Remote</TypographyH6>
           </div>
 
-          <TypographyH6 className="font-semibold -mt-2">
-            Open to global relocation
+          <TypographyH6 className="font-semibold -mt-2 text-center text-muted-foreground">
+            France (CET) · open to relocation
           </TypographyH6>
 
-          <div className="flex gap-x-6">
+          <div className="flex flex-wrap justify-center gap-2">
             <Badge className="font-bold">French</Badge>
             <Badge className="font-bold">English</Badge>
+            <Badge variant="outline" className="font-bold">
+              German B1
+            </Badge>
           </div>
         </div>
 

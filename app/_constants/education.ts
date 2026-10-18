@@ -30,7 +30,7 @@ export const EDUCATION: EducationEntry[] = [
     location: "Remote",
     section: "software",
     link: {
-      href: process.env.NEXT_PUBLIC_FMT_URL ?? "",
+      href: "https://drive.google.com/file/d/13Z-Se1lSnq1VLzee3Mt7DICzXwc_Yxb5/view?usp=sharing",
       label: "Read my No-Loss Gaming article",
     },
     description:

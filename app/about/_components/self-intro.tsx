@@ -10,10 +10,10 @@ const WEB3_MOTIVATION =
   "That's what drew me to software, and eventually to **Web3** — not as speculation, but as infrastructure. A place where the audit trail doesn't belong to anyone and integrity is a property of the system, not a courtesy."
 
 const CAREER =
-  "I built the experience methodically: starting at Renuo AG (agency, Zurich), then freelance across Europe and Bali, and now as a full-stack engineer at Prismo.io — a production SaaS where I work daily with **Next.js**, **TypeScript**, **CQRS**, hexagonal architecture, **Supabase**, and test coverage (**Vitest** + **Cypress**)."
+  "I built the experience methodically: starting at Renuo AG (agency, Zurich), then freelance across Europe and Bali (including [11 merged PRs](https://github.com/DeXter-on-Radix/website/pulls?q=is%3Apr+author%3ASiegfriedBz+is%3Amerged) to the DeXter-on-Radix DEX), and now as a full-stack engineer at Prismo.io — a production SaaS where I work daily with **Next.js**, **TypeScript**, **CQRS**, hexagonal architecture, **Supabase**, and test coverage (**Vitest** + **Cypress**)."
 
 const PROJECTS =
-  "Alongside that, I've shipped four end-to-end personal projects: three **Web3** DApps on Base and Ethereum Sepolia and one full-stack **Web2** auction platform. The most recent — **BioVerify** — treats peer review as a coordination game:"
+  "Alongside that, I've shipped four end-to-end personal projects: three **Web3** DApps on Ethereum Sepolia (BioVerify also on Base Sepolia) and one full-stack **Web2** auction platform. The most recent — **BioVerify** — treats peer review as a coordination game:"
 
 const BIOVERIFY_BULLETS = [
   "Research artifacts content-addressed on **IPFS**",
@@ -23,10 +23,10 @@ const BIOVERIFY_BULLETS = [
 ]
 
 const PRODUCTION_SIGNALS =
-  "Beyond Web3, I build and ship production systems daily — real-time backends, event-driven architecture, **Stripe** integrations, **i18n**."
+  "Beyond Web3, I ship production SaaS features daily at Prismo.io, and on my own projects I've built real-time backends, **Stripe** payments and **i18n** (GavL)."
 
 const CLOSING =
-  "Open to **remote** and **global relocation** — full-time or part-time — across Web2, Web3, and agentic systems. Wherever I land, I'll show up ready to build — and find a mountain or a wave on Sundays."
+  "Open to **full-time remote** roles and **relocation**, across Web3, agentic systems and Web2. Wherever I land, I'll show up ready to build — and find a mountain or a wave on Sundays."
 
 export const SelfIntro = () => {
   return (
