@@ -52,7 +52,7 @@ export default function Page() {
     <div className="max-w-6xl mx-auto flex flex-col gap-8">
       <JsonLd nodes={[personNode(), websiteNode()]} />
       <Hero proof={heroProof} />
-      <Projects />
+      <Projects heading="Selected work" />
     </div>
   );
 }

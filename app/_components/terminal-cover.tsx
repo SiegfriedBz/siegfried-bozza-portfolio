@@ -27,12 +27,19 @@ export const TerminalCover: FC<Props> = (props) => {
         </span>
       </div>
       <pre className="flex-1 overflow-hidden px-4 py-3 font-mono text-[11px] leading-relaxed text-slate-200 sm:text-xs md:text-sm">
-        {lines.map((line, i) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: static transcript
-          <code key={i} className={cn("block whitespace-pre", lineTone(line))}>
-            {line || " "}
-          </code>
-        ))}
+        {lines
+          .map((line, n) => ({ line, id: `line-${n}` }))
+          .map(({ line, id }) => (
+            <code
+              key={id}
+              className={cn(
+                "block overflow-hidden text-ellipsis whitespace-pre",
+                lineTone(line),
+              )}
+            >
+              {line || " "}
+            </code>
+          ))}
       </pre>
     </div>
   );

@@ -1,8 +1,8 @@
 /* MDX article body — typography plugin defaults, tuned to match the BioVerify article. */
 
 .post-prose {
-  --tw-prose-links: #0f766e;
-  --tw-prose-invert-links: #2dd4bf;
+  --tw-prose-links: var(--accent-blue);
+  --tw-prose-invert-links: var(--accent-blue);
   font-size: 1.0625rem;
   line-height: 1.75;
 }

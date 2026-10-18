@@ -106,11 +106,9 @@ const Table = (props: ComponentProps<"table">) => (
 
 /** Short summary box, placed right after an article's opening paragraph. */
 export const TLDR = ({ children }: { children: ReactNode }) => (
-  <aside className="not-prose my-8 rounded-xl border border-border border-l-[3px] border-l-teal-500 bg-muted/30 px-5 py-4 dark:border-l-[#2dd4bf]">
-    <p className="mb-2 font-mono text-[11px] uppercase tracking-[0.14em] text-teal-700 dark:text-[#2dd4bf]">
-      TL;DR
-    </p>
-    <div className="text-sm leading-relaxed text-foreground/90 [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.85em] [&_li]:my-1.5 [&_ul]:list-disc [&_ul]:ps-5 [&_ul]:marker:text-teal-600">
+  <aside className="not-prose my-8 rounded-xl border border-border border-l-[3px] border-l-accent-blue bg-muted/30 px-5 py-4">
+    <p className="mb-2 font-mono text-xs font-medium text-accent-blue">TL;DR</p>
+    <div className="text-sm leading-relaxed text-foreground/90 [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.85em] [&_li]:my-1.5 [&_ul]:list-disc [&_ul]:ps-5 [&_ul]:marker:text-accent-blue">
       {children}
     </div>
   </aside>
@@ -124,11 +122,9 @@ export const Callout = ({
   title?: string;
   children: ReactNode;
 }) => (
-  <aside className="not-prose my-8 rounded-xl border border-amber-500/40 bg-amber-500/5 px-5 py-4">
+  <aside className="not-prose my-8 rounded-xl border border-accent-blue/30 bg-accent-blue/5 px-5 py-4">
     {title ? (
-      <p className="mb-2 font-semibold text-amber-700 dark:text-amber-400">
-        {title}
-      </p>
+      <p className="mb-2 font-semibold text-foreground">{title}</p>
     ) : null}
     <div className="text-sm leading-relaxed text-foreground/90 [&_a]:underline [&_code]:rounded [&_code]:bg-muted [&_code]:px-1 [&_code]:font-mono [&_code]:text-[0.85em] [&_p+p]:mt-3 [&_ul]:mt-2 [&_ul]:list-disc [&_ul]:ps-5">
       {children}

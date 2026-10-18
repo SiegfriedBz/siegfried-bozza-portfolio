@@ -1,6 +1,6 @@
 # Siegfried Bozza — Portfolio (2026)
 
-Personal site and digital resume: **Next.js 16**, **React 19**, **Tailwind CSS v4**, **motion**, **Mermaid**, **shadcn/ui**, **Biome**. Showcases six case studies (VeriSci, Wallet Watcher, BioVerify, Bet2Gether, Forge, GavL) with deep-dive project pages and long-form articles written in **MDX**.
+Personal site and digital resume: **Next.js 16**, **React 19**, **Tailwind CSS v4**, **Geist**, **Mermaid**, **shadcn/ui**, **Biome**. Showcases six case studies (VeriSci, Wallet Watcher, BioVerify, Bet2Gether, Forge, GavL) with deep-dive project pages and long-form articles written in **MDX**.
 
 **Live:** [siegfriedbozza.com](https://www.siegfriedbozza.com)
 
@@ -18,9 +18,9 @@ Personal site and digital resume: **Next.js 16**, **React 19**, **Tailwind CSS v
 | Area | Packages |
 |------|-----------|
 | Framework | `next@16.4.2`, `react@19.3.1` |
-| Styling | `tailwindcss@^4`, `tw-animate-css`, `class-variance-authority` |
+| Styling | `tailwindcss@^4`, `tw-animate-css`, `class-variance-authority`, `geist` (self-hosted fonts) |
 | UI | Radix primitives, `lucide-react`, `embla-carousel-react` |
-| Content | `@next/mdx` + `remark-gfm`, `sugar-high` (code), `mermaid@^11` (diagrams), `motion@^12` |
+| Content | `@next/mdx` + `remark-gfm`, `sugar-high` (code), `mermaid@^11` (diagrams); hero motion is plain CSS |
 | Quality | `@biomejs/biome@^2.3`, TypeScript 5 |
 
 ## Local development

@@ -1,7 +1,7 @@
 # siegfried-bozza-portfolio
 
 Siegfried Bozza's portfolio: Next.js 16 (App Router), React 19, Tailwind CSS v4, shadcn/ui,
-motion, Mermaid, Biome. Deployed on Vercel at https://www.siegfriedbozza.com from `main`.
+Geist fonts, Mermaid, Biome. Deployed on Vercel at https://www.siegfriedbozza.com from `main`.
 The repo is public and recruiters read it, so the code and the content are both on show.
 
 Read `README.md` for setup.

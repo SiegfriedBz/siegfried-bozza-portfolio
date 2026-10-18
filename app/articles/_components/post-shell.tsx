@@ -47,8 +47,8 @@ export const PostShell: FC<Props> = ({ article, children }) => {
         ]}
       />
       <header className="mb-10 border-b border-border pb-8 pt-8 sm:mb-14 sm:pb-12 dark:border-white/10">
-        <span className="mb-4 block font-mono text-[11px] uppercase tracking-[0.12em] text-teal-700 dark:text-[#2dd4bf]">
-          {article.tags.join(" · ")}
+        <span className="mb-4 block font-mono text-xs text-accent-blue">
+          {article.tags.join(", ")}
         </span>
         <h1 className="mb-4 font-serif text-[clamp(2rem,5vw,3.1rem)] font-normal leading-[1.15] text-foreground text-balance">
           {article.title}
@@ -76,7 +76,7 @@ export const PostShell: FC<Props> = ({ article, children }) => {
               <span aria-hidden>·</span>
               <Link
                 href={project.links.page}
-                className="inline-flex items-center gap-1 font-medium text-teal-700 underline-offset-4 hover:underline dark:text-[#2dd4bf]"
+                className="inline-flex items-center gap-1 font-medium text-accent-blue underline-offset-4 hover:underline"
               >
                 {project.title.h1} project page
                 <MoveRightIcon className="size-4 shrink-0" />
@@ -103,7 +103,7 @@ export const PostShell: FC<Props> = ({ article, children }) => {
               {...(external
                 ? { target: "_blank", rel: "noopener noreferrer" }
                 : {})}
-              className="rounded-md border border-teal-700/35 px-4 py-2 font-mono text-xs uppercase tracking-wide text-teal-700 transition-colors hover:bg-teal-500/10 dark:border-[#1a7a6e] dark:text-[#2dd4bf] dark:hover:bg-[rgba(45,212,191,0.1)]"
+              className="rounded-md border border-border px-4 py-2 font-mono text-xs text-accent-blue transition-colors hover:border-accent-blue hover:bg-accent-blue/5"
             >
               {item.label}
             </Link>

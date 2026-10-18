@@ -15,7 +15,7 @@ type Props = {
 };
 
 export const ArticleCard: FC<Props> = ({ article, className }) => {
-  const { title, subtitle, excerpt, date, href, cover, tags } = article;
+  const { title, excerpt, date, href, cover, tags } = article;
   const terminal = PROJECTS.find(
     (p) => p.slug === article.relatedProjectSlug,
   )?.terminal;
@@ -56,11 +56,11 @@ export const ArticleCard: FC<Props> = ({ article, className }) => {
 
         <CardContent className="flex flex-col gap-3 p-5 text-left sm:p-6">
           <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
+            {tags.slice(0, 3).map((tag) => (
               <Badge
                 key={tag}
                 variant="outline"
-                className="text-[10px] font-semibold uppercase tracking-wide text-accent-blue"
+                className="text-xs font-medium text-accent-blue"
               >
                 {tag}
               </Badge>
@@ -70,10 +70,6 @@ export const ArticleCard: FC<Props> = ({ article, className }) => {
           <h2 className="text-xl font-semibold leading-snug text-foreground transition-colors group-hover:text-accent-blue sm:text-2xl">
             {title}
           </h2>
-
-          <p className="text-sm italic leading-snug text-muted-foreground sm:text-base">
-            {subtitle}
-          </p>
 
           <p className="text-sm leading-relaxed text-muted-foreground line-clamp-3">
             {excerpt}

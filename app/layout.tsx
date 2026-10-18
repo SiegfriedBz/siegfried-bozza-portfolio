@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Footer } from "./_components/footer";
 import { Navbar } from "./_components/navbar";
+import { GeistMono, GeistSans } from "./_lib/fonts";
 import {
   DEFAULT_KEYWORDS,
   DEFAULT_OG_IMAGES,
@@ -40,7 +41,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${GeistSans.variable} ${GeistMono.variable}`}
+      suppressHydrationWarning
+    >
       <body className="antialiased px-4 sm:px-16 mx-auto gap-8">
         <ThemeProvider
           attribute="class"

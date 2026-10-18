@@ -9,51 +9,55 @@ export const ExternalLinks: FC = () => {
   const { github, linkedin, email: mailTo } = PROFILE_LINKS;
 
   return (
-    <div className="flex items-center gap-x-4">
+    <div className="flex items-center gap-x-1">
       {github ? (
-        <a
-          href={github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group"
-          aria-label="GitHub"
-        >
-          <Tooltip desc="GitHub">
+        <Tooltip desc="GitHub">
+          <a
+            href={github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group rounded-md p-2"
+            aria-label="GitHub"
+          >
             <LuGithub className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200" />
-          </Tooltip>
-        </a>
+          </a>
+        </Tooltip>
       ) : null}
       {linkedin ? (
-        <a
-          href={linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group"
-          aria-label="LinkedIn"
-        >
-          <Tooltip desc="LinkedIn">
+        <Tooltip desc="LinkedIn">
+          <a
+            href={linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group rounded-md p-2"
+            aria-label="LinkedIn"
+          >
             <LuLinkedin className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200" />
-          </Tooltip>
-        </a>
+          </a>
+        </Tooltip>
       ) : null}
       {mailTo ? (
-        <a href={`mailto:${mailTo}`} className="group" aria-label="Email">
-          <Tooltip desc="Email">
+        <Tooltip desc="Email">
+          <a
+            href={`mailto:${mailTo}`}
+            className="group rounded-md p-2"
+            aria-label="Email"
+          >
             <MailIcon className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200" />
-          </Tooltip>
-        </a>
-      ) : null}
-      <a
-        href={CV_HREF}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group"
-        aria-label="Download CV"
-      >
-        <Tooltip desc="CV">
-          <FileDownIcon className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200" />
+          </a>
         </Tooltip>
-      </a>
+      ) : null}
+      <Tooltip desc="CV">
+        <a
+          href={CV_HREF}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group rounded-md p-2"
+          aria-label="Download CV"
+        >
+          <FileDownIcon className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200" />
+        </a>
+      </Tooltip>
     </div>
   );
 };

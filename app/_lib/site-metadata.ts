@@ -14,12 +14,10 @@ export const PITCH =
 
 export const CORE_STACK = ["TypeScript", "Solidity", "Node.js", "Next.js"];
 
-export const BACKGROUND =
-  "Before software, I spent fifteen years in molecular-biology research and environmental engineering, which is where my interest in DeSci comes from.";
-
 export const AVAILABILITY = {
   headline: "Open to full-time remote roles",
-  detail: "France (CET) · async, cross-timezone teams · open to relocation",
+  detail:
+    "Based in France (CET), used to async, cross-timezone teams, and open to relocation.",
 };
 
 /**
@@ -29,7 +27,7 @@ export const AVAILABILITY = {
 export const PERSON_SUMMARY =
   "Siegfried Bozza is a Full-Stack Web3 Engineer based in Annecy, France, open to full-time remote roles. He builds the off-chain systems that on-chain products depend on, in TypeScript and Solidity: event pipelines, wallet and settlement backends, durable AI-agent workflows and dApps. He has worked at Prismo.io since 2024. Before software he spent fifteen years in molecular-biology research and environmental engineering, and his recent projects, VeriSci and BioVerify, are in decentralized science (DeSci).";
 
-export const DEFAULT_TITLE = `${SITE_NAME} — ${ROLE}`;
+export const DEFAULT_TITLE = `${SITE_NAME} | ${ROLE}`;
 
 /** SERP-friendly (≤160 chars). */
 export const SITE_DESCRIPTION_SHORT =

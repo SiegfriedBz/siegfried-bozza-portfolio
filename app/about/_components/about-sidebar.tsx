@@ -1,8 +1,8 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { type ComponentProps, type FC, useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 // Menu items
 const items = [
@@ -92,17 +92,18 @@ export const AboutSidebar: FC<Props> = (props) => {
         const isActive = activeId === id;
 
         return (
-          <li key={item.title} className="font-bold">
+          <li key={item.title}>
             <Link
               href={item.url}
+              aria-current={isActive ? "location" : undefined}
               className={cn(
-                "transition-colors",
+                "block border-l-2 py-0.5 ps-3 text-sm font-medium transition-colors",
                 isActive
-                  ? "text-primary underline underline-offset-4"
-                  : "text-muted-foreground",
+                  ? "border-accent-blue text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground",
               )}
             >
-              - {item.title}
+              {item.title}
             </Link>
           </li>
         );

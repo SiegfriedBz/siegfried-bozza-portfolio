@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { AVAILABILITY, CORE_STACK, PITCH, ROLE } from "./_lib/site-metadata";
 
-export const alt = `Siegfried Bozza — ${ROLE}`;
+export const alt = `Siegfried Bozza, ${ROLE}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -65,7 +65,7 @@ export default function OpenGraphImage() {
           lineHeight: 1.4,
         }}
       >
-        {`${CORE_STACK.join(" · ")} — ${AVAILABILITY.headline}`}
+        {`${CORE_STACK.join(", ")}. ${AVAILABILITY.headline}.`}
       </div>
     </div>,
     { ...size },
