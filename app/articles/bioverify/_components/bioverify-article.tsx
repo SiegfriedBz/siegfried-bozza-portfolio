@@ -508,7 +508,7 @@ export const BioVerifyArticle: FC = () => {
           </em>
         </TypographyP>
         <ArticleGif
-          src="/projects/bioverify/gifs/early-slash-01-submit.gif"
+          src="/projects/bioverify/videos/early-slash-01-submit.mp4"
           alt="User B on tablet submits a publication that duplicates existing literature; transaction confirmed on Base Sepolia"
           label="Step 1 — User B submits on Base Sepolia"
           caption={
@@ -519,7 +519,7 @@ export const BioVerifyArticle: FC = () => {
         />
         <ArticleGif
           className="mt-4"
-          src="/projects/bioverify/gifs/early-slash-02-realtime.gif"
+          src="/projects/bioverify/videos/early-slash-02-realtime.mp4"
           alt="User A on mobile sees the new publication row appear in real time over WebSocket without a wallet; status ends at EARLY_SLASHED"
           label="Step 2 — Realtime list → EARLY_SLASHED"
           caption={
@@ -593,7 +593,7 @@ export const BioVerifyArticle: FC = () => {
           </em>
         </TypographyP>
         <ArticleGif
-          src="/projects/bioverify/gifs/submit-success-01-form.gif"
+          src="/projects/bioverify/videos/submit-success-01-form.mp4"
           alt="Author fills the publication form on the DApp with metadata and IPFS manifest, ready to submit"
           label="Step 1 — Fill the publication form"
           caption={
@@ -605,7 +605,7 @@ export const BioVerifyArticle: FC = () => {
         />
         <ArticleGif
           className="mt-4"
-          src="/projects/bioverify/gifs/submit-success-02-tx.gif"
+          src="/projects/bioverify/videos/submit-success-02-tx.mp4"
           alt="Author confirms the on-chain submitPublication transaction; the Telegram bot mirrors SUBMITTED then IN_REVIEW as the events are mined"
           label="Step 2 — Submitted → In Review"
           caption={
@@ -618,7 +618,7 @@ export const BioVerifyArticle: FC = () => {
         />
         <ArticleGif
           className="mt-4"
-          src="/projects/bioverify/gifs/submit-success-03-in-review.gif"
+          src="/projects/bioverify/videos/submit-success-03-in-review.mp4"
           alt="Publication detail page on the DApp showing IN_REVIEW status and the Chainlink VRF–selected reviewer addresses"
           label="Step 3 — VRF reviewers on the publication detail"
           caption={
@@ -800,7 +800,7 @@ export const BioVerifyArticle: FC = () => {
           <strong>PUBLISHED</strong>.
         </TypographyP>
         <ArticleGif
-          src="/projects/bioverify/gifs/peer-review-01-pass.gif"
+          src="/projects/bioverify/videos/peer-review-01-pass.mp4"
           alt="First peer reviewer signs an EIP-712 pass verdict off-chain in their wallet; the agent records the review on-chain"
           label="Step 1 — First peer reviewer: PASS (EIP-712 signature)"
           caption={
@@ -812,7 +812,7 @@ export const BioVerifyArticle: FC = () => {
         />
         <ArticleGif
           className="mt-4"
-          src="/projects/bioverify/gifs/peer-review-02-fail.gif"
+          src="/projects/bioverify/videos/peer-review-02-fail.mp4"
           alt="Second peer reviewer submits a fail verdict; the two reviews now conflict and the workflow escalates"
           label="Step 2 — Second peer reviewer: FAIL → conflict, escalation"
           caption={
@@ -824,7 +824,7 @@ export const BioVerifyArticle: FC = () => {
         />
         <ArticleGif
           className="mt-4"
-          src="/projects/bioverify/gifs/peer-review-03-senior-pass.gif"
+          src="/projects/bioverify/videos/peer-review-03-senior-pass.mp4"
           alt="Split view: Telegram bot shows both peer reviews and the agent's escalation decision; the senior reviewer submits a tie-breaking pass"
           label="Step 3 — Senior reviewer breaks the tie (PASS)"
           caption={
@@ -840,7 +840,7 @@ export const BioVerifyArticle: FC = () => {
         />
         <ArticleGif
           className="mt-4"
-          src="/projects/bioverify/gifs/peer-review-04-published.gif"
+          src="/projects/bioverify/videos/peer-review-04-published.mp4"
           alt="Telegram bot shows PUBLISHED status; the publication detail page resolves the final verdict CID from IPFS after the senior reviewer's tie-break"
           label="Step 4 — PUBLISHED with the verdict resolved from IPFS"
           caption={

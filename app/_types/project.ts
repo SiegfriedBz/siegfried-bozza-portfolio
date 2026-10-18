@@ -55,7 +55,8 @@ export type Project = {
   };
 
   images: string[];
-  gifs: string[];
+  /** Screen recordings (.mp4). A same-name .jpg next to each file is used as the poster. */
+  videos: string[];
 
   links: {
     page: string;

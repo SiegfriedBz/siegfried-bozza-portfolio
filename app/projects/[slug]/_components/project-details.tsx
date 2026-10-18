@@ -37,7 +37,7 @@ export const ProjectDetails: FC<Props> = (props) => {
     diagram,
     constructionPeriod,
     images,
-    gifs,
+    videos,
     links,
   } = project;
 
@@ -95,7 +95,7 @@ export const ProjectDetails: FC<Props> = (props) => {
       <ProjectLinks className="self-center" links={linksTo} />
 
       {/* Carousel */}
-      <ProjectCarousel images={[...images, ...gifs]} projectName={title.h1} />
+      <ProjectCarousel images={images} videos={videos} projectName={title.h1} />
 
       {diagram ? (
         <ProjectDiagramCard

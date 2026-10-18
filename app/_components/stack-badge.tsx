@@ -87,6 +87,7 @@ export const StackBadge: FC<Props> = ({ stack }) => {
         src={record.logo}
         alt={record.name}
         fill
+        sizes="56px"
         className="object-contain p-1 rounded-sm"
       />
     </div>
