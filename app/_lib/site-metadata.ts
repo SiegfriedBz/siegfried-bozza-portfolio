@@ -3,41 +3,61 @@ export const SITE_URL =
 
 export const SITE_NAME = "Siegfried Bozza";
 
-export const DEFAULT_TITLE =
-  "Siegfried Bozza — Full-Stack Engineer · Web3 & AI Agents";
+/**
+ * Positioning — single source of truth. Hero, About, metadata, OG image and
+ * manifest all read from here, so the CV / GitHub / LinkedIn copy should match it.
+ */
+export const ROLE = "Full-Stack Web3 Engineer";
+
+export const PITCH =
+  "I build the off-chain systems that on-chain products depend on: event pipelines, wallet and settlement backends, durable AI-agent workflows, and the dApps on top.";
+
+export const CORE_STACK = ["TypeScript", "Solidity", "Node.js", "Next.js"];
+
+export const BACKGROUND =
+  "Before software, I spent fifteen years in molecular-biology research and environmental engineering, which is where my interest in DeSci comes from.";
+
+export const AVAILABILITY = {
+  headline: "Open to full-time remote roles",
+  detail:
+    "France (CET) · async, cross-timezone teams · open to relocation",
+};
+
+export const DEFAULT_TITLE = `${SITE_NAME} — ${ROLE}`;
 
 /** SERP-friendly (≤160 chars). */
 export const SITE_DESCRIPTION_SHORT =
-  "Full-Stack Engineer · React, Next.js, Solidity. BioVerify DeSci case study, agentic DApps. Open to remote or global relocation.";
+  "Full-Stack Web3 Engineer (TypeScript, Solidity). Event pipelines, wallet backends and AI-agent workflows around smart contracts. Open to remote roles.";
 
 /** Richer copy for Open Graph / Twitter. */
 export const SITE_DESCRIPTION_LONG =
-  "Full-Stack Engineer specializing in React, Next.js, TypeScript, and Solidity. Creator of BioVerify — a DeSci peer-review case study with durable AI agents (LangGraph, Inngest), Chainlink VRF, and on-chain staking. Also built GavL (real-time auctions with Supabase & Stripe), Bet2Gether (Chainlink prediction games), and Forge (ERC-1155 crafting). Open to remote roles or global relocation.";
+  "Full-Stack Web3 Engineer working in TypeScript and Solidity. I build the off-chain systems on-chain products depend on: VeriSci (open paper ratings on the OriginTrail DKG), Wallet Watcher (a custody backend slice with an append-only ledger and exactly-once withdrawals), BioVerify (agentic DeSci peer review with Chainlink VRF), plus Bet2Gether, Forge and GavL. Open to full-time remote roles.";
 
 export const DEFAULT_KEYWORDS = [
   "Siegfried Bozza",
-  "Full-Stack Engineer",
-  "React",
-  "Next.js",
+  "Full-Stack Web3 Engineer",
+  "Web3 backend engineer",
   "TypeScript",
   "Solidity",
-  "Web3",
+  "Node.js",
+  "Next.js",
+  "React",
+  "viem",
+  "wagmi",
+  "Foundry",
+  "Chainlink",
+  "custody backend",
+  "HD wallets",
+  "event-driven architecture",
+  "CQRS",
   "DeSci",
+  "decentralized science",
+  "OriginTrail DKG",
+  "VeriSci",
   "BioVerify",
-  "AI Agents",
+  "AI agents",
   "LangGraph",
   "Inngest",
-  "Chainlink",
-  "Foundry",
-  "wagmi",
-  "viem",
-  "Drizzle ORM",
-  "Neon Postgres",
-  "Supabase",
-  "Tailwind CSS",
-  "shadcn/ui",
-  "DApp",
-  "decentralized science",
-  "peer review",
   "smart contracts",
+  "remote",
 ] as const;

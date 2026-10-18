@@ -29,7 +29,7 @@ export const FeaturedProjects = () => {
     <>
       <TypographyH2 className="font-extrabold">Featured Projects</TypographyH2>
       <p className="mt-2 text-sm text-muted-foreground">
-        Full-stack end-to-end case studies.
+        End-to-end builds, each with its code, tests and known limitations.
       </p>
 
       <div className="mt-6 flex flex-col gap-y-10">

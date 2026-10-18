@@ -1,25 +1,29 @@
-import { SITE_NAME } from "@/app/_lib/site-metadata"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { EarthIcon } from "lucide-react"
-import type { Metadata } from "next"
-import { SiegAvatar } from "../_components/sieg-avatar"
-import { TypographyH1 } from "../_components/typography/h1"
-import { TypographyH2 } from "../_components/typography/h2"
-import { TypographyH6 } from "../_components/typography/h6"
-import { AboutSidebar } from "./_components/about-sidebar"
-import { AllSkillsBadges } from "./_components/all-skills-badges"
-import { BadgeExternalLinks } from "./_components/badge-external-links"
-import { BookCallBadge } from "./_components/book-call-badge"
-import { EarlierCareer } from "./_components/earlier-career"
-import { Education } from "./_components/education"
-import { FeaturedProjects } from "./_components/featured-projects"
-import { SelfIntro } from "./_components/self-intro"
-import { WorkXP } from "./_components/work-xp"
+import { EarthIcon } from "lucide-react";
+import type { Metadata } from "next";
+import {
+  AVAILABILITY,
+  CORE_STACK,
+  ROLE,
+  SITE_NAME,
+} from "@/app/_lib/site-metadata";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { SiegAvatar } from "../_components/sieg-avatar";
+import { TypographyH1 } from "../_components/typography/h1";
+import { TypographyH2 } from "../_components/typography/h2";
+import { TypographyH6 } from "../_components/typography/h6";
+import { AboutSidebar } from "./_components/about-sidebar";
+import { AllSkillsBadges } from "./_components/all-skills-badges";
+import { BadgeExternalLinks } from "./_components/badge-external-links";
+import { BookCallBadge } from "./_components/book-call-badge";
+import { EarlierCareer } from "./_components/earlier-career";
+import { Education } from "./_components/education";
+import { FeaturedProjects } from "./_components/featured-projects";
+import { SelfIntro } from "./_components/self-intro";
+import { WorkXP } from "./_components/work-xp";
 
-const ABOUT_TITLE = `About | ${SITE_NAME}`
-const ABOUT_DESCRIPTION =
-  "Full-stack engineer · Next.js, TypeScript, Web3 · Renuo AG & Prismo.io · open to remote or global relocation."
+const ABOUT_TITLE = `About | ${SITE_NAME}`;
+const ABOUT_DESCRIPTION = `${ROLE} · ${CORE_STACK.join(", ")} · Prismo.io, freelance, Renuo AG · ${AVAILABILITY.headline}.`;
 
 export const metadata: Metadata = {
   title: ABOUT_TITLE,
@@ -34,7 +38,7 @@ export const metadata: Metadata = {
     title: ABOUT_TITLE,
     description: ABOUT_DESCRIPTION,
   },
-}
+};
 
 export default function Page() {
   return (
@@ -78,12 +82,9 @@ export default function Page() {
                   Siegfried Bozza
                 </TypographyH1>
                 <TypographyH2 className="text-center text-muted-foreground sm:text-xl md:text-2xl lg:text-3xl lg:text-left text-balance">
-                  <span className="whitespace-nowrap">Full-stack engineer</span>{" "}
+                  <span className="whitespace-nowrap">{ROLE}</span>{" "}
                   <span className="whitespace-nowrap">
-                    <span aria-hidden="true">·</span> Web3
-                  </span>{" "}
-                  <span className="whitespace-nowrap">
-                    <span aria-hidden="true">·</span> AI integrations
+                    <span aria-hidden="true">·</span> TypeScript & Solidity
                   </span>
                 </TypographyH2>
               </div>
@@ -133,5 +134,5 @@ export default function Page() {
         </div>
       </div>
     </main>
-  )
+  );
 }
