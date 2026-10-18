@@ -28,24 +28,24 @@ const CLOSING =
 export const SelfIntro = () => {
   return (
     <div className="text-sm sm:text-base md:text-lg tracking-wider space-y-3">
-      <div>
+      <p>
         <RichText text={ORIGIN} />
-      </div>
-      <div>
+      </p>
+      <p>
         <RichText text={REALIZATION} />
-      </div>
-      <div>
+      </p>
+      <p>
         <RichText text={WEB3_MOTIVATION} />
-      </div>
+      </p>
 
       <hr className="my-4 border-border" />
 
-      <div>
+      <p>
         <RichText text={CAREER} />
-      </div>
-      <div>
+      </p>
+      <p>
         <RichText text={PROJECTS} />
-      </div>
+      </p>
 
       <ul className="list-outside list-disc space-y-2 ps-6 sm:ps-12">
         {PROJECT_BULLETS.map((bullet) => (
@@ -57,9 +57,9 @@ export const SelfIntro = () => {
 
       <hr className="my-4 border-border" />
 
-      <div>
+      <p>
         <RichText text={CLOSING} />
-      </div>
+      </p>
     </div>
   );
 };

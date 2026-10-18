@@ -4,8 +4,8 @@ import { PROFILE_LINKS } from "@/app/_constants/links";
 import { PROJECTS } from "@/app/_constants/projects";
 import { WORK_EXPERIENCE } from "@/app/_constants/work-xp";
 import {
+  PERSON_SUMMARY,
   ROLE,
-  SITE_DESCRIPTION_SHORT,
   SITE_NAME,
   SITE_URL,
 } from "@/app/_lib/site-metadata";
@@ -53,7 +53,7 @@ export const personNode = (): Node => {
     "@id": PERSON_ID,
     name: SITE_NAME,
     jobTitle: ROLE,
-    description: SITE_DESCRIPTION_SHORT,
+    description: PERSON_SUMMARY,
     url: `${base}/`,
     image: abs("/images/avatar.png"),
     sameAs: [PROFILE_LINKS.github, PROFILE_LINKS.linkedin],

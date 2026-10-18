@@ -22,6 +22,13 @@ export const AVAILABILITY = {
   detail: "France (CET) · async, cross-timezone teams · open to relocation",
 };
 
+/**
+ * Third-person summary: the one place the site says who Siegfried is, for search and AI
+ * answers (and for anyone writing an introduction). Keep it factual and current.
+ */
+export const PERSON_SUMMARY =
+  "Siegfried Bozza is a Full-Stack Web3 Engineer based in Annecy, France, open to full-time remote roles. He builds the off-chain systems that on-chain products depend on, in TypeScript and Solidity: event pipelines, wallet and settlement backends, durable AI-agent workflows and dApps. He has worked at Prismo.io since 2024. Before software he spent fifteen years in molecular-biology research and environmental engineering, and his recent projects, VeriSci and BioVerify, are in decentralized science (DeSci).";
+
 export const DEFAULT_TITLE = `${SITE_NAME} — ${ROLE}`;
 
 /** SERP-friendly (≤160 chars). */

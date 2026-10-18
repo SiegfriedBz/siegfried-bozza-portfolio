@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from "react";
+import { type FC, Fragment, type ReactNode } from "react";
 
 type Props = {
   text: string;
@@ -35,13 +35,17 @@ export const RichText: FC<Props> = ({ text }) => (
   <>
     {text.split("\n").map((line, li) => (
       // biome-ignore lint/suspicious/noArrayIndexKey: static CMS strings
-      <span key={li} className="mb-2 block last:mb-0">
-        {line
-          .split(INLINE_PATTERN)
-          .map((segment, si) =>
-            segment ? renderInlineSegment(segment, `${li}-${si}`) : null,
-          )}
-      </span>
+      <Fragment key={li}>
+        {/* A real newline between lines: block spans alone read as one run-on sentence to text extractors. */}
+        {li > 0 ? "\n" : null}
+        <span className="mb-2 block last:mb-0">
+          {line
+            .split(INLINE_PATTERN)
+            .map((segment, si) =>
+              segment ? renderInlineSegment(segment, `${li}-${si}`) : null,
+            )}
+        </span>
+      </Fragment>
     ))}
   </>
 );

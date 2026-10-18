@@ -10,6 +10,7 @@ import {
   AVAILABILITY,
   CORE_STACK,
   DEFAULT_OG_IMAGES,
+  PERSON_SUMMARY,
   ROLE,
   SITE_NAME,
 } from "@/app/_lib/site-metadata";
@@ -146,6 +147,13 @@ export default function Page() {
                 Technical Skills
               </TypographyH2>
               <AllSkillsBadges />
+            </div>
+
+            <div id="bio" className="scroll-mt-24">
+              <TypographyH2 className="font-extrabold">Short bio</TypographyH2>
+              <p className="mt-3 max-w-prose text-sm text-muted-foreground sm:text-base">
+                {PERSON_SUMMARY}
+              </p>
             </div>
           </div>
         </div>
