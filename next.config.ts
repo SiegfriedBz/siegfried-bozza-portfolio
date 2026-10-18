@@ -12,6 +12,19 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    // Old preview hostnames → canonical domain (avoids duplicate indexing).
+    return [
+      {
+        source: "/:path*",
+        has: [
+          { type: "host", value: "siegfried-bozza-portfolio-next.vercel.app" },
+        ],
+        destination: "https://www.siegfriedbozza.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

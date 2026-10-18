@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import {
   AVAILABILITY,
   CORE_STACK,
+  DEFAULT_OG_IMAGES,
   ROLE,
   SITE_NAME,
 } from "@/app/_lib/site-metadata";
@@ -30,11 +31,13 @@ export const metadata: Metadata = {
   description: ABOUT_DESCRIPTION,
   alternates: { canonical: "/about" },
   openGraph: {
+    images: DEFAULT_OG_IMAGES,
     title: ABOUT_TITLE,
     description: ABOUT_DESCRIPTION,
     url: "/about",
   },
   twitter: {
+    images: DEFAULT_OG_IMAGES.map((i) => i.url),
     title: ABOUT_TITLE,
     description: ABOUT_DESCRIPTION,
   },
