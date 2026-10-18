@@ -207,7 +207,12 @@ const bioVerifyProject: Project = {
     "/projects/bioverify/images/bioverify_landing.jpg",
   ],
 
-  gifs: [],
+  videos: [
+    "/projects/bioverify/videos/submit-success-01-form.mp4",
+    "/projects/bioverify/videos/early-slash-02-realtime.mp4",
+    "/projects/bioverify/videos/peer-review-02-fail.mp4",
+    "/projects/bioverify/videos/peer-review-04-published.mp4",
+  ],
 
   featured: {
     category: "Web3 Architecture & Coordination",
@@ -429,11 +434,11 @@ export const PROJECTS: Project[] = [
       "/projects/bet2gether/images/bet2gether-tenderly-action-logs.png",
     ],
 
-    gifs: [
-      "/projects/bet2gether/gifs/bet2gether-create-game_and-bet-1.gif",
-      "/projects/bet2gether/gifs/bet2gether-create-game_and-bet-2.gif",
-      "/projects/bet2gether/gifs/bet2gether-auto-mint-to-game-creator-if-winner.gif",
-      "/projects/bet2gether/gifs/bet2gether-winner-claim-rewards.gif",
+    videos: [
+      "/projects/bet2gether/videos/bet2gether-create-game-and-bet-1.mp4",
+      "/projects/bet2gether/videos/bet2gether-create-game-and-bet-2.mp4",
+      "/projects/bet2gether/videos/bet2gether-auto-mint-to-game-creator-if-winner.mp4",
+      "/projects/bet2gether/videos/bet2gether-winner-claim-rewards.mp4",
     ],
 
     featured: {
@@ -617,12 +622,12 @@ export const PROJECTS: Project[] = [
       "/projects/forge/images/forge-mint.png",
     ],
 
-    gifs: [
-      "/projects/forge/gifs/forge-mobile-mint.gif",
-      "/projects/forge/gifs/forge-desktop-mint.01.gif",
-      "/projects/forge/gifs/forge-desktop-trade.02.gif",
-      "/projects/forge/gifs/forge-desktop-forge.03.gif",
-      "/projects/forge/gifs/forge-desktop-burn.04.gif",
+    videos: [
+      "/projects/forge/videos/forge-mobile-mint.mp4",
+      "/projects/forge/videos/forge-desktop-mint-01.mp4",
+      "/projects/forge/videos/forge-desktop-trade-02.mp4",
+      "/projects/forge/videos/forge-desktop-forge-03.mp4",
+      "/projects/forge/videos/forge-desktop-burn-04.mp4",
     ],
 
     featured: {
@@ -813,12 +818,12 @@ export const PROJECTS: Project[] = [
       "/projects/gavl/images/gavl-landing.png",
     ],
 
-    gifs: [
-      "/projects/gavl/gifs/gavl-create-auctions.gif",
-      "/projects/gavl/gifs/gavl-bid-2-users.gif",
-      "/projects/gavl/gifs/gavl-bid-3-users.gif",
-      "/projects/gavl/gifs/gavl-auction-won-notifications.gif",
-      "/projects/gavl/gifs/gavl-stripe-flow.gif",
+    videos: [
+      "/projects/gavl/videos/gavl-create-auctions.mp4",
+      "/projects/gavl/videos/gavl-bid-2-users.mp4",
+      "/projects/gavl/videos/gavl-bid-3-users.mp4",
+      "/projects/gavl/videos/gavl-auction-won-notifications.mp4",
+      "/projects/gavl/videos/gavl-stripe-flow.mp4",
     ],
 
     featured: {
