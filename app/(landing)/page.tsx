@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/app/_components/json-ld";
 import { PROJECTS } from "@/app/_constants/projects";
+import { personNode, websiteNode } from "@/app/_lib/json-ld";
 import {
   DEFAULT_OG_IMAGES,
   DEFAULT_TITLE,
   SITE_DESCRIPTION_LONG,
   SITE_DESCRIPTION_SHORT,
+  SITE_NAME,
 } from "@/app/_lib/site-metadata";
 import { Projects } from "../_components/projects";
 import { Hero, type HeroProof } from "./_components/hero";
@@ -18,6 +21,7 @@ export const metadata: Metadata = {
     title: DEFAULT_TITLE,
     description: SITE_DESCRIPTION_LONG,
     url: "/",
+    siteName: SITE_NAME,
   },
   twitter: {
     images: DEFAULT_OG_IMAGES.map((i) => i.url),
@@ -45,9 +49,10 @@ const heroProof: HeroProof[] = HERO_PROOF_SLUGS.flatMap((slug) => {
 
 export default function Page() {
   return (
-    <main className="max-w-6xl mx-auto flex flex-col gap-8">
+    <div className="max-w-6xl mx-auto flex flex-col gap-8">
+      <JsonLd nodes={[personNode(), websiteNode()]} />
       <Hero proof={heroProof} />
       <Projects />
-    </main>
+    </div>
   );
 }

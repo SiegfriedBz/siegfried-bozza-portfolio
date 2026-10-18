@@ -8,6 +8,8 @@ export type FeaturedCategory =
 
 export type Project = {
   slug: string;
+  /** Programming languages in the repo (structured data). */
+  languages: string[];
   /** Human-facing build window, e.g. "Mar–Apr 2026" (badge) */
   constructionPeriod: string;
   title: {

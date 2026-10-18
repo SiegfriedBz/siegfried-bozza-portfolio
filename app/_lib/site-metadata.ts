@@ -74,3 +74,14 @@ export const DEFAULT_OG_IMAGES = [
     alt: DEFAULT_TITLE,
   },
 ];
+
+/** Date the static pages' content last changed (sitemap lastModified). Update with content changes. */
+export const SITE_LAST_UPDATED = "2026-10-18";
+
+/** Meta description that fits search snippets: cut at a word boundary, never mid-word. */
+export const toMetaDescription = (text: string, max = 155) => {
+  const clean = text.replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max);
+  return `${cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:.\s]+$/, "")}…`;
+};

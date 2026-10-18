@@ -5,7 +5,7 @@ const Layout: FC<PropsWithChildren> = (props) => {
   const { children } = props;
 
   return (
-    <main>
+    <div>
       <div
         className="relative 
         flex flex-col items-center justify-center 
@@ -20,7 +20,7 @@ const Layout: FC<PropsWithChildren> = (props) => {
 
         {children}
       </div>
-    </main>
+    </div>
   );
 };
 

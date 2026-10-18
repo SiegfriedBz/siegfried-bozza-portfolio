@@ -1,87 +1,108 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { useTheme } from "next-themes"
-import { useEffect, useRef, useState } from "react"
+import { useTheme } from "next-themes";
+import { useEffect, useRef, useState } from "react";
+import { cn } from "@/lib/utils";
 
 export type MermaidBlockProps = {
-  definition: string
-  diagramId: string
-  className?: string
-}
+  definition: string;
+  diagramId: string;
+  className?: string;
+};
 
 export function MermaidBlock({
   definition,
   diagramId,
   className,
 }: MermaidBlockProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  // Mermaid is ~400 KB of JS: load it only when a diagram gets close to the viewport.
+  const [inView, setInView] = useState(false);
   const [status, setStatus] = useState<"loading" | "ready" | "error">(
     "loading",
-  )
-  const { resolvedTheme } = useTheme()
+  );
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "300px" },
+    );
+    observer.observe(wrapper);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!inView) return;
     if (!definition.trim()) {
-      setStatus("error")
-      return
+      setStatus("error");
+      return;
     }
 
-    const container = containerRef.current
+    const container = containerRef.current;
     if (!container) {
-      return
+      return;
     }
 
-    let cancelled = false
-    setStatus("loading")
+    let cancelled = false;
+    setStatus("loading");
 
     async function draw() {
       try {
-        const mermaid = (await import("mermaid")).default
-        const isDark = resolvedTheme === "dark"
+        const mermaid = (await import("mermaid")).default;
+        const isDark = resolvedTheme === "dark";
         mermaid.initialize({
           startOnLoad: false,
           theme: isDark ? "dark" : "neutral",
           securityLevel: "strict",
           fontFamily:
             "var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif",
-        })
+        });
 
-        const safeId = `mmd-${diagramId}`.replace(/[^a-zA-Z0-9_-]/g, "-")
+        const safeId = `mmd-${diagramId}`.replace(/[^a-zA-Z0-9_-]/g, "-");
         const { svg, bindFunctions } = await mermaid.render(
           safeId,
           definition.trim(),
-        )
+        );
 
         if (cancelled || !container) {
-          return
+          return;
         }
 
-        container.innerHTML = svg
-        bindFunctions?.(container)
-        const svgEl = container.querySelector("svg")
-        svgEl?.setAttribute("width", "100%")
-        svgEl?.style.setProperty("max-width", "100%")
-        svgEl?.style.setProperty("height", "auto")
-        setStatus("ready")
+        container.innerHTML = svg;
+        bindFunctions?.(container);
+        const svgEl = container.querySelector("svg");
+        svgEl?.setAttribute("width", "100%");
+        svgEl?.style.setProperty("max-width", "100%");
+        svgEl?.style.setProperty("height", "auto");
+        setStatus("ready");
       } catch {
         if (!cancelled && container) {
-          container.innerHTML = ""
+          container.innerHTML = "";
         }
         if (!cancelled) {
-          setStatus("error")
+          setStatus("error");
         }
       }
     }
 
-    void draw()
+    void draw();
     return () => {
-      cancelled = true
-    }
-  }, [definition, resolvedTheme, diagramId])
+      cancelled = true;
+    };
+  }, [definition, resolvedTheme, diagramId, inView]);
 
   return (
     <div
+      ref={wrapperRef}
       className={cn(
         "relative overflow-x-auto rounded-xl border border-border/40 bg-muted/10 px-2 py-5 sm:px-4",
         status === "loading" && "min-h-[200px]",
@@ -106,5 +127,5 @@ export function MermaidBlock({
         </p>
       ) : null}
     </div>
-  )
+  );
 }

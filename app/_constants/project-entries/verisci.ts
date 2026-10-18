@@ -7,6 +7,7 @@ const blob = (path: string) => `${REPO}/blob/HEAD/${path}`;
 
 export const verisciProject: Project = {
   slug: "verisci",
+  languages: ["TypeScript", "Solidity"],
   constructionPeriod: "Aug–Oct 2026",
   title: {
     h1: "VeriSci",

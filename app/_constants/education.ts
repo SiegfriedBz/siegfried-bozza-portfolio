@@ -6,6 +6,8 @@ export type EducationEntry = {
   id: number;
   year?: string;
   title: string;
+  /** School or programme provider, for structured data. */
+  institution: string;
   location: string;
   description: string;
   link?: { href: string; label: string; iconName?: IconName };
@@ -18,6 +20,7 @@ export const EDUCATION: EducationEntry[] = [
     id: 1,
     year: "2025",
     title: "EVM Architecture & Smart Contract Security Specialization",
+    institution: "Metana",
     location: "Remote",
     section: "software",
     description:
@@ -27,6 +30,7 @@ export const EDUCATION: EducationEntry[] = [
     id: 2,
     year: "2021-2023",
     title: "M.Sc. Blockchain Technologies",
+    institution: "University of Barcelona",
     location: "Remote",
     section: "software",
     link: {
@@ -40,6 +44,7 @@ export const EDUCATION: EducationEntry[] = [
     id: 3,
     year: "2022",
     title: "Full-Stack Software Engineering Bootcamp",
+    institution: "Le Wagon",
     location: "Zurich, Switzerland",
     section: "software",
     description:
@@ -49,6 +54,7 @@ export const EDUCATION: EducationEntry[] = [
     id: 4,
     year: "2012",
     title: "M.Eng. Civil & Environmental Engineering",
+    institution: "École des Mines",
     location: "France",
     section: "earlier",
     description:
@@ -58,6 +64,7 @@ export const EDUCATION: EducationEntry[] = [
     id: 5,
     year: "2001",
     title: "M.Sc. Molecular Biology & Genetics",
+    institution: "University of Montpellier",
     location: "France",
     section: "earlier",
     description:

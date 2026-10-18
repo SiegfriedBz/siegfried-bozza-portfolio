@@ -11,6 +11,7 @@ export const BIOVERIFY_ARTICLE_HERO =
 
 const bioVerifyProject: Project = {
   slug: "bioverify",
+  languages: ["TypeScript", "Solidity"],
   constructionPeriod: "Mar–Apr 2026",
   title: {
     h1: "BioVerify",
@@ -247,6 +248,7 @@ export const PROJECTS: Project[] = [
 
   {
     slug: "bet2gether",
+    languages: ["TypeScript", "Solidity"],
     constructionPeriod: "Oct–Nov 2025",
     title: {
       h1: "Bet2Gether",
@@ -458,6 +460,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "forge",
+    languages: ["TypeScript", "Solidity"],
     constructionPeriod: "Oct–Nov 2025",
     title: {
       h1: "Forge",
@@ -649,6 +652,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "gavl",
+    languages: ["TypeScript"],
     constructionPeriod: "Sep–Oct 2025",
     title: {
       h1: "GavL — Next Auctions",

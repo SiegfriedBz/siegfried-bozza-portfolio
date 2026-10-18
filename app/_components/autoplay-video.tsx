@@ -1,6 +1,6 @@
 "use client";
 
-import { type FC, useEffect, useRef } from "react";
+import { type FC, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -14,12 +14,31 @@ type Props = {
 export const posterFor = (src: string) => src.replace(/\.mp4$/, ".jpg");
 
 /**
- * Muted, looping screen recording. Nothing is downloaded until the video is on
- * screen (preload="none" + poster), and it pauses again when scrolled or swiped away.
+ * Muted, looping screen recording. Nothing is downloaded until the video is near the
+ * screen (preload="none", poster set lazily), and it pauses when scrolled or swiped away.
  */
 export const AutoplayVideo: FC<Props> = (props) => {
   const { src, label, className } = props;
   const ref = useRef<HTMLVideoElement>(null);
+  // The poster is an image download too: fetch it only once the video is near the
+  // viewport (off-screen carousel slides would otherwise all load at page load).
+  const [near, setNear] = useState(false);
+
+  useEffect(() => {
+    const video = ref.current;
+    if (!video) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setNear(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const video = ref.current;
@@ -51,7 +70,7 @@ export const AutoplayVideo: FC<Props> = (props) => {
     <video
       ref={ref}
       src={src}
-      poster={posterFor(src)}
+      poster={near ? posterFor(src) : undefined}
       aria-label={label}
       muted
       loop

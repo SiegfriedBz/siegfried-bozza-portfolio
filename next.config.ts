@@ -14,6 +14,25 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async headers() {
+    // Baseline hardening. No CSP yet: Mermaid and motion inject inline styles, so a
+    // useful policy needs nonces (see the SEO audit notes).
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "X-Frame-Options", value: "DENY" },
+          {
+            key: "Permissions-Policy",
+            value:
+              "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+          },
+        ],
+      },
+    ];
+  },
   async redirects() {
     // Old preview hostnames → canonical domain (avoids duplicate indexing).
     return [

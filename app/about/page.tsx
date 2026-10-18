@@ -1,5 +1,11 @@
 import { EarthIcon } from "lucide-react";
 import type { Metadata } from "next";
+import { JsonLd } from "@/app/_components/json-ld";
+import {
+  breadcrumbNode,
+  personNode,
+  profilePageNode,
+} from "@/app/_lib/json-ld";
 import {
   AVAILABILITY,
   CORE_STACK,
@@ -35,6 +41,7 @@ export const metadata: Metadata = {
     title: ABOUT_TITLE,
     description: ABOUT_DESCRIPTION,
     url: "/about",
+    siteName: SITE_NAME,
   },
   twitter: {
     images: DEFAULT_OG_IMAGES.map((i) => i.url),
@@ -45,7 +52,14 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="w-full max-w-6xl mx-auto">
+    <div className="w-full max-w-6xl mx-auto">
+      <JsonLd
+        nodes={[
+          personNode(),
+          profilePageNode(),
+          breadcrumbNode([{ name: "Home", path: "/" }, { name: "About" }]),
+        ]}
+      />
       <AboutSidebar className="max-sm:hidden" />
 
       <div className="sm:ml-32 lg:ml-48 2xl:ml-0 grid grid-cols-1 lg:grid-cols-5 lg:gap-x-8 xl:gap-x-16">
@@ -136,6 +150,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

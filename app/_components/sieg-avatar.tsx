@@ -12,7 +12,7 @@ export const SiegAvatar: FC<Props> = (props) => {
       {...rest}
       className={cn(className, "rounded-full border border-border bg-white")}
     >
-      <AvatarImage src="/images/avatar.png" />
+      <AvatarImage src="/images/avatar.webp" alt="Siegfried Bozza" />
       <AvatarFallback>SB</AvatarFallback>
     </Avatar>
   );

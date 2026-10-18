@@ -57,6 +57,7 @@ export const Hero: FC<Props> = ({ proof }) => {
 
         <TypographyH1 className="text-balance max-[374px]:text-3xl text-4xl drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] sm:text-5xl xl:text-6xl">
           {ROLE.split(" ").map((word, index) => (
+            // A real space after each word: inline-block spans alone read as one glued word.
             <motion.span
               // biome-ignore lint/suspicious/noArrayIndexKey: static array
               key={index}
@@ -69,7 +70,7 @@ export const Hero: FC<Props> = ({ proof }) => {
               }}
               className="mx-1 inline-block sm:mx-2"
             >
-              {word}
+              {word}{" "}
             </motion.span>
           ))}
         </TypographyH1>

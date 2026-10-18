@@ -1,9 +1,11 @@
 import { MoveRightIcon } from "lucide-react";
 import Link from "next/link";
 import type { FC, PropsWithChildren } from "react";
+import { JsonLd } from "@/app/_components/json-ld";
 import { SiegAvatar } from "@/app/_components/sieg-avatar";
 import { PROFILE_LINKS } from "@/app/_constants/links";
 import { PROJECTS } from "@/app/_constants/projects";
+import { articleNode, breadcrumbNode, personNode } from "@/app/_lib/json-ld";
 import type { Article } from "@/app/_types/article";
 
 type Props = PropsWithChildren<{ article: Article }>;
@@ -33,6 +35,17 @@ export const PostShell: FC<Props> = ({ article, children }) => {
 
   return (
     <article>
+      <JsonLd
+        nodes={[
+          personNode(),
+          articleNode(article.slug),
+          breadcrumbNode([
+            { name: "Home", path: "/" },
+            { name: "Articles", path: "/articles" },
+            { name: article.title },
+          ]),
+        ]}
+      />
       <header className="mb-10 border-b border-border pb-8 pt-8 sm:mb-14 sm:pb-12 dark:border-white/10">
         <span className="mb-4 block font-mono text-[11px] uppercase tracking-[0.12em] text-teal-700 dark:text-[#2dd4bf]">
           {article.tags.join(" · ")}
