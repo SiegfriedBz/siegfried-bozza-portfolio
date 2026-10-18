@@ -15,8 +15,9 @@ Read `README.md` for setup.
 | `pnpm typecheck` | `tsc --noEmit` |
 | `pnpm build` | Production build (webpack), the same one Vercel runs |
 
-If `pnpm` fails with a proto "Failed to detect an applicable version" error, run the same
-command through `npx -y pnpm@10.15.0 <args>`.
+Toolchain: pnpm 10.34.6, pinned by `packageManager` in `package.json` (proto and Corepack
+read it). If proto reports the version is missing, ask the user to run
+`proto install pnpm 10.34.6`; do not work around it.
 
 ## Where things live
 
