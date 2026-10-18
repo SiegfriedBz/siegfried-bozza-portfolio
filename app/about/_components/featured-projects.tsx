@@ -1,10 +1,10 @@
+import { MoveRightIcon } from "lucide-react";
+import Link from "next/link";
 import { RichText } from "@/app/_components/rich-text";
 import { TypographyH2 } from "@/app/_components/typography/h2";
 import { TypographyH3 } from "@/app/_components/typography/h3";
 import { PROJECTS } from "@/app/_constants/projects";
 import type { FeaturedCategory, Project } from "@/app/_types/project";
-import { MoveRightIcon } from "lucide-react";
-import Link from "next/link";
 
 const CATEGORY_ORDER: FeaturedCategory[] = [
   "Web3 Backend & Infrastructure",

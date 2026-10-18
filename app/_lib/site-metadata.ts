@@ -19,8 +19,7 @@ export const BACKGROUND =
 
 export const AVAILABILITY = {
   headline: "Open to full-time remote roles",
-  detail:
-    "France (CET) · async, cross-timezone teams · open to relocation",
+  detail: "France (CET) · async, cross-timezone teams · open to relocation",
 };
 
 export const DEFAULT_TITLE = `${SITE_NAME} — ${ROLE}`;

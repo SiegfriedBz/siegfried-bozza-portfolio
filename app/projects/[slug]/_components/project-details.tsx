@@ -1,3 +1,7 @@
+import { ExternalLinkIcon, Newspaper } from "lucide-react";
+import Link from "next/link";
+import type { ComponentProps, FC } from "react";
+import { LuGithub } from "react-icons/lu";
 import { ProjectCarousel } from "@/app/_components/project-carousel";
 import { ProjectLinks } from "@/app/_components/project-links";
 import { RichText } from "@/app/_components/rich-text";
@@ -13,10 +17,6 @@ import type { Project } from "@/app/_types/project";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { ExternalLinkIcon, Newspaper } from "lucide-react";
-import Link from "next/link";
-import type { ComponentProps, FC } from "react";
-import { LuGithub } from "react-icons/lu";
 import { ProjectDiagramCard } from "./project-diagram-card";
 
 type Props = ComponentProps<"div"> & { project: Project };

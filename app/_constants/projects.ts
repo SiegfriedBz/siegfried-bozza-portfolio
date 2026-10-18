@@ -1,14 +1,13 @@
-import type { Project } from "@/app/_types/project"
-import { verisciProject } from "./project-entries/verisci"
-import { walletWatcherProject } from "./project-entries/wallet-watcher"
-import { STACK } from "./stack"
+import type { Project } from "@/app/_types/project";
+import { verisciProject } from "./project-entries/verisci";
+import { walletWatcherProject } from "./project-entries/wallet-watcher";
+import { STACK } from "./stack";
 
-const bioVerifyGithub = "https://github.com/SiegfriedBz/BioVerify_Agentic_DApp"
+const bioVerifyGithub = "https://github.com/SiegfriedBz/BioVerify_Agentic_DApp";
 
 /** Bundled article hero + OG fallback (works with next/image without remotePatterns). */
 export const BIOVERIFY_ARTICLE_HERO =
-  "/projects/bioverify/images/bioverify_landing.jpg"
-
+  "/projects/bioverify/images/bioverify_landing.jpg";
 
 const bioVerifyProject: Project = {
   slug: "bioverify",
@@ -237,9 +236,9 @@ const bioVerifyProject: Project = {
       ? `${bioVerifyGithub}/blob/main/docs/architecture.md`
       : "",
   },
-}
+};
 
-export const BIOVERIFY_LINKS = bioVerifyProject.links
+export const BIOVERIFY_LINKS = bioVerifyProject.links;
 
 export const PROJECTS: Project[] = [
   verisciProject,
@@ -844,4 +843,4 @@ export const PROJECTS: Project[] = [
       github: "https://github.com/SiegfriedBz/Next-Auctions",
     },
   },
-]
+];
