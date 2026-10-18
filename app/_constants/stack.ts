@@ -24,6 +24,9 @@ export enum STACK {
   DRIZZLE = "DRIZZLE",
   NEON = "NEON",
   MONGODB = "MONGODB",
+  NODE = "NODE",
+  HONO = "HONO",
+  SQLITE = "SQLITE",
   UPSTASH = "UPSTASH",
   // web3 specific
   SOLIDITY = "SOLIDITY",

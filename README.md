@@ -1,6 +1,6 @@
 # Siegfried Bozza — Portfolio (2026)
 
-Personal site and digital resume: **Next.js 16**, **React 19**, **Tailwind CSS v4**, **motion**, **Mermaid**, **shadcn/ui**, **Biome**. Showcases five case studies (VeriSci, BioVerify, Bet2Gether, Forge, GavL) with deep-dive project pages and long-form articles written in **MDX**.
+Personal site and digital resume: **Next.js 16**, **React 19**, **Tailwind CSS v4**, **motion**, **Mermaid**, **shadcn/ui**, **Biome**. Showcases six case studies (VeriSci, Wallet Watcher, BioVerify, Bet2Gether, Forge, GavL) with deep-dive project pages and long-form articles written in **MDX**.
 
 **Live:** [siegfried-bozza-portfolio-next.vercel.app](https://siegfried-bozza-portfolio-next.vercel.app)
 

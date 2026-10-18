@@ -25,11 +25,14 @@ const CATEGORIES: { label: string; items: STACK[] }[] = [
   {
     label: "Backend",
     items: [
+      STACK.NODE,
+      STACK.HONO,
       STACK.SUPABASE,
       STACK.STRIPE,
       STACK.INNGEST,
       STACK.DRIZZLE,
       STACK.NEON,
+      STACK.SQLITE,
       STACK.MONGODB,
     ],
   },

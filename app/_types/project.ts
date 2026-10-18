@@ -57,6 +57,11 @@ export type Project = {
 
   images: string[];
   gifs: string[];
+  /** Cover for projects without a UI (e.g. a backend service): a short terminal transcript. */
+  terminal?: {
+    title: string;
+    lines: string[];
+  };
 
   links: {
     page: string;
