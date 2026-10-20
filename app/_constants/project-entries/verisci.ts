@@ -1,14 +1,14 @@
-/** VeriSci — figures verified against origin/main on 2026-10-18. */
+/** VeriSci — figures verified against main (ee6fe7b) on 2026-10-20. */
 import { STACK } from "@/app/_constants/stack";
 import type { Project } from "@/app/_types/project";
 
 const REPO = "https://github.com/SiegfriedBz/verisci";
-const blob = (path: string) => `${REPO}/blob/HEAD/${path}`;
+const blob = (path: string) => `${REPO}/blob/main/${path}`;
 
 export const verisciProject: Project = {
   slug: "verisci",
   languages: ["TypeScript", "Solidity"],
-  constructionPeriod: "Aug–Oct 2026",
+  constructionPeriod: "Oct 2026",
   title: {
     h1: "VeriSci",
     h2: "Open Reproducibility-Readiness Ratings for Life-Science Papers on the OriginTrail DKG and Base",
@@ -22,10 +22,10 @@ export const verisciProject: Project = {
       "Trust in a scientific paper is mostly inferred from the journal it appeared in, and the reviews behind that judgement are rarely public. Reporting guidelines such as CONSORT and ARRIVE list what a paper must state for others to repeat the work, yet compliance is rarely checked in the open. In a 2016 Nature survey of more than 1,500 researchers, more than 70% had tried and failed to reproduce another scientist's experiments.",
     solution:
       "VeriSci publishes a paper to the **OriginTrail DKG** as a Knowledge Asset signed by its submitter (**EIP-712**). Anyone with a wallet can request a rating on a **Base Sepolia** contract. A durable **Inngest** run reads the paper, has **Gemini** answer the reporting checklist for its kind of study with quotes, checks every quote in code, computes the score once, publishes the rating as its own Knowledge Asset, and has the oracle record the score on chain.",
-    overview: `VeriSci is an early, actively developed DeSci app that rates how completely a life-science or health paper reports its work, a score it calls **reproducibility readiness**. Everything runs on testnets, and the deployed app has no published papers yet.
+    overview: `VeriSci is a DeSci app under construction that rates how completely a life-science or health paper reports its work, a score it calls **reproducibility readiness**. The first phase, a machine score, runs on testnets, and production already has published papers and settled ratings. Human review, with reviewers drawn by **Chainlink VRF**, comes next.
 The rating's evidence (rationale, study type, every check with its quote) lives in a Knowledge Asset on the **OriginTrail DKG**; the score and which asset counts live on the **RatingController** contract on **Base Sepolia**. The contract is never ahead of the DKG, and the UI flags any gap between them.
 Most of the engineering is off-chain. Chain events arrive through an **HMAC**-verified **Alchemy Notify** webhook, a cron reconciler restarts stuck requests from the contract's own pending set, every store, mint, fulfil and cancel reads state before writing, and a single serialized **Inngest** function sends every oracle transaction.
-The project is a rebuild of an earlier prototype, desci-rating-dapp, and its 33 ADRs record what that prototype taught.`,
+The project is a rebuild of an earlier prototype, desci-rating-dapp, and its 35 ADRs start from what that prototype taught.`,
   },
 
   features: [
@@ -69,23 +69,37 @@ The project is a rebuild of an earlier prototype, desci-rating-dapp, and its 33 
     {
       key: "Operational alerts",
       description:
-        "An hourly health check reads the DKG node, the oracle and publisher wallet balances (ETH and TRAC) and requests pending past 6 hours, and posts what needs attention to a **Telegram** chat, along with failed runs, orphaned rating assets, published papers and settled ratings.",
+        "An hourly health check reads the DKG node, the oracle and publisher wallet balances (ETH and TRAC) and requests pending past 6 hours, and posts what needs attention to a **Telegram** chat, along with failed runs, orphaned rating assets, published papers and settled ratings. Production refuses to start without the bot's settings.",
+    },
+    {
+      key: "Readable by search engines and AI search",
+      description:
+        "Production is open to crawlers ([ADR 0040](" +
+        blob("docs/adr/0040-production-is-open-to-crawlers.md") +
+        ")). Each paper and rating has its own title, canonical link and schema.org data (a ScholarlyArticle, and a rating as a Review of it), each paper a share card, and crawlers that run no JavaScript get the record in the HTML.",
+    },
+    {
+      key: "Wallet loaded on demand",
+      description:
+        "Pages load the wallet's code (**Reown AppKit**, WalletConnect, about 1 MB) only when a visitor uses it or comes back connected. Lighthouse mobile went from 67–74 to 92–97 on every page.",
     },
   ],
 
   challenges: `A DKG mint can succeed while its response is lost: in a spike against the project's own node, three concurrent mints of one asset produced one mint, one reverted transaction that still paid gas and one token approval, and a mint whose client disconnected landed seconds later. Every write therefore reads state first, and mints are started and then polled in short steps.
 A hosted LLM gives different answers to the same paper, even at temperature 0. The score is computed once from checked quotes, stored in the rating's Knowledge Asset and read back by every retry, so the score on chain always equals the one on the DKG.
 Webhooks arrive at least once, can be lost, and after a reorg may describe a log that is no longer on chain; Inngest deduplicates event ids for 24 hours only, and its concurrency limits count steps, not sleeping runs. Recovery combines request-derived event ids, a singleton run per request, on-chain reads before every write, and a reconciler that reads the contract's pending set.
-The free RPC tier caps eth_getLogs at 10 blocks, so the prototype could only recover a stuck rating from the browser that requested it. The rebuilt contract stores everything recovery needs, readable a page at a time.`,
+The free RPC tier caps eth_getLogs at 10 blocks, so the prototype could only recover a stuck rating from the browser that requested it. The rebuilt contract stores everything recovery needs, readable a page at a time.
+Production's first context graph never became active: OriginTrail's network kept it dormant, every mint was declined, and the run blamed VeriSci's own node. A declined mint now stops as network-refused and the paper's page says the network has not accepted the record yet. Production moved to a newly registered graph, which minted its first paper on the first try.`,
 
-  outcome: `Both flows (publish a paper, request and settle a rating) are built and deployed to separate staging and production environments on Base Sepolia, with the DKG node, GROBID and an RPC proxy on a dedicated server. Ratings run end to end locally against a contract on Anvil; deployed, a webhook starts each rating and a cron restarts a stuck one. VeriSci is early and in active development, and the deployed app has no published papers yet.
-The project is mostly evidence of engineering habits: decisions recorded in ADRs that the feature plans cite, behaviour observed on real systems written down as dated domain facts, and a test suite that drives whole durable workflows with fake step tools.`,
+  outcome: `Both flows (publish a paper, request and settle a rating) run on separate staging and production environments on Base Sepolia, with the DKG node, GROBID and an RPC proxy on a dedicated server. A webhook starts each rating and a cron restarts a stuck one, and production has its first published papers and settled ratings. VeriSci is still under construction: human review is the next phase on the roadmap below.
+The project is mostly evidence of engineering habits: decisions recorded in ADRs that the feature plans cite, behaviour observed on real systems written down as dated domain facts, and a test suite that drives whole durable workflows with fake step tools.
+I built the repo in about three weeks, alongside my full-time job, which I could not have done without **Claude Code**. It works inside a harness I set up: a CLAUDE.md per workspace, skills that plan a feature, write its tests first and review the branch, hooks that lint and test every edited file, and a read-only reviewer agent that blocks a pull request conflicting with an accepted ADR.`,
 
   outcomeMetrics: [
-    "**33 ADRs** on the default branch (numbered to 0039, with 6 folded into others), each amendment logged with a dated History line",
-    "**1,467 Vitest tests** in 116 files across 7 workspaces, all passing",
+    "**35 ADRs** on `main` (numbered to 0041, with 6 folded into others), each amendment logged with a dated History line",
+    "**1,714 Vitest tests** in 139 files across 7 workspaces, all passing",
     "**74 Foundry tests**: 61 unit and fuzz tests on RatingController, 12 on the deploy script, and an invariant suite of 6 properties; CI runs each fuzz test 5,000 times",
-    "**Domain core coverage:** 100% of lines and 96.2% of branches, with CI failing below 90% of branches",
+    "**Domain core coverage:** 100% of lines and 96.3% of branches, with CI failing below 90% of branches",
     "**14 reference papers** (12 in the field across every study type, 2 outside it) with expected answers written before the scorer first read them",
     "**3 RatingController deployments per environment** on Base Sepolia, past ones still read by the backend",
   ],
@@ -99,17 +113,21 @@ The project is mostly evidence of engineering habits: decisions recorded in ADRs
     "**Gemini free tier:** the scoring model allows 20 requests a day, shared by every environment.",
     "**The score measures reporting completeness only.** It says nothing about whether findings are right, a fabricated paper that reports everything would score well, and 14 reference papers are far too few to call it calibrated.",
     "**One hot oracle key** on the deployment, holding a few days of gas and alerted on below a threshold.",
+    "**One copy of each PDF**, on Pinata: the CID proves a file is unchanged but does not keep it available.",
     "**No end-to-end tests yet**; the pages have component tests.",
   ],
 
   roadmap: [
-    "**Phase 2, human review:** reviewers drawn with **Chainlink VRF**, their input checked by the backend and recorded by the oracle as a new version of the same rating asset ([ADR 0012](" +
+    "**Phase 2, transparent human review (next):** reviewers drawn at random with **Chainlink VRF**, whose proof is checked on chain, so no one can steer the draw and anyone can audit it. VeriSci's node writes their score into the same rating asset and the oracle records it ([ADR 0012](" +
       blob("docs/adr/0012-three-phases-settled-by-the-oracle.md") +
-      ")).",
-    "**Phase 3, wet-lab replication**, settled the same way.",
-    "**A payment plan before mainnet**, likely a payable request with a refund if the oracle stalls.",
-    "**End-to-end tests** with Playwright.",
-    "**Stronger key and node setup:** oracle signing in a KMS or dedicated signer, and one DKG token per graph.",
+      ")). Reviewer staking and pay are planned, not decided yet.",
+    "**Payment, for people and AI agents:** today a requester pays only gas and VeriSci pays the rest ([ADR 0015](" +
+      blob("docs/adr/0015-rating-requests-are-free-on-testnet.md") +
+      ")); a fee for publishing and rating is planned before mainnet.",
+    "**An API for AI agents**, to publish papers, request ratings of any paper published on VeriSci, and read both, without the web app.",
+    "**A lasting, decentralized copy of every PDF**, then **mainnet**.",
+    "**Phase 3, wet-lab replication:** a lab repeats the experiments and a second round of human review checks its results before the oracle scores them.",
+    "**Engineering:** end-to-end tests with Playwright, oracle signing in a KMS or dedicated signer, and one DKG token per graph.",
   ],
 
   stack: {
@@ -170,7 +188,7 @@ The project is mostly evidence of engineering habits: decisions recorded in ADRs
       {
         key: "Vitest + fast-check",
         description:
-          "1,467 tests across the monorepo, with durable workflows driven through fake step tools and property-based tests for UAL parsing and asset names.",
+          "1,714 tests across the monorepo, with durable workflows driven through fake step tools and property-based tests for UAL parsing and asset names.",
       },
     ],
   },
@@ -198,11 +216,11 @@ The project is mostly evidence of engineering habits: decisions recorded in ADRs
     category: "Web3 Backend & Infrastructure",
     subtitle: "OriginTrail DKG & Base Sepolia",
     summary:
-      "An open, verifiable rating for life-science papers, built by a former molecular biologist. The evidence lives on the **OriginTrail DKG**, the score on a **Base Sepolia** contract, and the off-chain pipeline between them is built to survive lost webhooks, retried mints and stuck transactions.",
+      "An open, verifiable rating for life-science papers, built by a former molecular biologist. The evidence lives on the **OriginTrail DKG**, the score on a **Base Sepolia** contract, and the off-chain pipeline between them is built to survive lost webhooks, retried mints and stuck transactions. Under construction: the machine score runs on testnets, and human review with **Chainlink VRF** is next.",
     bullets: [
       "**Every write converges:** stores, mints, fulfils and cancels read state first, and the LLM's score is computed once and read back from the minted asset, so retries and restarts never write twice.",
       "**At-least-once ingestion with recovery:** HMAC-verified **Alchemy Notify** webhooks, request-derived **Inngest** event ids, and a cron reconciler that reads the contract's pending set instead of scanning logs.",
-      "**Decisions on record:** 33 ADRs, 1,467 Vitest tests and 74 Foundry tests (fuzz and invariants), with staging and production isolated down to contracts, graphs and oracle keys.",
+      "**Decisions on record:** 35 ADRs, 1,714 Vitest tests and 74 Foundry tests (fuzz and invariants), with staging and production isolated down to contracts, graphs and oracle keys.",
     ],
   },
 
