@@ -18,7 +18,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "wallet-watcher",
-    title: "Counting Every Wei Once: A Custody-Style Wallet Backend",
+    title: "Making the Books Match the Chain: A Wallet Backend on Sepolia",
     subtitle:
       "Exactly-once outflows from receipts, bigint wei end to end, Multicall3 snapshots pinned to their block, and an HTTP layer that never sees a key.",
     excerpt:

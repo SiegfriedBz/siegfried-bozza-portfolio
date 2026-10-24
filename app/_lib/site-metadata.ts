@@ -13,12 +13,18 @@ export const ROLE = "Full-Stack Web3 Engineer";
 export const PITCH =
   "I build the off-chain systems that on-chain products depend on: event pipelines, wallet and settlement backends, durable AI-agent workflows, and the dApps on top.";
 
-export const CORE_STACK = ["TypeScript", "Solidity", "Node.js", "Next.js"];
+export const CORE_STACK = [
+  "Next.js",
+  "TypeScript",
+  "Node.js",
+  "Solidity",
+  "Foundry",
+];
 
 export const AVAILABILITY = {
   headline: "Open to relocation or full-time remote",
   detail:
-    "Based in France (CET). I'd happily move for the right full-time role, Asia-Pacific most of all, and I work well remote with async teams.",
+    "Based in France (CET). I'd happily move for the right full-time role, Asia-Pacific most of all. Remote works for me too.",
   /** Short forms for the About header. */
   label: "Open to relocation",
   location: "France (CET) · APAC preferred · or remote",
@@ -30,7 +36,7 @@ export const AVAILABILITY = {
  * Keep it factual and current.
  */
 export const PERSON_SUMMARY =
-  "I'm Siegfried Bozza, a Full-Stack Web3 Engineer based in Annecy, France. I'd relocate for the right full-time role, ideally in Asia-Pacific, and I'm also open to remote work. I build the off-chain systems that on-chain products depend on, in TypeScript and Solidity: event pipelines, wallet and settlement backends, durable AI-agent workflows and dApps. I've worked at Prismo.io since 2024. Before software I spent fifteen years in molecular-biology research and environmental engineering, living and working in France, Canada and Switzerland. From mid-2023 to mid-2024 I studied full-stack and Web3 development while travelling, partly in Indonesia. My recent projects, VeriSci and BioVerify, are in decentralized science (DeSci).";
+  "I'm Siegfried Bozza, a Full-Stack Web3 Engineer. I spent fifteen years in molecular-biology research and environmental engineering in France, Canada and Switzerland, then moved to software in 2022, starting at Renuo AG in Zurich. From mid-2023 to mid-2024 I studied full-stack and Web3 development while travelling, partly in Vietnam and Indonesia. Since 2024 I've been a full-stack engineer at Prismo.io, a production SaaS built with Next.js, TypeScript and Supabase. On my own time I build Web3 projects on testnets in TypeScript and Solidity, mostly the backend around the contracts. Two of them, VeriSci and BioVerify, are decentralized-science (DeSci) apps. I'd relocate for the right full-time role, ideally in Asia-Pacific, and I'm also open to remote work.";
 
 export const DEFAULT_TITLE = `${SITE_NAME} | ${ROLE}`;
 

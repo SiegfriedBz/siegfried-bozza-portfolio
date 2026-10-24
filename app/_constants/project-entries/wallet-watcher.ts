@@ -14,7 +14,7 @@ export const walletWatcherProject: Project = {
   title: {
     h1: "Wallet Watcher",
     h2: "Custody Backend: HD Wallets, ETH Ledger and Signed Withdrawals",
-    short: "Exactly-Once Withdrawal Ledger",
+    short: "A Wallet Backend Whose Books Match the Chain",
   },
   description: {
     short:
