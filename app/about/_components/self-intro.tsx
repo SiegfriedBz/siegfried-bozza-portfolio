@@ -23,7 +23,7 @@ const PROJECT_BULLETS = [
 ];
 
 const CLOSING =
-  "I'm looking for a **full-time remote** role on a Web3 or DeSci team. I can work from anywhere and I'm used to async work across time zones. Wherever I land, I'll show up ready to build, and find a mountain or a wave on Sundays.";
+  "I'm looking for a **full-time** role on a Web3 or DeSci team. I'd happily **relocate** for it, to Asia-Pacific most of all, and I also work well **remote** with async teams across time zones. Wherever I land, I'll show up ready to build, and find a mountain or a wave on Sundays.";
 
 export const SelfIntro = () => {
   return (

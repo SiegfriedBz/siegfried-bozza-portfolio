@@ -70,7 +70,9 @@ export default function Page() {
 
           <div className="flex gap-x-3 items-center">
             <EarthIcon className="text-amber-500 size-5" />
-            <TypographyH6 className="font-semibold">Remote</TypographyH6>
+            <TypographyH6 className="font-semibold">
+              {AVAILABILITY.label}
+            </TypographyH6>
           </div>
 
           <TypographyH6 className="font-semibold -mt-2 text-center text-muted-foreground">

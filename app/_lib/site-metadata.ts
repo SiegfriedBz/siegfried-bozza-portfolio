@@ -16,11 +16,12 @@ export const PITCH =
 export const CORE_STACK = ["TypeScript", "Solidity", "Node.js", "Next.js"];
 
 export const AVAILABILITY = {
-  headline: "Open to full-time remote roles",
+  headline: "Open to relocation or full-time remote",
   detail:
-    "Currently in France (CET). I can work from anywhere and I'm used to async teams across time zones.",
-  /** Short form for the About header. */
-  location: "France (CET) · location-independent",
+    "Based in France (CET). I'd happily move for the right full-time role, Asia-Pacific most of all, and I work well remote with async teams.",
+  /** Short forms for the About header. */
+  label: "Open to relocation",
+  location: "France (CET) · APAC preferred · or remote",
 };
 
 /**
@@ -29,17 +30,17 @@ export const AVAILABILITY = {
  * Keep it factual and current.
  */
 export const PERSON_SUMMARY =
-  "I'm Siegfried Bozza, a Full-Stack Web3 Engineer based in Annecy, France, looking for a full-time remote role I can do from anywhere. I build the off-chain systems that on-chain products depend on, in TypeScript and Solidity: event pipelines, wallet and settlement backends, durable AI-agent workflows and dApps. I've worked at Prismo.io since 2024. Before software I spent fifteen years in molecular-biology research and environmental engineering, living and working in France, Canada and Switzerland. From mid-2023 to mid-2024 I studied full-stack and Web3 development while travelling, partly in Indonesia. My recent projects, VeriSci and BioVerify, are in decentralized science (DeSci).";
+  "I'm Siegfried Bozza, a Full-Stack Web3 Engineer based in Annecy, France. I'd relocate for the right full-time role, ideally in Asia-Pacific, and I'm also open to remote work. I build the off-chain systems that on-chain products depend on, in TypeScript and Solidity: event pipelines, wallet and settlement backends, durable AI-agent workflows and dApps. I've worked at Prismo.io since 2024. Before software I spent fifteen years in molecular-biology research and environmental engineering, living and working in France, Canada and Switzerland. From mid-2023 to mid-2024 I studied full-stack and Web3 development while travelling, partly in Indonesia. My recent projects, VeriSci and BioVerify, are in decentralized science (DeSci).";
 
 export const DEFAULT_TITLE = `${SITE_NAME} | ${ROLE}`;
 
 /** SERP-friendly (≤160 chars). */
 export const SITE_DESCRIPTION_SHORT =
-  "Full-Stack Web3 Engineer (TypeScript, Solidity). Event pipelines, wallet backends and AI-agent workflows around smart contracts. Open to remote roles.";
+  "Full-Stack Web3 Engineer (TypeScript, Solidity). Event pipelines, wallet backends and AI-agent workflows around smart contracts. Open to relocation or remote.";
 
 /** Richer copy for Open Graph / Twitter. */
 export const SITE_DESCRIPTION_LONG =
-  "Full-Stack Web3 Engineer working in TypeScript and Solidity. I build the off-chain systems on-chain products depend on. Personal projects, on testnets: VeriSci (open paper ratings on the OriginTrail DKG), Wallet Watcher (a custody backend slice with an append-only ledger, outflows booked exactly once), BioVerify (agentic DeSci peer review with Chainlink VRF), plus Bet2Gether, Forge and GavL. Open to full-time remote roles.";
+  "Full-Stack Web3 Engineer working in TypeScript and Solidity. I build the off-chain systems on-chain products depend on. Personal projects, on testnets: VeriSci (open paper ratings on the OriginTrail DKG), Wallet Watcher (a custody backend slice with an append-only ledger, outflows booked exactly once), BioVerify (agentic DeSci peer review with Chainlink VRF), plus Bet2Gether, Forge and GavL. Open to relocation (Asia-Pacific first) or full-time remote.";
 
 export const DEFAULT_KEYWORDS = [
   "Siegfried Bozza",
@@ -68,6 +69,7 @@ export const DEFAULT_KEYWORDS = [
   "Inngest",
   "smart contracts",
   "remote",
+  "relocation",
 ] as const;
 
 /**
