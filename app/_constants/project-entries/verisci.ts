@@ -93,10 +93,10 @@ Production's first context graph never became active: OriginTrail's network kept
 
   outcome: `Both flows (publish a paper, request and settle a rating) run on separate staging and production environments on Base Sepolia, with the DKG node, GROBID and an RPC proxy on a dedicated server. A webhook starts each rating and a cron restarts a stuck one, and production has its first published papers and settled ratings. VeriSci is still under construction: human review is the next phase on the roadmap below.
 The project is mostly evidence of engineering habits: decisions recorded in ADRs that the feature plans cite, behaviour observed on real systems written down as dated domain facts, and a test suite that drives whole durable workflows with fake step tools.
-I built the repo in about three weeks, alongside my full-time job, which I could not have done without **Claude Code**. It works inside a harness I set up: a CLAUDE.md per workspace, skills that plan a feature, write its tests first and review the branch, hooks that lint and test every edited file, and a read-only reviewer agent that blocks a pull request conflicting with an accepted ADR.`,
+I built the repo in about three weeks, alongside my full-time job, and I could not have done it without **Claude Code**. It works inside a harness I set up: a CLAUDE.md per workspace, skills that plan a feature, write its tests first and review the branch, hooks that lint and test every edited file, and a read-only reviewer agent that blocks a pull request conflicting with an accepted ADR.`,
 
   outcomeMetrics: [
-    "**35 ADRs** on `main` (numbered to 0041, with 6 folded into others), each amendment logged with a dated History line",
+    "**35 ADRs** on main (numbered to 0041, with 6 folded into others), each amendment logged with a dated History line",
     "**1,714 Vitest tests** in 139 files across 7 workspaces, all passing",
     "**74 Foundry tests**: 61 unit and fuzz tests on RatingController, 12 on the deploy script, and an invariant suite of 6 properties; CI runs each fuzz test 5,000 times",
     "**Domain core coverage:** 100% of lines and 96.3% of branches, with CI failing below 90% of branches",
@@ -124,7 +124,7 @@ I built the repo in about three weeks, alongside my full-time job, which I could
     "**Payment, for people and AI agents:** today a requester pays only gas and VeriSci pays the rest ([ADR 0015](" +
       blob("docs/adr/0015-rating-requests-are-free-on-testnet.md") +
       ")); a fee for publishing and rating is planned before mainnet.",
-    "**An API for AI agents**, to publish papers, request ratings of any paper published on VeriSci, and read both, without the web app.",
+    "**An API for AI agents**, to read papers and ratings and to request ratings without the web app.",
     "**A lasting, decentralized copy of every PDF**, then **mainnet**.",
     "**Phase 3, wet-lab replication:** a lab repeats the experiments and a second round of human review checks its results before the oracle scores them.",
     "**Engineering:** end-to-end tests with Playwright, oracle signing in a KMS or dedicated signer, and one DKG token per graph.",
