@@ -146,9 +146,10 @@ export const BioVerifyArticle: FC = () => {
               key: "hitl",
               content: (
                 <>
-                  <strong>Human-in-the-loop</strong> — AI agents coordinate the
-                  workflow, but reviewers make every verdict call; agents record
-                  and settle, they never override.
+                  <strong>Human-in-the-loop</strong> — human reviewers sign the
+                  peer verdicts and the senior reviewer has the final word after
+                  an escalation; an agent records and settles them. The
+                  plagiarism screen and the call to escalate are LLM decisions.
                 </>
               ),
             },
@@ -246,7 +247,7 @@ export const BioVerifyArticle: FC = () => {
           title="From on-chain event to off-chain intelligence"
         />
 
-        <h3 className={h3}>Getter-less contract: CQRS as a first principle</h3>
+        <h3 className={h3}>Getter-light contract: CQRS as a first principle</h3>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <code>BioVerifyV3</code> is deliberately getter-light. It emits a
           granular event for every state transition and avoids exposing view
@@ -256,14 +257,15 @@ export const BioVerifyArticle: FC = () => {
           read model.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          The contract benefits: smaller bytecode means cheaper deployment,
-          lower ongoing interaction gas where it matters, and a smaller attack
-          surface to audit. The frontend benefits: the UI reads a fast Postgres
-          projection rather than orchestrating dozens of <code>eth_call</code>{" "}
-          requests against the chain — work the EVM is not optimised for product
-          lists — while Drizzle-backed queries support rich filtering, sorting,
-          and pagination. The chain is the source of truth; Postgres reflects
-          that truth and is the source of responsiveness, lowering UI latency.
+          The contract benefits: smaller bytecode means cheaper deployment and a
+          smaller surface to audit (every write emits events, so writes cost a
+          little more gas, not less). The frontend benefits: the UI reads a fast
+          Postgres projection rather than orchestrating dozens of{" "}
+          <code>eth_call</code> requests against the chain — work the EVM is not
+          optimised for product lists — while Drizzle-backed queries support
+          rich filtering, sorting, and pagination. The chain is the source of
+          truth; Postgres reflects that truth and is the source of
+          responsiveness, lowering UI latency.
         </TypographyP>
 
         <h3 className={h3}>Alchemy Notify: from block to webhook</h3>
@@ -442,8 +444,9 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Fetch from IPFS.</strong> The agent retrieves the full
           publication manifest by its CID. This is the same content the author
-          uploaded — content-addressed, so the agent is guaranteed to read
-          exactly what was submitted, unchanged.
+          uploaded, addressed by its CID. The agent fetches it through the
+          Pinata gateway without re-hashing it, so this relies on trusting the
+          gateway.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Plagiarism check with Exa.</strong> The agent passes the
@@ -564,11 +567,12 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <TechTag variant="amber">Chainlink VRF v2.5</TechTag> follows the
           usual hybrid smart-contract pattern: random words are produced
-          off-chain together with a cryptographic proof; the consumer contract
-          verifies that proof on-chain before consuming the words. The draw is
-          not merely opaque — it is <strong>verifiable</strong>. Think of it as
-          a public lottery where you do not have to trust the organiser: anyone
-          can re-check the draw afterward.
+          off-chain together with a cryptographic proof; the Chainlink VRF
+          coordinator verifies that proof on-chain before calling back the
+          consumer contract. The draw is not merely opaque — it is{" "}
+          <strong>verifiable</strong>. Think of it as a public lottery where you
+          do not have to trust the organiser: anyone can re-check the draw
+          afterward.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           In BioVerify&apos;s flow: the agent calls <code>pickReviewers()</code>{" "}
@@ -582,7 +586,7 @@ export const BioVerifyArticle: FC = () => {
 
         <DiagramWrap
           label="Figure 3 — Chainlink VRF: verifiable reviewer selection"
-          caption="Random words come back with a cryptographic proof; the contract verifies the proof on-chain before drawing reviewers from the staked pool."
+          caption="Random words come back with a cryptographic proof; the VRF coordinator verifies it on-chain, then calls back BioVerifyV3, which draws reviewers from the staked pool."
         >
           <Figure3Vrf />
         </DiagramWrap>
@@ -717,8 +721,8 @@ export const BioVerifyArticle: FC = () => {
         <ul className={dashList}>
           <li>
             <strong>Peer reviewers.</strong> The non-senior members of the VRF
-            draw. They submit independent pass/fail verdicts. When both agree,
-            the graph routes straight to settlement —{" "}
+            draw. They submit independent pass/fail verdicts, and Gemini reads
+            them and decides whether to settle or escalate. When it settles —{" "}
             <code>publishPublication</code> if the shared verdict is pass,{" "}
             <code>slashPublication</code> if it is fail; in that branch the
             settlement helper classifies both peers as honest: each gets their
@@ -967,12 +971,12 @@ export const BioVerifyArticle: FC = () => {
           agent.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          <strong>Contract test coverage.</strong> <code>BioVerifyV3</code>{" "}
-          ships with full coverage in Foundry: 50 tests across 12 suites — 100%
-          lines, statements, branches, and functions. VRF flows use{" "}
-          <code>VRFCoordinatorV2_5Mock</code> with deterministic fulfillment
-          overrides and log assertions, including edge cases such as colliding
-          random words.
+          <strong>Contract test coverage.</strong> <code>BioVerifyV3</code> has
+          50 Foundry tests across 12 suites; the last committed coverage run
+          (March 2026, before later contract changes) showed 100% of lines and
+          functions. VRF flows use <code>VRFCoordinatorV2_5Mock</code> with
+          deterministic fulfillment overrides and log assertions, including edge
+          cases such as colliding random words.
         </TypographyP>
 
         <hr className="my-14 border-border dark:border-white/10" />

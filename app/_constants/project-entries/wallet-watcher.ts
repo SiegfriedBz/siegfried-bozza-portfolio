@@ -1,4 +1,4 @@
-/** Wallet Watcher — figures verified against the repo and Sepolia on 2026-10-18. */
+/** Wallet Watcher — figures verified against the repo and Sepolia on 2026-10-18; claims re-reviewed against origin/main (ee67e0e) on 2026-10-24. */
 import { STACK } from "@/app/_constants/stack";
 import type { Project } from "@/app/_types/project";
 
@@ -13,26 +13,26 @@ export const walletWatcherProject: Project = {
   constructionPeriod: "Sep–Oct 2026",
   title: {
     h1: "Wallet Watcher",
-    h2: "Custody Backend: HD Wallets, ETH Ledger and Signed Withdrawals",
-    short: "A Wallet Backend Whose Books Match the Chain",
+    h2: "Custody Backend Slice: HD Wallets, ETH Ledger and Signed Withdrawals",
+    short: "Each Withdrawal Booked Once, From Its Receipt",
   },
   description: {
     short:
-      "Custody backend slice on Sepolia: HD wallets, an append-only ETH ledger, and EIP-1559 withdrawals booked exactly once from their receipts.",
+      "Custody backend slice on Sepolia: HD wallets, an append-only ETH ledger, and EIP-1559 withdrawals, each booked once from its receipt.",
     problem:
       "Backends that move money fail in boring ways: a withdrawal counted twice, wei rounded through a float, a spend approved on a stale balance, an RPC key leaked into a log, a transaction signed for the wrong chain. None of them needs an attacker, and each one leaves the books disagreeing with the chain.",
     solution:
-      "**Wallet Watcher** derives N wallets from one BIP-39 mnemonic, polls their ETH balances into an append-only **SQLite** ledger, and builds and signs **EIP-1559** withdrawals behind a localhost admin API. Outflows are written once from the **transaction receipt**, amounts stay **bigint** wei end to end, balances come from one **Multicall3** snapshot pinned to its block, and only **signer.ts** ever signs.",
+      "**Wallet Watcher** derives N wallets from one BIP-39 mnemonic, polls their ETH balances into an append-only **SQLite** ledger, and builds and signs **EIP-1559** withdrawals behind a localhost admin API. Each withdrawal is booked once, from its **transaction receipt**, amounts stay **bigint** wei end to end, balances come from one **Multicall3** snapshot pinned to its block, and only **signer.ts** ever signs.",
     overview: `Wallet Watcher is a single **Node.js** and **TypeScript** service on **Ethereum Sepolia**, built to a written spec. It derives 1 to 20 wallets at the BIP-44 path m/44'/60'/0'/0/i, polls every balance at startup and then every 8 minutes, and exposes a localhost API to list wallets, read each wallet's ledger, and build, sign and optionally broadcast withdrawals.
-The money logic sits in three pure modules with no I/O (withdrawal planning, settlement, change detection), and everything that touches the chain, the database or HTTP stays at the edges. A broadcast is recorded as **pending**; the poller later writes **one** outflow from the receipt, so a withdrawal can never be booked twice.
-The repo documents its own limits (no confirmation depth, one withdrawal in flight per wallet, keys in process memory) and a path to production: KMS/MPC signing, write-ahead broadcasts with idempotency keys, a reorg-aware ledger and nonce management.`,
+The money logic sits in three pure modules with no I/O (withdrawal planning, settlement, change detection), and everything that touches the chain, the database or HTTP stays at the edges. A broadcast is recorded as **pending**; the poller later writes **one** outflow from the receipt, never from a balance diff, so the poller cannot book the same withdrawal twice.
+The repo documents its own limits (no confirmation depth, one withdrawal in flight per wallet, keys in process memory, a known balance-after bug listed below) and a path to production: KMS/MPC signing, write-ahead broadcasts with idempotency keys, a reorg-aware ledger and nonce management.`,
   },
 
   features: [
     {
-      key: "Exactly-Once Outflows",
+      key: "One Outflow per Withdrawal, From the Receipt",
       description:
-        "A broadcast is stored as **pending** and the ledger is left alone. The poller writes **one** outflow from the receipt (amount + **gasUsed × effectiveGasPrice**, or the fee alone if reverted), together with the status and new balance in a single SQLite transaction. While a withdrawal is pending, that wallet's balance diff is skipped, so the drop is never booked twice.",
+        "A broadcast is stored as **pending** and the ledger is left alone. The poller writes **one** outflow from the receipt (amount + **gasUsed × effectiveGasPrice**, or the fee alone if reverted), together with the status and new balance in a single SQLite transaction. While a withdrawal is pending, that wallet's balance diff is skipped, so the drop is not booked twice. An outflow the service did not record (a lost 502, a transaction sent by hand) shows up as its own **external_outflow** type: a built-in alarm.",
     },
     {
       key: "Exact Amounts, No Floats",
@@ -42,17 +42,17 @@ The repo documents its own limits (no confirmation depth, one withdrawal in flig
     {
       key: "Block-Consistent Balance Snapshots",
       description:
-        "Each round reads every balance and the block number in **one Multicall3 eth_call** (never split, no silent failures). The poller keeps a **block floor** and never compares against an older block than a receipt or snapshot it already relied on, so a lagging node behind a load-balanced RPC cannot create a false inflow.",
+        "Each round reads every balance and the block number in **one Multicall3 eth_call** (never split, no silent failures). The poller keeps a **block floor** and never compares against an older block than a receipt or snapshot it already relied on, so within a run a lagging node behind a load-balanced RPC cannot create a false inflow.",
     },
     {
       key: "Worst-Case Fee Check",
       description:
-        "A withdrawal is signed only if **balance ≥ value + gasLimit × maxFeePerGas**, on a balance, a pending-tag nonce, fees and a gas estimate read fresh from the chain. Otherwise the API returns **422** with the max sendable amount. It is exact when the node can estimate gas (one wei more is refused). When the amount is at or above the balance the node may refuse to estimate, the code falls back to 21,000 gas, and the figure is an upper bound.",
+        "A withdrawal is signed only if **balance ≥ value + gasLimit × maxFeePerGas**, on a balance, a pending-tag nonce, fees and a gas estimate read fresh from the chain. Otherwise the API returns **422** with the max sendable amount, exact to the wei on fixed inputs (unit-tested). When the amount is at least the balance, the code skips the estimate (the node may refuse it) and assumes 21,000 gas, so the figure is an upper bound.",
     },
     {
-      key: "Key Isolation and Least Privilege",
+      key: "Signing Behind One Module",
       description:
-        "Only **signer.ts** signs, deriving one wallet's key per signature; no private key is stored, logged or returned. The HTTP layer receives functions (read, sign, broadcast), never the mnemonic or the RPC client, and the RPC client has no account. Signing requires an admin key compared in constant time, and logged errors drop the RPC URL that carries the provider key.",
+        "Only **signer.ts** signs; no private key is stored, logged or returned. The HTTP layer receives functions (read, sign, broadcast), never the mnemonic or the RPC client, and the RPC client has no account. This is a module boundary inside one process: the mnemonic is loaded into the environment and stays in memory. Signing requires an admin key compared in constant time, and logged errors drop the RPC URL that carries the provider key.",
     },
     {
       key: "Testnet Enforced at Startup",
@@ -62,7 +62,7 @@ The repo documents its own limits (no confirmation depth, one withdrawal in flig
     {
       key: "Deterministic HD Wallets",
       description:
-        "BIP-39 mnemonic validated with its checksum, BIP-44 derivation at **m/44'/60'/0'/0/i**: the same index is always the same address, raising N appends and lowering it keeps a prefix. Verified against Hardhat's published test vectors.",
+        "BIP-39 mnemonic validated with its checksum, BIP-44 derivation at **m/44'/60'/0'/0/i**: the same index is always the same address, raising N appends and lowering it keeps a prefix. Ledger rows are keyed by address, not index, so a mnemonic change cannot inherit another wallet's history. Verified against Hardhat's published test vectors.",
     },
   ],
 
@@ -78,14 +78,16 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
     `**One outflow row** of −0.000523183071527 ETH for a 0.0005 ETH withdrawal: the amount plus **21,000 gas × 1.103955787 gwei** from the receipt ([Sepolia tx](${SEPOLIA_TX}))`,
     "**Worst-case fee bound** checked before signing: 0.000024728757984 ETH, against 0.000023183071527 ETH actually paid",
     "**One RPC call** reads every balance per poll round (Multicall3), plus one receipt lookup per pending withdrawal",
-    "**Ledger matches chain:** wallet #0's on-chain balance on 18 Oct 2026 (476,816,928,473,000 wei) equals its last ledger row",
-    "**Max sendable exact to the wei when gas can be estimated:** the computed amount is accepted, one wei more is refused (tested); an upper bound when the node refuses to estimate",
+    "**Ledger matched the chain in the walkthrough:** wallet #0's on-chain balance on 18 Oct 2026 (476,816,928,473,000 wei) equals its last ledger row",
+    "**Max sendable exact to the wei on fixed chain inputs:** the computed amount is accepted, one wei more is refused (unit-tested); an upper bound when the estimate is skipped",
   ],
 
   transferablePatterns:
     "**Receipt-driven settlement** for any system that books on-chain spends; **block-pinned snapshots** (one eth_call plus a block floor) for indexers and pollers behind load-balanced RPCs; **worst-case cost checks** on fresh state before signing; and **injecting capabilities instead of secrets** (sign, broadcast, read as functions), which turns a later move to KMS or MPC signing into a one-function change.",
 
   limitations: [
+    "**Known bug, balance-after:** if a deposit lands and a withdrawal settles before the poller has seen the deposit, the outflow row's balance-after is computed from the stale stored balance and can be negative until the next poll round (up to 8 minutes). The fix is to book the unseen inflow before the outflow.",
+    "**At most one outflow per broadcast, in one process:** a crash between send and insert, or a 502 that actually went through, is booked as an external outflow; a receipt later reorged out stays booked.",
     "**No confirmation depth:** balances are read at latest and a withdrawal settles on its first receipt, so a reorg could undo a recorded change.",
     "**One withdrawal in flight per wallet**, and the pending check is not atomic: two simultaneous broadcasts can both pass.",
     "**A never-mined transaction** keeps its wallet pending; there is no replacement or cancellation yet.",
@@ -115,9 +117,9 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
     ],
     main: [
       {
-        key: "Node.js 24 + TypeScript (strict)",
+        key: "Node.js 22.13+ + TypeScript (strict)",
         description:
-          "One process with a composition root, pure money modules and I/O at the edges; strict mode with **noUncheckedIndexedAccess**.",
+          "One process with a composition root, pure money modules and I/O at the edges; strict mode with **noUncheckedIndexedAccess**; CI runs on Node 24.",
       },
       {
         key: "viem",
@@ -137,12 +139,12 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
       {
         key: "SQLite (node:sqlite)",
         description:
-          "Three tables (balances, ledger, withdrawals), amounts as **TEXT**, and related writes in one transaction.",
+          "Three tables (balances, ledger, withdrawals), amounts as **TEXT**, and related writes in one transaction, rollback-tested by forcing a constraint failure mid-write.",
       },
       {
         key: "Vitest",
         description:
-          "**156 offline tests**: Hardhat test vectors, real signing, in-memory SQLite and fake chain clients.",
+          "**156 offline tests**: Hardhat test vectors, real signing, in-memory SQLite, and a fake chain that changes between calls and during retries (including a block older than one already seen).",
       },
     ],
   },
@@ -175,11 +177,11 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
     category: "Web3 Backend & Infrastructure",
     subtitle: "Sepolia · Node.js",
     summary:
-      "A small custody backend built to a written spec: HD wallets, an append-only ETH ledger and signed EIP-1559 withdrawals, where each withdrawal is booked once from its receipt and the HTTP layer never touches a key.",
+      "A small custody backend built to a written spec: HD wallets, an append-only ETH ledger and signed EIP-1559 withdrawals, where each withdrawal is booked once from its receipt and the HTTP layer never holds the mnemonic.",
     bullets: [
-      "**Exactly-once outflows:** a broadcast is stored as pending, and the poller writes one outflow from the receipt (amount + real fee), never from a balance diff.",
+      "**Receipt-driven settlement:** a broadcast is stored as pending, and the poller writes one outflow from the receipt (amount + real fee), never from a balance diff.",
       "**Consistent, exact reads:** every balance in one **Multicall3** eth_call pinned to its block, **bigint** wei end to end, and a worst-case fee check before signing.",
-      "**Key isolation:** only **signer.ts** signs, deriving one key per signature; 156 offline tests, CI green on main.",
+      "**Signing behind one module:** only **signer.ts** signs and no key is stored or logged; 156 offline tests, CI green on main.",
     ],
   },
 

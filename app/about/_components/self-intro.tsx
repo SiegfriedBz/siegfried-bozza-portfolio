@@ -17,9 +17,9 @@ const PROJECTS =
 
 const PROJECT_BULLETS = [
   "**VeriSci**: open reproducibility-readiness ratings for life-science papers: records on the **OriginTrail DKG**, scores on Base Sepolia, and every write safe to retry",
-  "**Wallet Watcher**: a custody-backend slice: HD wallets, an append-only ledger and outflows booked exactly once, with **viem**",
-  "**BioVerify**: peer review as a coordination game: **Chainlink VRF** reviewer selection, on-chain stakes and slashes, and multi-day human-in-the-loop agents (**LangGraph** + **Inngest**)",
-  "Smaller studies: **Bet2Gether** (Chainlink-settled prediction market), **Forge** (atomic ERC-1155 crafting) and **GavL** (real-time auctions with Supabase and Stripe)",
+  "**Wallet Watcher**: a custody-backend slice: HD wallets, an append-only ledger and each withdrawal booked once from its receipt, with **viem**",
+  "**BioVerify**: peer review as a coordination game: **Chainlink VRF** reviewer selection, on-chain stakes and slashes, and agents that pause for days of human review (**LangGraph**, with **Inngest** retries)",
+  "Smaller studies: **Bet2Gether** (prediction market resolved by Chainlink Automation), **Forge** (atomic ERC-1155 crafting) and **GavL** (auctions with Supabase and Stripe)",
 ];
 
 const CLOSING =

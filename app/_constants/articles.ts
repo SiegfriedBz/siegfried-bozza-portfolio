@@ -18,9 +18,10 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "wallet-watcher",
-    title: "Making the Books Match the Chain: A Wallet Backend on Sepolia",
+    title:
+      "Booking Every Withdrawal From Its Receipt: A Wallet Backend on Sepolia",
     subtitle:
-      "Exactly-once outflows from receipts, bigint wei end to end, Multicall3 snapshots pinned to their block, and an HTTP layer that never sees a key.",
+      "Outflows booked from receipts, bigint wei end to end, Multicall3 snapshots pinned to their block, and an HTTP layer that never holds the mnemonic.",
     excerpt:
       "A Node.js and TypeScript service on Sepolia that derives HD wallets, keeps an append-only ETH ledger and signs EIP-1559 withdrawals. The write-up covers the boring failure modes it rules out, how it is tested, and what production would change.",
     date: "2026-10-18",

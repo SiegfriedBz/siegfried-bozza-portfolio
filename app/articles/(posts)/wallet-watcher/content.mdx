@@ -4,7 +4,7 @@ Wallet Watcher is a small service I built to a written spec: the wallet-and-ledg
 
 <TLDR>
 
-- Every outflow is written once, by the poller, from the transaction receipt: amount plus `gasUsed × effectiveGasPrice`. A balance diff never books a withdrawal.
+- Each withdrawal is booked once, by the poller, from its transaction receipt: amount plus `gasUsed × effectiveGasPrice`. A balance diff never books a withdrawal; anything the service did not record shows up as `external_outflow`.
 - Amounts are `bigint` wei in code, `TEXT` in SQLite and strings in JSON. The API rejects amounts sent as JSON numbers.
 - All balances come from one Multicall3 `eth_call` that also returns its block number, and the poller never compares against a block older than one it already relied on.
 - A withdrawal is signed only if `balance ≥ value + gasLimit × maxFeePerGas`, on a balance read from the chain just before signing.
@@ -48,7 +48,7 @@ sequenceDiagram
 
 Without `broadcast`, the request stops after signing and returns the payload, the signature and the serialized `0x02…` transaction. Nothing is sent and nothing is recorded.
 
-## Exactly-once outflows: the receipt is the only source
+## One outflow per withdrawal: the receipt is the only source
 
 The simplest way to record withdrawals is to diff balances and call every drop an outflow. I didn't, because a diff only sees net change, so it cannot split the amount from the fee, and it races with settlement.
 
@@ -202,9 +202,9 @@ export const planWithdrawal = (input: WithdrawalInputs): WithdrawalPlan => {
 
 The function is pure; its inputs are read fresh just before it runs. The nonce comes from `eth_getTransactionCount` with the `pending` tag, so a transaction still in the mempool is not reused. Fees come from viem's `estimateFeesPerGas` (`maxFeePerGas` = 1.2 × base fee + priority fee), and gas from `eth_estimateGas`. The balance in SQLite can be minutes old, so it never decides a spend.
 
-As a result, sending a wallet's whole balance always fails: the fee comes on top. The API answers `422` with `maxSendableWei`, and the [tests](https://github.com/SiegfriedBz/wallet-watcher/blob/HEAD/test/withdrawal.test.ts) check that exactly that amount passes and one wei more fails. In the Sepolia run, the bound checked before signing was 0.000024728757984 ETH (21,000 gas at a `maxFeePerGas` of 1.177559904 gwei); the fee paid was 0.000023183071527 ETH.
+As a result, sending a wallet's whole balance always fails: the fee comes on top. The API answers `422` with `maxSendableWei`, and the [tests](https://github.com/SiegfriedBz/wallet-watcher/blob/HEAD/test/withdrawal.test.ts) check, on fixed chain inputs, that exactly that amount passes and one wei more fails. Live, fees are read again on every request, so a `maxSendableWei` can be refused a block later. In the Sepolia run, the bound checked before signing was 0.000024728757984 ETH (21,000 gas at a `maxFeePerGas` of 1.177559904 gwei); the fee paid was 0.000023183071527 ETH.
 
-Estimating gas instead of hard-coding 21,000 mattered sooner than I expected. Sepolia's Glamsterdam upgrade raised the cost of a first transfer to a never-used address: on 17 October, `eth_estimateGas` for a 1-wei transfer from wallet #0 returned 207,391 for a fresh address and 21,000 for wallet #1. When the amount is at least the balance, the node may refuse to estimate, so the code falls back to 21,000. The funds check fails anyway, but the `maxSendableWei` it reports is then an upper bound.
+Estimating gas instead of hard-coding 21,000 mattered sooner than I expected. Sepolia's Glamsterdam upgrade raised the cost of a first transfer to a never-used address: on 17 October, `eth_estimateGas` for a 1-wei transfer from wallet #0 returned 207,391 for a fresh address and 21,000 for wallet #1. When the amount is at least the balance, the node may refuse to estimate, so the code skips the estimate and assumes 21,000. The funds check fails anyway, but the `maxSendableWei` it reports is then an upper bound.
 
 ## Key isolation and least privilege
 
@@ -274,6 +274,8 @@ Not covered: the startup wiring in `index.ts` and real RPC behavior; the end-to-
 
 ## Known limitations
 
+- **Known bug:** if a deposit lands and a withdrawal settles before the poller has seen the deposit, the outflow row's balance-after is computed from the stale stored balance and can be negative until the next diff books the inflow, up to 8 minutes later. Booking the unseen inflow first (for example from the balance at `receipt.blockNumber − 1`) fixes it.
+- "Once" holds inside one process: a crash between `eth_sendRawTransaction` and the insert is booked as `external_outflow`, and a receipt later reorged out stays booked.
 - There is no confirmation depth: balances are read at `latest` and a withdrawal settles on its first receipt.
 - A transaction that is never mined keeps its wallet pending. No new broadcast is allowed and no diff runs, so a deposit to that wallet goes unrecorded too.
 - The one-pending check is not atomic, so two simultaneous broadcasts can both pass. Usually the node rejects the second for its nonce, but one with a high enough fee replaces the first, which then stays pending forever.

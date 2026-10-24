@@ -11,7 +11,7 @@ export const SITE_NAME = "Siegfried Bozza";
 export const ROLE = "Full-Stack Web3 Engineer";
 
 export const PITCH =
-  "I build the off-chain systems that on-chain products depend on: event pipelines, wallet and settlement backends, durable AI-agent workflows, and the dApps on top.";
+  "I build the off-chain systems that on-chain products depend on: contract-event projections into Postgres, a wallet and ledger backend, AI-agent workflows that settle on-chain, and the dApps on top.";
 
 export const CORE_STACK = [
   "Next.js",
@@ -46,7 +46,7 @@ export const SITE_DESCRIPTION_SHORT =
 
 /** Richer copy for Open Graph / Twitter. */
 export const SITE_DESCRIPTION_LONG =
-  "Full-Stack Web3 Engineer working in TypeScript and Solidity. I build the off-chain systems on-chain products depend on. Personal projects, on testnets: VeriSci (open paper ratings on the OriginTrail DKG), Wallet Watcher (a custody backend slice with an append-only ledger, outflows booked exactly once), BioVerify (agentic DeSci peer review with Chainlink VRF), plus Bet2Gether, Forge and GavL. Open to relocation (Asia-Pacific first) or full-time remote.";
+  "Full-Stack Web3 Engineer working in TypeScript and Solidity. I build the off-chain systems on-chain products depend on. Personal projects, on testnets: VeriSci (open paper ratings on the OriginTrail DKG), Wallet Watcher (a custody backend slice with an append-only ledger, each withdrawal booked from its receipt), BioVerify (agentic DeSci peer review with Chainlink VRF), plus Bet2Gether, Forge and GavL. Open to relocation (Asia-Pacific first) or full-time remote.";
 
 export const DEFAULT_KEYWORDS = [
   "Siegfried Bozza",
