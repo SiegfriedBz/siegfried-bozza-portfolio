@@ -7,7 +7,7 @@ const bioVerifyGithub = "https://github.com/SiegfriedBz/BioVerify_Agentic_DApp";
 
 /** Bundled article hero + OG fallback (works with next/image without remotePatterns). */
 export const BIOVERIFY_ARTICLE_HERO =
-  "/projects/bioverify/images/bioverify_landing.jpg";
+  "/projects/bioverify/images/bioverify-landing.webp";
 
 const bioVerifyProject: Project = {
   slug: "bioverify",
@@ -200,8 +200,8 @@ const bioVerifyProject: Project = {
   },
 
   images: [
+    "/projects/bioverify/images/bioverify-landing.webp",
     "/projects/bioverify/images/bioverify_publications.jpg",
-    "/projects/bioverify/images/bioverify_landing.jpg",
   ],
 
   videos: [
@@ -428,6 +428,7 @@ export const PROJECTS: Project[] = [
     },
 
     images: [
+      "/projects/bet2gether/images/bet2gether-landing.webp",
       "/projects/bet2gether/images/bet2gether-landing-create.png",
       "/projects/bet2gether/images/bet2gether-bet.png",
       "/projects/bet2gether/images/bet2gether-claim.png",
@@ -619,6 +620,7 @@ export const PROJECTS: Project[] = [
     },
 
     images: [
+      "/projects/forge/images/forge-cover.webp",
       "/projects/forge/images/forge-forge.png",
       "/projects/forge/images/forge-landing.png",
       "/projects/forge/images/forge-mint.png",
@@ -817,7 +819,7 @@ export const PROJECTS: Project[] = [
     },
 
     images: [
-      "/projects/gavl/images/gavl-table.png",
+      "/projects/gavl/images/gavl-table-flat.webp",
       "/projects/gavl/images/gavl-landing.png",
     ],
 
