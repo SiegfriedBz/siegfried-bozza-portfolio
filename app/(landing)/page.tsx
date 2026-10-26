@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 };
 
 /** Projects shown as proof in the hero, in this order. */
-const HERO_PROOF_SLUGS = ["verisci", "wallet-watcher", "bioverify"];
+const HERO_PROOF_SLUGS = ["labstrail", "wallet-watcher", "bioverify"];
 
 const heroProof: HeroProof[] = HERO_PROOF_SLUGS.flatMap((slug) => {
   const project = PROJECTS.find((p) => p.slug === slug);

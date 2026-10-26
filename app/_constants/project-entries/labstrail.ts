@@ -1,18 +1,18 @@
-/** VeriSci — figures verified against main (ee6fe7b) on 2026-10-20. */
+/** LabsTrail (renamed from VeriSci) — figures verified against main (3df9e7e, v0.8.1) on 2026-10-26. */
 import { STACK } from "@/app/_constants/stack";
 import type { Project } from "@/app/_types/project";
 
-const REPO = "https://github.com/SiegfriedBz/verisci";
+const REPO = "https://github.com/SiegfriedBz/labstrail";
 const blob = (path: string) => `${REPO}/blob/main/${path}`;
 
-export const verisciProject: Project = {
-  slug: "verisci",
+export const labstrailProject: Project = {
+  slug: "labstrail",
   languages: ["TypeScript", "Solidity"],
   constructionPeriod: "Oct 2026",
   title: {
-    h1: "VeriSci",
+    h1: "LabsTrail",
     h2: "Open Reproducibility-Readiness Ratings for Life-Science Papers on the OriginTrail DKG and Base",
-    short: "Retry-Safe DeSci Rating Pipeline",
+    short: "Traceable Paper Ratings on the OriginTrail DKG and Base",
   },
 
   description: {
@@ -21,11 +21,11 @@ export const verisciProject: Project = {
     problem:
       "Trust in a scientific paper is mostly inferred from the journal it appeared in, and the reviews behind that judgement are rarely public. Reporting guidelines such as CONSORT and ARRIVE list what a paper must state for others to repeat the work, yet compliance is rarely checked in the open. In a 2016 Nature survey of more than 1,500 researchers, more than 70% had tried and failed to reproduce another scientist's experiments.",
     solution:
-      "VeriSci publishes a paper to the **OriginTrail DKG** as a Knowledge Asset signed by its submitter (**EIP-712**). Anyone with a wallet can request a rating on a **Base Sepolia** contract. A durable **Inngest** run reads the paper, has **Gemini** answer the reporting checklist for its kind of study with quotes, checks every quote in code, computes the score once, publishes the rating as its own Knowledge Asset, and has the oracle record the score on chain.",
-    overview: `VeriSci is a DeSci app under construction that rates how completely a life-science or health paper reports its work, a score it calls **reproducibility readiness**. The first phase, a machine score, runs on testnets, and production already has published papers and settled ratings. Human review, with reviewers drawn by **Chainlink VRF**, comes next.
-The rating's evidence (rationale, study type, every check with its quote) lives in a Knowledge Asset on the **OriginTrail DKG**; the score and which asset counts live on the **RatingController** contract on **Base Sepolia**. The contract is never ahead of the DKG, and the UI flags any gap between them.
+      "LabsTrail publishes a paper to the **OriginTrail DKG** as a Knowledge Asset signed by its submitter (**EIP-712**). Anyone with a wallet can request a rating on a **Base Sepolia** contract. A durable **Inngest** run reads the paper, has **Gemini** answer the reporting checklists for the kinds of study it reports, with quotes, checks every quote in code, computes the score once, publishes the rating as its own Knowledge Asset, and has the oracle record the score on chain.",
+    overview: `LabsTrail is a DeSci app under construction that rates how completely a life-science or health paper reports its work, a score it calls **reproducibility readiness**. The first phase, a machine score, runs on testnets, and production already has published papers and settled ratings. Human review, with reviewers drawn by **Chainlink VRF**, comes next.
+The rating's evidence (rationale, kinds of study, every check with its quote) lives in a Knowledge Asset on the **OriginTrail DKG**; the score and which asset counts live on the **RatingController** contract on **Base Sepolia**. The contract is never ahead of the DKG, and the UI flags any gap between them.
 Most of the engineering is off-chain. Chain events arrive through an **HMAC**-verified **Alchemy Notify** webhook, a cron reconciler restarts stuck requests from the contract's own pending set, every store, mint, fulfil and cancel reads state before writing, and a single serialized **Inngest** function sends every oracle transaction.
-The project is a rebuild of an earlier prototype, desci-rating-dapp, and its 35 ADRs start from what that prototype taught.`,
+The project is a rebuild of an earlier prototype, desci-rating-dapp, and its 36 ADRs start from what that prototype taught. It was called VeriSci until October 2026.`,
   },
 
   features: [
@@ -59,7 +59,7 @@ The project is a rebuild of an earlier prototype, desci-rating-dapp, and its 35 
     {
       key: "Checklist scoring with checked quotes",
       description:
-        "**Gemini** answers the checklist for the paper's study type (built from CONSORT 2025, STROBE, ARRIVE 2.0, MDAR and PRISMA 2020) with a quote per answer. Code awards a point only when the quote is found in the paper's text and computes the 0 to 100 score with integer rounding; the model never gives the number.",
+        "**Gemini** lists the kinds of study a paper reports and answers their checklists (built from CONSORT 2025, STROBE, ARRIVE 2.0, MDAR and PRISMA 2020) with a quote per answer. Code awards a point only when the quote is found in the paper's text and computes the 0 to 100 score with integer rounding; the model never gives the number.",
     },
     {
       key: "Isolated environments",
@@ -87,20 +87,21 @@ The project is a rebuild of an earlier prototype, desci-rating-dapp, and its 35 
 
   challenges: `A DKG mint can succeed while its response is lost: in a spike against the project's own node, three concurrent mints of one asset produced one mint, one reverted transaction that still paid gas and one token approval, and a mint whose client disconnected landed seconds later. Every write therefore reads state first, and mints are started and then polled in short steps.
 A hosted LLM gives different answers to the same paper, even at temperature 0. The score is computed once from checked quotes, stored in the rating's Knowledge Asset and read back by every retry, so the score on chain always equals the one on the DKG.
+That keeps the record consistent, not the score steady: the same staging paper scored 54, then 75, on one day. Over 16 measured runs on 3 papers, the model classed a fly genetics paper as an animal study in some runs and as lab work in others, a spread of 21 points. Scorer version 4 defines the kinds of study more precisely, lets a paper report several, gives eight checks a rule per answer and tells the model how to quote long passages. Over 14 more runs, one paper scored the same every time and the other two moved by 7 and 9 points.
 Webhooks arrive at least once, can be lost, and after a reorg may describe a log that is no longer on chain; Inngest deduplicates event ids for 24 hours only, and its concurrency limits count steps, not sleeping runs. Recovery combines request-derived event ids, a singleton run per request, on-chain reads before every write, and a reconciler that reads the contract's pending set.
 The free RPC tier caps eth_getLogs at 10 blocks, so the prototype could only recover a stuck rating from the browser that requested it. The rebuilt contract stores everything recovery needs, readable a page at a time.
-Production's first context graph never became active: OriginTrail's network kept it dormant, every mint was declined, and the run blamed VeriSci's own node. A declined mint now stops as network-refused and the paper's page says the network has not accepted the record yet. Production moved to a newly registered graph, which minted its first paper on the first try.`,
+Production's first context graph never became active: OriginTrail's network kept it dormant, every mint was declined, and the run blamed LabsTrail's own node. A declined mint now stops as network-refused and the paper's page says the network has not accepted the record yet. Production moved to a newly registered graph, which minted its first paper on the first try.`,
 
-  outcome: `Both flows (publish a paper, request and settle a rating) run on separate staging and production environments on Base Sepolia, with the DKG node, GROBID and an RPC proxy on a dedicated server. A webhook starts each rating and a cron restarts a stuck one, and production has its first published papers and settled ratings. VeriSci is still under construction: human review is the next phase on the roadmap below.
+  outcome: `Both flows (publish a paper, request and settle a rating) run on separate staging and production environments on Base Sepolia, with the DKG node, GROBID and an RPC proxy on a dedicated server. A webhook starts each rating and a cron restarts a stuck one, and production has its first published papers and settled ratings. LabsTrail is still under construction: human review is the next phase on the roadmap below.
 The project is mostly evidence of engineering habits: decisions recorded in ADRs that the feature plans cite, behaviour observed on real systems written down as dated domain facts, and a test suite that drives whole durable workflows with fake step tools.
 I built the repo in about three weeks, alongside my full-time job, and I could not have done it without **Claude Code**. It works inside a harness I set up: a CLAUDE.md per workspace, skills that plan a feature, write its tests first and review the branch, hooks that lint and test every edited file, and a read-only reviewer agent that blocks a pull request conflicting with an accepted ADR.`,
 
   outcomeMetrics: [
-    "**35 ADRs** on main (numbered to 0041, with 6 folded into others), each amendment logged with a dated History line",
-    "**1,714 Vitest tests** in 139 files across 7 workspaces, all passing",
+    "**36 ADRs** on main (numbered to 0042, with 6 folded into others), each amendment logged with a dated History line",
+    "**1,841 Vitest tests** in 143 files across 7 workspaces, all passing",
     "**74 Foundry tests**: 61 unit and fuzz tests on RatingController, 12 on the deploy script, and an invariant suite of 6 properties; CI runs each fuzz test 5,000 times",
-    "**Domain core coverage:** 100% of lines and 96.3% of branches, with CI failing below 90% of branches",
-    "**14 reference papers** (12 in the field across every study type, 2 outside it) with expected answers written before the scorer first read them",
+    "**Domain core coverage:** 100% of lines and 96.4% of branches, with CI failing below 90% of branches",
+    "**14 reference papers** (12 in the field across every kind of study, 2 outside it) with expected answers written before the scorer first read them",
     "**3 RatingController deployments per environment** on Base Sepolia, past ones still read by the backend",
   ],
 
@@ -108,20 +109,21 @@ I built the repo in about three weeks, alongside my full-time job, and I could n
     "Read-before-write side effects that converge on retry; at-least-once event ingestion with deterministic event ids and a state-based reconciler; one serialized lane for a hot signing key, with fee bumps and nonce recovery; LLM output treated as untrusted and checked by code before anything is written; environment isolation enforced when config is validated. The same patterns fit payment and settlement backends, indexers and any agent workflow that writes to a chain.",
 
   limitations: [
-    "**Testnet only, and requests are free.** VeriSci pays the oracle's gas, the DKG publish and the LLM. The cap of 3 pending requests per address is easy to dodge with fresh addresses, so a throttle of 3 rating runs an hour is the real bound.",
+    "**Testnet only, and requests are free.** LabsTrail pays the oracle's gas, the DKG publish and the LLM. The cap of 3 pending requests per address is easy to dodge with fresh addresses, so a throttle of 3 rating runs an hour is the real bound.",
     "**One shared DKG node** on one free VM serves staging and production. An outage takes down both, and the node's single admin token means staging's credential could in principle write the production graph; a config guard covers that for now.",
     "**Gemini free tier:** the scoring model allows 20 requests a day, shared by every environment.",
     "**The score measures reporting completeness only.** It says nothing about whether findings are right, a fabricated paper that reports everything would score well, and 14 reference papers are far too few to call it calibrated.",
+    "**Scores still move between ratings.** Gemini 3.8 Flash has no seed, so judgement checks such as limitations can be answered differently; the last measurement put the spread at 0 to 9 points on 3 papers.",
     "**One hot oracle key** on the deployment, holding a few days of gas and alerted on below a threshold.",
     "**One copy of each PDF**, on Pinata: the CID proves a file is unchanged but does not keep it available.",
     "**No end-to-end tests yet**; the pages have component tests.",
   ],
 
   roadmap: [
-    "**Phase 2, transparent human review (next):** reviewers drawn at random with **Chainlink VRF**, whose proof is checked on chain, so no one can steer the draw and anyone can audit it. VeriSci's node writes their score into the same rating asset and the oracle records it ([ADR 0012](" +
+    "**Phase 2, transparent human review (next):** reviewers drawn at random with **Chainlink VRF**, whose proof is checked on chain, so no one can steer the draw and anyone can audit it. LabsTrail's node writes their score into the same rating asset and the oracle records it ([ADR 0012](" +
       blob("docs/adr/0012-three-phases-settled-by-the-oracle.md") +
       ")). Reviewer staking and pay are planned, not decided yet.",
-    "**Payment, for people and AI agents:** today a requester pays only gas and VeriSci pays the rest ([ADR 0015](" +
+    "**Payment, for people and AI agents:** today a requester pays only gas and LabsTrail pays the rest ([ADR 0015](" +
       blob("docs/adr/0015-rating-requests-are-free-on-testnet.md") +
       ")); a fee for publishing and rating is planned before mainnet.",
     "**An API for AI agents**, to read papers and ratings and to request ratings without the web app.",
@@ -173,7 +175,7 @@ I built the repo in about three weeks, alongside my full-time job, and I could n
       {
         key: "Gemini",
         description:
-          "Flash-Lite checks a paper's field at publish time; Flash answers the study type's checklist with quotes, which code verifies before scoring.",
+          "Flash-Lite checks a paper's field at publish time; 3.8 Flash answers the checklists of the paper's kinds of study with quotes, which code verifies before scoring.",
       },
       {
         key: "Alchemy Notify + viem",
@@ -188,7 +190,7 @@ I built the repo in about three weeks, alongside my full-time job, and I could n
       {
         key: "Vitest + fast-check",
         description:
-          "1,714 tests across the monorepo, with durable workflows driven through fake step tools and property-based tests for UAL parsing and asset names.",
+          "1,841 tests across the monorepo, with durable workflows driven through fake step tools and property-based tests for UAL parsing and asset names.",
       },
     ],
   },
@@ -209,7 +211,7 @@ I built the repo in about three weeks, alongside my full-time job, and I could n
   O -->|"fulfilPhase1"| C`,
   },
 
-  images: ["/projects/verisci/images/verisci-landing.png"],
+  images: ["/projects/labstrail/images/labstrail-landing.png"],
   videos: [],
 
   featured: {
@@ -220,17 +222,17 @@ I built the repo in about three weeks, alongside my full-time job, and I could n
     bullets: [
       "**Every write converges:** stores, mints, fulfils and cancels read state first, and the LLM's score is computed once and read back from the minted asset, so retries and restarts never write twice.",
       "**At-least-once ingestion with recovery:** HMAC-verified **Alchemy Notify** webhooks, request-derived **Inngest** event ids, and a cron reconciler that reads the contract's pending set instead of scanning logs.",
-      "**Decisions on record:** 35 ADRs, 1,714 Vitest tests and 74 Foundry tests (fuzz and invariants), with staging and production isolated down to contracts, graphs and oracle keys.",
+      "**Decisions on record:** 36 ADRs, 1,841 Vitest tests and 74 Foundry tests (fuzz and invariants), with staging and production isolated down to contracts, graphs and oracle keys.",
     ],
   },
 
   links: {
-    page: "/projects/verisci",
-    live: "https://verisci.vercel.app",
+    page: "/projects/labstrail",
+    live: "https://labstrail.vercel.app",
     github: REPO,
     article: {
-      href: "/articles/verisci",
-      label: "Read the VeriSci article",
+      href: "/articles/labstrail",
+      label: "Read the LabsTrail article",
       iconName: "dna",
     },
   },

@@ -6,7 +6,7 @@ import { Projects } from "../_components/projects";
 
 const PROJECTS_TITLE = `Projects | ${SITE_NAME}`;
 const PROJECTS_DESCRIPTION =
-  "Projects I've built: VeriSci (DeSci ratings), Wallet Watcher (custody backend), BioVerify (agentic peer review), Bet2Gether, Forge and GavL.";
+  "Projects I've built: LabsTrail (DeSci ratings), Wallet Watcher (custody backend), BioVerify (agentic peer review), Bet2Gether, Forge and GavL.";
 
 export const metadata: Metadata = {
   title: PROJECTS_TITLE,

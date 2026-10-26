@@ -3,18 +3,18 @@ import type { Article } from "@/app/_types/article";
 
 export const ARTICLES: Article[] = [
   {
-    slug: "verisci",
-    title: "Every Write Converges: The Engineering Behind VeriSci",
+    slug: "labstrail",
+    title: "Keeping a Knowledge Graph and a Chain in Sync: Building LabsTrail",
     subtitle:
       "Rating life-science papers on the OriginTrail DKG and Base Sepolia, and keeping each score correct through lost webhooks, retried mints, stuck nonces and a non-deterministic LLM.",
     excerpt:
       "How I rebuilt a DeSci prototype into a rating pipeline where every store, mint and oracle transaction is safe to retry: at-least-once webhooks, a cron reconciler, a serialized oracle lane, and an LLM whose quotes are checked by code.",
-    date: "2026-10-20",
-    href: "/articles/verisci",
-    cover: "/projects/verisci/images/verisci-landing.png",
-    tags: ["DeSci", "Web3", "OriginTrail DKG", "Inngest", "VeriSci"],
+    date: "2026-10-26",
+    href: "/articles/labstrail",
+    cover: "/projects/labstrail/images/labstrail-landing.png",
+    tags: ["DeSci", "Web3", "OriginTrail DKG", "Inngest", "LabsTrail"],
     readingMinutes: 15,
-    relatedProjectSlug: "verisci",
+    relatedProjectSlug: "labstrail",
   },
   {
     slug: "wallet-watcher",

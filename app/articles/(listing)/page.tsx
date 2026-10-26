@@ -6,7 +6,7 @@ import { ArticlesList } from "@/app/articles/_components/articles-list";
 
 const ARTICLES_TITLE = `Articles | ${SITE_NAME}`;
 const ARTICLES_DESCRIPTION =
-  "How I built VeriSci, Wallet Watcher and BioVerify, the trade-offs I made, and what production would need.";
+  "How I built LabsTrail, Wallet Watcher and BioVerify, the trade-offs I made, and what production would need.";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/articles" },

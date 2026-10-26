@@ -36,7 +36,7 @@ export const AVAILABILITY = {
  * Keep it factual and current.
  */
 export const PERSON_SUMMARY =
-  "I'm Siegfried Bozza, a Full-Stack Web3 Engineer. I spent fifteen years in molecular-biology research and environmental engineering in France, Canada and Switzerland, then moved to software in 2022, starting at Renuo AG in Zurich. From mid-2023 to mid-2024 I studied full-stack and Web3 development while travelling, partly in Vietnam and Indonesia. Since 2024 I've been a full-stack engineer at Prismo.io, a production SaaS built with Next.js, TypeScript and Supabase. On my own time I build Web3 projects on testnets in TypeScript and Solidity, mostly the backend around the contracts. Two of them, VeriSci and BioVerify, are decentralized-science (DeSci) apps. I'd relocate for the right full-time role, ideally in Asia-Pacific, and I'm also open to remote work.";
+  "I'm Siegfried Bozza, a Full-Stack Web3 Engineer. I spent fifteen years in molecular-biology research and environmental engineering in France, Canada and Switzerland, then moved to software in 2022, starting at Renuo AG in Zurich. From mid-2023 to mid-2024 I studied full-stack and Web3 development while travelling, partly in Vietnam and Indonesia. Since 2024 I've been a full-stack engineer at Prismo.io, a production SaaS built with Next.js, TypeScript and Supabase. On my own time I build Web3 projects on testnets in TypeScript and Solidity, mostly the backend around the contracts. Two of them, LabsTrail and BioVerify, are decentralized-science (DeSci) apps. I'd relocate for the right full-time role, ideally in Asia-Pacific, and I'm also open to remote work.";
 
 export const DEFAULT_TITLE = `${SITE_NAME} | ${ROLE}`;
 
@@ -46,7 +46,7 @@ export const SITE_DESCRIPTION_SHORT =
 
 /** Richer copy for Open Graph / Twitter. */
 export const SITE_DESCRIPTION_LONG =
-  "Full-Stack Web3 Engineer working in TypeScript and Solidity. I build the off-chain systems on-chain products depend on. Personal projects, on testnets: VeriSci (open paper ratings on the OriginTrail DKG), Wallet Watcher (a custody backend slice with an append-only ledger, each withdrawal booked from its receipt), BioVerify (agentic DeSci peer review with Chainlink VRF), plus Bet2Gether, Forge and GavL. Open to relocation (Asia-Pacific first) or full-time remote.";
+  "Full-Stack Web3 Engineer working in TypeScript and Solidity. I build the off-chain systems on-chain products depend on. Personal projects, on testnets: LabsTrail (open paper ratings on the OriginTrail DKG), Wallet Watcher (a custody backend slice with an append-only ledger, each withdrawal booked from its receipt), BioVerify (agentic DeSci peer review with Chainlink VRF), plus Bet2Gether, Forge and GavL. Open to relocation (Asia-Pacific first) or full-time remote.";
 
 export const DEFAULT_KEYWORDS = [
   "Siegfried Bozza",
@@ -68,7 +68,7 @@ export const DEFAULT_KEYWORDS = [
   "DeSci",
   "decentralized science",
   "OriginTrail DKG",
-  "VeriSci",
+  "LabsTrail",
   "BioVerify",
   "AI agents",
   "LangGraph",

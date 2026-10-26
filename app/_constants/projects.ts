@@ -1,5 +1,5 @@
 import type { Project } from "@/app/_types/project";
-import { verisciProject } from "./project-entries/verisci";
+import { labstrailProject } from "./project-entries/labstrail";
 import { walletWatcherProject } from "./project-entries/wallet-watcher";
 import { STACK } from "./stack";
 
@@ -246,7 +246,7 @@ const bioVerifyProject: Project = {
 export const BIOVERIFY_LINKS = bioVerifyProject.links;
 
 export const PROJECTS: Project[] = [
-  verisciProject,
+  labstrailProject,
   walletWatcherProject,
   bioVerifyProject,
 

@@ -3,7 +3,7 @@ import { PostShell } from "@/app/articles/_components/post-shell";
 import { articleMetadata } from "@/app/articles/_lib/article-metadata";
 import Content from "./content.mdx";
 
-const SLUG = "verisci";
+const SLUG = "labstrail";
 
 export const metadata = articleMetadata(SLUG);
 
