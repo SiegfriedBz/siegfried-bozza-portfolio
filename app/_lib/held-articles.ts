@@ -1,14 +1,18 @@
 /**
- * Articles still being checked before release. The production deploy leaves them out
- * (pages 404, no links, not in the sitemap or llms.txt); local runs and Vercel preview
- * deploys show them, so they can be read in place. Empty this list to publish them.
+ * Articles still being checked before release. They show only in `pnpm dev` and on Vercel
+ * preview deploys; everywhere else (production, a local `pnpm build`, or a build without
+ * Vercel's system variables) they 404 and appear in no list, link, sitemap or llms.txt.
+ * Empty this list to publish them.
  */
 const HELD_ARTICLE_SLUGS: readonly string[] = ["labstrail", "wallet-watcher"];
 
-const IS_PRODUCTION = process.env.VERCEL_ENV === "production";
+// Fails closed: held unless this is clearly a dev server or a Vercel preview.
+const SHOW_HELD =
+  process.env.NODE_ENV === "development" ||
+  process.env.VERCEL_ENV === "preview";
 
 export const isArticleHeld = (slug: string): boolean =>
-  IS_PRODUCTION && HELD_ARTICLE_SLUGS.includes(slug);
+  !SHOW_HELD && HELD_ARTICLE_SLUGS.includes(slug);
 
 /** Same check for an article link such as `/articles/labstrail`. */
 export const isArticleHrefHeld = (href: string): boolean =>

@@ -10,7 +10,7 @@ Personal site and digital resume: **Next.js 16**, **React 19**, **Tailwind CSS v
 - Landing hero + featured projects grid  
 - **About** — work experience (software + earlier career), education, skills badges, external links, CV (PDF)  
 - **Projects** — per-slug detail pages with screenshot/video carousels, Mermaid diagrams, stack badges, honest limitations & roadmaps  
-- **Articles** — index at `/articles`; MDX posts in `app/articles/(posts)/<slug>/content.mdx`, plus the bespoke BioVerify article  
+- **Articles** — index at `/articles`; MDX posts in `app/articles/(posts)/<slug>/content.mdx`, plus the bespoke BioVerify article. An article listed in `app/_lib/held-articles.ts` is held back: it shows only in `pnpm dev` and on Vercel preview deploys; empty the list to publish it  
 - Dark / light theme, Vercel Analytics  
 
 ## Tech stack (this repo)
@@ -37,7 +37,7 @@ Open [http://localhost:3000](http://localhost:3000).
 ```bash
 pnpm check       # Biome on files changed since develop
 pnpm typecheck   # tsc --noEmit
-pnpm build       # production build, as on Vercel
+pnpm build       # production build, as on Vercel (held articles are hidden, as in production)
 ```
 
 CI (`.github/workflows/ci.yml`) runs the same three on every PR to `develop` or `main`.
@@ -53,7 +53,7 @@ pnpm start
 
 ## Deployment
 
-Configured for **Vercel**. The site URL and every public link (profiles, demos, repos) are hardcoded in `app/_lib/site-metadata.ts` and `app/_constants`, so no env vars are needed.
+Configured for **Vercel**. The site URL and every public link (profiles, demos, repos) are hardcoded in `app/_lib/site-metadata.ts` and `app/_constants`, so no env vars need setting. Held articles (`app/_lib/held-articles.ts`) read Vercel's system variable `VERCEL_ENV` to show on preview deploys; without it they stay hidden.
 
 Screen recordings live in `public/projects/<slug>/videos/` as H.264 MP4 with a same-name `.jpg` poster. To add one from a GIF:
 
