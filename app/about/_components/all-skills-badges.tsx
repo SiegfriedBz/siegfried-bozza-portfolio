@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { getStackRecord, StackBadge } from "@/app/_components/stack-badge";
+import { getStackRecord } from "@/app/_components/stack-badge";
 import { STACK } from "@/app/_constants/stack";
 import { Badge } from "@/components/ui/badge";
 
@@ -74,25 +74,15 @@ export const AllSkillsBadges: FC = () => {
             </span>
             <div className="flex-1 h-px bg-border" aria-hidden />
           </div>
-          <ul className="flex flex-wrap gap-x-4 gap-y-4 ps-0 list-none">
+          <ul className="flex flex-wrap gap-2 ps-0 list-none">
             {items.map((stack) => {
               const record = getStackRecord(stack);
               if (!record) return null;
-              const hasLogo = Boolean(record.logo);
               return (
                 <li key={stack}>
-                  {hasLogo ? (
-                    <div className="flex flex-col items-center gap-1 min-w-fit px-1">
-                      <StackBadge stack={stack} />
-                      <span className="whitespace-nowrap text-[10px] sm:text-xs text-center text-muted-foreground leading-tight">
-                        {record.name}
-                      </span>
-                    </div>
-                  ) : (
-                    <Badge variant="outline" className="h-8 text-xs">
-                      {record.name}
-                    </Badge>
-                  )}
+                  <Badge variant="outline" className="h-8 px-3 text-xs">
+                    {record.name}
+                  </Badge>
                 </li>
               );
             })}
