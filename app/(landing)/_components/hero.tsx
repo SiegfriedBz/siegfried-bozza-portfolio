@@ -1,193 +1,146 @@
-"use client"
+import {
+  ArrowUpRightIcon,
+  CalendarClockIcon,
+  FileDownIcon,
+} from "lucide-react";
+import Link from "next/link";
+import { type CSSProperties, type FC, Fragment } from "react";
+import { LightGlow } from "@/app/_components/light-glow";
+import { SiegAvatar } from "@/app/_components/sieg-avatar";
+import { CV_HREF } from "@/app/_constants/cv";
+import { PROFILE_LINKS } from "@/app/_constants/links";
+import {
+  AVAILABILITY,
+  CORE_STACK,
+  PITCH,
+  ROLE,
+} from "@/app/_lib/site-metadata";
+import { Button } from "@/components/ui/button";
 
-import { LightGlow } from "@/app/_components/light-glow"
-import { CV_HREF } from "@/app/_constants/cv"
-import { Button } from "@/components/ui/button"
-import { ChevronRightIcon, FileDownIcon } from "lucide-react"
-import { motion } from "motion/react"
-import Link from "next/link"
-import { SiegAvatar } from "../../_components/sieg-avatar"
-import { TypographyH1 } from "../../_components/typography/h1"
+export type HeroProof = {
+  slug: string;
+  name: string;
+  pitch: string;
+  period: string;
+  href: string;
+};
 
-export const Hero = () => {
+type Props = {
+  proof: HeroProof[];
+};
+
+/**
+ * Left: who, what, how to reach him. Right: three projects as proof. On mobile the CTAs
+ * come before the proof so they stay in the first screen.
+ */
+export const Hero: FC<Props> = ({ proof }) => {
   return (
-    <section className="relative flex min-h-svh flex-col items-center px-4 pb-6 pt-24 text-center animate-fade-in sm:pt-20 md:pb-12 md:pt-20 [@media(max-height:640px)]:pb-3 [@media(max-height:640px)]:pt-12 [@media(max-height:480px)]:pb-2 [@media(max-height:480px)]:pt-8">
-      {/* Light glow behind the title */}
-      <LightGlow />
+    <section className="relative mx-auto grid w-full max-w-6xl items-center gap-12 px-4 pb-16 pt-24 text-left lg:min-h-dvh lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-16">
+      <LightGlow className="-left-1/4 right-1/4" />
 
-      {/* Top: Featured work + eyebrow */}
-      <motion.div className="flex min-h-0 w-full max-w-4xl flex-col items-center gap-3 text-center sm:gap-5 [@media(max-height:640px)]:gap-2">
-        <Button
-          variant={"outline"}
-          asChild
-          className="relative overflow-hidden border border-border bg-accent-glow/25 transition-all duration-300 hover:dark:shadow-sm hover:dark:shadow-accent-blue dark:border-accent-blue dark:bg-input/30 group"
-        >
-          <Link
-            href="/projects"
-            className="rounded-lg inline-flex justify-between items-center"
-          >
-            <span className="font-bold transition-all z-1 duration-300 dark:text-accent-blue group-hover:text-white dark:group-hover:text-background">
-              Featured work
-            </span>
-            {/* sliding background layer */}
-            <span className="absolute inset-0 z-0 -translate-x-full bg-accent-blue transition-transform duration-300 group-hover:translate-x-0" />
-          </Link>
-        </Button>
+      <div className="relative z-10 flex flex-col gap-6">
+        <p className="font-mono text-sm text-accent-blue">Siegfried Bozza</p>
 
-        <motion.p
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-          className="relative z-10 text-sm font-semibold uppercase tracking-widest text-accent-blue"
-        >
-          Siegfried Bozza
-        </motion.p>
-      </motion.div>
-
-      {/* Golden ratio spacer — minor (1) above H1 */}
-      <div className="flex-1 min-h-1 sm:min-h-4" />
-
-      {/* Middle: H1 + bio */}
-      <motion.div className="flex w-full min-h-0 max-w-4xl flex-col items-center gap-3 text-center sm:gap-6 md:gap-10 [@media(max-height:640px)]:gap-2 [@media(max-height:480px)]:gap-1">
-        <TypographyH1 className="z-10 -translate-y-0.5 max-[374px]:text-2xl text-3xl drop-shadow-[0_0_8px_rgba(255,255,255,0.1)] sm:-translate-y-[3px] sm:text-4xl md:-translate-y-1 md:text-5xl lg:text-5xl xl:text-6xl">
-          {"Full-Stack Engineer · Web3 & AI Agents"
-            .split(" ")
-            .map((word, index) => (
-              <motion.span
-                // biome-ignore lint/suspicious/noArrayIndexKey: static array
-                key={index}
-                initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
-                animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                transition={{
-                  duration: 0.35,
-                  delay: index * 0.08,
-                  ease: "easeOut",
-                }}
-                className="mx-1 inline-block sm:mx-2"
+        <h1 className="text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+          {/* Real spaces between the inline-block words, so the H1 text reads
+              "Full-Stack Web3 Engineer" to crawlers and screen readers. */}
+          {ROLE.split(" ").map((word, index, all) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: static words
+            <Fragment key={index}>
+              <span
+                className="hero-word"
+                style={{ "--i": index } as CSSProperties}
               >
                 {word}
-              </motion.span>
+              </span>
+              {index < all.length - 1 ? " " : null}
+            </Fragment>
+          ))}
+        </h1>
+
+        <p className="max-w-[58ch] text-pretty text-lg leading-relaxed text-foreground/80">
+          {PITCH}
+        </p>
+
+        <ul className="flex flex-wrap gap-2" aria-label="Core stack">
+          {CORE_STACK.map((tech) => (
+            <li
+              key={tech}
+              className="rounded-md border border-border px-2.5 py-1 font-mono text-xs text-muted-foreground"
+            >
+              {tech}
+            </li>
+          ))}
+        </ul>
+
+        <div
+          className="hero-reveal flex flex-col gap-4"
+          style={{ "--delay": "200ms" } as CSSProperties}
+        >
+          <div className="flex flex-wrap items-center gap-3">
+            <Button asChild size="lg">
+              <a
+                href={PROFILE_LINKS.calendly}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <CalendarClockIcon className="size-4" />
+                Book a call
+              </a>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link href="/about">
+                <SiegAvatar className="size-5" alt="" />
+                About me
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="ghost">
+              <a href={CV_HREF} target="_blank" rel="noopener noreferrer">
+                <FileDownIcon className="size-4" />
+                CV
+              </a>
+            </Button>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            <span className="font-medium text-foreground">
+              {AVAILABILITY.headline}.
+            </span>{" "}
+            {AVAILABILITY.detail}
+          </p>
+        </div>
+      </div>
+
+      {proof.length > 0 ? (
+        <div
+          className="hero-reveal relative z-10"
+          style={{ "--delay": "350ms" } as CSSProperties}
+        >
+          <h2 className="mb-3 text-sm font-medium text-muted-foreground">
+            Personal projects, on testnets
+          </h2>
+          <ul className="flex flex-col gap-3">
+            {proof.map((p) => (
+              <li key={p.slug}>
+                <Link
+                  href={p.href}
+                  className="group flex items-start justify-between gap-4 rounded-xl border border-border bg-background/70 p-4 backdrop-blur-sm transition-colors hover:border-accent-blue active:translate-y-px"
+                >
+                  <div className="flex flex-col gap-1">
+                    <h3 className="font-semibold">{p.name}</h3>
+                    <p className="text-sm leading-snug text-muted-foreground">
+                      {p.pitch}
+                    </p>
+                    <p className="font-mono text-xs text-muted-foreground/80">
+                      {p.period}
+                    </p>
+                  </div>
+                  <ArrowUpRightIcon className="mt-1 size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-accent-blue" />
+                </Link>
+              </li>
             ))}
-        </TypographyH1>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 0.8 }}
-          className="relative z-10 mx-auto max-w-xl px-1 text-center text-sm font-normal leading-relaxed text-muted-foreground sm:max-w-2xl sm:text-sm md:text-base lg:text-lg [@media(max-height:640px)]:text-xs [@media(max-height:480px)]:max-w-md"
-        >
-          I have been building{" "}
-          <span className="font-bold text-accent-foreground">
-            software since 2022
-          </span>,{" "}
-          following fifteen years in molecular biology research
-          (<span className="font-bold text-accent-foreground">M.Sc.</span>)
-          {" "} and environmental engineering (<span className="font-bold text-accent-foreground">M.Eng.</span>){" "}
-          across {" "}
-          <span className="font-bold text-accent-foreground">Canada</span>,{" "}
-          <span className="font-bold text-accent-foreground">France</span>,{" "}and {" "}
-          <span className="font-bold text-accent-foreground">Switzerland</span>.
-          {" "}
-
-          Today I build{" "}
-          <span className="font-bold text-accent-foreground">
-            production Web2 systems
-          </span>
-          ,{" "}
-          <span className="font-bold text-accent-foreground">
-            decentralized applications
-          </span>
-          , and{" "}
-          <span className="font-bold text-accent-foreground">
-            agentic backends
-          </span>{" "}
-          — mainly with{" "}
-          <span className="font-bold text-accent-foreground">
-            Next.js
-          </span>,{" "}
-          <span className="font-bold text-accent-foreground">
-            TypeScript
-          </span>,{" "}
-          <span className="font-bold text-accent-foreground">
-            Supabase
-          </span>,{" "}
-          <span className="font-bold text-accent-foreground">
-            Foundry
-          </span>,{" "}
-          <span className="font-bold text-accent-foreground">
-            Solidity
-          </span>,{" "}
-          <span className="font-bold text-accent-foreground">
-            Chainlink
-          </span>,{" "} and {" "}
-          <span className="font-bold text-accent-foreground">
-            LangGraph
-          </span>.
-
-
-        </motion.p>
-      </motion.div>
-
-      {/* Golden ratio spacer — major (φ) below H1 */}
-      <div className="flex-[1.618] min-h-2 sm:min-h-6 md:min-h-8" />
-
-      {/* Bottom: relocation pill + About */}
-      <motion.div className="flex flex-col items-center gap-3 sm:gap-8 [@media(max-height:640px)]:gap-2">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 1.0 }}
-          className="relative z-10 inline-block max-w-lg rounded-full border border-accent-blue/40 bg-accent-blue/10 px-4 py-1.5 text-center text-xs font-medium text-accent-blue sm:max-w-none sm:text-sm [@media(max-height:480px)]:py-1"
-        >
-          <span>
-            Open to remote roles or <span className="font-bold">global</span>{" "}
-            relocation
-          </span>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.3, delay: 1.2 }}
-          className="relative z-10 flex shrink-0 flex-nowrap items-center justify-center gap-4"
-        >
-          <Button
-            asChild
-            className="group shadow-lg transition-transform duration-300 transform hover:scale-x-105"
-            variant={"outline"}
-          >
-            <Link
-              href="/about"
-              className="relative rounded-lg inline-flex items-center justify-center gap-2 min-[425px]:justify-between"
-            >
-              <SiegAvatar className="size-6 ml-0" />
-              <span className="mr-0 min-[425px]:mr-2">
-                About
-                <span className="max-[424px]:hidden"> me</span>
-              </span>
-              <ChevronRightIcon className="absolute right-0.5 top-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-            </Link>
-          </Button>
-
-          <Button
-            asChild
-            className="group shadow-lg transition-transform duration-300 transform hover:scale-x-105"
-            variant={"outline"}
-          >
-            <a
-              href={CV_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-lg inline-flex justify-between items-center gap-2"
-            >
-              <FileDownIcon className="size-4" />
-              <span>
-                <span className="max-[424px]:hidden">Download </span>CV
-              </span>
-            </a>
-          </Button>
-        </motion.div>
-      </motion.div>
+          </ul>
+        </div>
+      ) : null}
     </section>
-  )
-}
+  );
+};

@@ -1,11 +1,13 @@
-import type { Article } from "@/app/_types/article";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 import { MoveRightIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { FC } from "react";
+import { TerminalCover } from "@/app/_components/terminal-cover";
+import { PROJECTS } from "@/app/_constants/projects";
+import type { Article } from "@/app/_types/article";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 type Props = {
   article: Article;
@@ -13,7 +15,10 @@ type Props = {
 };
 
 export const ArticleCard: FC<Props> = ({ article, className }) => {
-  const { title, subtitle, excerpt, date, href, cover, tags } = article;
+  const { title, excerpt, date, href, cover, tags } = article;
+  const terminal = PROJECTS.find(
+    (p) => p.slug === article.relatedProjectSlug,
+  )?.terminal;
 
   return (
     <Card
@@ -31,11 +36,18 @@ export const ArticleCard: FC<Props> = ({ article, className }) => {
               fill
               className="object-cover opacity-90 transition-opacity duration-300 group-hover:opacity-100"
               sizes="(max-width: 768px) 100vw, 50vw"
-              unoptimized
             />
             <div
               className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/90 via-transparent to-transparent"
               aria-hidden
+            />
+          </div>
+        ) : terminal ? (
+          <div className="aspect-[16/7] w-full overflow-hidden">
+            <TerminalCover
+              title={terminal.title}
+              lines={terminal.lines}
+              className="rounded-none border-0"
             />
           </div>
         ) : (
@@ -44,11 +56,11 @@ export const ArticleCard: FC<Props> = ({ article, className }) => {
 
         <CardContent className="flex flex-col gap-3 p-5 text-left sm:p-6">
           <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
+            {tags.slice(0, 3).map((tag) => (
               <Badge
                 key={tag}
                 variant="outline"
-                className="text-[10px] font-semibold uppercase tracking-wide text-accent-blue"
+                className="text-xs font-medium text-accent-blue"
               >
                 {tag}
               </Badge>
@@ -58,10 +70,6 @@ export const ArticleCard: FC<Props> = ({ article, className }) => {
           <h2 className="text-xl font-semibold leading-snug text-foreground transition-colors group-hover:text-accent-blue sm:text-2xl">
             {title}
           </h2>
-
-          <p className="text-sm italic leading-snug text-muted-foreground sm:text-base">
-            {subtitle}
-          </p>
 
           <p className="text-sm leading-relaxed text-muted-foreground line-clamp-3">
             {excerpt}

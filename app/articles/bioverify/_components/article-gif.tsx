@@ -1,18 +1,21 @@
-import { cn } from "@/lib/utils";
-import Image from "next/image";
 import type { FC, ReactNode } from "react";
+import { AutoplayVideo } from "@/app/_components/autoplay-video";
+import { cn } from "@/lib/utils";
 
 type Props = {
+  /** Screen recording (.mp4); its poster is the same path with .jpg. */
   src: string;
   alt: string;
   label: string;
   caption: ReactNode;
+  /** Intrinsic height of the recording; all of them are 800 px wide. */
+  height: number;
   className?: string;
-  priority?: boolean;
 };
 
+/** Captioned demo recording (formerly a GIF; the MP4s are about 72% lighter). */
 export const ArticleGif: FC<Props> = (props) => {
-  const { src, alt, label, caption, className, priority = false } = props;
+  const { src, alt, label, caption, height, className } = props;
 
   return (
     <figure
@@ -29,14 +32,12 @@ export const ArticleGif: FC<Props> = (props) => {
         {label}
       </div>
       <div className="overflow-hidden rounded-lg border border-border/60">
-        <Image
+        <AutoplayVideo
           src={src}
-          alt={alt}
-          width={1200}
-          height={675}
-          className="h-auto w-full"
-          unoptimized
-          {...(priority ? { priority: true } : { loading: "lazy" })}
+          label={alt}
+          width={800}
+          height={height}
+          className="h-auto"
         />
       </div>
       <figcaption className="mt-4 px-4 text-center font-[family-name:var(--font-serif)] text-sm italic leading-relaxed text-muted-foreground">

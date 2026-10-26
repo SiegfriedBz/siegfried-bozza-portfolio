@@ -1,12 +1,15 @@
 import type { IconName } from "@/app/_constants/icons";
 
 export type FeaturedCategory =
+  | "Web3 Backend & Infrastructure"
   | "Web3 Architecture & Coordination"
   | "Smart Contract Patterns & Testing"
   | "Full-Stack Web2";
 
 export type Project = {
   slug: string;
+  /** Programming languages in the repo (structured data). */
+  languages: string[];
   /** Human-facing build window, e.g. "Mar–Apr 2026" (badge) */
   constructionPeriod: string;
   title: {
@@ -55,7 +58,13 @@ export type Project = {
   };
 
   images: string[];
-  gifs: string[];
+  /** Screen recordings (.mp4). A same-name .jpg next to each file is used as the poster. */
+  videos: string[];
+  /** Cover for projects without a UI (e.g. a backend service): a short terminal transcript. */
+  terminal?: {
+    title: string;
+    lines: string[];
+  };
 
   links: {
     page: string;

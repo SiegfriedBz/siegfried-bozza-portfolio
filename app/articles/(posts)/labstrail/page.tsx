@@ -1,0 +1,19 @@
+import { notFound } from "next/navigation";
+import { getArticle } from "@/app/_constants/articles";
+import { isArticleHeld } from "@/app/_lib/held-articles";
+import { PostShell } from "@/app/articles/_components/post-shell";
+import { articleMetadata } from "@/app/articles/_lib/article-metadata";
+import Content from "./content.mdx";
+
+const SLUG = "labstrail";
+
+export const metadata = articleMetadata(SLUG);
+
+export default function Page() {
+  if (isArticleHeld(SLUG)) notFound();
+  return (
+    <PostShell article={getArticle(SLUG)}>
+      <Content />
+    </PostShell>
+  );
+}

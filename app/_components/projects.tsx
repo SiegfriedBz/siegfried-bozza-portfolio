@@ -2,17 +2,31 @@ import type { FC } from "react";
 import { PROJECTS } from "@/app/_constants/projects";
 import { ProjectCard } from "../(landing)/_components/project-card";
 
-export const Projects: FC = () => {
+type Props = {
+  /** Optional section heading (the landing page shows one; /projects has its own H1). */
+  heading?: string;
+};
+
+export const Projects: FC<Props> = ({ heading }) => {
   return (
-    <section className="py-8">
-      <ul className="space-y-12">
-        {PROJECTS.map((p) => {
-          return (
-            <li key={p.slug}>
-              <ProjectCard project={p} />
-            </li>
-          );
-        })}
+    <section
+      className="w-full py-8"
+      aria-labelledby={heading ? "projects-heading" : undefined}
+    >
+      {heading ? (
+        <h2
+          id="projects-heading"
+          className="mb-8 text-left text-2xl font-semibold tracking-tight sm:text-3xl"
+        >
+          {heading}
+        </h2>
+      ) : null}
+      <ul className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
+        {PROJECTS.map((p) => (
+          <li key={p.slug}>
+            <ProjectCard project={p} titleAs={heading ? "h3" : "h2"} />
+          </li>
+        ))}
       </ul>
     </section>
   );

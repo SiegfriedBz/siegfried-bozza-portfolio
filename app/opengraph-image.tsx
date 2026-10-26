@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
+import { AVAILABILITY, CORE_STACK, PITCH, ROLE } from "./_lib/site-metadata";
 
-export const alt = "Siegfried Bozza — Full-Stack Engineer";
+export const alt = `Siegfried Bozza, ${ROLE}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -42,18 +43,29 @@ export default function OpenGraphImage() {
           lineHeight: 1.3,
         }}
       >
-        Full-Stack Engineer · Web3 & AI agents
+        {ROLE}
       </div>
       <div
         style={{
-          marginTop: 48,
+          marginTop: 20,
+          fontSize: 26,
+          color: "#cbd5e1",
+          maxWidth: 1000,
+          lineHeight: 1.4,
+        }}
+      >
+        {PITCH}
+      </div>
+      <div
+        style={{
+          marginTop: 40,
           fontSize: 22,
           color: "#94a3b8",
           maxWidth: 800,
           lineHeight: 1.4,
         }}
       >
-        Open to remote roles or global relocation
+        {`${CORE_STACK.join(", ")}. ${AVAILABILITY.headline}.`}
       </div>
     </div>,
     { ...size },

@@ -1,21 +1,23 @@
+import { ExternalLinkIcon, MoveRightIcon, Newspaper } from "lucide-react";
+import Link from "next/link";
+import type { ComponentProps, FC } from "react";
+import { LuGithub } from "react-icons/lu";
 import { ProjectCarousel } from "@/app/_components/project-carousel";
 import { ProjectLinks } from "@/app/_components/project-links";
 import { RichText } from "@/app/_components/rich-text";
 import { SiegAvatar } from "@/app/_components/sieg-avatar";
 import { StackBadge } from "@/app/_components/stack-badge";
+import { TerminalCover } from "@/app/_components/terminal-cover";
 import { TypographyH1 } from "@/app/_components/typography/h1";
 import { TypographyH2 } from "@/app/_components/typography/h2";
 import { TypographyH3 } from "@/app/_components/typography/h3";
 import { TypographyP } from "@/app/_components/typography/p";
+import { PROJECTS } from "@/app/_constants/projects";
 import type { STACK } from "@/app/_constants/stack";
 import type { Project } from "@/app/_types/project";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { ExternalLinkIcon, Newspaper } from "lucide-react";
-import Link from "next/link";
-import type { ComponentProps, FC } from "react";
-import { LuGithub } from "react-icons/lu";
 import { ProjectDiagramCard } from "./project-diagram-card";
 
 type Props = ComponentProps<"div"> & { project: Project };
@@ -37,7 +39,8 @@ export const ProjectDetails: FC<Props> = (props) => {
     diagram,
     constructionPeriod,
     images,
-    gifs,
+    videos,
+    terminal,
     links,
   } = project;
 
@@ -74,20 +77,20 @@ export const ProjectDetails: FC<Props> = (props) => {
       className={cn(className, "z-10 flex flex-col justify-center gap-8")}
     >
       <div className="flex w-full flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:items-baseline sm:justify-center sm:gap-x-3">
-        <TypographyH1 className="w-full max-w-prose tracking-wider text-balance sm:w-auto">
+        <TypographyH1 className="w-full max-w-prose tracking-tight text-balance sm:w-auto">
           {title.h1}
         </TypographyH1>
         <Badge className="w-fit shrink-0 font-normal" variant="outline">
           Built {constructionPeriod}
         </Badge>
       </div>
-      <TypographyH2 className="-mt-2 text-center tracking-wider text-balance sm:-mt-4">
+      <TypographyH2 className="-mt-2 text-center text-xl font-medium tracking-normal text-balance text-muted-foreground sm:-mt-4 sm:text-2xl">
         {title.h2}
       </TypographyH2>
 
       {/* Avatar */}
       <div className="flex justify-center items-center gap-x-6 sm:gap-x-8 mb-4">
-        <SiegAvatar />
+        <SiegAvatar alt="" />
         <span className="text-accent-blue font-bold">Siegfried Bozza</span>
       </div>
 
@@ -95,7 +98,17 @@ export const ProjectDetails: FC<Props> = (props) => {
       <ProjectLinks className="self-center" links={linksTo} />
 
       {/* Carousel */}
-      <ProjectCarousel images={[...images, ...gifs]} projectName={title.h1} />
+      {images.length + videos.length > 0 ? (
+        <ProjectCarousel
+          images={images}
+          videos={videos}
+          projectName={title.h1}
+        />
+      ) : terminal ? (
+        <div className="aspect-video w-full">
+          <TerminalCover title={terminal.title} lines={terminal.lines} />
+        </div>
+      ) : null}
 
       {diagram ? (
         <ProjectDiagramCard
@@ -270,6 +283,31 @@ export const ProjectDetails: FC<Props> = (props) => {
 
       {/* ProjectLinks */}
       <ProjectLinks className="self-center" links={linksTo} />
+
+      <NextProject slug={project.slug} />
     </div>
+  );
+};
+
+/** Every project page ends with a way forward instead of a dead end. */
+const NextProject: FC<{ slug: string }> = ({ slug }) => {
+  const index = PROJECTS.findIndex((p) => p.slug === slug);
+  const next = PROJECTS[(index + 1) % PROJECTS.length];
+  if (!next || next.slug === slug) return null;
+
+  return (
+    <Link
+      href={next.links.page}
+      className="group mx-auto mt-4 flex w-full max-w-xl items-center justify-between gap-4 rounded-xl border border-border p-4 text-left transition-colors hover:border-accent-blue"
+    >
+      <span className="flex flex-col">
+        <span className="text-xs text-muted-foreground">Next project</span>
+        <span className="font-semibold">{next.title.h1}</span>
+        <span className="text-sm text-muted-foreground">
+          {next.title.short ?? next.title.h2}
+        </span>
+      </span>
+      <MoveRightIcon className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-accent-blue" />
+    </Link>
   );
 };

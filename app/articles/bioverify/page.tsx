@@ -1,5 +1,9 @@
-import { BIOVERIFY_LINKS } from "@/app/_constants/projects";
 import type { Metadata } from "next";
+import { JsonLd } from "@/app/_components/json-ld";
+import { getArticle } from "@/app/_constants/articles";
+import { BIOVERIFY_LINKS } from "@/app/_constants/projects";
+import { articleNode, breadcrumbNode, personNode } from "@/app/_lib/json-ld";
+import { SITE_NAME } from "@/app/_lib/site-metadata";
 import { BioVerifyArticle } from "./_components/bioverify-article";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -31,6 +35,9 @@ export async function generateMetadata(): Promise<Metadata> {
     ],
     openGraph: {
       type: "article",
+      authors: [SITE_NAME],
+      publishedTime: getArticle("bioverify").date,
+      siteName: SITE_NAME,
       title,
       description,
       url: "/articles/bioverify",
@@ -55,5 +62,20 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function BioVerifyArticlePage() {
-  return <BioVerifyArticle />;
+  return (
+    <>
+      <JsonLd
+        nodes={[
+          personNode(),
+          articleNode("bioverify"),
+          breadcrumbNode([
+            { name: "Home", path: "/" },
+            { name: "Articles", path: "/articles" },
+            { name: getArticle("bioverify").title },
+          ]),
+        ]}
+      />
+      <BioVerifyArticle />
+    </>
+  );
 }
