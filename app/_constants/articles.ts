@@ -36,7 +36,7 @@ export const ARTICLES: Article[] = [
     subtitle:
       "A DeSci peer-review case study, told as a user journey — where every step introduces the stack that makes it possible.",
     excerpt:
-      "Peer review as a coordination game: IPFS manifests, Chainlink VRF, LangGraph + Inngest agents, EIP-712 verdicts, and a getter-less contract projected into Neon Postgres — end to end on Base Sepolia and Ethereum Sepolia.",
+      "Peer review as a coordination game: IPFS manifests, Chainlink VRF, LangGraph + Inngest agents, EIP-712 verdicts, and a getter-light contract projected into Neon Postgres — end to end on Base Sepolia and Ethereum Sepolia.",
     date: "2026-05-18",
     href: "/articles/bioverify",
     cover: BIOVERIFY_LINKS.ogImage?.trim() || undefined,

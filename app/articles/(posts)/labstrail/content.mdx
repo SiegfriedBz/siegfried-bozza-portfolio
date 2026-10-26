@@ -2,14 +2,14 @@ Before software, I spent years as a molecular-biology researcher and published t
 
 LabsTrail publishes life-science and health papers to the OriginTrail Decentralized Knowledge Graph (DKG) and gives each one a rating that anyone can request with a wallet and check against the paper. It is under construction: everything runs on testnets, production has its first published papers and settled ratings, and transparent human review is the next phase. Most of the engineering is off-chain, in a workflow that has to finish a rating correctly when a webhook is lost, a mint is retried, a transaction sticks, or the model answers differently the second time.
 
-Until October 2026 the project was called VeriSci. Another science tool already had that name, so I renamed it; graph names and records minted before the rename still say `verisci` ([ADR 0042](https://github.com/SiegfriedBz/labstrail/blob/main/docs/adr/0042-the-project-is-named-labstrail.md)).
+Until October 2026 the project was called VeriSci. Another science tool already had that name, so I renamed it; graph and asset names still say `verisci`, for old and new records alike ([ADR 0042](https://github.com/SiegfriedBz/labstrail/blob/main/docs/adr/0042-the-project-is-named-labstrail.md)).
 
 <TLDR>
 
 - LabsTrail rates how completely a life-science paper reports its work. The evidence lives on the OriginTrail DKG, the score on a Base Sepolia contract.
 - A rating crosses a chain, a DKG node, IPFS and an LLM, and any step can fail halfway.
 - Every write reads state first and treats "already done" as success, so webhooks, retries and a cron reconciler can all start the same rating safely.
-- The LLM answers a reporting checklist with quotes; code checks each quote and computes the score once.
+- The LLM answers the reporting checklists for the kinds of study a paper reports, with quotes; code checks each quote and computes the score once.
 - On `main`: 36 ADRs, 1,841 Vitest tests, and 74 Foundry tests including fuzz and invariant suites.
 - Next on the roadmap: human review, with reviewers drawn by Chainlink VRF.
 
@@ -19,7 +19,7 @@ Until October 2026 the project was called VeriSci. Another science tool already 
 
 To publish, a submitter uploads a PDF to IPFS and signs its CID with their wallet (EIP-712). A publish run parses the PDF with GROBID, asks a small Gemini model whether it is a life-science or health paper, and publishes it to the DKG as a Knowledge Asset (a Target KA) recording who submitted it.
 
-To rate, anyone with a wallet calls `requestPhase1(targetUal)` on the `RatingController` contract and pays only gas. A rating run has Gemini answer the reporting checklist for the paper's kind of study, quoting the passage behind each answer, and code turns the answers into a score from 0 to 100. LabsTrail's DKG node publishes the rating as its own asset (an R-KA, linked to the paper by `schema:about`), and the oracle records the score on the contract. I call the score "reproducibility readiness": whether a paper gives others what they need to check and repeat its work.
+To rate, anyone with a wallet calls `requestPhase1(targetUal)` on the `RatingController` contract and pays only gas. A rating run has Gemini answer the reporting checklists for the kinds of study the paper reports, quoting the passage behind each answer, and code turns the answers into a score from 0 to 100. LabsTrail's DKG node publishes the rating as its own asset (an R-KA, linked to the paper by `schema:about`), and the oracle records the score on the contract. I call the score "reproducibility readiness": whether a paper gives others what they need to check and repeat its work.
 
 Production is open to search engines and AI search ([ADR 0040](https://github.com/SiegfriedBz/labstrail/blob/main/docs/adr/0040-production-is-open-to-crawlers.md)). Each paper and rating page carries its own schema.org data, with a rating described as a Review of its paper, and crawlers that run no JavaScript get the record in the HTML. The wallet's code loads only when a visitor uses it or comes back connected, which took Lighthouse mobile from 67–74 to 92–97 on every page.
 
@@ -228,7 +228,7 @@ Changes are measured against 14 open-access reference papers, 12 in the field ac
 
 Storing the score once keeps the chain consistent, but it does not make the score steady. On staging, the same paper scored 54 and then 75 on the same day. To find out why, I ran 16 ratings of 3 papers with the scorer then in use (version 3). The fly genetics paper was classed as an animal study in some runs and as lab work in others, which swaps its whole checklist: a spread of 21 points. Judgement checks such as `limitations` moved the other two by 10 and 13 points.
 
-Version 4 defines the kinds more precisely ("animal" means live vertebrates or cephalopods, so flies count as lab work), gives eight checks a rule for each answer, lets a paper report several kinds of study, and tells the model how to quote a long passage or a table row. Over 14 more runs on the same papers, the trial scored 64 every time, and the other two spreads fell to 7 and 9 points, all from judgement checks; no quote was lost to the matcher. Gemini 3.8 Flash has no seed, and Google lists temperature as deprecated for it, so some spread will remain. Each measurement is dated in the [domain notes](https://github.com/SiegfriedBz/labstrail/blob/main/docs/domain.md).
+Version 4 defines the kinds more precisely ("animal" means live vertebrates or cephalopods, so flies count as lab work), gives eight checks a rule for each answer, lets a paper report several kinds of study, and tells the model how to quote a long passage or a table row. Over 14 more runs on the same papers, the trial scored 64 every time, and the other two spreads fell to 7 and 9 points, all from judgement checks; no quote was lost to the matcher. Gemini 3.8 Flash has no documented seed, and Google lists temperature as deprecated for it, so some spread will remain. Each measurement is dated in the [domain notes](https://github.com/SiegfriedBz/labstrail/blob/main/docs/domain.md).
 
 <Callout title="What the score cannot tell you">
 

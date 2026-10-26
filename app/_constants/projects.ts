@@ -519,7 +519,7 @@ export const PROJECTS: Project[] = [
       {
         key: "Foundry Tests",
         description:
-          "**37 tests** (32 Forge, 5 FToken) that run the real deploy script in `setUp` and assert exact custom-error selectors and events. The README's coverage run reports 100% of lines and branches, deploy scripts included; there are no fuzz or invariant tests yet.",
+          "**37 tests** (32 Forge, 5 FToken) that run the real deploy script in `setUp` and assert exact custom-error selectors and events. There are no fuzz or invariant tests yet.",
       },
       {
         key: "Verified Smart Contracts",
@@ -667,7 +667,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "gavl",
     languages: ["TypeScript"],
-    constructionPeriod: "Sep–Oct 2025",
+    constructionPeriod: "Sep–Nov 2025",
     title: {
       h1: "GavL — Next Auctions",
       h2: "Bidding · Stripe Settlement · Postgres Triggers · Realtime Notifications",
@@ -849,7 +849,7 @@ export const PROJECTS: Project[] = [
 
     featured: {
       category: "Full-Stack Web2",
-      subtitle: "Sep–Oct 2025",
+      subtitle: "Sep–Nov 2025",
       summary:
         "A learning build for full-stack auction flows: bidding rules in Postgres triggers and RLS, real-time notifications over private Supabase Realtime channels, scheduled closure via an Edge Function, and Stripe settlement through a signature-verified webhook.",
       bullets: [

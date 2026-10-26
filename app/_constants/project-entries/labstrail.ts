@@ -113,7 +113,7 @@ I built the repo in about three weeks, alongside my full-time job, and I could n
     "**One shared DKG node** on one free VM serves staging and production. An outage takes down both, and the node's single admin token means staging's credential could in principle write the production graph; a config guard covers that for now.",
     "**Gemini free tier:** the scoring model allows 20 requests a day, shared by every environment.",
     "**The score measures reporting completeness only.** It says nothing about whether findings are right, a fabricated paper that reports everything would score well, and 14 reference papers are far too few to call it calibrated.",
-    "**Scores still move between ratings.** Gemini 3.8 Flash has no seed, so judgement checks such as limitations can be answered differently; the last measurement put the spread at 0 to 9 points on 3 papers.",
+    "**Scores still move between ratings.** Gemini 3.8 Flash has no documented seed, so judgement checks such as limitations can be answered differently; the last measurement put the spread at 0 to 9 points on 3 papers.",
     "**One hot oracle key** on the deployment, holding a few days of gas and alerted on below a threshold.",
     "**One copy of each PDF**, on Pinata: the CID proves a file is unchanged but does not keep it available.",
     "**No end-to-end tests yet**; the pages have component tests.",

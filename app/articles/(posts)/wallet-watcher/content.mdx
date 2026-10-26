@@ -206,7 +206,7 @@ As a result, sending a wallet's whole balance always fails: the fee comes on top
 
 Estimating gas instead of hard-coding 21,000 mattered sooner than I expected. Sepolia's Glamsterdam upgrade raised the cost of a first transfer to a never-used address: on 17 October, `eth_estimateGas` for a 1-wei transfer from wallet #0 returned 207,391 for a fresh address and 21,000 for wallet #1. When the amount is at least the balance, the node may refuse to estimate, so the code skips the estimate and assumes 21,000. The funds check fails anyway, but the `maxSendableWei` it reports is then an upper bound.
 
-## Key isolation and least privilege
+## Signing behind one module
 
 The trust boundary is the process and its `.env`. The mnemonic sits in both for the life of the service, and anything that can read either one controls every wallet. That is acceptable on a testnet and is the first thing production changes.
 
