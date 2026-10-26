@@ -73,15 +73,15 @@ export const BioVerifyArticle: FC = () => {
         </TypographyP>
 
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          This is a case study in on-chain coordination: the chain records
-          what happened, and agents orchestrate what happens next. One agent
-          key still settles every outcome, so it is not yet trust-minimised.
-          Having spent fifteen years in Molecular Biology and
-          Civil/Environmental Engineering before software — and having been on
-          the author side of peer review myself — I had a specific reason to
-          care. Rather than describe the stack in the abstract, this article
-          follows the system as a user experiences it, and introduces each piece
-          of technology precisely at the moment the story needs it.
+          This is a case study in on-chain coordination: the chain records what
+          happened, and agents orchestrate what happens next. One agent key
+          still settles every outcome, so it is not yet trust-minimised. Having
+          spent fifteen years in Molecular Biology and Civil/Environmental
+          Engineering before software — and having been on the author side of
+          peer review myself — I had a specific reason to care. Rather than
+          describe the stack in the abstract, this article follows the system as
+          a user experiences it, and introduces each piece of technology
+          precisely at the moment the story needs it.
         </TypographyP>
 
         <PullQuote>
@@ -786,11 +786,11 @@ export const BioVerifyArticle: FC = () => {
           label="Figure 4 — Review agent: HITL, escalation, and settlement"
           caption={
             <>
-              Inngest starts the review agent and retries that first run;
-              later reviews resume it from a Next.js server action, with no
-              retry. LangGraph owns the human pauses: the checkpointer restores state after each{" "}
-              <code>interrupt()</code> so the graph knows both what it last knew
-              and what must happen next.
+              Inngest starts the review agent and retries that first run; later
+              reviews resume it from a Next.js server action, with no retry.
+              LangGraph owns the human pauses: the checkpointer restores state
+              after each <code>interrupt()</code> so the graph knows both what
+              it last knew and what must happen next.
             </>
           }
         >
@@ -929,9 +929,8 @@ export const BioVerifyArticle: FC = () => {
 
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           The economic mechanics aim for honest participation to be the dominant
-          strategy — not by assuming
-          participants are virtuous, but by making dishonesty costly in every
-          scenario the contract can observe.
+          strategy — not by assuming participants are virtuous, but by making
+          dishonesty costly in every scenario the contract can observe.
         </TypographyP>
 
         <OutcomesTable />
@@ -988,8 +987,8 @@ export const BioVerifyArticle: FC = () => {
           Peer review is the domain BioVerify is grounded in, but the
           coordination pattern is not specific to science. The same problems
           show up wherever multiple <strong>mutually untrusting actors</strong>{" "}
-          need a shared process, with verifiable selection,
-          long-running human-in-the-loop steps, and on-chain settlement.
+          need a shared process, with verifiable selection, long-running
+          human-in-the-loop steps, and on-chain settlement.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           These are not claims I have validated — they are domains where I see
