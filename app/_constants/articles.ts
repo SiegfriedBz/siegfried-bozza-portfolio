@@ -1,7 +1,8 @@
 import { BIOVERIFY_LINKS } from "@/app/_constants/projects";
+import { isArticleHeld } from "@/app/_lib/held-articles";
 import type { Article } from "@/app/_types/article";
 
-export const ARTICLES: Article[] = [
+const ALL_ARTICLES: Article[] = [
   {
     slug: "labstrail",
     title: "Keeping a Knowledge Graph and a Chain in Sync: Building LabsTrail",
@@ -46,8 +47,11 @@ export const ARTICLES: Article[] = [
   },
 ];
 
+/** The articles this deploy lists and links to; held ones are left out in production. */
+export const ARTICLES = ALL_ARTICLES.filter((a) => !isArticleHeld(a.slug));
+
 export const getArticle = (slug: string): Article => {
-  const article = ARTICLES.find((a) => a.slug === slug);
+  const article = ALL_ARTICLES.find((a) => a.slug === slug);
   if (!article) throw new Error(`Unknown article slug: ${slug}`);
   return article;
 };

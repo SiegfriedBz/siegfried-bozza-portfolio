@@ -1,3 +1,4 @@
+import { isArticleHrefHeld } from "@/app/_lib/held-articles";
 import type { Project } from "@/app/_types/project";
 import { labstrailProject } from "./project-entries/labstrail";
 import { walletWatcherProject } from "./project-entries/wallet-watcher";
@@ -245,7 +246,7 @@ const bioVerifyProject: Project = {
 
 export const BIOVERIFY_LINKS = bioVerifyProject.links;
 
-export const PROJECTS: Project[] = [
+const ALL_PROJECTS: Project[] = [
   labstrailProject,
   walletWatcherProject,
   bioVerifyProject,
@@ -866,3 +867,11 @@ export const PROJECTS: Project[] = [
     },
   },
 ];
+
+/** Every project, without the links to articles held back in production. */
+export const PROJECTS: Project[] = ALL_PROJECTS.map((project) => {
+  const { article, ...links } = project.links;
+  return article && isArticleHrefHeld(article.href)
+    ? { ...project, links }
+    : project;
+});

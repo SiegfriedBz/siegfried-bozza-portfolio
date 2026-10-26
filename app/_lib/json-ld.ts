@@ -1,4 +1,4 @@
-import { ARTICLES } from "@/app/_constants/articles";
+import { getArticle } from "@/app/_constants/articles";
 import { EDUCATION } from "@/app/_constants/education";
 import { PROFILE_LINKS } from "@/app/_constants/links";
 import { PROJECTS } from "@/app/_constants/projects";
@@ -86,8 +86,7 @@ export const profilePageNode = (): Node => ({
 });
 
 export const articleNode = (slug: string): Node => {
-  const article = ARTICLES.find((a) => a.slug === slug);
-  if (!article) throw new Error(`Unknown article slug: ${slug}`);
+  const article = getArticle(slug);
   const url = abs(article.href);
 
   return {
