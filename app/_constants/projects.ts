@@ -487,7 +487,7 @@ const ALL_PROJECTS: Project[] = [
     },
     description: {
       short:
-        "ERC-1155 crafting case study — burn-then-mint for composites in one call, a rules contract that owns the token ledger, and 37 Foundry tests (Next.js + wagmi).",
+        "ERC-1155 crafting case study — burn-then-mint for composites in one call, a rules contract that owns the token ledger, and 38 Foundry tests (Next.js + wagmi).",
       problem:
         "ERC-1155 crafting loops need supply rules users cannot route around: inputs burned and outputs minted together, and no way to mint or burn outside the recipes.",
       solution:
@@ -528,7 +528,7 @@ const ALL_PROJECTS: Project[] = [
       {
         key: "Foundry Tests",
         description:
-          "**37 tests** (32 Forge, 5 FToken) that run the real deploy script in `setUp` and assert exact custom-error selectors and events. There are no fuzz or invariant tests yet.",
+          "**38 tests** (32 Forge, 6 FToken) that run the real deploy script in `setUp`, with a throwaway key so CI needs no secrets, and assert exact custom-error selectors and events. There are no fuzz or invariant tests yet, and `trade` has a single happy-path test.",
       },
       {
         key: "Verified Smart Contracts",
@@ -545,7 +545,7 @@ const ALL_PROJECTS: Project[] = [
     Forge on **Sepolia** shows atomic **ERC-1155** composition with verified contracts and a small single-page **Next.js** client — a focused case study, not a shipped game economy.
   `,
     outcomeMetrics: [
-      "**Tests:** 37 Foundry unit tests; the README's coverage run reports 95/95 lines and 19/19 branches across Forge.sol, FToken.sol and the deploy scripts",
+      "**Tests:** 38 Foundry unit tests; `forge coverage` reports 100% of lines (95/95), statements, branches (21/21) and functions across Forge.sol, FToken.sol and the deploy scripts",
       "**Sepolia addresses:** [Forge](https://sepolia.etherscan.io/address/0x7d8A16168D337B2241fCbA1cc5bd196479DF1F0C#code) · [FToken](https://sepolia.etherscan.io/address/0xa6D68eDA0993364481C2c5DA8d6cd43e03f592bA#code)",
       "**Deployment:** Sepolia — Forge & FToken verified on Etherscan",
       "**Architecture:** Forge is immutable owner of FToken; only Forge mutates supply; forged IDs use burnBatch + mint in one tx",
@@ -565,6 +565,7 @@ const ALL_PROJECTS: Project[] = [
     ],
     roadmap: [
       "**L2 comparison** — Deploy the same **Forge**/**FToken** pattern to an L2 testnet and compare gas on **burnBatch** + **mint** paths vs Sepolia.",
+      "**Bounded admin** — Cap `setCoolDownDelay` and derive recipes from `I_MAX_TOKEN_ID` (or fix it at 6).",
       "**Progressive cooldowns** — Per-id or tiered cooldown tuning instead of a single mapping.",
       "**Marketplace hooks** — Pair the contracts with standard **ERC-1155** marketplace flows.",
     ],
@@ -592,7 +593,7 @@ const ALL_PROJECTS: Project[] = [
         {
           key: "Solidity + Foundry",
           description:
-            "Implements ERC-1155 minting, forging, burning and trading logic, with custom errors carrying context and an indexed event per action; 37 tests.",
+            "Implements ERC-1155 minting, forging, burning and trading logic, with custom errors carrying context and an indexed event per action; 38 tests.",
         },
         {
           key: "Next.js + Wagmi",
@@ -659,11 +660,11 @@ const ALL_PROJECTS: Project[] = [
       category: "Smart Contract Patterns & Testing",
       subtitle: "Sepolia",
       summary:
-        "An experiment in ERC-1155 crafting rules: the ledger (FToken) handles balances while the rules contract (Forge) encodes recipes, cooldowns, and burn-then-mint in one call — with 37 Foundry tests.",
+        "An experiment in ERC-1155 crafting rules: the ledger (FToken) handles balances while the rules contract (Forge) encodes recipes, cooldowns, and burn-then-mint in one call — with 38 Foundry tests.",
       bullets: [
         "**Atomic forging** — Composite tokens (IDs 3–6) are created by burning their inputs and minting the result in a single transaction (**burnBatch** + **mint**), one wallet confirmation.",
         "**Factory-owned ledger** — **Forge** deploys **FToken** (ERC-1155) in its constructor and is its immutable owner, so users cannot mint or burn outside the recipes and ownership can never change.",
-        "**Foundry tests** — 37 unit tests through the real deploy script, asserting exact custom errors and events; contracts verified on Sepolia.",
+        "**Foundry tests** — 38 unit tests through the real deploy script, asserting exact custom errors and events; contracts verified on Sepolia.",
       ],
     },
 
