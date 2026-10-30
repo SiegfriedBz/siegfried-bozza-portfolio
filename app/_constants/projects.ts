@@ -685,10 +685,10 @@ const ALL_PROJECTS: Project[] = [
       problem:
         "Auction platforms need bidding, automatic closure at the deadline, notifications to the people involved, and payment settlement without exposing privileged database access to the browser.",
       solution:
-        "GavL keeps the workflow in **Postgres**: `SECURITY DEFINER` triggers track the highest bid and write NEW_BID, AUCTION_WON and PAYMENT notifications, pushed to each user over a private **Supabase Realtime** channel. A scheduled **close-auctions** Edge Function closes due auctions, and a signature-verified **Stripe** webhook records payment through a server-only service role.",
+        "GavL keeps the workflow in **Postgres**: `SECURITY DEFINER` triggers track the highest bid and write `NEW_BID`, `NEW_AUCTION_WON` and `NEW_PAYMENT` notifications, pushed to each user over a private **Supabase Realtime** channel. A **pg_cron** job calls the **close-auctions** Edge Function every 5 minutes to close due auctions, and a signature-verified **Stripe** webhook records payment through a server-only service role.",
       overview: `
         GavL is a learning build focused on real-time full-stack flows. It follows a ports-and-adapters layout: domains hold types and **Zod** schemas; ports are repository interfaces; services own workflows; **Supabase** repositories sit behind those ports; instances wire services to infrastructure.
-        Notifications for new bids, auction wins and payments go to each affected user over private per-user **Supabase Realtime** broadcast channels; other viewers see a new price on refresh. A scheduled job (set up in the Supabase dashboard) calls the **close-auctions** Edge Function, so auctions close within one schedule interval after **endAt**. **Stripe Checkout** plus a signature-verified webhook (raw body, constructEvent) sets **paidAt** through a **service-role** client that stays server-only.
+        Notifications for new bids, auction wins and payments go to each affected user over private per-user **Supabase Realtime** broadcast channels; other viewers see a new price on refresh. A **pg_cron** job, committed as a migration that reads its URL and key from Vault, calls the **close-auctions** Edge Function every 5 minutes, so auctions close up to 5 minutes after **endAt**. **Stripe Checkout** plus a signature-verified webhook (raw body, constructEvent) sets **paidAt** through a **service-role** client that stays server-only.
         The UI is multilingual (**French**, **English**, **German** via **Lingui**), responsive, and uses URL-driven filters, sorting, and pagination (**nuqs**) with **Suspense** and skeleton loaders.
       `,
     },
@@ -744,18 +744,18 @@ const ALL_PROJECTS: Project[] = [
       "**Live demo:** next-auctions.vercel.app",
       "**i18n:** French / English / German (Lingui)",
       "**Architecture:** ports and adapters — services behind repository interfaces; URL-driven filters via nuqs; 66 Jest unit tests in CI",
-      "**Automation:** scheduled Edge Function closes auctions; signature-verified Stripe webhook → server-only service-role write",
+      "**Automation:** pg_cron calls the close-auctions Edge Function every 5 minutes; signature-verified Stripe webhook → server-only service-role write",
     ],
     transferablePatterns:
       "Payments + webhooks, workflow rules in Postgres triggers and RLS, per-user notification channels, and scheduled lifecycle jobs.",
 
     limitations: [
-      "**Known bugs, bid integrity** — the server does not check that a bid beats the current highest (only the form does); RLS lets bidders edit or delete their own bids while an auction is open; owners can bid on their own auctions; bids are accepted between **endAt** and the next scheduled close; and the highest-bid trigger reads `MAX` without a lock, so two near-simultaneous bids can store a stale highest bid. The fix is a `place_bid` RPC that locks the auction row and checks amount and deadline, with no update or delete on bids.",
+      "**Known bugs, bid integrity** — the server does not check that a bid beats the current highest (only the form does); RLS lets bidders edit or delete their own bids while an auction is open; owners can bid on their own auctions; bids are accepted between **endAt** and the next scheduled close, up to 5 minutes later; and the highest-bid trigger reads `MAX` without a lock, so two near-simultaneous bids can store a stale highest bid. The fix is a `place_bid` RPC that locks the auction row and checks amount and deadline, with no update or delete on bids.",
       "**Payment checks are UI-only** — creating a checkout session does not check on the server that the caller is the winner or that the auction is closed and unpaid; the webhook then trusts the auction ID in the session metadata.",
-      "**Repo vs live setup** — the realtime broadcast trigger is dropped by a later migration and the close-auctions schedule is not committed, so a fresh setup from the repo has no live notifications until both are added.",
-      "**Testing depth** — **Jest** unit tests cover services and mappers with mocked repositories; triggers, RLS, the webhook and the Edge Function are untested, and there is no end-to-end browser harness yet.",
+      "**Webhook retries** are not deduplicated by `event.id`; a retry rewrites `paidAt`, but the payment notification still fires once.",
+      "**Testing depth** — 66 **Jest** tests cover services and mappers with mocked repositories; triggers, RLS, the webhook, the Edge Function and the server actions are untested, and there is no end-to-end browser harness yet.",
       "**Service role** — the Stripe webhook and the Edge Function bypass **RLS** with a server-only key. One server action that writes through it has no auth check of its own; today only the webhook route imports it.",
-      "**CRON granularity** — Auction closure depends on how often the scheduled job runs; near-miss timing is bounded by that cadence.",
+      "**Closing cadence** — the pg_cron job runs every 5 minutes, so an auction can stay open up to 5 minutes past **endAt**.",
     ],
     roadmap: [
       "**Cypress E2E** — Cover login, bidding, closure, and Stripe test-mode flows in a browser.",
@@ -787,7 +787,7 @@ const ALL_PROJECTS: Project[] = [
         {
           key: "Backend & Database",
           description:
-            "Supabase (Postgres triggers, RLS, Realtime, Edge Functions)",
+            "Supabase (Postgres triggers, RLS, Realtime, Edge Functions, pg_cron)",
         },
         {
           key: "Payments",
