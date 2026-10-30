@@ -93,7 +93,7 @@ export const DEFAULT_OG_IMAGES = [
 ];
 
 /** Date the static pages' content last changed (sitemap lastModified). Update with content changes. */
-export const SITE_LAST_UPDATED = "2026-10-26";
+export const SITE_LAST_UPDATED = "2026-10-30";
 
 /** Meta description that fits search snippets: cut at a word boundary, never mid-word. */
 export const toMetaDescription = (text: string, max = 155) => {

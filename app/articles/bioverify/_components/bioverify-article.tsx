@@ -53,10 +53,10 @@ export const BioVerifyArticle: FC = () => {
             <strong>BioVerify</strong>
           )}
           : a full-stack agentic DApp where authors stake ETH on their research,
-          reviewers are selected by Chainlink VRF, every artifact is
-          content-addressed on <strong>IPFS</strong>, and AI agents coordinate
-          the rest — with humans making every verdict call. You can try it on
-          the{" "}
+          reviewers are selected by Chainlink VRF, the submission and its final
+          verdict are content-addressed on <strong>IPFS</strong>, and AI agents
+          coordinate the rest, with people writing the reviews and Gemini or a
+          senior reviewer setting the verdict. You can try it on the{" "}
           {BIOVERIFY_LIVE ? (
             <a href={BIOVERIFY_LIVE}>live demo</a>
           ) : (
@@ -96,8 +96,8 @@ export const BioVerifyArticle: FC = () => {
           processes, inconsistent conflict disclosure, and reviewers who are
           rarely compensated. Blockchain cannot fix science, but it can make
           parts of the process verifiable — stakes and outcomes settle on-chain,
-          participants can prove what they signed, and for one specific
-          subproblem (selecting reviewers fairly){" "}
+          reviewers sign their reviews, which are checked off-chain, and for one
+          specific subproblem (selecting reviewers fairly){" "}
           <TechTag variant="amber">Chainlink VRF</TechTag> attaches a
           cryptographic proof to the randomness so the draw can be audited.
         </TypographyP>
@@ -135,11 +135,10 @@ export const BioVerifyArticle: FC = () => {
               key: "durable",
               content: (
                 <>
-                  <strong>Durable coordination</strong> — Inngest wraps agents
-                  in durable <code>step.run</code> with retries and crash-resume
-                  on serverless; LangGraph <code>interrupt()</code> pauses for
-                  human signatures, and Postgres checkpointers persist graph
-                  state between resumes.
+                  <strong>Durable coordination</strong> — Inngest starts each
+                  agent run and retries it on failure; LangGraph{" "}
+                  <code>interrupt()</code> pauses for human signatures, and
+                  Postgres checkpointers persist graph state between resumes.
                 </>
               ),
             },
@@ -150,7 +149,8 @@ export const BioVerifyArticle: FC = () => {
                   <strong>Human-in-the-loop</strong> — human reviewers sign the
                   peer verdicts and the senior reviewer has the final word after
                   an escalation; an agent records and settles them. The
-                  plagiarism screen and the call to escalate are LLM decisions.
+                  plagiarism screen, the call to escalate and the verdict when
+                  there is no escalation are Gemini&apos;s.
                 </>
               ),
             },
@@ -174,10 +174,9 @@ export const BioVerifyArticle: FC = () => {
           own contract address, reward and slash pools, and reviewer pool. The
           same Solidity source is deployed to both networks, producing the same
           ABI on each — only per-chain parameters such as the Chainlink VRF
-          coordinator and subscription differ. This multi-chain design is
-          deliberate: BioVerify is chain-agnostic across EVM-compatible
-          networks; the same coordination patterns work without modifying
-          application logic.
+          coordinator and subscription differ. The two networks are hardcoded in
+          the app, though: adding a chain means a new deployment plus changes in
+          several places.
         </TypographyP>
 
         <h3 className={h3}>
@@ -198,7 +197,7 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           BioVerify uses <TechTag>Pinata</TechTag> as the IPFS pinning service.
           Each component is uploaded individually, producing its own CID. The
-          frontend then assembles a final <strong>research manifest</strong> — a
+          server then assembles a final <strong>research manifest</strong> — a
           structured JSON object containing all the component CIDs — and pins
           that too. The manifest&apos;s CID becomes the single identifier for
           the whole submission.
@@ -275,11 +274,11 @@ export const BioVerifyArticle: FC = () => {
           webhook service. For each network, BioVerify configures one webhook
           scoped to a single contract address — the deployed{" "}
           <code>BioVerifyV3</code> — so Alchemy POSTs a signed payload
-          containing the event logs that contract emitted in each new confirmed
-          block. Two such webhooks run in parallel — one for Base Sepolia, one
-          for Ethereum Sepolia — both reacting to the same set of{" "}
-          <code>BioVerifyV3</code> events and both POSTing to the Next.js API
-          route at <code>/api/webhooks/alchemy/all-events</code>.
+          containing the event logs that contract emitted in each new block. Two
+          such webhooks run in parallel — one for Base Sepolia, one for Ethereum
+          Sepolia — both reacting to the same set of <code>BioVerifyV3</code>{" "}
+          events and both POSTing to the Next.js API route at{" "}
+          <code>/api/webhooks/alchemy/all-events</code>.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           That route runs as a <strong>Vercel serverless function</strong>. The
@@ -319,9 +318,10 @@ export const BioVerifyArticle: FC = () => {
           <strong>block number plus log index</strong> — to each upsert. An
           update applies only when the inbound event sorts strictly newer than
           what is already stored. Duplicates converge idempotently; stale
-          deliveries cannot rewind fresher projections. That guards the
-          projection against duplication and reorder chaos that webhook
-          pipelines naturally introduce.
+          deliveries cannot rewind fresher projections. There is one stamp per
+          row, though, so a late event that touches a different column is
+          dropped, and a projection that fails after the webhook&apos;s 200 is
+          lost.
         </CalloutCard>
 
         <DiagramWrap
@@ -383,11 +383,11 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Why Inngest?</strong> Vercel serverless functions have tight
           per-invocation time limits and no guaranteed in-memory state between
-          invocations. Inngest wraps each agent run in a durable execution
-          shell: automatic retries, step isolation so successful steps are not
-          replayed, and clean crash-recovery if a worker dies mid-run. It is{" "}
-          <em>not</em> the mechanism that waits days for a reviewer — that pause
-          lives in LangGraph.
+          invocations. Inngest starts each agent run and retries it on failure.
+          Each agent runs inside one <code>step.run</code>, so a retry re-runs
+          the whole agent, and its commands read state before writing where they
+          can. It is <em>not</em> the mechanism that waits days for a reviewer —
+          that pause lives in LangGraph.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Why LangGraph?</strong> Human review needs real suspension
@@ -571,9 +571,10 @@ export const BioVerifyArticle: FC = () => {
           off-chain together with a cryptographic proof; the Chainlink VRF
           coordinator verifies that proof on-chain before calling back the
           consumer contract. The draw is not merely opaque — it is{" "}
-          <strong>verifiable</strong>. Think of it as a public lottery where you
-          do not have to trust the organiser: anyone can re-check the draw
-          afterward.
+          <strong>verifiable</strong>. Think of it as a public lottery that
+          anyone can re-check afterward. One caveat: the contract owner can
+          change the VRF coordinator, so the draw is only as neutral as the
+          coordinator it points to (listed under known edge cases).
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           In BioVerify&apos;s flow: the agent calls <code>pickReviewers()</code>{" "}
@@ -705,8 +706,8 @@ export const BioVerifyArticle: FC = () => {
           >
             BioVerify Telegram bot
           </a>
-          , which broadcasts contract state transitions in real time across both
-          Base Sepolia and Ethereum Sepolia.
+          , which posts updates as each publication moves through screening,
+          review and settlement, on both Base Sepolia and Ethereum Sepolia.
         </TypographyP>
 
         <h3 className={h3}>
@@ -723,33 +724,35 @@ export const BioVerifyArticle: FC = () => {
           <li>
             <strong>Peer reviewers.</strong> The non-senior members of the VRF
             draw. They submit independent pass/fail verdicts, and Gemini reads
-            them and decides whether to settle or escalate. When it settles —{" "}
-            <code>publishPublication</code> if the shared verdict is pass,{" "}
-            <code>slashPublication</code> if it is fail; in that branch the
-            settlement helper classifies both peers as honest: each gets their
-            stake back, the reviewer reward, and a reputation bump — the senior
-            reviewer is not invoked.
+            them and returns pass, fail or escalate. When it settles —{" "}
+            <code>publishPublication</code> on pass,{" "}
+            <code>slashPublication</code> on fail — each peer whose verdict
+            matches Gemini&apos;s is honest and gets their stake back, the
+            reviewer reward and a reputation bump; a peer who disagrees is
+            negligent and is slashed. The senior reviewer is not asked.
           </li>
           <li>
             <strong>Senior reviewer.</strong> Drawn alongside peers but
-            designated as the highest-reputation reviewer of the three. If peers
-            disagree, the workflow escalates to the senior reviewer (tie-break
-            assisted by Gemini), who signs a binding verdict. The peer who
-            aligned with the senior is honest; the dissenting peer is negligent
-            and is slashed (stake to the slash pool, reputation drop). Even when
-            peers agree, the senior remains economically aligned: settlement
-            code unconditionally credits them as honest — their locked stake
-            unlocks and they still receive the reviewer reward, on the grounds
-            that they served as the standby escalation authority.
+            designated as the highest-reputation reviewer of the three. If
+            Gemini escalates (its prompt asks for that when the peers split, but
+            the code does not force it), the senior reviewer signs a binding
+            verdict: the code enforces it, and Gemini only rewrites the
+            reasoning. The peer who aligned with the senior is honest; the
+            dissenting peer is negligent and is slashed (stake to the slash
+            pool, reputation drop). Even without escalation, the senior remains
+            economically aligned: settlement code unconditionally credits them
+            as honest — their locked stake unlocks and they still receive the
+            reviewer reward, on the grounds that they served as the standby
+            escalation authority.
           </li>
         </ul>
 
         <h3 className={h3}>Possible outcomes and what triggers settlement</h3>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           The review agent settles the publication once the binding verdict is
-          established — either by peer reviewer consensus or senior reviewer
-          decision. It calls one of two contract functions through the agent
-          address:
+          established — Gemini&apos;s verdict or, after escalation, the senior
+          reviewer&apos;s. It calls one of two contract functions through the
+          agent address:
         </TypographyP>
         <ul className={dashList}>
           <li>
@@ -904,8 +907,8 @@ export const BioVerifyArticle: FC = () => {
               content: (
                 <>
                   Review Agent: LangGraph <code>interrupt()</code> while
-                  reviewers sign EIP-712 payloads → consensus or escalation →{" "}
-                  <code>publishPublication</code> /{" "}
+                  reviewers sign EIP-712 payloads → Gemini verdict or escalation
+                  → <code>publishPublication</code> /{" "}
                   <code>slashPublication</code>
                 </>
               ),
@@ -940,14 +943,15 @@ export const BioVerifyArticle: FC = () => {
             Honesty is measured against the binding verdict, not the
             paper&apos;s outcome.
           </strong>{" "}
-          When peer reviewers agree, both peers aligned with that verdict are
-          rewarded; the senior is always credited as honest at settlement so
-          their standby stake and reward settle cleanly. When peers conflict,
-          the senior reviewer&apos;s verdict is binding: the matching peer is
-          honest; the dissenting peer is negligent. The system is intentionally
-          simple, with a clear limitation: a wrong or compromised senior
-          reviewer gets the final word — the roadmap addresses this with
-          weighted majority voting based on on-chain reputation.
+          Without escalation, Gemini&apos;s verdict is binding: each peer who
+          matches it is rewarded, and a peer who disagrees is negligent. After
+          escalation, the senior reviewer&apos;s verdict is binding: the
+          matching peer is honest; the dissenting peer is negligent. The senior
+          is always credited as honest at settlement so their standby stake and
+          reward settle cleanly. The system is intentionally simple, with a
+          clear limitation: a wrong or compromised senior reviewer gets the
+          final word — the roadmap addresses this with weighted majority voting
+          based on on-chain reputation.
         </TypographyP>
 
         <hr className="my-14 border-border dark:border-white/10" />
@@ -972,11 +976,12 @@ export const BioVerifyArticle: FC = () => {
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Contract test coverage.</strong> <code>BioVerifyV3</code> has
-          50 Foundry tests across 12 suites; the last committed coverage run
-          (March 2026, before later contract changes) showed 100% of lines and
-          functions. VRF flows use <code>VRFCoordinatorV2_5Mock</code> with
-          deterministic fulfillment overrides and log assertions, including edge
-          cases such as colliding random words.
+          50 Foundry tests in 12 suites, across 11 test files;{" "}
+          <code>forge coverage</code> on 24 October 2026 shows 100% of lines
+          (240/240), branches (37/37) and functions. VRF flows use{" "}
+          <code>VRFCoordinatorV2_5Mock</code> with deterministic fulfillment
+          overrides and log assertions, including edge cases such as colliding
+          random words.
         </TypographyP>
 
         <hr className="my-14 border-border dark:border-white/10" />
@@ -1083,9 +1088,10 @@ export const BioVerifyArticle: FC = () => {
             <strong>Known edge cases</strong> — empty or malformed IPFS payloads
             can leave a publication stuck in <code>SUBMITTED</code>; a gas spike
             during settlement can strand a publication in <code>IN_REVIEW</code>{" "}
-            with no retry. One agent key, which is also the treasury on both
-            deployments, settles every outcome. The README documents these at
-            the file level, including specific nodes and commands affected.
+            with no retry. One agent key, which is also the treasury and the
+            owner on both deployments, settles every outcome, and as owner it
+            can change the VRF coordinator. The README documents these at the
+            file level, including specific nodes and commands affected.
           </li>
         </ul>
 
@@ -1103,8 +1109,7 @@ export const BioVerifyArticle: FC = () => {
           </li>
           <li>
             <strong>Agents &amp; orchestration</strong> — LangGraph (graph state
-            + HITL interrupts), Inngest (durable step.run, retries, crash
-            recovery)
+            + HITL interrupts), Inngest (starts and retries each agent run)
           </li>
           <li>
             <strong>Data &amp; storage</strong> — Neon Postgres (CQRS read model

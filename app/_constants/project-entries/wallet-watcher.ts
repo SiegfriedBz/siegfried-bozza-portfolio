@@ -1,4 +1,4 @@
-/** Wallet Watcher — figures verified against the repo and Sepolia on 2026-10-18; claims re-reviewed against origin/main (ee67e0e) on 2026-10-24. */
+/** Wallet Watcher — figures verified against the repo and Sepolia on 2026-10-18; claims re-reviewed against origin/main (ee67e0e) on 2026-10-24 and against the rewritten README (0f8e5fd) on 2026-10-30. */
 import { STACK } from "@/app/_constants/stack";
 import type { Project } from "@/app/_types/project";
 
@@ -25,14 +25,14 @@ export const walletWatcherProject: Project = {
       "**Wallet Watcher** derives N wallets from one BIP-39 mnemonic, polls their ETH balances into an append-only **SQLite** ledger, and builds and signs **EIP-1559** withdrawals behind a localhost admin API. Each withdrawal is booked once, from its **transaction receipt**, amounts stay **bigint** wei end to end, balances come from one **Multicall3** snapshot pinned to its block, and only **signer.ts** ever signs.",
     overview: `Wallet Watcher is a single **Node.js** and **TypeScript** service on **Ethereum Sepolia**, built to a written spec. It derives 1 to 20 wallets at the BIP-44 path m/44'/60'/0'/0/i, polls every balance at startup and then every 8 minutes, and exposes a localhost API to list wallets, read each wallet's ledger, and build, sign and optionally broadcast withdrawals.
 The money logic sits in three pure modules with no I/O (withdrawal planning, settlement, change detection), and everything that touches the chain, the database or HTTP stays at the edges. A broadcast is recorded as **pending**; the poller later writes **one** outflow from the receipt, never from a balance diff, so the poller cannot book the same withdrawal twice.
-The repo documents its own limits (no confirmation depth, one withdrawal in flight per wallet, keys in process memory, a known balance-after bug listed below) and a path to production: KMS/MPC signing, write-ahead broadcasts with idempotency keys, a reorg-aware ledger and nonce management.`,
+The repo documents its own limits (no confirmation depth, one withdrawal in flight per wallet, keys in process memory, a known balance-after bug listed below) and a path to production: KMS/MPC signing, finality and reorg checks, nonce management, withdrawal policy and per-operator access.`,
   },
 
   features: [
     {
       key: "One Outflow per Withdrawal, From the Receipt",
       description:
-        "A broadcast is stored as **pending** and the ledger is left alone. The poller writes **one** outflow from the receipt (amount + **gasUsed × effectiveGasPrice**, or the fee alone if reverted), together with the status and new balance in a single SQLite transaction. While a withdrawal is pending, that wallet's balance diff is skipped, so the drop is not booked twice. An outflow the service did not record (a lost 502, a transaction sent by hand) shows up as its own **external_outflow** type: a built-in alarm.",
+        "A broadcast is stored as **pending** and the ledger is left alone. The poller writes **one** outflow from the receipt (amount + **gasUsed × effectiveGasPrice**, or the fee alone if reverted), together with the status and new balance in a single SQLite transaction. While a withdrawal is pending, that wallet's balance diff is skipped, so the drop is not booked twice. An outflow the service did not record (a lost 502, a transaction sent by hand) shows up as its own **external_outflow** type: a built-in alarm. This holds within one running process.",
     },
     {
       key: "Exact Amounts, No Floats",
@@ -86,23 +86,25 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
     "**Receipt-driven settlement** for any system that books on-chain spends; **block-pinned snapshots** (one eth_call plus a block floor) for indexers and pollers behind load-balanced RPCs; **worst-case cost checks** on fresh state before signing; and **injecting capabilities instead of secrets** (sign, broadcast, read as functions), which turns a later move to KMS or MPC signing into a one-function change.",
 
   limitations: [
-    "**Known bug, balance-after:** if a deposit lands and a withdrawal settles before the poller has seen the deposit, the outflow row's balance-after is computed from the stale stored balance and can be negative until the next poll round (up to 8 minutes). The fix is to book the unseen inflow before the outflow.",
+    "**Known bug, balance-after:** if a deposit lands and a withdrawal settles before the poller has seen the deposit, the outflow row's balance-after is computed from the stale stored balance and can be too low, even negative, until the same round books the deposit as an inflow (or a later round, up to 8 minutes, if the balance read fails or the node is behind). The ledger's deltas stay right. The fix is to book the unseen inflow before the outflow.",
     "**At most one outflow per broadcast, in one process:** a crash between send and insert, or a 502 that actually went through, is booked as an external outflow; a receipt later reorged out stays booked.",
     "**No confirmation depth:** balances are read at latest and a withdrawal settles on its first receipt, so a reorg could undo a recorded change.",
     "**One withdrawal in flight per wallet**, and the pending check is not atomic: two simultaneous broadcasts can both pass.",
     "**A never-mined transaction** keeps its wallet pending; there is no replacement or cancellation yet.",
     "**A failed broadcast is ambiguous:** a 502 records nothing, but the node may have accepted the transaction, and a retry gets the next nonce.",
     "**The block floor lives in memory** and is lost on restart.",
-    "**Deposits are merged per poll interval** and carry no transaction hash; one admin key is shared by every operator.",
+    "**The 10-minute bound assumes a responsive RPC:** viem's timeouts and retries (about 41 s at worst for one request) and a 12-second wait for a lagging node can push a round past its margin.",
+    "**Deposits are merged per poll interval** and carry no transaction hash, and the ledger endpoint has no pagination; one admin key is shared by every operator.",
   ],
 
   roadmap: [
     "**Keys out of the process:** KMS/HSM or MPC signing, and watch-only address derivation from the account xpub.",
-    "**Write-ahead broadcasts:** idempotency keys and signed bytes persisted before sending, so a retry resends the same transaction.",
-    "**Transaction lifecycle:** a per-wallet nonce manager and lock, with replace-by-fee for stuck transactions.",
-    "**Reorg-aware ledger:** block number and hash on every row, credit at safe or finalized, reversing rows on reorg.",
-    "**Deposit attribution:** EIP-7708 Transfer logs where the chain emits them, indexers or traces elsewhere.",
-    "**Operations:** Postgres with migrations, RPC failover, metrics, and an alert on every external outflow.",
+    "**Finality:** credit deposits after N confirmations or at safe/finalized, show pending and available balances apart, re-check settled receipts against reorgs, and store each snapshot's block number with its rows.",
+    "**Transaction lifecycle:** a per-wallet nonce manager and lock, with replace-by-fee or cancellation for stuck transactions.",
+    "**Withdrawal policy and access:** idempotency keys, limits, destination allowlists, a second approver above a threshold, an audit log, and per-operator identity instead of one shared key.",
+    "**Deposit attribution:** EIP-7708 Transfer logs where the chain emits them, indexers, traces or provider webhooks elsewhere.",
+    "**Operations:** Postgres with migrations, RPC failover, metrics, an alert on every external outflow, and a `/health` that reports poller freshness.",
+    "**More assets and chains:** ERC-20 and L2s.",
   ],
 
   stack: {

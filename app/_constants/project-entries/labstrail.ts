@@ -1,4 +1,4 @@
-/** LabsTrail (renamed from VeriSci) — figures verified against main (3df9e7e, v0.8.1) on 2026-10-26. */
+/** LabsTrail (renamed from VeriSci) — figures verified against main (3df9e7e, v0.8.1) on 2026-10-26; limitations matched to the README's (1c738ba) on 2026-10-30. */
 import { STACK } from "@/app/_constants/stack";
 import type { Project } from "@/app/_types/project";
 
@@ -86,7 +86,7 @@ The project is a rebuild of an earlier prototype, desci-rating-dapp, and its 36 
   ],
 
   challenges: `A DKG mint can succeed while its response is lost: in a spike against the project's own node, three concurrent mints of one asset produced one mint, one reverted transaction that still paid gas and one token approval, and a mint whose client disconnected landed seconds later. Every write therefore reads state first, and mints are started and then polled in short steps.
-A hosted LLM gives different answers to the same paper, even at temperature 0. The score is computed once from checked quotes, stored in the rating's Knowledge Asset and read back by every retry, so the score on chain always equals the one on the DKG.
+A hosted LLM gives different answers to the same paper, even with temperature set to 0 (deprecated for Gemini 3.8 Flash). The score is computed once from checked quotes, stored in the rating's Knowledge Asset and read back by every retry, so the score on chain always equals the one on the DKG.
 That keeps the record consistent, not the score steady: the same staging paper scored 54, then 75, on one day. Over 16 measured runs on 3 papers, the model classed a fly genetics paper as an animal study in some runs and as lab work in others, a spread of 21 points. Scorer version 4 defines the kinds of study more precisely, lets a paper report several, gives eight checks a rule per answer and tells the model how to quote long passages. Over 14 more runs, one paper scored the same every time and the other two moved by 7 and 9 points.
 Webhooks arrive at least once, can be lost, and after a reorg may describe a log that is no longer on chain; Inngest deduplicates event ids for 24 hours only, and its concurrency limits count steps, not sleeping runs. Recovery combines request-derived event ids, a singleton run per request, on-chain reads before every write, and a reconciler that reads the contract's pending set.
 The free RPC tier caps eth_getLogs at 10 blocks, so the prototype could only recover a stuck rating from the browser that requested it. The rebuilt contract stores everything recovery needs, readable a page at a time.
@@ -113,8 +113,8 @@ I built the repo in about three weeks, alongside my full-time job, and I could n
     "**One shared DKG node** on one free VM serves staging and production. An outage takes down both, and the node's single admin token means staging's credential could in principle write the production graph; a config guard covers that for now.",
     "**Gemini free tier:** the scoring model allows 20 requests a day, shared by every environment.",
     "**The score measures reporting completeness only.** It says nothing about whether findings are right, a fabricated paper that reports everything would score well, and 14 reference papers are far too few to call it calibrated.",
-    "**Scores still move between ratings.** Gemini 3.8 Flash has no documented seed, so judgement checks such as limitations can be answered differently; the last measurement put the spread at 0 to 9 points on 3 papers.",
-    "**One hot oracle key** on the deployment, holding a few days of gas and alerted on below a threshold.",
+    "**Scores still move between ratings.** Gemini 3.8 Flash has no documented seed, and temperature is deprecated for it, so judgement checks such as limitations can be answered differently; with scorer version 4, 14 runs on 3 papers spread by 0, 7 and 9 points.",
+    "**One hot oracle key** per environment, holding a few days of gas and alerted on below a threshold.",
     "**One copy of each PDF**, on Pinata: the CID proves a file is unchanged but does not keep it available.",
     "**No end-to-end tests yet**; the pages have component tests.",
   ],

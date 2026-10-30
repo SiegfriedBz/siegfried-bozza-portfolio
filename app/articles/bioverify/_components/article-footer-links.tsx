@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 const LINKEDIN = PROFILE_LINKS.linkedin;
 
 const BASE_SEPOLIA =
-  "https://sepolia.basescan.org/address/0x76654c2cdadcf869e78928f0785797b6be20f11b";
+  "https://sepolia.basescan.org/address/0xf569d7b5016de6ef0f16fcae82d85d61249df31d";
 const ETH_SEPOLIA =
-  "https://sepolia.etherscan.io/address/0x7d52170db31be4ab3d0166fbba937a031dc6e1ff";
+  "https://sepolia.etherscan.io/address/0xfce6990d551a60f8640a498b6bc34a15822ba3e3";
 
 type Props = {
   className?: string;

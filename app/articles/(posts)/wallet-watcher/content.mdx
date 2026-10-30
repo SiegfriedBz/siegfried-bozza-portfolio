@@ -16,7 +16,7 @@ Wallet Watcher is a small service I built to a written spec: the wallet-and-ledg
 
 It derives N wallets (1 to 20) from one BIP-39 mnemonic at `m/44'/60'/0'/0/i`, so wallet #0 is the same address on every run and raising N only appends. A poller reads every balance at startup, then 8 minutes after each round ends, and writes each change to an append-only ledger in SQLite. A localhost admin API lists the wallets, serves each wallet's ledger, and builds and signs EIP-1559 withdrawals, broadcasting them only when asked.
 
-The stack is Node.js 24, strict TypeScript, viem, Hono, Zod, the built-in `node:sqlite`, Vitest and Biome. The money logic sits in three pure modules with no I/O (`withdrawal.ts`, `settlement.ts`, `balance-change.ts`), and everything that touches the chain, the database or HTTP stays at the edges. The state fits in three tables:
+The stack is Node.js 22.13+ (CI on 24), strict TypeScript, viem, Hono, Zod, the built-in `node:sqlite`, Vitest and Biome. The money logic sits in three pure modules with no I/O (`withdrawal.ts`, `settlement.ts`, `balance-change.ts`), and everything that touches the chain, the database or HTTP stays at the edges. The state fits in three tables:
 
 | Table | What it holds |
 |---|---|
@@ -274,17 +274,18 @@ Not covered: the startup wiring in `index.ts` and real RPC behavior; the end-to-
 
 ## Known limitations
 
-- **Known bug:** if a deposit lands and a withdrawal settles before the poller has seen the deposit, the outflow row's balance-after is computed from the stale stored balance and can be negative until the next diff books the inflow, up to 8 minutes later. Booking the unseen inflow first (for example from the balance at `receipt.blockNumber − 1`) fixes it.
+- **Known bug:** if a deposit lands and a withdrawal settles before the poller has seen the deposit, the outflow row's balance-after is computed from the stale stored balance and can be too low, even negative, until the same round books the deposit as an `inflow` (or a later round, up to 8 minutes, if the balance read fails or the node is behind). The deltas stay right. Booking the unseen inflow first (for example from the balance at `receipt.blockNumber − 1`) fixes it.
 - "Once" holds inside one process: a crash between `eth_sendRawTransaction` and the insert is booked as `external_outflow`, and a receipt later reorged out stays booked.
 - There is no confirmation depth: balances are read at `latest` and a withdrawal settles on its first receipt.
 - A transaction that is never mined keeps its wallet pending. No new broadcast is allowed and no diff runs, so a deposit to that wallet goes unrecorded too.
 - The one-pending check is not atomic, so two simultaneous broadcasts can both pass. Usually the node rejects the second for its nonce, but one with a high enough fee replaces the first, which then stays pending forever.
 - A failed broadcast is ambiguous. A `502` records nothing, yet the node may have accepted the transaction and only the response was lost. The poller would then book it as `external_outflow`, and a retry signs a new transaction with the next nonce, so both go through.
+- The 10-minute freshness bound assumes a responsive RPC: viem's timeouts and retries (about 41 seconds at worst for one request) and a 12-second wait for a lagging node can push a round past its margin.
 - One admin key is shared by every operator.
 
 ## Path to production
 
-Four items from the README's production list would change the design itself.
+The README lists what a production custody system would add. Four of those changes would reshape the design itself, and here is how I would make them.
 
 ### Keys out of the process
 
