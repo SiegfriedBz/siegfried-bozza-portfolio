@@ -26,7 +26,7 @@ const bioVerifyProject: Project = {
     problem:
       "Published papers often point to mutable URLs (data can change or disappear after publication). Reviewer selection is opaque, incentives for reviewers and publishers are weak, and the reproducibility crisis has eroded trust in research findings.",
     solution:
-      "BioVerify is an experiment in that direction. It treats peer review as a **coordination game**: authors stake ETH, AI screens for plagiarism, human reviewers sign verdicts that an agent settles on-chain, and research artifacts are pinned to IPFS so what was reviewed stays addressable. A truth layer (BioVerifyV3) holds stakes, lifecycle, VRF-based reviewer selection, and settlement; an orchestration layer (LangGraph + Inngest) runs screening and review graphs with human-in-the-loop pauses. The contract only accepts a settlement split over reviewers who have stake locked on that publication, so the agent cannot slash arbitrary accounts, but it does decide who is honest.",
+      "BioVerify is an experiment in that direction. It treats peer review as a **coordination game**: authors stake ETH, AI screens for plagiarism, human reviewers sign their reviews, Gemini or (after an escalation) a senior reviewer sets the verdict, an agent settles it on-chain, and research artifacts are pinned to IPFS so what was reviewed stays addressable. A truth layer (BioVerifyV3) holds stakes, lifecycle, VRF-based reviewer selection, and settlement; an orchestration layer (LangGraph + Inngest) runs screening and review graphs with human-in-the-loop pauses. The contract only accepts a settlement split over reviewers who have stake locked on that publication, so the agent cannot slash arbitrary accounts, but it does decide who is honest.",
     overview: `
         BioVerify separates concerns across two layers. On-chain, **BioVerifyV3** is the source of truth for stakes, publication status, reviewer selection, and settlement. Off-chain, **LangGraph** runs the submission and review graphs and its **Postgres checkpointer** carries pauses that can span days, while **Inngest** retries each agent run.
         Chain events drive the app: the contract emits rich events instead of view-heavy reads for product state. **Alchemy Notify** POSTs logs to a verified webhook (**HMAC-SHA256**); **processContractEvent** projects into **Neon Postgres** with optimistic concurrency on (blockNumber, logIndex). The frontend reads the projection and uses a **viem** WebSocket subscription to **NewPublicationStatus** so open lists invalidate as soon as a status event is mined.
@@ -78,7 +78,7 @@ const bioVerifyProject: Project = {
     {
       key: "Live Telegram Notifications",
       description:
-        "A public **Telegram bot** broadcasts contract state transitions in real time across **Base Sepolia** and **Ethereum Sepolia** — readers can follow the publication lifecycle without keeping the app open.",
+        "A public **Telegram bot** posts updates as each publication moves through screening, review and settlement, on **Base Sepolia** and **Ethereum Sepolia**, so readers can follow it without keeping the app open.",
     },
   ],
 
@@ -224,11 +224,11 @@ const bioVerifyProject: Project = {
     category: "Web3 Architecture & Coordination",
     subtitle: "Base & Ethereum Sepolia",
     summary:
-      "A case study in treating scientific peer review as a **coordination game**: authors stake ETH, an AI agent screens for plagiarism, Chainlink VRF picks reviewers, and an agent settles the human reviewers' signed verdicts on-chain — with research artifacts pinned to IPFS.",
+      "A case study in treating scientific peer review as a **coordination game**: authors stake ETH, an AI agent screens for plagiarism, Chainlink VRF picks reviewers who sign their reviews, Gemini or a senior reviewer sets the verdict, and an agent settles it on-chain — with research artifacts pinned to IPFS.",
     bullets: [
       "**Getter-light contract, event-sourced reads** — **BioVerifyV3** emits events instead of exposing most view getters; **Alchemy Notify** delivers logs to an **HMAC-SHA256**-verified webhook that projects into **Neon Postgres** with optimistic concurrency — the frontend reads from the projection, not the chain.",
       "**Dual-agent pipeline** — a **Submission Agent** fetches the IPFS manifest and runs a neural search via **Exa AI** for plagiarism screening; a **Review Agent** manages multi-day human-in-the-loop peer review, with **LangGraph** checkpointers carrying the pause across serverless cold starts and **Inngest** retrying each agent run.",
-      "**VRF reviewer selection** — after screening passes, **Chainlink VRF** draws peer reviewers from the staked pool, so nobody hand-picks who reviews a given submission. Settlement is still trusted to one agent key, which also owns the contract and can change the VRF coordinator (listed under limitations).",
+      "**VRF reviewer selection** — after screening passes, **Chainlink VRF** draws peer reviewers from the staked pool, so reviewers are drawn, not hand-picked, as long as the coordinator is Chainlink's. The agent key settles every outcome and also owns the contract, so it could swap the coordinator (listed under limitations).",
     ],
   },
 
@@ -693,7 +693,7 @@ const ALL_PROJECTS: Project[] = [
         "GavL keeps the workflow in **Postgres**: `SECURITY DEFINER` triggers track the highest bid and write `NEW_BID`, `NEW_AUCTION_WON` and `NEW_PAYMENT` notifications, pushed to each user over a private **Supabase Realtime** channel. A **pg_cron** job calls the **close-auctions** Edge Function every 5 minutes to close due auctions, and a signature-verified **Stripe** webhook records payment through a server-only service role.",
       overview: `
         GavL is a learning build focused on real-time full-stack flows. It follows a ports-and-adapters layout: domains hold types and **Zod** schemas; ports are repository interfaces; services own workflows; **Supabase** repositories sit behind those ports; instances wire services to infrastructure.
-        Notifications for new bids, auction wins and payments go to each affected user over private per-user **Supabase Realtime** broadcast channels; other viewers see a new price on refresh. A **pg_cron** job, committed as a migration that reads its URL and key from Vault, calls the **close-auctions** Edge Function every 5 minutes, so auctions close up to 5 minutes after **endAt**. **Stripe Checkout** plus a signature-verified webhook (raw body, constructEvent) sets **paidAt** through a **service-role** client that stays server-only.
+        Notifications for new bids, auction wins and payments go to each affected user over private per-user **Supabase Realtime** broadcast channels; other viewers see a new price on refresh. A **pg_cron** job calls the **close-auctions** Edge Function every 5 minutes, so auctions close up to 5 minutes after **endAt**; the repo commits it as a migration that reads its URL and key from Vault, and the live project runs the same job, created in the dashboard. **Stripe Checkout** plus a signature-verified webhook (raw body, constructEvent) sets **paidAt** through a **service-role** client that stays server-only.
         The UI is multilingual (**French**, **English**, **German** via **Lingui**), responsive, and uses URL-driven filters, sorting, and pagination (**nuqs**) with **Suspense** and skeleton loaders.
       `,
     },

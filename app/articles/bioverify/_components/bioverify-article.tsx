@@ -53,7 +53,7 @@ export const BioVerifyArticle: FC = () => {
             <strong>BioVerify</strong>
           )}
           : a full-stack agentic DApp where authors stake ETH on their research,
-          reviewers are selected by Chainlink VRF, the manuscript and each
+          reviewers are selected by Chainlink VRF, the submission and its final
           verdict are content-addressed on <strong>IPFS</strong>, and AI agents
           coordinate the rest, with people writing the reviews and Gemini or a
           senior reviewer setting the verdict. You can try it on the{" "}
@@ -385,9 +385,9 @@ export const BioVerifyArticle: FC = () => {
           per-invocation time limits and no guaranteed in-memory state between
           invocations. Inngest starts each agent run and retries it on failure.
           Each agent runs inside one <code>step.run</code>, so a retry re-runs
-          the whole agent, and its commands read on-chain state before writing
-          where they can. It is <em>not</em> the mechanism that waits days for a
-          reviewer — that pause lives in LangGraph.
+          the whole agent, and its commands read state before writing where they
+          can. It is <em>not</em> the mechanism that waits days for a reviewer —
+          that pause lives in LangGraph.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Why LangGraph?</strong> Human review needs real suspension
@@ -571,9 +571,10 @@ export const BioVerifyArticle: FC = () => {
           off-chain together with a cryptographic proof; the Chainlink VRF
           coordinator verifies that proof on-chain before calling back the
           consumer contract. The draw is not merely opaque — it is{" "}
-          <strong>verifiable</strong>. Think of it as a public lottery where you
-          do not have to trust the organiser: anyone can re-check the draw
-          afterward.
+          <strong>verifiable</strong>. Think of it as a public lottery that
+          anyone can re-check afterward. One caveat: the contract owner can
+          change the VRF coordinator, so the draw is only as neutral as the
+          coordinator it points to (listed under known edge cases).
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           In BioVerify&apos;s flow: the agent calls <code>pickReviewers()</code>{" "}
@@ -1087,9 +1088,10 @@ export const BioVerifyArticle: FC = () => {
             <strong>Known edge cases</strong> — empty or malformed IPFS payloads
             can leave a publication stuck in <code>SUBMITTED</code>; a gas spike
             during settlement can strand a publication in <code>IN_REVIEW</code>{" "}
-            with no retry. One agent key, which is also the treasury on both
-            deployments, settles every outcome. The README documents these at
-            the file level, including specific nodes and commands affected.
+            with no retry. One agent key, which is also the treasury and the
+            owner on both deployments, settles every outcome, and as owner it
+            can change the VRF coordinator. The README documents these at the
+            file level, including specific nodes and commands affected.
           </li>
         </ul>
 
