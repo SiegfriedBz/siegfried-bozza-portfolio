@@ -303,7 +303,7 @@ const ALL_PROJECTS: Project[] = [
       {
         key: "Real-Time Updates",
         description:
-          "Toasts and table refreshes are driven by contract events (`NewBet`, `NewRoundStatus`, `Mint`) over **Alchemy WebSockets** and **wagmi** listeners.",
+          "Toasts and table refreshes are driven by contract events (`PredictionPool_NewBet`, `PredictionPool_NewRoundStatus`, `PredictionPoolToken_Mint`) over **Alchemy WebSockets** and **wagmi** listeners.",
       },
       {
         key: "Hybrid On-Chain/Off-Chain Automation",
@@ -349,16 +349,20 @@ const ALL_PROJECTS: Project[] = [
       "Oracle-driven settlement, hybrid on/off-chain automation, event-driven UI architecture.",
 
     limitations: [
-      "**Known bug, payout (deployed version)** — `claimReward` divides each winner's weight by the total weight of **both** sides, so winners together receive only part of the pool and the rest stays locked in the contract; if nobody bets on the winning side, the whole pool is locked. No refund or sweep exists. The fix is to divide by the winning side's weight only and add a refund path for one-sided rounds.",
+      "**Known bug, payout** — `claimReward` divides each winner's weight by the total weight of **both** sides, so winners together receive only part of the pool and the rest stays locked in the contract; if nobody bets on the winning side, the whole pool is locked. No refund or sweep exists. The fix is to divide by the winning side's weight only and add a refund path for one-sided rounds.",
       "**Owner can freeze resolution** — the owner can disable a price feed; rounds on that feed then revert when resolved, and because `performUpkeep` resolves due rounds in one batch, one revert blocks every due round.",
       "**Unbounded loops** — `checkUpkeep` scans every round ever created and `claimReward` loops over every player, so gas grows with use until Automation's check limit or a block limit is hit.",
-      "**Oracle timing and staleness (deployed version)** — The deployed **PredictionPool** reads `latestRoundData()` when `performUpkeep` runs and ignores `updatedAt`. `performUpkeep` is permissionless, so anyone can resolve a round after its deadline and the settlement price depends on *when* that call lands, not on the price at `round.end`; a stale answer would also be accepted. The fix is to walk back with `getRoundData` to the last answer at or before the deadline and to bound staleness against the feed heartbeat.",
+      "**Oracle timing and staleness** — **PredictionPool** reads `latestRoundData()` when `performUpkeep` runs and ignores `updatedAt`. `performUpkeep` is permissionless, so anyone can resolve a round after its deadline and the settlement price depends on *when* that call lands, not on the price at `round.end`; a stale answer would also be accepted. The fix is to walk back with `getRoundData` to the last answer at or before the deadline and to bound staleness against the feed heartbeat.",
       "**Testnet only** — Deployed on **Ethereum Sepolia** for experimentation, not mainnet money at risk.",
       "**Tenderly bridge** — The reward mint depends on an off-chain Web3 Action signing with an operator key that holds **MINTER_ROLE**. It handles only the first `RoundResolved` event per transaction and logs failures without retrying, so a winning creator can miss an NFT.",
+      "**Rounding dust** — the remainder of the weight math stays in the contract.",
+      "**Unused states** — `NotStarted` and `Ended` exist in the round enum but are never kept: a round goes from Active to Resolved.",
     ],
     roadmap: [
       "**L2 convergence** — Deploy to Arbitrum, Optimism, or similar to compare settlement cost and UX vs Sepolia.",
-      "**On-chain reward path** — Replace Tenderly-triggered minting with logic inside core contracts for a fully on-chain reward flow.",
+      "**Fix the payout** — Divide by the winning side's weight and refund one-sided rounds.",
+      "**On-chain reward path** — Replace Tenderly-triggered minting with a call from **PredictionPool**, so no off-chain key is needed.",
+      "**Bounded loops** — Track due rounds and claim per player instead of scanning every round and player.",
     ],
 
     stack: {
@@ -427,7 +431,7 @@ const ALL_PROJECTS: Project[] = [
     User ->> Pool: createRound(feed, target, betSide, duration)
     User ->> Pool: betOn(roundId, betSide)
     CL_Auto ->> Pool: performUpkeep after round.end
-    Pool ->> CL_Feed: latestRoundData (atomic settlement)
+    Pool ->> CL_Feed: latestRoundData (at resolution time)
     CL_Feed -->> Pool: latest answer (updatedAt not checked)
     Pool ->> Pool: _resolveRound and emit PredictionPool_RoundResolved
     Pool -->> Tenderly: PredictionPool_RoundResolved (event)
