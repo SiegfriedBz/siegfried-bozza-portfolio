@@ -10,4 +10,4 @@ export const PROFILE_LINKS = {
 } as const;
 
 /** BioVerify's public Telegram bot, as linked from the BioVerify README. */
-export const BIOVERIFY_TELEGRAM_URL = "https://web.telegram.org/a/#8438952136";
+export const BIOVERIFY_TELEGRAM_URL = "https://t.me/BioVerifyBot";

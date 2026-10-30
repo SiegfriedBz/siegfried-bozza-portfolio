@@ -5,7 +5,7 @@ export const Figure4ReviewAgent: FC = () => {
     <svg
       className="diag-svg"
       role="img"
-      aria-label="Flowchart: Review agent — LangGraph rehydrates from checkpointer, pauses for HITL EIP-712 signatures, peer consensus or senior tie-break, then publishPublication or slashPublication."
+      aria-label="Flowchart: Review agent — LangGraph rehydrates from checkpointer, pauses for HITL EIP-712 signatures, Gemini verdict or escalation to the senior reviewer, then publishPublication or slashPublication."
       viewBox="0 0 700 420"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -118,10 +118,10 @@ export const Figure4ReviewAgent: FC = () => {
       <g className="dn-gray">
         <rect x="240" y="188" width="220" height="46" rx="8" />
         <text x="350" y="206" textAnchor="middle" className="node-title">
-          Peer reviewers agree?
+          Gemini verdict
         </text>
         <text x="350" y="223" textAnchor="middle" className="node-sub">
-          consensus or conflict
+          pass, fail or escalate
         </text>
       </g>
 
@@ -142,7 +142,7 @@ export const Figure4ReviewAgent: FC = () => {
         fontFamily="var(--font-geist-mono), monospace"
         fontSize="9px"
       >
-        conflict
+        escalate
       </text>
       <g className="dn-amber">
         <rect x="36" y="188" width="122" height="46" rx="8" />
@@ -189,7 +189,7 @@ export const Figure4ReviewAgent: FC = () => {
         fontFamily="var(--font-geist-mono), monospace"
         fontSize="9px"
       >
-        consensus
+        pass / fail
       </text>
       <g className="dn-gray">
         <rect x="240" y="270" width="220" height="46" rx="8" />

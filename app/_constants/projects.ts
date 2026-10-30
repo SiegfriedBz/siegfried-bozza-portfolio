@@ -73,7 +73,7 @@ const bioVerifyProject: Project = {
     {
       key: "Durable Agent Orchestration",
       description:
-        "**LangGraph** checkpointers (Postgres) let the review graph pause for days at a human-in-the-loop interrupt and resume where it left off; **Inngest** wraps each agent run with retries and crash recovery.",
+        "**LangGraph** checkpointers (Postgres) let the review graph pause for days at a human-in-the-loop interrupt and resume where it left off; **Inngest** starts each agent run and retries it on failure.",
     },
     {
       key: "Live Telegram Notifications",
@@ -84,8 +84,8 @@ const bioVerifyProject: Project = {
 
   challenges: `
         Orchestrating durable agents across asynchronous human review: **LangGraph** checkpointers let the workflow pause for days and resume at the same human-in-the-loop interrupt.
-        A getter-light, event-emitted contract required tight alignment between on-chain emissions and **Neon Postgres** projections via **Alchemy Notify**; optimistic concurrency on (blockNumber, logIndex) guards out-of-order or duplicate webhook deliveries.
-        Keeping **Inngest** to retries around each agent run, and the pause itself in **LangGraph** state, avoided duplicated side effects when a step replays.
+        A getter-light, event-emitted contract required tight alignment between on-chain emissions and **Neon Postgres** projections via **Alchemy Notify**; optimistic concurrency on (blockNumber, logIndex) makes a repeated webhook delivery harmless.
+        I kept **Inngest** to retries around each agent run and the pause itself in **LangGraph** state; a retry re-runs the whole agent, so its commands read state before writing where they can.
     `,
 
   outcome: `
@@ -94,7 +94,7 @@ const bioVerifyProject: Project = {
     `,
   outcomeMetrics: [
     "**Deployments:** Base Sepolia + Ethereum Sepolia (verified contract addresses on-chain explorers)",
-    "**Tests:** BioVerifyV3 — 50 Foundry tests across 12 suites, including VRF edge cases (collisions, pool shrinking and rewards running out during VRF); 100% lines (241/241) and functions (26/26) at the last committed coverage run (March 2026, before later contract changes)",
+    "**Tests:** BioVerifyV3 — 50 Foundry tests across 12 suites, in 11 files, including VRF edge cases (collisions, pool shrinking and rewards running out during VRF); `forge coverage` on 24 October 2026: 100% of lines (240/240), branches (37/37) and functions. Only the contract has automated tests",
     "**Read path:** Product queries served from the Neon Postgres projection; lists update over WebSocket, the detail view polls every 10 s until the publication is final",
     "**Realtime UX:** Standalone viem WebSocket clients + TanStack Query invalidation (no eth_call fanout for UX reads)",
     "**Security primitives:** CEI + OpenZeppelin nonReentrant on ETH-out paths; pull-withdrawal claims; HMAC-SHA256–verified Alchemy Notify webhooks; EIP-712–signed peer reviews",
@@ -103,15 +103,19 @@ const bioVerifyProject: Project = {
     "Event-driven CQRS, durable agent orchestration, multi-actor coordination — patterns that also apply to dashboards, DAO tooling, and marketplaces.",
 
   limitations: [
-    "**Settlement is trusted to one agent key** — a single immutable agent address drives every transition (pick reviewers, early slash, publish or slash), and on both deployments the agent address is also the treasury. The contract limits whom it can slash, not the verdict.",
-    "**LLM decisions without a human** — the plagiarism early-slash is one Gemini call over Exa's top results, and without escalation Gemini decides pass or fail from the peer reviews; reviewers who disagree with it are slashed. Signed reviews are verified off-chain; the contract stores only a bool per review.",
+    "**Settlement is trusted to one agent key** — a single immutable agent address drives every transition (pick reviewers, early slash, publish or slash), and on both deployments the agent address is also the treasury and the owner, who can change the VRF coordinator. The contract limits whom it can slash, not the verdict.",
+    "**LLM decisions without a human** — the plagiarism early-slash is one Gemini call over Exa's top results, and without escalation Gemini decides pass or fail from the peer reviews; reviewers who disagree with it are slashed. Signed reviews are verified off-chain; the contract stores only a bool per review, and the signatures stay in the private checkpoint database.",
     "**Contract edge cases** — `pickReviewers` checks `status != IN_REVIEW` instead of `== SUBMITTED`, so the agent could re-open a finished publication; if the reviewer pool shrinks or rewards run out between the VRF request and fulfilment, the callback reverts and the publication stays IN_REVIEW (VRF does not retry); collision handling by linear probing slightly biases the draw.",
-    "**Read model** — each row carries one (block, logIndex) stamp while updates touch some columns, so a late event changing a different field is dropped; failed projections after the webhook's 200 are lost, with no replay job yet.",
+    "**Read model** — each row carries one (block, logIndex) stamp while updates touch some columns, so a late event changing a different field is dropped; failed projections after the webhook's 200 are lost, with no replay job yet; the webhook's HMAC is compared with `===`, not in constant time.",
+    "**IPFS reads trust the gateway** — the agent fetches content through the **Pinata** gateway and does not re-hash it against the CID.",
     "**No author recourse against false positives** — The submission agent can produce a false plagiarism verdict, and peer review can reach a binding decision the author considers incorrect. Today both paths are terminal (immediate `earlySlashPublication` or `slashPublication`); there is no contract-level mechanism for the author to contest, post an escalation stake, or trigger a second human-only review.",
     "**IPFS / manifest edge cases** — A syntactically valid CID that resolves to an empty or malformed manifest can leave the submission graph without a clean pass/fail path; after **Inngest** step retries the publication may remain stuck in SUBMITTED until validation is hardened.",
     "**Agent transaction failures** — On-chain commands use simulate-then-write with no gas bump or nonce recovery. Settlement runs in the Next.js server action that resumes the last review, with no retry, so a gas spike can leave a publication in IN_REVIEW after the last human review is recorded.",
+    "**Chain support is hardcoded** — the two networks are a fixed enum used across the codebase; adding a chain means a new deployment plus changes in several places.",
+    "**Testing depth** — only the contract has automated tests; the agents, the read model and the frontend have none.",
   ],
   roadmap: [
+    "**Less trust in the agent** — Separate the agent, the treasury and the owner, and record each review's signature on-chain so the contract can check who voted what.",
     "**Weighted majority voting** — Replace the senior tie-break with consensus weighted by on-chain reputation.",
     "**ZK reputation (Reclaim Protocol)** — Privacy-preserving proofs of real-world signals without exposing raw credentials.",
     "**Encrypted access (Lit Protocol) and monetisation (x402)** — Encrypt IPFS payloads with on-chain conditional decryption; gate datasets and supplementary material behind micropayments.",
@@ -170,7 +174,7 @@ const bioVerifyProject: Project = {
       {
         key: "Inngest",
         description:
-          "Retries and crash recovery around each agent run (submission screening, reviewer pick, review start).",
+          "Retries around each agent run that a chain event starts: the submission agent (screening, then the reviewer draw) and the start of the review agent.",
       },
       {
         key: "Drizzle ORM + Neon Postgres",
@@ -197,8 +201,8 @@ const bioVerifyProject: Project = {
       [*] --> SUBMITTED : submitPublication()
       SUBMITTED --> EARLY_SLASHED : AI detects plagiarism
       SUBMITTED --> IN_REVIEW : AI passes, VRF selects reviewers
-      IN_REVIEW --> PUBLISHED : peer review consensus (pass)
-      IN_REVIEW --> SLASHED : peer review consensus (fail)
+      IN_REVIEW --> PUBLISHED : final verdict (pass)
+      IN_REVIEW --> SLASHED : final verdict (fail)
       EARLY_SLASHED --> [*]
       PUBLISHED --> [*]
       SLASHED --> [*]`,
@@ -224,7 +228,7 @@ const bioVerifyProject: Project = {
     bullets: [
       "**Getter-light contract, event-sourced reads** — **BioVerifyV3** emits events instead of exposing most view getters; **Alchemy Notify** delivers logs to an **HMAC-SHA256**-verified webhook that projects into **Neon Postgres** with optimistic concurrency — the frontend reads from the projection, not the chain.",
       "**Dual-agent pipeline** — a **Submission Agent** fetches the IPFS manifest and runs a neural search via **Exa AI** for plagiarism screening; a **Review Agent** manages multi-day human-in-the-loop peer review, with **LangGraph** checkpointers carrying the pause across serverless cold starts and **Inngest** retrying each agent run.",
-      "**VRF reviewer selection** — after screening passes, **Chainlink VRF** draws peer reviewers from the staked pool, so the operator cannot hand-pick who reviews a given submission. Settlement is still trusted to one agent key (listed under limitations).",
+      "**VRF reviewer selection** — after screening passes, **Chainlink VRF** draws peer reviewers from the staked pool, so nobody hand-picks who reviews a given submission. Settlement is still trusted to one agent key, which also owns the contract and can change the VRF coordinator (listed under limitations).",
     ],
   },
 

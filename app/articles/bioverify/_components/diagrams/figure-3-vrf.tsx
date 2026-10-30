@@ -5,7 +5,7 @@ export const Figure3Vrf: FC = () => {
     <svg
       className="diag-svg"
       role="img"
-      aria-label="Flowchart: Chainlink VRF — agent calls pickReviewers, BioVerifyV3 requests random words, Chainlink returns words plus proof, contract verifies and emits Agent_PickReviewers."
+      aria-label="Flowchart: Chainlink VRF — agent calls pickReviewers, BioVerifyV3 requests random words, the Chainlink coordinator verifies the proof and calls BioVerifyV3, which draws reviewers and emits Agent_PickReviewers."
       viewBox="0 0 700 260"
       xmlns="http://www.w3.org/2000/svg"
     >
