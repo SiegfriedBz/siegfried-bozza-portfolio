@@ -23,6 +23,7 @@ const bioVerifyProject: Project = {
   description: {
     short:
       "Multi-chain DeSci peer-review case study — Next.js + Solidity + Chainlink + LangGraph + Inngest for decentralized peer review (Base Sepolia & Ethereum Sepolia).",
+    meta: "DeSci peer review on Base Sepolia and Ethereum Sepolia: Solidity, Chainlink VRF, a LangGraph review agent, Inngest and a Next.js front end.",
     problem:
       "Published papers often point to mutable URLs (data can change or disappear after publication). Reviewer selection is opaque, incentives for reviewers and publishers are weak, and the reproducibility crisis has eroded trust in research findings.",
     solution:
@@ -266,7 +267,8 @@ const ALL_PROJECTS: Project[] = [
     },
     description: {
       short:
-        "Solidity prediction pools with Chainlink Price Feeds, Automation, and VRF — rounds go from Active to Resolved on an Automation upkeep, on Ethereum Sepolia (Next.js + wagmi + Tenderly). Has a known payout bug, documented below.",
+        "Solidity prediction pools with Chainlink Price Feeds, Automation, and VRF — rounds go from Active to Resolved on an Automation upkeep, on Ethereum Sepolia (Next.js + wagmi + Tenderly). Has a known payout bug, listed under Known limitations.",
+      meta: "Solidity prediction pools on Ethereum Sepolia with Chainlink Price Feeds, Automation and VRF; an Automation upkeep resolves each round. Known payout bug.",
       problem:
         "Prediction markets only stay interesting when settlement is credibly neutral. Operator-settled designs ask you to trust whoever calls resolve and picks the price. Permissionless on-chain designs still need something to trigger resolution at the deadline — if only winners call it, timing becomes gameable; if a single bot runs it, trust shifts to that operator. Random rewards driven by block metadata or admin-picked tokenIds are easy to bias or predict.",
       solution:
@@ -488,6 +490,7 @@ const ALL_PROJECTS: Project[] = [
     description: {
       short:
         "ERC-1155 crafting case study — burn-then-mint for composites in one call, a rules contract that owns the token ledger, and 38 Foundry tests (Next.js + wagmi).",
+      meta: "ERC-1155 crafting on Ethereum Sepolia: composites burn their parts and mint in one call, a rules contract owns the token ledger, and 38 Foundry tests.",
       problem:
         "ERC-1155 crafting loops need supply rules users cannot route around: inputs burned and outputs minted together, and no way to mint or burn outside the recipes.",
       solution:
@@ -686,7 +689,8 @@ const ALL_PROJECTS: Project[] = [
 
     description: {
       short:
-        "Full-stack auction case study — Postgres triggers that track the highest bid and send per-user Realtime notifications, RLS, a scheduled Edge Function that closes auctions, and Stripe (Next.js, Supabase, TypeScript). Known bid-integrity gaps documented below.",
+        "Full-stack auction case study — Postgres triggers that track the highest bid and send per-user Realtime notifications, RLS, a scheduled Edge Function that closes auctions, and Stripe (Next.js, Supabase, TypeScript). Known bid-integrity gaps, listed under Known limitations.",
+      meta: "Next.js and Supabase auctions: triggers track the highest bid, Realtime notifies each user, an Edge Function closes auctions. Known bid-integrity gaps.",
       problem:
         "Auction platforms need bidding, automatic closure at the deadline, notifications to the people involved, and payment settlement without exposing privileged database access to the browser.",
       solution:

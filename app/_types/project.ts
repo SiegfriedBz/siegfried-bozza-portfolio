@@ -20,6 +20,8 @@ export type Project = {
   };
   description: {
     short: string;
+    /** Hand-written search and link-preview description (≤ 155 characters); without it, `short` is cut to fit. */
+    meta?: string;
     /** Business-context lead-in for project detail pages (markdown **bold** supported) */
     problem?: string;
     solution?: string;

@@ -40,7 +40,8 @@ export async function generateMetadata({
   }
 
   const title = `${project.title.h1} | ${SITE_NAME}`;
-  const description = toMetaDescription(project.description.short);
+  const description =
+    project.description.meta ?? toMetaDescription(project.description.short);
   const ogImage =
     project.links.ogImage?.trim() ||
     project.images[0] ||
