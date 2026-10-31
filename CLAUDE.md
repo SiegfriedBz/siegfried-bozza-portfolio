@@ -35,7 +35,9 @@ read it). If proto reports the version is missing, ask the user to run
   to that commit's date.
 - **Media**: screen recordings are MP4 with a same-name `.jpg` poster in
   `public/projects/<slug>/videos/` (README has the ffmpeg commands). Never commit GIFs.
-  Screenshots go through `next/image` with a `sizes` prop.
+  Screenshots go through `next/image` with a `sizes` prop. Every carousel image and video gets
+  a `mediaAlt` entry in its project, keyed by its path, that says what it shows (watch a video
+  to the end, not only its poster).
 
 ## Content rules
 
@@ -45,6 +47,9 @@ The reviewer agent checks these on every branch:
   project's git history, metrics from the code or the chain, links that resolve. No invented
   numbers.
 - Say what is testnet, early or limited; keep the "Known limitations" sections honest.
+  Testnet-only projects set `testnet: true` (the badge on their page); the testnet wording in
+  `site-metadata.ts`, the hero, `/projects` and llms.txt is written by hand, so update it if a
+  project goes to mainnet.
 - Pages agree with each other: About, project pages, articles, README and the CV tell the
   same story (dates, chains, roles).
 - Voice: plain, specific, first person. Avoid AI-writing tells (staged "not X but Y"

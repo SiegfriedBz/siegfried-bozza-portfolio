@@ -12,7 +12,6 @@ export type EducationEntry = {
   description: string;
   link?: { href: string; label: string; iconName?: IconName };
   section: EducationSection;
-  publications?: { label: string; href: string }[];
 };
 
 export const EDUCATION: EducationEntry[] = [

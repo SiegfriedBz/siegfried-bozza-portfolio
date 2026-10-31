@@ -12,7 +12,7 @@ import { AutoplayVideo } from "./autoplay-video";
 type Props = {
   images: string[];
   videos: string[];
-  /** Used for descriptive alt text on each slide. */
+  /** Names the numbered fallback ("Forge — screenshot 2") for slides without an `alts` entry. */
   projectName: string;
   /** What each slide shows, keyed by its path; slides without one get a numbered fallback. */
   alts?: Record<string, string>;
