@@ -70,8 +70,8 @@ export const ProjectCarousel: FC<Props> = (props) => {
       </CarouselContent>
       {slides.length > 1 ? (
         <>
-          <CarouselPrevious className="left-2 max-sm:hidden" />
-          <CarouselNext className="right-2 max-sm:hidden" />
+          <CarouselPrevious className="left-2 max-sm:size-10" />
+          <CarouselNext className="right-2 max-sm:size-10" />
         </>
       ) : null}
     </Carousel>

@@ -16,7 +16,7 @@ export const ExternalLinks: FC = () => {
             href={github}
             target="_blank"
             rel="noopener noreferrer"
-            className="group rounded-md p-2"
+            className="group rounded-md p-2 max-sm:p-3"
             aria-label="GitHub"
           >
             <LuGithub className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200" />
@@ -29,7 +29,7 @@ export const ExternalLinks: FC = () => {
             href={linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="group rounded-md p-2"
+            className="group rounded-md p-2 max-sm:p-3"
             aria-label="LinkedIn"
           >
             <LuLinkedin className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200" />
@@ -40,7 +40,7 @@ export const ExternalLinks: FC = () => {
         <Tooltip desc="Email">
           <a
             href={`mailto:${mailTo}`}
-            className="group rounded-md p-2"
+            className="group rounded-md p-2 max-sm:p-3"
             aria-label="Email"
           >
             <MailIcon className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200" />
@@ -52,7 +52,7 @@ export const ExternalLinks: FC = () => {
           href={CV_HREF}
           target="_blank"
           rel="noopener noreferrer"
-          className="group rounded-md p-2"
+          className="group rounded-md p-2 max-sm:p-3"
           aria-label="Download CV"
         >
           <FileDownIcon className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200" />

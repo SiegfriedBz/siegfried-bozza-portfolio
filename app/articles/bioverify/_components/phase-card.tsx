@@ -26,7 +26,7 @@ export const PhaseCard: FC<Props> = (props) => {
         {number}
       </div>
       <div className="min-w-0 flex-1">
-        <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-teal-600 dark:text-[#2dd4bf]">
+        <span className="mb-1.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-teal-700 dark:text-[#2dd4bf]">
           {label}
         </span>
         {/* Each phase opens a section of the article, so its title is an H2 and the

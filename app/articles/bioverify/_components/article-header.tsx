@@ -14,7 +14,7 @@ export const ArticleHeader: FC<Props> = () => {
 
   return (
     <header className="mb-8 border-b border-border pb-6 pt-8 sm:mb-14 sm:pb-12 dark:border-white/10">
-      <span className="mb-3 block font-mono text-[11px] uppercase tracking-[0.12em] text-teal-600 sm:mb-5 dark:text-[#2dd4bf]">
+      <span className="mb-3 block font-mono text-[11px] uppercase tracking-[0.12em] text-teal-700 sm:mb-5 dark:text-[#2dd4bf]">
         Architecture · Web3 · DeSci · Agentic Systems
       </span>
       <h1 className="mb-3 font-[family-name:var(--font-serif)] text-[clamp(2rem,5vw,3.25rem)] font-normal leading-[1.15] text-foreground sm:mb-5">

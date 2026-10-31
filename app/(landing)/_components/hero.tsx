@@ -84,7 +84,8 @@ export const Hero: FC<Props> = ({ proof }) => {
           style={{ "--delay": "200ms" } as CSSProperties}
         >
           <div className="flex flex-wrap items-center gap-3">
-            <Button asChild size="lg">
+            {/* 44 px tap targets on phones (size lg is 40 px). */}
+            <Button asChild size="lg" className="max-sm:h-11">
               <a
                 href={PROFILE_LINKS.calendly}
                 target="_blank"
@@ -94,13 +95,13 @@ export const Hero: FC<Props> = ({ proof }) => {
                 Book a call
               </a>
             </Button>
-            <Button asChild size="lg" variant="outline">
+            <Button asChild size="lg" variant="outline" className="max-sm:h-11">
               <Link href="/about">
                 <SiegAvatar className="size-5" alt="" />
                 About me
               </Link>
             </Button>
-            <Button asChild size="lg" variant="ghost">
+            <Button asChild size="lg" variant="outline" className="max-sm:h-11">
               <a href={CV_HREF} target="_blank" rel="noopener noreferrer">
                 <FileDownIcon className="size-4" />
                 CV
@@ -136,7 +137,7 @@ export const Hero: FC<Props> = ({ proof }) => {
                     <p className="text-sm leading-snug text-muted-foreground">
                       {p.pitch}
                     </p>
-                    <p className="font-mono text-xs text-muted-foreground/80">
+                    <p className="font-mono text-xs text-muted-foreground">
                       {p.period}
                     </p>
                   </div>

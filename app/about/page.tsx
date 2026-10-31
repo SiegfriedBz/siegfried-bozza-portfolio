@@ -67,7 +67,7 @@ export default function Page() {
       <AboutSidebar className="max-sm:hidden" />
 
       <div className="sm:ml-32 lg:ml-48 2xl:ml-0 grid grid-cols-1 lg:grid-cols-5 lg:gap-x-8 xl:gap-x-16">
-        <div className="max-sm:min-h-[60svh] gap-y-4 sm:gap-y-2 flex z-10 flex-col  justify-center items-center lg:fixed lg:left-48 min-[1135px]:left-54! min-[1285px]:left-64! lg:top-1/4 lg:-translate-y-1/4 lg:max-w-40 col-span-1">
+        <div className="max-sm:pt-10 max-sm:pb-6 gap-y-4 sm:gap-y-2 flex z-10 flex-col  justify-center items-center lg:fixed lg:left-48 min-[1135px]:left-54! min-[1285px]:left-64! lg:top-1/4 lg:-translate-y-1/4 lg:max-w-40 col-span-1">
           <SiegAvatar className="size-28 sm:size-32" />
 
           <div className="flex gap-x-3 items-center">
@@ -93,7 +93,7 @@ export default function Page() {
               id="introduction"
               className="scroll-mt-26 sm:scroll-mt-32 flex flex-col gap-2 items-center lg:items-start w-full"
             >
-              <div className="max-sm:min-h-[32svh]">
+              <div>
                 <div className="flex justify-center lg:justify-start">
                   <BookCallBadge />
                 </div>

@@ -26,7 +26,7 @@ const h3 =
   "mb-3.5 mt-9 text-[15px] font-medium uppercase tracking-wide text-accent-blue dark:text-[#2dd4bf]";
 
 const dashList =
-  "mb-6 list-none space-y-2 pl-0 [&>li]:relative [&>li]:pl-6 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:text-teal-600 [&>li]:before:content-['—'] dark:[&>li]:before:text-[#2dd4bf]";
+  "mb-6 list-none space-y-2 pl-0 [&>li]:relative [&>li]:pl-6 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:text-teal-700 [&>li]:before:content-['—'] dark:[&>li]:before:text-[#2dd4bf]";
 
 export const BioVerifyArticle: FC = () => {
   const BIOVERIFY_GITHUB = BIOVERIFY_LINKS.github;

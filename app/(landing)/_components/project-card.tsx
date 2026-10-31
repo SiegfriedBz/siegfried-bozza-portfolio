@@ -142,13 +142,13 @@ export const ProjectCard: FC<Props> = (props) => {
           {chips.slice(0, MAX_CHIPS).map((name) => (
             <li
               key={`${slug}-${name}`}
-              className="rounded-md border border-border px-2 py-0.5 font-mono text-[11px] text-muted-foreground"
+              className="rounded-md border border-border px-2 py-0.5 font-mono text-xs text-muted-foreground"
             >
               {name}
             </li>
           ))}
           {extra > 0 ? (
-            <li className="px-1 py-0.5 font-mono text-[11px] text-muted-foreground">
+            <li className="px-1 py-0.5 font-mono text-xs text-muted-foreground">
               +{extra}
             </li>
           ) : null}
