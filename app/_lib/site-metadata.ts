@@ -11,7 +11,7 @@ export const SITE_NAME = "Siegfried Bozza";
 export const ROLE = "Full-Stack Web3 Engineer";
 
 export const PITCH =
-  "I build the off-chain systems that on-chain products depend on: contract-event projections into Postgres, a wallet and ledger backend, AI-agent workflows that settle on-chain, and the dApps on top.";
+  "On my own time I build Web3 projects on testnets, mostly the off-chain side: contract events projected into Postgres, AI-agent workflows that settle on-chain, and the dApps on top.";
 
 export const CORE_STACK = [
   "Next.js",
@@ -42,11 +42,11 @@ export const DEFAULT_TITLE = `${SITE_NAME} | ${ROLE}`;
 
 /** SERP-friendly (≤160 chars). */
 export const SITE_DESCRIPTION_SHORT =
-  "Full-Stack Web3 Engineer (TypeScript, Solidity). Event pipelines, wallet backends and AI-agent workflows around smart contracts. Open to relocation or remote.";
+  "Full-Stack Web3 Engineer (Next.js, TypeScript, Solidity, Foundry): production SaaS since 2024, Web3 projects on testnets. Relocation (APAC preferred) or remote.";
 
 /** Richer copy for Open Graph / Twitter. */
 export const SITE_DESCRIPTION_LONG =
-  "Full-Stack Web3 Engineer working in TypeScript and Solidity. I build the off-chain systems on-chain products depend on. Personal projects, on testnets: LabsTrail (open paper ratings on the OriginTrail DKG), Wallet Watcher (a custody backend slice with an append-only ledger, each withdrawal booked from its receipt), BioVerify (agentic DeSci peer review with Chainlink VRF), plus Bet2Gether, Forge and GavL. Open to relocation (Asia-Pacific first) or full-time remote.";
+  "Full-Stack Web3 Engineer, in production since 2024 on a Next.js / TypeScript / Supabase SaaS. Personal Web3 projects, on testnets: LabsTrail (open paper ratings on the OriginTrail DKG; Solidity, Foundry, Inngest, Gemini), Wallet Watcher (a custody backend slice; Node.js, TypeScript, viem, Hono, SQLite), BioVerify (agentic DeSci peer review; Solidity, Foundry, Chainlink VRF, LangGraph, Inngest), Bet2Gether (prediction market; Solidity, Foundry, Chainlink) and Forge (ERC-1155 crafting; Solidity, Foundry). Also GavL, an auction app (Next.js, Supabase, Stripe). Open to relocation (Asia-Pacific first) or full-time remote.";
 
 export const DEFAULT_KEYWORDS = [
   "Siegfried Bozza",
@@ -93,7 +93,7 @@ export const DEFAULT_OG_IMAGES = [
 ];
 
 /** Date the static pages' content last changed (sitemap lastModified). Update with content changes. */
-export const SITE_LAST_UPDATED = "2026-10-30";
+export const SITE_LAST_UPDATED = "2026-10-31";
 
 /** Meta description that fits search snippets: cut at a word boundary, never mid-word. */
 export const toMetaDescription = (text: string, max = 155) => {

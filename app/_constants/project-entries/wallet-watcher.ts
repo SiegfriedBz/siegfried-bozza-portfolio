@@ -9,8 +9,8 @@ const SEPOLIA_TX =
 export const walletWatcherProject: Project = {
   slug: "wallet-watcher",
   languages: ["TypeScript"],
-  // First commit 30 Sep 2026, last merge (PR #8) 17 Oct 2026.
-  constructionPeriod: "Sep–Oct 2026",
+  // First commit 30 Sep 2026, last merge (PR #8) 17 Oct 2026: shown as Oct 2026 (Siegfried, 2026-10-31).
+  constructionPeriod: "Oct 2026",
   title: {
     h1: "Wallet Watcher",
     h2: "Custody Backend Slice: HD Wallets, ETH Ledger and Signed Withdrawals",

@@ -31,7 +31,7 @@ import { SelfIntro } from "./_components/self-intro";
 import { WorkXP } from "./_components/work-xp";
 
 const ABOUT_TITLE = `About ${SITE_NAME} | ${ROLE}`;
-const ABOUT_DESCRIPTION = `${ROLE} · ${CORE_STACK.join(", ")} · Prismo.io, Renuo AG · ${AVAILABILITY.headline}.`;
+const ABOUT_DESCRIPTION = `${ROLE}: full-stack at Prismo.io since 2024 (Next.js, TypeScript, Supabase), Web3 projects on testnets (Solidity, Foundry, Chainlink). Open to relocation or remote.`;
 
 export const metadata: Metadata = {
   title: ABOUT_TITLE,

@@ -28,7 +28,7 @@ export const EDUCATION: EducationEntry[] = [
   },
   {
     id: 2,
-    year: "2021-2023",
+    year: "2023",
     title: "M.Sc. Blockchain Technologies",
     institution: "University of Barcelona",
     location: "Remote",
