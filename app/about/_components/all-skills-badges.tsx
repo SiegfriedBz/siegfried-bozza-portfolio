@@ -1,8 +1,8 @@
 import type { FC } from "react";
-import { getStackRecord } from "@/app/_components/stack-badge";
+import { StackTiles } from "@/app/_components/stack-tile";
 import { STACK } from "@/app/_constants/stack";
-import { Badge } from "@/components/ui/badge";
 
+// Each group shows its items in STACK order (StackTiles sorts them).
 const CATEGORIES: { label: string; items: STACK[] }[] = [
   {
     label: "Frontend",
@@ -74,19 +74,7 @@ export const AllSkillsBadges: FC = () => {
             </span>
             <div className="flex-1 h-px bg-border" aria-hidden />
           </div>
-          <ul className="flex flex-wrap gap-2 ps-0 list-none">
-            {items.map((stack) => {
-              const record = getStackRecord(stack);
-              if (!record) return null;
-              return (
-                <li key={stack}>
-                  <Badge variant="outline" className="h-8 px-3 text-xs">
-                    {record.name}
-                  </Badge>
-                </li>
-              );
-            })}
-          </ul>
+          <StackTiles items={items} className="ps-0 list-none" />
         </section>
       ))}
     </div>

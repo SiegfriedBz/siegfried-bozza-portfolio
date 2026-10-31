@@ -4,12 +4,14 @@ import { cn } from "@/lib/utils";
 type Props = {
   title: string;
   lines: string[];
+  /** In a fixed-size cover the transcript is cropped: fade the last lines out rather than cut one in half. */
+  cropped?: boolean;
   className?: string;
 };
 
 /** Cover for projects without a UI: a short, real terminal transcript. */
 export const TerminalCover: FC<Props> = (props) => {
-  const { title, lines, className } = props;
+  const { title, lines, cropped = false, className } = props;
 
   return (
     <div
@@ -22,24 +24,38 @@ export const TerminalCover: FC<Props> = (props) => {
         <span className="size-3 rounded-full bg-[#ff5f57]" aria-hidden />
         <span className="size-3 rounded-full bg-[#febc2e]" aria-hidden />
         <span className="size-3 rounded-full bg-[#28c840]" aria-hidden />
-        <span className="ms-3 truncate font-mono text-xs text-slate-400">
+        <span className="ms-3 min-w-0 font-mono text-xs text-slate-400">
           {title}
         </span>
       </div>
-      <pre className="flex-1 overflow-hidden px-4 py-3 font-mono text-[11px] leading-relaxed text-slate-200 sm:text-xs md:text-sm">
+      <pre
+        className={cn(
+          "flex-1 overflow-hidden px-4 py-3 font-mono text-[11px] leading-relaxed text-slate-200 sm:text-xs md:text-sm",
+          cropped &&
+            "[mask-image:linear-gradient(to_bottom,#000_calc(100%-3rem),transparent)]",
+        )}
+      >
         {lines
           .map((line, n) => ({ line, id: `line-${n}` }))
-          .map(({ line, id }) => (
-            <code
-              key={id}
-              className={cn(
-                "block overflow-hidden text-ellipsis whitespace-pre",
-                lineTone(line),
-              )}
-            >
-              {line || " "}
-            </code>
-          ))}
+          .map(({ line, id }) => {
+            // Long lines wrap with a hanging indent under their own indentation, so JSON stays readable.
+            const indent = line.length - line.trimStart().length;
+            return (
+              <code
+                key={id}
+                className={cn(
+                  "block whitespace-pre-wrap [overflow-wrap:anywhere]",
+                  lineTone(line),
+                )}
+                style={{
+                  paddingInlineStart: `${indent + 2}ch`,
+                  textIndent: "-2ch",
+                }}
+              >
+                {line.trimStart() || " "}
+              </code>
+            );
+          })}
       </pre>
     </div>
   );

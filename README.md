@@ -8,8 +8,8 @@ Personal site and digital resume: **Next.js 16**, **React 19**, **Tailwind CSS v
 ## Features
 
 - Landing hero + featured projects grid  
-- **About** — work experience (software + earlier career), education, skills badges, external links, CV (PDF)  
-- **Projects** — per-slug detail pages with screenshot/video carousels, Mermaid diagrams, stack badges, honest limitations & roadmaps  
+- **About** — work experience (software + earlier career), education, technical skills as logo tiles, external links, CV (PDF)  
+- **Projects** — per-slug detail pages with screenshot/video carousels, Mermaid diagrams, the stack as logo tiles, honest limitations & roadmaps  
 - **Articles** — index at `/articles`; MDX posts in `app/articles/(posts)/<slug>/content.mdx`, plus the bespoke BioVerify article. An article listed in `app/_lib/held-articles.ts` is held back: it shows only in `pnpm dev` and on Vercel preview deploys; empty the list to publish it  
 - Dark / light theme, Vercel Analytics  
 

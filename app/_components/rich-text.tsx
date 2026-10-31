@@ -4,12 +4,24 @@ type Props = {
   text: string;
 };
 
-const INLINE_PATTERN = /(\*\*[^*]+?\*\*|\[[^\]]+\]\([^)]+\))/g;
+const INLINE_PATTERN = /(\*\*[^*]+?\*\*|`[^`]+`|\[[^\]]+\]\([^)]+\))/g;
 const LINK_PATTERN = /^\[([^\]]+)\]\(([^)]+)\)$/;
 
 function renderInlineSegment(segment: string, key: string): ReactNode {
   if (segment.startsWith("**") && segment.endsWith("**")) {
     return <strong key={key}>{segment.slice(2, -2)}</strong>;
+  }
+
+  // Inline code, styled like the articles' (post-prose.css)
+  if (segment.length > 2 && segment.startsWith("`") && segment.endsWith("`")) {
+    return (
+      <code
+        key={key}
+        className="rounded-md bg-muted/85 px-[0.35em] py-[0.1em] font-mono text-[0.875em] font-medium"
+      >
+        {segment.slice(1, -1)}
+      </code>
+    );
   }
 
   const linkMatch = LINK_PATTERN.exec(segment);

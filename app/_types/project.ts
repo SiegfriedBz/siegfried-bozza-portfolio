@@ -1,4 +1,5 @@
 import type { IconName } from "@/app/_constants/icons";
+import type { STACK } from "@/app/_constants/stack";
 
 export type FeaturedCategory =
   | "Web3 Backend & Infrastructure"
@@ -51,7 +52,7 @@ export type Project = {
   roadmap?: string[];
 
   stack: {
-    all: string[];
+    all: STACK[];
     main: {
       key: string;
       description: string;
