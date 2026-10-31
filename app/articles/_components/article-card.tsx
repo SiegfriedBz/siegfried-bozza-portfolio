@@ -47,6 +47,7 @@ export const ArticleCard: FC<Props> = ({ article, className }) => {
             <TerminalCover
               title={terminal.title}
               lines={terminal.lines}
+              cropped
               className="rounded-none border-0"
             />
           </div>

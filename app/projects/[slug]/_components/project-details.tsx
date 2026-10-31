@@ -114,9 +114,8 @@ export const ProjectDetails: FC<Props> = (props) => {
           alts={project.mediaAlt}
         />
       ) : terminal ? (
-        <div className="aspect-video w-full">
-          <TerminalCover title={terminal.title} lines={terminal.lines} />
-        </div>
+        // Natural height: the whole transcript shows, nothing cropped.
+        <TerminalCover title={terminal.title} lines={terminal.lines} />
       ) : null}
 
       {diagram ? (

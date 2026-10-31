@@ -105,6 +105,7 @@ export const ProjectCard: FC<Props> = (props) => {
           <TerminalCover
             title={terminal.title}
             lines={terminal.lines}
+            cropped
             className="rounded-none border-0"
           />
         ) : video ? (
