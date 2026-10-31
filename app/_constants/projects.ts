@@ -21,11 +21,11 @@ const bioVerifyProject: Project = {
     "/projects/bioverify/images/bioverify_publications.jpg":
       "BioVerify protocol overview: reward and slashed pools, research and member counts, and the publication ledger",
     "/projects/bioverify/videos/submit-success-01-form.mp4":
-      "BioVerify screen recording: submitting a publication while the Telegram bot posts the update",
+      "BioVerify screen recording: filling in the publication form, with the Telegram bot open beside the app",
     "/projects/bioverify/videos/early-slash-02-realtime.mp4":
       "BioVerify screen recording: an early slash, shown live in the publication ledger",
     "/projects/bioverify/videos/peer-review-02-fail.mp4":
-      "BioVerify screen recording: a peer review that ends in a failed publication",
+      "BioVerify screen recording: a peer reviewer marks the publication invalid, signs the review and sends it to the AI agent",
     "/projects/bioverify/videos/peer-review-04-published.mp4":
       "BioVerify screen recording: a reviewer signs a review and the publication is published",
   },
@@ -531,7 +531,7 @@ const ALL_PROJECTS: Project[] = [
       "/projects/forge/images/forge-landing.png":
         "Forge landing page with the Rules and Play buttons",
       "/projects/forge/images/forge-mint.png":
-        "Forge token collection with balances and the Trade, Mint, Burn and Forge buttons",
+        "Forge token collection with balances, the mint buttons in cooldown, and the Trade, Burn and Forge buttons",
       "/projects/forge/videos/forge-mobile-mint.mp4":
         "Forge screen recording: minting tokens on a phone",
       "/projects/forge/videos/forge-desktop-mint-01.mp4":
@@ -751,13 +751,13 @@ const ALL_PROJECTS: Project[] = [
       "/projects/gavl/videos/gavl-create-auctions.mp4":
         "GavL screen recording: creating an auction",
       "/projects/gavl/videos/gavl-bid-2-users.mp4":
-        "GavL screen recording: two users bidding on the same auction",
+        "GavL screen recording: a buyer places the first bid and the seller is notified live",
       "/projects/gavl/videos/gavl-bid-3-users.mp4":
-        "GavL screen recording: three users bidding, each told live whether they hold the highest bid",
+        "GavL screen recording: a second buyer outbids the first, and each is told live whether they hold the highest bid",
       "/projects/gavl/videos/gavl-auction-won-notifications.mp4":
         "GavL screen recording: the auction closes and the winner is notified",
       "/projects/gavl/videos/gavl-stripe-flow.mp4":
-        "GavL screen recording: the winner pays through Stripe",
+        "GavL screen recording: the winner pays through Stripe Checkout in test mode",
     },
     title: {
       h1: "GavL — Next Auctions",
