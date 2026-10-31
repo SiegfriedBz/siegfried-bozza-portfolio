@@ -14,7 +14,7 @@ import { BioVerifyArticle } from "./_components/bioverify-article";
 export async function generateMetadata(): Promise<Metadata> {
   const ogImage = BIOVERIFY_LINKS.ogImage ?? "";
 
-  const title = "When the Chain Is Not Enough: Agentic DApp Case Study";
+  const title = "BioVerify Case Study: When the Chain Is Not Enough";
   const description =
     "A DeSci peer-review case study: where every step in the workflow introduces the piece of the stack that makes it possible.";
 

@@ -11,10 +11,12 @@ export const walletWatcherProject: Project = {
   languages: ["TypeScript"],
   // First commit 30 Sep 2026, last merge (PR #8) 17 Oct 2026: shown as Oct 2026 (Siegfried, 2026-10-31).
   constructionPeriod: "Oct 2026",
+  testnet: true,
   title: {
     h1: "Wallet Watcher",
     h2: "Custody Backend Slice: HD Wallets, ETH Ledger and Signed Withdrawals",
     short: "Each Withdrawal Booked Once, From Its Receipt",
+    meta: "Custody Backend Slice",
   },
   description: {
     short:

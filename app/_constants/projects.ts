@@ -14,16 +14,18 @@ const bioVerifyProject: Project = {
   slug: "bioverify",
   languages: ["TypeScript", "Solidity"],
   constructionPeriod: "Jan–Apr 2026",
+  testnet: true,
   title: {
     h1: "BioVerify",
     h2: "DeSci Peer-Review — Chainlink VRF & Durable AI Agents for Scientific Integrity",
     short: "Multi-chain Agentic DeSci Case Study",
+    meta: "Agentic DeSci Peer Review",
   },
 
   description: {
     short:
       "Multi-chain DeSci peer-review case study — Next.js + Solidity + Chainlink + LangGraph + Inngest for decentralized peer review (Base Sepolia & Ethereum Sepolia).",
-    meta: "DeSci peer review on Base Sepolia and Ethereum Sepolia: Solidity, Chainlink VRF, a LangGraph review agent, Inngest and a Next.js front end.",
+    meta: "DeSci peer review on Base Sepolia and Ethereum Sepolia: Solidity, Chainlink VRF, a LangGraph review agent, Inngest and a Next.js and TypeScript front end.",
     problem:
       "Published papers often point to mutable URLs (data can change or disappear after publication). Reviewer selection is opaque, incentives for reviewers and publishers are weak, and the reproducibility crisis has eroded trust in research findings.",
     solution:
@@ -260,10 +262,12 @@ const ALL_PROJECTS: Project[] = [
     slug: "bet2gether",
     languages: ["TypeScript", "Solidity"],
     constructionPeriod: "Oct–Nov 2025",
+    testnet: true,
     title: {
       h1: "Bet2Gether",
       h2: "Chainlink Automation-Driven Round Resolution",
       short: "Chainlink-Settled Prediction Market",
+      meta: "Chainlink Prediction Market",
     },
     description: {
       short:
@@ -465,7 +469,7 @@ const ALL_PROJECTS: Project[] = [
     featured: {
       category: "Web3 Architecture & Coordination",
       summary:
-        "A proof-of-concept prediction market: Chainlink Automation triggers resolution, Chainlink Price Feeds supply the price, and VRF picks ERC-1155 reward ids. The deployed contract has a known payout bug and an oracle-timing weakness, both documented under Known limitations.",
+        "A proof-of-concept prediction market on Ethereum Sepolia: Chainlink Automation triggers resolution, Chainlink Price Feeds supply the price, and VRF picks ERC-1155 reward ids. The deployed contract has a known payout bug and an oracle-timing weakness, both documented under Known limitations.",
       bullets: [
         "**Automation-driven resolution** — **Chainlink Automation** calls **performUpkeep** so eligible rounds move without a human operator clicking resolve.",
         "**Verifiable inputs** — **Chainlink Price Feeds** for settlement prices and **Chainlink VRF v2.5** for unpredictable **ERC-1155** reward ids.",
@@ -482,14 +486,16 @@ const ALL_PROJECTS: Project[] = [
     slug: "forge",
     languages: ["TypeScript", "Solidity"],
     constructionPeriod: "Nov 2025",
+    testnet: true,
     title: {
       h1: "Forge",
       h2: "ERC-1155 Token-Composition",
       short: "Atomic ERC-1155 Crafting",
+      meta: "Atomic ERC-1155 Crafting",
     },
     description: {
       short:
-        "ERC-1155 crafting case study — burn-then-mint for composites in one call, a rules contract that owns the token ledger, and 38 Foundry tests (Next.js + wagmi).",
+        "ERC-1155 crafting case study on Ethereum Sepolia — burn-then-mint for composites in one call, a rules contract that owns the token ledger, and 38 Foundry tests (Next.js + wagmi).",
       meta: "ERC-1155 crafting on Ethereum Sepolia: composites burn their parts and mint in one call, a rules contract owns the token ledger, and 38 Foundry tests.",
       problem:
         "ERC-1155 crafting loops need supply rules users cannot route around: inputs burned and outputs minted together, and no way to mint or burn outside the recipes.",
@@ -685,12 +691,13 @@ const ALL_PROJECTS: Project[] = [
       h1: "GavL — Next Auctions",
       h2: "Bidding · Stripe Settlement · Postgres Triggers · Realtime Notifications",
       short: "Auctions with Supabase and Stripe",
+      meta: "Supabase and Stripe",
     },
 
     description: {
       short:
         "Full-stack auction case study — Postgres triggers that track the highest bid and send per-user Realtime notifications, RLS, a scheduled Edge Function that closes auctions, and Stripe (Next.js, Supabase, TypeScript). Known bid-integrity gaps, listed under Known limitations.",
-      meta: "Next.js and Supabase auctions: triggers track the highest bid, Realtime notifies each user, an Edge Function closes auctions. Known bid-integrity gaps.",
+      meta: "Next.js, TypeScript and Supabase auctions: triggers track the top bid, Realtime notifies each user, an Edge Function closes them. Known bid-integrity gaps.",
       problem:
         "Auction platforms need bidding, automatic closure at the deadline, notifications to the people involved, and payment settlement without exposing privileged database access to the browser.",
       solution:

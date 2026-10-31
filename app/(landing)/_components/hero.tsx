@@ -12,6 +12,7 @@ import { PROFILE_LINKS } from "@/app/_constants/links";
 import {
   AVAILABILITY,
   CORE_STACK,
+  DAY_JOB,
   PITCH,
   ROLE,
 } from "@/app/_lib/site-metadata";
@@ -64,7 +65,7 @@ export const Hero: FC<Props> = ({ proof }) => {
         </h1>
 
         <p className="max-w-[58ch] text-pretty text-lg leading-relaxed text-foreground/80">
-          {PITCH}
+          {DAY_JOB} {PITCH}
         </p>
 
         <ul className="flex flex-wrap gap-2" aria-label="Core stack">

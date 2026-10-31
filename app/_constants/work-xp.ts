@@ -81,15 +81,15 @@ export const WORK_EXPERIENCE: WorkExperienceEntry[] = [
     ],
     references: [
       {
-        label: "Dromard et al., J. Neurosci. Res. 2008",
+        label: "Dromard et al. (with Bozza S), J. Neurosci. Res. 2008",
         href: "https://pubmed.ncbi.nlm.nih.gov/18335522/",
       },
       {
-        label: "Tanguay et al., Fungal Genet. Biol. 2006",
+        label: "Tanguay, Bozza & Breuil, Fungal Genet. Biol. 2006",
         href: "https://pubmed.ncbi.nlm.nih.gov/16859936/",
       },
       {
-        label: "Fisher et al., Dev. Biol. 2010",
+        label: "Fisher et al. (with Bozza S), Dev. Biol. 2010",
         href: "https://pubmed.ncbi.nlm.nih.gov/19833123/",
       },
     ],

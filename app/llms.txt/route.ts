@@ -15,7 +15,7 @@ export function GET() {
     "",
     `> ${PERSON_SUMMARY}`,
     "",
-    "## Projects",
+    "## Projects (personal; the Web3 ones run on testnets)",
     ...PROJECTS.map(
       (p) =>
         `- [${p.title.h1}](${abs(p.links.page)}): ${plain(p.description.short)}`,

@@ -12,11 +12,15 @@ export type Project = {
   languages: string[];
   /** Human-facing build window, e.g. "Mar–Apr 2026" (badge) */
   constructionPeriod: string;
+  /** Runs on testnets only: a "Testnet" badge sits next to the build window */
+  testnet?: boolean;
   title: {
     h1: string;
     h2: string;
     /** Punchy pitch for about page; falls back to title.h2 when omitted */
     short?: string;
+    /** Descriptor in the page title, "<h1>: <meta> | Siegfried Bozza" (≤ 60 characters in all) */
+    meta?: string;
   };
   description: {
     short: string;
