@@ -3,7 +3,12 @@ import { notFound } from "next/navigation";
 import type { FC } from "react";
 import { JsonLd } from "@/app/_components/json-ld";
 import { BIOVERIFY_ARTICLE_HERO, PROJECTS } from "@/app/_constants/projects";
-import { breadcrumbNode, personNode, projectNode } from "@/app/_lib/json-ld";
+import {
+  breadcrumbNode,
+  personNode,
+  projectNode,
+  websiteNode,
+} from "@/app/_lib/json-ld";
 import {
   DEFAULT_OG_IMAGES,
   SITE_NAME,
@@ -18,6 +23,9 @@ export async function generateStaticParams() {
     return { slug: p.slug };
   });
 }
+
+// Unknown slugs get the prerendered 404 page instead of a page rendered on demand.
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
@@ -79,6 +87,7 @@ const Page: FC<Props> = async (props) => {
       <JsonLd
         nodes={[
           personNode(),
+          websiteNode(),
           projectNode(slug),
           breadcrumbNode([
             { name: "Home", path: "/" },

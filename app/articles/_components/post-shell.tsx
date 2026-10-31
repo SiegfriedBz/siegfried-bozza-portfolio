@@ -5,7 +5,12 @@ import { JsonLd } from "@/app/_components/json-ld";
 import { SiegAvatar } from "@/app/_components/sieg-avatar";
 import { PROFILE_LINKS } from "@/app/_constants/links";
 import { PROJECTS } from "@/app/_constants/projects";
-import { articleNode, breadcrumbNode, personNode } from "@/app/_lib/json-ld";
+import {
+  articleNode,
+  breadcrumbNode,
+  personNode,
+  websiteNode,
+} from "@/app/_lib/json-ld";
 import type { Article } from "@/app/_types/article";
 
 type Props = PropsWithChildren<{ article: Article }>;
@@ -38,6 +43,7 @@ export const PostShell: FC<Props> = ({ article, children }) => {
       <JsonLd
         nodes={[
           personNode(),
+          websiteNode(),
           articleNode(article.slug),
           breadcrumbNode([
             { name: "Home", path: "/" },

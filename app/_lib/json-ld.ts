@@ -5,6 +5,7 @@ import { PROJECTS } from "@/app/_constants/projects";
 import {
   PERSON_SUMMARY,
   ROLE,
+  SITE_LAST_UPDATED,
   SITE_NAME,
   SITE_URL,
 } from "@/app/_lib/site-metadata";
@@ -82,6 +83,7 @@ export const profilePageNode = (): Node => ({
   name: `About ${SITE_NAME}`,
   isPartOf: { "@id": WEBSITE_ID },
   mainEntity: { "@id": PERSON_ID },
+  dateModified: SITE_LAST_UPDATED,
   inLanguage: "en",
 });
 
@@ -97,7 +99,7 @@ export const articleNode = (slug: string): Node => {
     alternativeHeadline: article.subtitle,
     description: article.excerpt,
     datePublished: article.date,
-    dateModified: article.date,
+    dateModified: article.updated ?? article.date,
     image: [abs(article.cover ?? "/opengraph-image")],
     author: { "@id": PERSON_ID },
     publisher: { "@id": PERSON_ID },

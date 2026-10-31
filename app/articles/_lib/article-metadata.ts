@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getArticle } from "@/app/_constants/articles";
+import { isArticleHeld } from "@/app/_lib/held-articles";
 import {
   DEFAULT_OG_IMAGES,
   SITE_NAME,
@@ -7,6 +8,9 @@ import {
 } from "@/app/_lib/site-metadata";
 
 export const articleMetadata = (slug: string): Metadata => {
+  // A held article 404s: keep its title, excerpt and canonical out of that page too.
+  if (isArticleHeld(slug)) return {};
+
   const article = getArticle(slug);
   const images = article.cover
     ? [{ url: article.cover, alt: article.title }]
@@ -28,6 +32,7 @@ export const articleMetadata = (slug: string): Metadata => {
       url: article.href,
       siteName: SITE_NAME,
       publishedTime: article.date,
+      ...(article.updated ? { modifiedTime: article.updated } : {}),
       authors: [SITE_NAME],
       tags: article.tags,
       images,

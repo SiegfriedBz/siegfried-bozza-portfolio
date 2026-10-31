@@ -39,23 +39,28 @@ export const Hero: FC<Props> = ({ proof }) => {
       <LightGlow className="-left-1/4 right-1/4" />
 
       <div className="relative z-10 flex flex-col gap-6">
-        <p className="font-mono text-sm text-accent-blue">Siegfried Bozza</p>
-
-        <h1 className="text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-          {/* Real spaces between the inline-block words, so the H1 text reads
-              "Full-Stack Web3 Engineer" to crawlers and screen readers. */}
-          {ROLE.split(" ").map((word, index, all) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: static words
-            <Fragment key={index}>
-              <span
-                className="hero-word"
-                style={{ "--i": index } as CSSProperties}
-              >
-                {word}
-              </span>
-              {index < all.length - 1 ? " " : null}
-            </Fragment>
-          ))}
+        {/* The name and the role form one H1 (the query recruiters type is the name),
+            styled as before: the name small above, the role large below. */}
+        <h1 className="flex flex-col gap-6">
+          <span className="font-mono text-sm text-accent-blue">
+            Siegfried Bozza
+          </span>{" "}
+          <span className="text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+            {/* Real spaces between the inline-block words, so the role reads
+                "Full-Stack Web3 Engineer" to crawlers and screen readers. */}
+            {ROLE.split(" ").map((word, index, all) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: static words
+              <Fragment key={index}>
+                <span
+                  className="hero-word"
+                  style={{ "--i": index } as CSSProperties}
+                >
+                  {word}
+                </span>
+                {index < all.length - 1 ? " " : null}
+              </Fragment>
+            ))}
+          </span>
         </h1>
 
         <p className="max-w-[58ch] text-pretty text-lg leading-relaxed text-foreground/80">

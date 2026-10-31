@@ -5,6 +5,7 @@ import {
   breadcrumbNode,
   personNode,
   profilePageNode,
+  websiteNode,
 } from "@/app/_lib/json-ld";
 import {
   AVAILABILITY,
@@ -58,6 +59,7 @@ export default function Page() {
       <JsonLd
         nodes={[
           personNode(),
+          websiteNode(),
           profilePageNode(),
           breadcrumbNode([{ name: "Home", path: "/" }, { name: "About" }]),
         ]}

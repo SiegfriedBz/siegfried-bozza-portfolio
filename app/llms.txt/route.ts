@@ -1,4 +1,5 @@
 import { ARTICLES } from "@/app/_constants/articles";
+import { CV_HREF } from "@/app/_constants/cv";
 import { PROFILE_LINKS } from "@/app/_constants/links";
 import { PROJECTS } from "@/app/_constants/projects";
 import { abs } from "@/app/_lib/json-ld";
@@ -27,6 +28,7 @@ export function GET() {
     "",
     "## Profiles",
     `- [About](${abs("/about")})`,
+    `- [CV (PDF)](${abs(CV_HREF)})`,
     `- [GitHub](${PROFILE_LINKS.github})`,
     `- [LinkedIn](${PROFILE_LINKS.linkedin})`,
     "",
