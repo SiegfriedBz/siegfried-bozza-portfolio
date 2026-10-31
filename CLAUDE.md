@@ -28,6 +28,14 @@ read it). If proto reports the version is missing, ask the user to run
   GitHub/LinkedIn copy must change as well: say so in the PR.
 - **Content**: `app/_constants/` (projects and `project-entries/`, work experience,
   education, articles, links). Public URLs are hardcoded there, never read from env vars.
+- **Stack**: `app/_constants/stack.ts`. The `STACK` enum's order is the display order on
+  cards, project pages and About: the core stack (`CORE_STACK` order), then protocols and
+  platforms, libraries, testing. A new technology goes in its group and gets a name and mark
+  in `stackMap` (`app/_components/stack-tile.tsx`).
+- **Logos**: `public/logos/`, one single-colour mark per technology (opaque shape on
+  transparent), painted in the text colour through a CSS mask. From Simple Icons (CC0) as
+  published, else the project's own mark reduced to one colour, with its source noted in
+  `stack-tile.tsx`.
 - **Articles**: `app/articles/(posts)/<slug>/content.mdx` plus a small `page.tsx`. MDX rules:
   no frontmatter, imports or exports; only `<TLDR>` and `<Callout title>` as components;
   diagrams as ```` ```mermaid ```` fences; no HTML comments and no bare `<`, `{` or `}` in
