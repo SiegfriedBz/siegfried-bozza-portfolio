@@ -31,7 +31,8 @@ read it). If proto reports the version is missing, ask the user to run
 - **Articles**: `app/articles/(posts)/<slug>/content.mdx` plus a small `page.tsx`. MDX rules:
   no frontmatter, imports or exports; only `<TLDR>` and `<Callout title>` as components;
   diagrams as ```` ```mermaid ```` fences; no HTML comments and no bare `<`, `{` or `}` in
-  prose.
+  prose. When an article's text changes, set its `updated` field (`app/_constants/articles.ts`)
+  to that commit's date.
 - **Media**: screen recordings are MP4 with a same-name `.jpg` poster in
   `public/projects/<slug>/videos/` (README has the ffmpeg commands). Never commit GIFs.
   Screenshots go through `next/image` with a `sizes` prop.

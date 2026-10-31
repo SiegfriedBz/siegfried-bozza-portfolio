@@ -92,7 +92,10 @@ export const DEFAULT_OG_IMAGES = [
   },
 ];
 
-/** Date the static pages' content last changed (sitemap lastModified). Update with content changes. */
+/**
+ * Date the static pages' content last changed: sitemap lastModified for the static and
+ * project pages, and the About page's JSON-LD dateModified. Update with content changes.
+ */
 export const SITE_LAST_UPDATED = "2026-10-31";
 
 /** Meta description that fits search snippets: cut at a word boundary, never mid-word. */

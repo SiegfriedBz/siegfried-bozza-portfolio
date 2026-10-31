@@ -83,7 +83,9 @@ const Page: FC<Props> = async (props) => {
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    // Full width: under the layout's items-center, a terminal cover's unbroken lines
+    // would otherwise set the page width and push it past a phone screen.
+    <div className="flex w-full flex-col gap-8">
       <JsonLd
         nodes={[
           personNode(),
