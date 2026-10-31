@@ -5,6 +5,7 @@ import {
   breadcrumbNode,
   personNode,
   profilePageNode,
+  websiteNode,
 } from "@/app/_lib/json-ld";
 import {
   AVAILABILITY,
@@ -31,7 +32,7 @@ import { SelfIntro } from "./_components/self-intro";
 import { WorkXP } from "./_components/work-xp";
 
 const ABOUT_TITLE = `About ${SITE_NAME} | ${ROLE}`;
-const ABOUT_DESCRIPTION = `${ROLE}: full-stack at Prismo.io since 2024 (Next.js, TypeScript, Supabase), Web3 projects on testnets (Solidity, Foundry, Chainlink). Open to relocation or remote.`;
+const ABOUT_DESCRIPTION = `${ROLE}: Next.js, TypeScript and Supabase at Prismo.io since 2024, Solidity and Foundry projects on testnets. Open to relocation or remote.`;
 
 export const metadata: Metadata = {
   title: ABOUT_TITLE,
@@ -58,6 +59,7 @@ export default function Page() {
       <JsonLd
         nodes={[
           personNode(),
+          websiteNode(),
           profilePageNode(),
           breadcrumbNode([{ name: "Home", path: "/" }, { name: "About" }]),
         ]}
@@ -65,7 +67,7 @@ export default function Page() {
       <AboutSidebar className="max-sm:hidden" />
 
       <div className="sm:ml-32 lg:ml-48 2xl:ml-0 grid grid-cols-1 lg:grid-cols-5 lg:gap-x-8 xl:gap-x-16">
-        <div className="max-sm:min-h-[60svh] gap-y-4 sm:gap-y-2 flex z-10 flex-col  justify-center items-center lg:fixed lg:left-48 min-[1135px]:left-54! min-[1285px]:left-64! lg:top-1/4 lg:-translate-y-1/4 lg:max-w-40 col-span-1">
+        <div className="max-sm:pt-10 max-sm:pb-6 gap-y-4 sm:gap-y-2 flex z-10 flex-col  justify-center items-center lg:fixed lg:left-48 min-[1135px]:left-54! min-[1285px]:left-64! lg:top-1/4 lg:-translate-y-1/4 lg:max-w-40 col-span-1">
           <SiegAvatar className="size-28 sm:size-32" />
 
           <div className="flex gap-x-3 items-center">
@@ -91,7 +93,7 @@ export default function Page() {
               id="introduction"
               className="scroll-mt-26 sm:scroll-mt-32 flex flex-col gap-2 items-center lg:items-start w-full"
             >
-              <div className="max-sm:min-h-[32svh]">
+              <div>
                 <div className="flex justify-center lg:justify-start">
                   <BookCallBadge />
                 </div>

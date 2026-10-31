@@ -3,7 +3,12 @@ import { notFound } from "next/navigation";
 import type { FC } from "react";
 import { JsonLd } from "@/app/_components/json-ld";
 import { BIOVERIFY_ARTICLE_HERO, PROJECTS } from "@/app/_constants/projects";
-import { breadcrumbNode, personNode, projectNode } from "@/app/_lib/json-ld";
+import {
+  breadcrumbNode,
+  personNode,
+  projectNode,
+  websiteNode,
+} from "@/app/_lib/json-ld";
 import {
   DEFAULT_OG_IMAGES,
   SITE_NAME,
@@ -19,6 +24,9 @@ export async function generateStaticParams() {
   });
 }
 
+// Unknown slugs get the prerendered 404 page instead of a page rendered on demand.
+export const dynamicParams = false;
+
 export async function generateMetadata({
   params,
 }: {
@@ -31,8 +39,11 @@ export async function generateMetadata({
     return { title: `Project | ${SITE_NAME}` };
   }
 
-  const title = `${project.title.h1} | ${SITE_NAME}`;
-  const description = toMetaDescription(project.description.short);
+  const title = project.title.meta
+    ? `${project.title.h1}: ${project.title.meta} | ${SITE_NAME}`
+    : `${project.title.h1} | ${SITE_NAME}`;
+  const description =
+    project.description.meta ?? toMetaDescription(project.description.short);
   const ogImage =
     project.links.ogImage?.trim() ||
     project.images[0] ||
@@ -75,10 +86,13 @@ const Page: FC<Props> = async (props) => {
   }
 
   return (
-    <div className="flex flex-col gap-8">
+    // Full width: under the layout's items-center, a terminal cover's unbroken lines
+    // would otherwise set the page width and push it past a phone screen.
+    <div className="flex w-full flex-col gap-8">
       <JsonLd
         nodes={[
           personNode(),
+          websiteNode(),
           projectNode(slug),
           breadcrumbNode([
             { name: "Home", path: "/" },

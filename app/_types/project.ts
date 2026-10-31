@@ -12,14 +12,22 @@ export type Project = {
   languages: string[];
   /** Human-facing build window, e.g. "Mar–Apr 2026" (badge) */
   constructionPeriod: string;
+  /** Runs on testnets only: a "Testnet" badge sits next to the build window */
+  testnet?: boolean;
+  /** What each carousel image or video shows, keyed by its path in `images` / `videos` */
+  mediaAlt?: Record<string, string>;
   title: {
     h1: string;
     h2: string;
     /** Punchy pitch for about page; falls back to title.h2 when omitted */
     short?: string;
+    /** Descriptor in the page title, "<h1>: <meta> | Siegfried Bozza" (≤ 60 characters in all) */
+    meta?: string;
   };
   description: {
     short: string;
+    /** Hand-written search and link-preview description (≤ 155 characters); without it, `short` is cut to fit. */
+    meta?: string;
     /** Business-context lead-in for project detail pages (markdown **bold** supported) */
     problem?: string;
     solution?: string;

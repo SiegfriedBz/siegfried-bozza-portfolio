@@ -12,7 +12,6 @@ export type EducationEntry = {
   description: string;
   link?: { href: string; label: string; iconName?: IconName };
   section: EducationSection;
-  publications?: { label: string; href: string }[];
 };
 
 export const EDUCATION: EducationEntry[] = [
@@ -68,20 +67,6 @@ export const EDUCATION: EducationEntry[] = [
     location: "France",
     section: "earlier",
     description:
-      "University of Montpellier — Molecular Biology & Genetics. Followed by research roles in France (INSERM, Institute for Neurosciences of Montpellier) and Canada (University of British Columbia, Vancouver). Co-author on 3 peer-reviewed papers on stem cells and epigenetics:",
-    publications: [
-      {
-        label: "J. Neurosci. Res.",
-        href: "https://pubmed.ncbi.nlm.nih.gov/18335522/",
-      },
-      {
-        label: "Fungal Genet. Biol.",
-        href: "https://pubmed.ncbi.nlm.nih.gov/16859936/",
-      },
-      {
-        label: "Dev. Biol.",
-        href: "https://pubmed.ncbi.nlm.nih.gov/19833123/",
-      },
-    ],
+      "University of Montpellier — Molecular Biology & Genetics. Followed by research roles in France (INSERM, Institute for Neurosciences of Montpellier) and Canada (University of British Columbia, Vancouver).",
   },
 ];

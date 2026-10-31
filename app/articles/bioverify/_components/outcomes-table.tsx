@@ -11,7 +11,7 @@ export const OutcomesTable: FC<Props> = (props) => {
   return (
     <div
       className={cn(
-        "my-8 overflow-x-auto rounded-xl border border-border dark:border-[rgba(139,148,158,0.3)]",
+        "table-scroll-cue my-8 overflow-x-auto rounded-xl border border-border dark:border-[rgba(139,148,158,0.3)]",
         className,
       )}
     >

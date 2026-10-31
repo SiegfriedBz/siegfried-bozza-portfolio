@@ -1,3 +1,4 @@
+import { ExternalLinkIcon } from "lucide-react";
 import { RichText } from "@/app/_components/rich-text";
 import { TypographyH2 } from "@/app/_components/typography/h2";
 import { TypographyH3 } from "@/app/_components/typography/h3";
@@ -5,7 +6,6 @@ import { TypographyH5 } from "@/app/_components/typography/h5";
 import { TypographyP } from "@/app/_components/typography/p";
 import { WORK_EXPERIENCE } from "@/app/_constants/work-xp";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLinkIcon } from "lucide-react";
 
 export const EarlierCareer = () => {
   const entries = WORK_EXPERIENCE.filter((w) => w.section === "earlier");

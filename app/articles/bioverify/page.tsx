@@ -2,14 +2,19 @@ import type { Metadata } from "next";
 import { JsonLd } from "@/app/_components/json-ld";
 import { getArticle } from "@/app/_constants/articles";
 import { BIOVERIFY_LINKS } from "@/app/_constants/projects";
-import { articleNode, breadcrumbNode, personNode } from "@/app/_lib/json-ld";
+import {
+  articleNode,
+  breadcrumbNode,
+  personNode,
+  websiteNode,
+} from "@/app/_lib/json-ld";
 import { SITE_NAME } from "@/app/_lib/site-metadata";
 import { BioVerifyArticle } from "./_components/bioverify-article";
 
 export async function generateMetadata(): Promise<Metadata> {
   const ogImage = BIOVERIFY_LINKS.ogImage ?? "";
 
-  const title = "When the Chain Is Not Enough: Agentic DApp Case Study";
+  const title = "BioVerify Case Study: When the Chain Is Not Enough";
   const description =
     "A DeSci peer-review case study: where every step in the workflow introduces the piece of the stack that makes it possible.";
 
@@ -37,6 +42,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "article",
       authors: [SITE_NAME],
       publishedTime: getArticle("bioverify").date,
+      modifiedTime: getArticle("bioverify").updated,
       siteName: SITE_NAME,
       title,
       description,
@@ -67,6 +73,7 @@ export default function BioVerifyArticlePage() {
       <JsonLd
         nodes={[
           personNode(),
+          websiteNode(),
           articleNode("bioverify"),
           breadcrumbNode([
             { name: "Home", path: "/" },

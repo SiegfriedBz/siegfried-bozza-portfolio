@@ -12,12 +12,14 @@ import { AutoplayVideo } from "./autoplay-video";
 type Props = {
   images: string[];
   videos: string[];
-  /** Used for descriptive alt text on each slide. */
+  /** Names the numbered fallback ("Forge — screenshot 2") for slides without an `alts` entry. */
   projectName: string;
+  /** What each slide shows, keyed by its path; slides without one get a numbered fallback. */
+  alts?: Record<string, string>;
 };
 
 export const ProjectCarousel: FC<Props> = (props) => {
-  const { images, videos, projectName } = props;
+  const { images, videos, projectName, alts } = props;
 
   const slides = [
     ...images.map((src) => ({ kind: "image" as const, src })),
@@ -42,15 +44,23 @@ export const ProjectCarousel: FC<Props> = (props) => {
                 <Image
                   src={slide.src}
                   fill
-                  alt={`${projectName} — screenshot ${index + 1}`}
+                  alt={
+                    alts?.[slide.src] ??
+                    `${projectName} — screenshot ${index + 1}`
+                  }
                   sizes="(min-width: 1024px) 1024px, 100vw"
-                  priority={index === 0}
+                  // The first slide is the page's LCP element (Next 16 deprecates `priority`).
+                  loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : "auto"}
                   className="object-cover"
                 />
               ) : (
                 <AutoplayVideo
                   src={slide.src}
-                  label={`${projectName} — screen recording ${index + 1}`}
+                  label={
+                    alts?.[slide.src] ??
+                    `${projectName} — screen recording ${index + 1}`
+                  }
                   className="object-contain"
                 />
               )}
@@ -60,8 +70,8 @@ export const ProjectCarousel: FC<Props> = (props) => {
       </CarouselContent>
       {slides.length > 1 ? (
         <>
-          <CarouselPrevious className="left-2 max-sm:hidden" />
-          <CarouselNext className="right-2 max-sm:hidden" />
+          <CarouselPrevious className="left-2 max-sm:size-10" />
+          <CarouselNext className="right-2 max-sm:size-10" />
         </>
       ) : null}
     </Carousel>

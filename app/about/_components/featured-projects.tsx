@@ -78,6 +78,7 @@ export const FeaturedProjects = () => {
                     <div className="flex flex-col gap-y-1 ps-6 sm:ps-12">
                       <Link
                         href={project.links.page}
+                        aria-label={`View project (${project.title.h1})`}
                         className="inline-flex items-center gap-1 text-sm font-medium text-accent-blue hover:underline"
                       >
                         View project

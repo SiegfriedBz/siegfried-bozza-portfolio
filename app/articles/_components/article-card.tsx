@@ -81,6 +81,7 @@ export const ArticleCard: FC<Props> = ({ article, className }) => {
                 year: "numeric",
                 month: "short",
                 day: "numeric",
+                timeZone: "UTC",
               })}
             </span>
             <span className="inline-flex items-center gap-1 font-medium text-accent-blue group-hover:underline">

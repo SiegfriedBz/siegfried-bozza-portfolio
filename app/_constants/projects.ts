@@ -14,15 +14,32 @@ const bioVerifyProject: Project = {
   slug: "bioverify",
   languages: ["TypeScript", "Solidity"],
   constructionPeriod: "Jan–Apr 2026",
+  testnet: true,
+  mediaAlt: {
+    "/projects/bioverify/images/bioverify-landing.webp":
+      "BioVerify landing page with the Submit Research and View Dashboard buttons",
+    "/projects/bioverify/images/bioverify_publications.jpg":
+      "BioVerify protocol overview: reward and slashed pools, research and member counts, and the publication ledger",
+    "/projects/bioverify/videos/submit-success-01-form.mp4":
+      "BioVerify screen recording: filling in the publication form, with the Telegram bot open beside the app",
+    "/projects/bioverify/videos/early-slash-02-realtime.mp4":
+      "BioVerify screen recording: an early slash, shown live in the publication ledger",
+    "/projects/bioverify/videos/peer-review-02-fail.mp4":
+      "BioVerify screen recording: a peer reviewer marks the publication invalid, signs the review and sends it to the AI agent",
+    "/projects/bioverify/videos/peer-review-04-published.mp4":
+      "BioVerify screen recording: a reviewer signs a review and the publication is published",
+  },
   title: {
     h1: "BioVerify",
-    h2: "DeSci Peer-Review — Chainlink VRF & Durable AI Agents for Scientific Integrity",
+    h2: "DeSci Peer-Review: Chainlink VRF & Durable AI Agents for Scientific Integrity",
     short: "Multi-chain Agentic DeSci Case Study",
+    meta: "Agentic DeSci Peer Review",
   },
 
   description: {
     short:
-      "Multi-chain DeSci peer-review case study — Next.js + Solidity + Chainlink + LangGraph + Inngest for decentralized peer review (Base Sepolia & Ethereum Sepolia).",
+      "Multi-chain DeSci peer-review case study: Next.js + TypeScript + Solidity + Chainlink + LangGraph + Inngest for decentralized peer review (Base Sepolia & Ethereum Sepolia).",
+    meta: "DeSci peer review on Base Sepolia and Ethereum Sepolia: Solidity, Chainlink VRF, a LangGraph review agent, Inngest and a Next.js and TypeScript front end.",
     problem:
       "Published papers often point to mutable URLs (data can change or disappear after publication). Reviewer selection is opaque, incentives for reviewers and publishers are weak, and the reproducibility crisis has eroded trust in research findings.",
     solution:
@@ -68,7 +85,7 @@ const bioVerifyProject: Project = {
     {
       key: "Event-Driven CQRS Architecture",
       description:
-        "**Getter-light** contract design — state mutations emit events, projected off-chain via **Alchemy Notify** webhooks into a **Neon Postgres** read model (**Drizzle ORM**) with **optimistic concurrency control**.",
+        "**Getter-light** contract design: state mutations emit events, projected off-chain via **Alchemy Notify** webhooks into a **Neon Postgres** read model (**Drizzle ORM**) with **optimistic concurrency control**.",
     },
     {
       key: "Durable Agent Orchestration",
@@ -89,38 +106,38 @@ const bioVerifyProject: Project = {
     `,
 
   outcome: `
-        BioVerify demonstrates an end-to-end DeSci peer-review pipeline on **Base Sepolia** and **Ethereum Sepolia** — stake and submit, AI-assisted screening, **Chainlink VRF** reviewer selection, human review with escalation, and on-chain settlement with explicit incentives.
-        The work is a learning vehicle for combining stateful agents, durable execution, and Solidity coordination — not a production claim for scientific publishing.
+        BioVerify demonstrates an end-to-end DeSci peer-review pipeline on **Base Sepolia** and **Ethereum Sepolia**: stake and submit, AI-assisted screening, **Chainlink VRF** reviewer selection, human review with escalation, and on-chain settlement with explicit incentives.
+        The work is a learning vehicle for combining stateful agents, durable execution, and Solidity coordination, not a production claim for scientific publishing.
     `,
   outcomeMetrics: [
     "**Deployments:** Base Sepolia + Ethereum Sepolia (verified contract addresses on-chain explorers)",
-    "**Tests:** BioVerifyV3 — 50 Foundry tests across 12 suites, in 11 files, including VRF edge cases (collisions, pool shrinking and rewards running out during VRF); `forge coverage` on 24 October 2026: 100% of lines (240/240), branches (37/37) and functions. Only the contract has automated tests",
+    "**Tests:** BioVerifyV3, 50 Foundry tests across 12 suites, in 11 files, including VRF edge cases (collisions, pool shrinking and rewards running out during VRF); `forge coverage` on 24 October 2026: 100% of lines (240/240), branches (37/37) and functions. Only the contract has automated tests",
     "**Read path:** Product queries served from the Neon Postgres projection; lists update over WebSocket, the detail view polls every 10 s until the publication is final",
     "**Realtime UX:** Standalone viem WebSocket clients + TanStack Query invalidation (no eth_call fanout for UX reads)",
     "**Security primitives:** CEI + OpenZeppelin nonReentrant on ETH-out paths; pull-withdrawal claims; HMAC-SHA256–verified Alchemy Notify webhooks; EIP-712–signed peer reviews",
   ],
   transferablePatterns:
-    "Event-driven CQRS, durable agent orchestration, multi-actor coordination — patterns that also apply to dashboards, DAO tooling, and marketplaces.",
+    "Event-driven CQRS, durable agent orchestration, multi-actor coordination: patterns that also apply to dashboards, DAO tooling, and marketplaces.",
 
   limitations: [
-    "**Settlement is trusted to one agent key** — a single immutable agent address drives every transition (pick reviewers, early slash, publish or slash), and on both deployments the agent address is also the treasury and the owner, who can change the VRF coordinator. The contract limits whom it can slash, not the verdict.",
-    "**LLM decisions without a human** — the plagiarism early-slash is one Gemini call over Exa's top results, and without escalation Gemini decides pass or fail from the peer reviews; reviewers who disagree with it are slashed. Signed reviews are verified off-chain; the contract stores only a bool per review, and the signatures stay in the private checkpoint database.",
-    "**Contract edge cases** — `pickReviewers` checks `status != IN_REVIEW` instead of `== SUBMITTED`, so the agent could re-open a finished publication; if the reviewer pool shrinks or rewards run out between the VRF request and fulfilment, the callback reverts and the publication stays IN_REVIEW (VRF does not retry); collision handling by linear probing slightly biases the draw.",
-    "**Read model** — each row carries one (block, logIndex) stamp while updates touch some columns, so a late event changing a different field is dropped; failed projections after the webhook's 200 are lost, with no replay job yet; the webhook's HMAC is compared with `===`, not in constant time.",
-    "**IPFS reads trust the gateway** — the agent fetches content through the **Pinata** gateway and does not re-hash it against the CID.",
-    "**No author recourse against false positives** — The submission agent can produce a false plagiarism verdict, and peer review can reach a binding decision the author considers incorrect. Today both paths are terminal (immediate `earlySlashPublication` or `slashPublication`); there is no contract-level mechanism for the author to contest, post an escalation stake, or trigger a second human-only review.",
-    "**IPFS / manifest edge cases** — A syntactically valid CID that resolves to an empty or malformed manifest can leave the submission graph without a clean pass/fail path; after **Inngest** step retries the publication may remain stuck in SUBMITTED until validation is hardened.",
-    "**Agent transaction failures** — On-chain commands use simulate-then-write with no gas bump or nonce recovery. Settlement runs in the Next.js server action that resumes the last review, with no retry, so a gas spike can leave a publication in IN_REVIEW after the last human review is recorded.",
-    "**Chain support is hardcoded** — the two networks are a fixed enum used across the codebase; adding a chain means a new deployment plus changes in several places.",
-    "**Testing depth** — only the contract has automated tests; the agents, the read model and the frontend have none.",
+    "**Settlement is trusted to one agent key:** a single immutable agent address drives every transition (pick reviewers, early slash, publish or slash), and on both deployments the agent address is also the treasury and the owner, who can change the VRF coordinator. The contract limits whom it can slash, not the verdict.",
+    "**LLM decisions without a human:** the plagiarism early-slash is one Gemini call over Exa's top results, and without escalation Gemini decides pass or fail from the peer reviews; reviewers who disagree with it are slashed. Signed reviews are verified off-chain; the contract stores only a bool per review, and the signatures stay in the private checkpoint database.",
+    "**Contract edge cases:** `pickReviewers` checks `status != IN_REVIEW` instead of `== SUBMITTED`, so the agent could re-open a finished publication; if the reviewer pool shrinks or rewards run out between the VRF request and fulfilment, the callback reverts and the publication stays IN_REVIEW (VRF does not retry); collision handling by linear probing slightly biases the draw.",
+    "**Read model:** each row carries one (block, logIndex) stamp while updates touch some columns, so a late event changing a different field is dropped; failed projections after the webhook's 200 are lost, with no replay job yet; the webhook's HMAC is compared with `===`, not in constant time.",
+    "**IPFS reads trust the gateway:** the agent fetches content through the **Pinata** gateway and does not re-hash it against the CID.",
+    "**No author recourse against false positives:** The submission agent can produce a false plagiarism verdict, and peer review can reach a binding decision the author considers incorrect. Today both paths are terminal (immediate `earlySlashPublication` or `slashPublication`); there is no contract-level mechanism for the author to contest, post an escalation stake, or trigger a second human-only review.",
+    "**IPFS / manifest edge cases:** A syntactically valid CID that resolves to an empty or malformed manifest can leave the submission graph without a clean pass/fail path; after **Inngest** step retries the publication may remain stuck in SUBMITTED until validation is hardened.",
+    "**Agent transaction failures:** On-chain commands use simulate-then-write with no gas bump or nonce recovery. Settlement runs in the Next.js server action that resumes the last review, with no retry, so a gas spike can leave a publication in IN_REVIEW after the last human review is recorded.",
+    "**Chain support is hardcoded:** the two networks are a fixed enum used across the codebase; adding a chain means a new deployment plus changes in several places.",
+    "**Testing depth:** only the contract has automated tests; the agents, the read model and the frontend have none.",
   ],
   roadmap: [
-    "**Less trust in the agent** — Separate the agent, the treasury and the owner, and record each review's signature on-chain so the contract can check who voted what.",
-    "**Weighted majority voting** — Replace the senior tie-break with consensus weighted by on-chain reputation.",
-    "**ZK reputation (Reclaim Protocol)** — Privacy-preserving proofs of real-world signals without exposing raw credentials.",
-    "**Encrypted access (Lit Protocol) and monetisation (x402)** — Encrypt IPFS payloads with on-chain conditional decryption; gate datasets and supplementary material behind micropayments.",
-    "**Internal corpus + RAG** — Index published manifests in **Neon** + pgvector alongside **Exa AI** for similarity checks.",
-    "**Author escalation path** — Let an author contest a verdict (AI early-slash or peer-review settlement) within a bounded escalation window by posting a larger escalation stake. The contract opens a second review cycle restricted to humans only, with a fresh **VRF** cohort that excludes the original reviewers. The second verdict is binding and reconciles the first: if confirmed, the escalation stake is slashed on top of the original; if overturned, prior rewards and slashes are reversed and recomputed against the new verdict. This requires a settlement-enforcement delay (escalation window) before terminal states become final.",
+    "**Less trust in the agent:** Separate the agent, the treasury and the owner, and record each review's signature on-chain so the contract can check who voted what.",
+    "**Weighted majority voting:** Replace the senior tie-break with consensus weighted by on-chain reputation.",
+    "**ZK reputation (Reclaim Protocol):** Privacy-preserving proofs of real-world signals without exposing raw credentials.",
+    "**Encrypted access (Lit Protocol) and monetisation (x402):** Encrypt IPFS payloads with on-chain conditional decryption; gate datasets and supplementary material behind micropayments.",
+    "**Internal corpus + RAG:** Index published manifests in **Neon** + pgvector alongside **Exa AI** for similarity checks.",
+    "**Author escalation path:** Let an author contest a verdict (AI early-slash or peer-review settlement) within a bounded escalation window by posting a larger escalation stake. The contract opens a second review cycle restricted to humans only, with a fresh **VRF** cohort that excludes the original reviewers. The second verdict is binding and reconciles the first: if confirmed, the escalation stake is slashed on top of the original; if overturned, prior rewards and slashes are reversed and recomputed against the new verdict. This requires a settlement-enforcement delay (escalation window) before terminal states become final.",
   ],
 
   stack: {
@@ -164,7 +181,7 @@ const bioVerifyProject: Project = {
       {
         key: "TanStack Query + TanStack Table + nuqs",
         description:
-          "Reactive UI data layer — **TanStack Query** caches server queries and invalidates on `NewPublicationStatus` WSS events; **TanStack Table** plus a custom **niko-table** library powers the `/publications` data grid; **nuqs** syncs filters and pagination to URL state.",
+          "Reactive UI data layer: **TanStack Query** caches server queries and invalidates on `NewPublicationStatus` WSS events; **TanStack Table** plus a custom **niko-table** library powers the `/publications` data grid; **nuqs** syncs filters and pagination to URL state.",
       },
       {
         key: "LangGraph.js + Gemini + Exa AI",
@@ -189,7 +206,7 @@ const bioVerifyProject: Project = {
       {
         key: "OpenZeppelin",
         description:
-          "**ReentrancyGuard** on ETH-out paths (**claim**, **transferSlashPoolToTreasury**) — battle-tested primitives instead of hand-rolled guards.",
+          "**ReentrancyGuard** on ETH-out paths (**claim**, **transferSlashPoolToTreasury**): OpenZeppelin's guard instead of a hand-rolled one.",
       },
     ],
   },
@@ -224,11 +241,11 @@ const bioVerifyProject: Project = {
     category: "Web3 Architecture & Coordination",
     subtitle: "Base & Ethereum Sepolia",
     summary:
-      "A case study in treating scientific peer review as a **coordination game**: authors stake ETH, an AI agent screens for plagiarism, Chainlink VRF picks reviewers who sign their reviews, Gemini or a senior reviewer sets the verdict, and an agent settles it on-chain — with research artifacts pinned to IPFS.",
+      "A case study in treating scientific peer review as a **coordination game**: authors stake ETH, an AI agent screens for plagiarism, Chainlink VRF picks reviewers who sign their reviews, Gemini or a senior reviewer sets the verdict, and an agent settles it on-chain, with research artifacts pinned to IPFS.",
     bullets: [
-      "**Getter-light contract, event-sourced reads** — **BioVerifyV3** emits events instead of exposing most view getters; **Alchemy Notify** delivers logs to an **HMAC-SHA256**-verified webhook that projects into **Neon Postgres** with optimistic concurrency — the frontend reads from the projection, not the chain.",
-      "**Dual-agent pipeline** — a **Submission Agent** fetches the IPFS manifest and runs a neural search via **Exa AI** for plagiarism screening; a **Review Agent** manages multi-day human-in-the-loop peer review, with **LangGraph** checkpointers carrying the pause across serverless cold starts and **Inngest** retrying each agent run.",
-      "**VRF reviewer selection** — after screening passes, **Chainlink VRF** draws peer reviewers from the staked pool, so reviewers are drawn, not hand-picked, as long as the coordinator is Chainlink's. The agent key settles every outcome and also owns the contract, so it could swap the coordinator (listed under limitations).",
+      "**Getter-light contract, event-sourced reads:** **BioVerifyV3** emits events instead of exposing most view getters; **Alchemy Notify** delivers logs to an **HMAC-SHA256**-verified webhook that projects into **Neon Postgres** with optimistic concurrency, so the frontend reads from the projection, not the chain.",
+      "**Dual-agent pipeline:** a **Submission Agent** fetches the IPFS manifest and runs a neural search via **Exa AI** for plagiarism screening; a **Review Agent** manages multi-day human-in-the-loop peer review, with **LangGraph** checkpointers carrying the pause across serverless cold starts and **Inngest** retrying each agent run.",
+      "**VRF reviewer selection:** after screening passes, **Chainlink VRF** draws peer reviewers from the staked pool, so reviewers are drawn, not hand-picked, as long as the coordinator is Chainlink's. The agent key settles every outcome and also owns the contract, so it could swap the coordinator (listed under limitations).",
     ],
   },
 
@@ -259,20 +276,45 @@ const ALL_PROJECTS: Project[] = [
     slug: "bet2gether",
     languages: ["TypeScript", "Solidity"],
     constructionPeriod: "Oct–Nov 2025",
+    testnet: true,
+    mediaAlt: {
+      "/projects/bet2gether/images/bet2gether-landing.webp":
+        "Bet2Gether landing page with the Start Betting button",
+      "/projects/bet2gether/images/bet2gether-landing-create.png":
+        "Bet2Gether create-game form: market pair, target price, side, duration and bet amount",
+      "/projects/bet2gether/images/bet2gether-bet.png":
+        "Bet2Gether: placing a bet on LINK/USD above 13.25 USD, with the MetaMask request on Sepolia",
+      "/projects/bet2gether/images/bet2gether-claim.png":
+        "Bet2Gether: claiming rewards on a won game, with the MetaMask request",
+      "/projects/bet2gether/images/bet2gether-nft.png":
+        "Bet2Gether games table with round statuses and a reward-NFT minted notice",
+      "/projects/bet2gether/images/bet2gether-tenderly-action-logs.png":
+        "Tenderly Web3 Action logs for a Bet2Gether reward-NFT mint",
+      "/projects/bet2gether/videos/bet2gether-create-game-and-bet-1.mp4":
+        "Bet2Gether screen recording: creating a game and betting from two wallets side by side, part 1",
+      "/projects/bet2gether/videos/bet2gether-create-game-and-bet-2.mp4":
+        "Bet2Gether screen recording: creating a game and betting from two wallets side by side, part 2",
+      "/projects/bet2gether/videos/bet2gether-auto-mint-to-game-creator-if-winner.mp4":
+        "Bet2Gether screen recording: the reward NFT minted automatically to the winning game creator",
+      "/projects/bet2gether/videos/bet2gether-winner-claim-rewards.mp4":
+        "Bet2Gether screen recording: the winning wallet claims its rewards",
+    },
     title: {
       h1: "Bet2Gether",
       h2: "Chainlink Automation-Driven Round Resolution",
       short: "Chainlink-Settled Prediction Market",
+      meta: "Chainlink Prediction Market",
     },
     description: {
       short:
-        "Solidity prediction pools with Chainlink Price Feeds, Automation, and VRF — rounds go from Active to Resolved on an Automation upkeep, on Ethereum Sepolia (Next.js + wagmi + Tenderly). Has a known payout bug, documented below.",
+        "Solidity prediction pools with Chainlink Price Feeds, Automation, and VRF; rounds go from Active to Resolved on an Automation upkeep, on Ethereum Sepolia (Next.js + TypeScript + wagmi + Tenderly). Has a known payout bug, listed under Known limitations.",
+      meta: "Solidity prediction pools on Ethereum Sepolia with Chainlink Price Feeds, Automation and VRF; an Automation upkeep resolves each round. Known payout bug.",
       problem:
-        "Prediction markets only stay interesting when settlement is credibly neutral. Operator-settled designs ask you to trust whoever calls resolve and picks the price. Permissionless on-chain designs still need something to trigger resolution at the deadline — if only winners call it, timing becomes gameable; if a single bot runs it, trust shifts to that operator. Random rewards driven by block metadata or admin-picked tokenIds are easy to bias or predict.",
+        "Prediction markets only stay interesting when settlement is credibly neutral. Operator-settled designs ask you to trust whoever calls resolve and picks the price. Permissionless on-chain designs still need something to trigger resolution at the deadline: if only winners call it, timing becomes gameable; if a single bot runs it, trust shifts to that operator. Random rewards driven by block metadata or admin-picked tokenIds are easy to bias or predict.",
       solution:
         "Once a round opens, resolution is an on-chain transition tied to oracle inputs. **PredictionPool** reads **Chainlink Price Feeds** when the round resolves; **Chainlink Automation** calls **performUpkeep** after the deadline (the call is also open to anyone, which leaves the timing gap described under Known limitations); **Chainlink VRF v2.5** picks the **ERC-1155** reward tokenId; the mint itself is requested by a **Tenderly Web3 Action** holding an operator key, when the round creator wins.",
       overview: `
-        Bet2Gether is a small prediction-market case study on **Ethereum Sepolia**. Rounds resolve from an allow-listed **Chainlink Price Feed** when the pool's resolve step runs after the deadline — the settlement price is whatever the feed returns at resolution time, not an ad hoc admin choice.
+        Bet2Gether is a small prediction-market case study on **Ethereum Sepolia**. Rounds resolve from an allow-listed **Chainlink Price Feed** when the pool's resolve step runs after the deadline; the settlement price is whatever the feed returns at resolution time, not an ad hoc admin choice.
         **PredictionPool** implements **AutomationCompatibleInterface**: **checkUpkeep** flags due rounds and **performUpkeep** resolves them. **PredictionPoolToken** mints randomized **ERC-1155** collectibles via **VRFConsumerBaseV2Plus**; a **Tenderly Web3 Action** listens for **PredictionPool_RoundResolved** and, when configured logic applies, calls **mint** with **MINTER_ROLE** protection.
         The **Next.js** client uses **wagmi**, **viem**, **Alchemy WebSockets**, and **RainbowKit** for wallet UX and event-driven UI.
       `,
@@ -292,7 +334,7 @@ const ALL_PROJECTS: Project[] = [
       {
         key: "Automation-Driven Resolution",
         description:
-          "**PredictionPool** implements **AutomationCompatibleInterface** — **Chainlink Automation** calls **performUpkeep** for due rounds. It is permissionless but defensive: each round ID in `performData` is re-checked, so a bogus call cannot resolve a round early or twice.",
+          "**PredictionPool** implements **AutomationCompatibleInterface**: **Chainlink Automation** calls **performUpkeep** for due rounds. It is permissionless but defensive: each round ID in `performData` is re-checked, so a bogus call cannot resolve a round early or twice.",
       },
       {
         key: "VRF-Picked NFT Rewards",
@@ -302,7 +344,7 @@ const ALL_PROJECTS: Project[] = [
       {
         key: "Time-Weighted Payouts",
         description:
-          "**getBetWeight** scales each bet by `((round.end - bet.time) * 1e18) / (round.end - round.start)` — earlier conviction earns more weight than late-round piling-on. (See the known payout bug under limitations.)",
+          "**getBetWeight** scales each bet by `((round.end - bet.time) * 1e18) / (round.end - round.start)`, so earlier conviction earns more weight than late-round piling-on. (See the known payout bug under limitations.)",
       },
       {
         key: "Real-Time Updates",
@@ -339,10 +381,10 @@ const ALL_PROJECTS: Project[] = [
 
     outcome: `
       Bet2Gether is deployed on **Ethereum Sepolia** with verified **PredictionPool** and **PredictionPoolToken** on **Etherscan**.
-      It is a learning exercise in oracle-driven resolution, autonomous upkeep, verifiable randomness for collectibles, and a small event-driven **Next.js** client — not a production prediction market.
+      It is a learning exercise in oracle-driven resolution, autonomous upkeep, verifiable randomness for collectibles, and a small event-driven **Next.js** and **TypeScript** client, not a production prediction market.
     `,
     outcomeMetrics: [
-      "**Deployment:** Ethereum Sepolia — PredictionPool & PredictionPoolToken verified on Etherscan",
+      "**Deployment:** Ethereum Sepolia, PredictionPool & PredictionPoolToken verified on Etherscan",
       "**Sepolia addresses:** [PredictionPool](https://sepolia.etherscan.io/address/0x51A0a7561dEbA056C1cDF5aB4c369Db686c77EF6) · [PredictionPoolToken](https://sepolia.etherscan.io/address/0xddd3c73caE8541FC6Ea119C1BffC5B6547D33eCf)",
       "**Chainlink:** Price Feeds (settlement), Automation (**performUpkeep**), VRF v2.5 (ERC-1155 reward randomness)",
       "**Settlement:** the Chainlink Price Feed's latest answer, read when the round is resolved (see the oracle limitation below)",
@@ -353,20 +395,20 @@ const ALL_PROJECTS: Project[] = [
       "Oracle-driven settlement, hybrid on/off-chain automation, event-driven UI architecture.",
 
     limitations: [
-      "**Known bug, payout** — `claimReward` divides each winner's weight by the total weight of **both** sides, so winners together receive only part of the pool and the rest stays locked in the contract; if nobody bets on the winning side, the whole pool is locked. No refund or sweep exists. The fix is to divide by the winning side's weight only and add a refund path for one-sided rounds.",
-      "**Owner can freeze resolution** — the owner can disable a price feed; rounds on that feed then revert when resolved, and because `performUpkeep` resolves due rounds in one batch, one revert blocks every due round.",
-      "**Unbounded loops** — `checkUpkeep` scans every round ever created and `claimReward` loops over every player, so gas grows with use until Automation's check limit or a block limit is hit.",
-      "**Oracle timing and staleness** — **PredictionPool** reads `latestRoundData()` when `performUpkeep` runs and ignores `updatedAt`. `performUpkeep` is permissionless, so anyone can resolve a round after its deadline and the settlement price depends on *when* that call lands, not on the price at `round.end`; a stale answer would also be accepted. The fix is to walk back with `getRoundData` to the last answer at or before the deadline and to bound staleness against the feed heartbeat.",
-      "**Testnet only** — Deployed on **Ethereum Sepolia** for experimentation, not mainnet money at risk.",
-      "**Tenderly bridge** — The reward mint depends on an off-chain Web3 Action signing with an operator key that holds **MINTER_ROLE**. It handles only the first `RoundResolved` event per transaction and logs failures without retrying, so a winning creator can miss an NFT.",
-      "**Rounding dust** — the remainder of the weight math stays in the contract.",
-      "**Unused states** — `NotStarted` and `Ended` exist in the round enum but are never kept: a round goes from Active to Resolved.",
+      "**Known bug, payout:** `claimReward` divides each winner's weight by the total weight of **both** sides, so winners together receive only part of the pool and the rest stays locked in the contract; if nobody bets on the winning side, the whole pool is locked. No refund or sweep exists. The fix is to divide by the winning side's weight only and add a refund path for one-sided rounds.",
+      "**Owner can freeze resolution:** the owner can disable a price feed; rounds on that feed then revert when resolved, and because `performUpkeep` resolves due rounds in one batch, one revert blocks every due round.",
+      "**Unbounded loops:** `checkUpkeep` scans every round ever created and `claimReward` loops over every player, so gas grows with use until Automation's check limit or a block limit is hit.",
+      "**Oracle timing and staleness:** **PredictionPool** reads `latestRoundData()` when `performUpkeep` runs and ignores `updatedAt`. `performUpkeep` is permissionless, so anyone can resolve a round after its deadline and the settlement price depends on *when* that call lands, not on the price at `round.end`; a stale answer would also be accepted. The fix is to walk back with `getRoundData` to the last answer at or before the deadline and to bound staleness against the feed heartbeat.",
+      "**Testnet only:** Deployed on **Ethereum Sepolia** for experimentation, not mainnet money at risk.",
+      "**Tenderly bridge:** The reward mint depends on an off-chain Web3 Action signing with an operator key that holds **MINTER_ROLE**. It handles only the first `RoundResolved` event per transaction and logs failures without retrying, so a winning creator can miss an NFT.",
+      "**Rounding dust:** the remainder of the weight math stays in the contract.",
+      "**Unused states:** `NotStarted` and `Ended` exist in the round enum but are never kept: a round goes from Active to Resolved.",
     ],
     roadmap: [
-      "**L2 convergence** — Deploy to Arbitrum, Optimism, or similar to compare settlement cost and UX vs Sepolia.",
-      "**Fix the payout** — Divide by the winning side's weight and refund one-sided rounds.",
-      "**On-chain reward path** — Replace Tenderly-triggered minting with a call from **PredictionPool**, so no off-chain key is needed.",
-      "**Bounded loops** — Track due rounds and claim per player instead of scanning every round and player.",
+      "**L2 convergence:** Deploy to Arbitrum, Optimism, or similar to compare settlement cost and UX vs Sepolia.",
+      "**Fix the payout:** Divide by the winning side's weight and refund one-sided rounds.",
+      "**On-chain reward path:** Replace Tenderly-triggered minting with a call from **PredictionPool**, so no off-chain key is needed.",
+      "**Bounded loops:** Track due rounds and claim per player instead of scanning every round and player.",
     ],
 
     stack: {
@@ -414,7 +456,7 @@ const ALL_PROJECTS: Project[] = [
         {
           key: "OpenZeppelin",
           description:
-            "**Ownable**, **AccessControl**, **ReentrancyGuard**, and **ERC1155** — `claimReward` reentrancy guard, **MINTER_ROLE**-gated mint, and the **PredictionPoolToken** ledger.",
+            "**Ownable**, **AccessControl**, **ReentrancyGuard**, and **ERC1155**: `claimReward` reentrancy guard, **MINTER_ROLE**-gated mint, and the **PredictionPoolToken** ledger.",
         },
       ],
     },
@@ -463,10 +505,10 @@ const ALL_PROJECTS: Project[] = [
     featured: {
       category: "Web3 Architecture & Coordination",
       summary:
-        "A proof-of-concept prediction market: Chainlink Automation triggers resolution, Chainlink Price Feeds supply the price, and VRF picks ERC-1155 reward ids. The deployed contract has a known payout bug and an oracle-timing weakness, both documented under Known limitations.",
+        "A proof-of-concept prediction market on Ethereum Sepolia: Chainlink Automation triggers resolution, Chainlink Price Feeds supply the price, and VRF picks ERC-1155 reward ids. The deployed contract has a known payout bug and an oracle-timing weakness, both documented under Known limitations.",
       bullets: [
-        "**Automation-driven resolution** — **Chainlink Automation** calls **performUpkeep** so eligible rounds move without a human operator clicking resolve.",
-        "**Verifiable inputs** — **Chainlink Price Feeds** for settlement prices and **Chainlink VRF v2.5** for unpredictable **ERC-1155** reward ids.",
+        "**Automation-driven resolution:** **Chainlink Automation** calls **performUpkeep** so eligible rounds move without a human operator clicking resolve.",
+        "**Verifiable inputs:** **Chainlink Price Feeds** for settlement prices and **Chainlink VRF v2.5** for unpredictable **ERC-1155** reward ids.",
       ],
     },
 
@@ -480,14 +522,37 @@ const ALL_PROJECTS: Project[] = [
     slug: "forge",
     languages: ["TypeScript", "Solidity"],
     constructionPeriod: "Nov 2025",
+    testnet: true,
+    mediaAlt: {
+      "/projects/forge/images/forge-cover.webp":
+        "Forge landing page above the token collection: Iron Ore, Elemental Essence, Crystal Shards",
+      "/projects/forge/images/forge-forge.png":
+        "Forge: forging a composite token, with the MetaMask request",
+      "/projects/forge/images/forge-landing.png":
+        "Forge landing page with the Rules and Play buttons",
+      "/projects/forge/images/forge-mint.png":
+        "Forge token collection with balances, the mint buttons in cooldown, and the Trade, Burn and Forge buttons",
+      "/projects/forge/videos/forge-mobile-mint.mp4":
+        "Forge screen recording: minting tokens on a phone",
+      "/projects/forge/videos/forge-desktop-mint-01.mp4":
+        "Forge screen recording: connecting a wallet and minting base tokens",
+      "/projects/forge/videos/forge-desktop-trade-02.mp4":
+        "Forge screen recording: trading tokens",
+      "/projects/forge/videos/forge-desktop-forge-03.mp4":
+        "Forge screen recording: forging a composite token from its parts",
+      "/projects/forge/videos/forge-desktop-burn-04.mp4":
+        "Forge screen recording: burning a composite token",
+    },
     title: {
       h1: "Forge",
       h2: "ERC-1155 Token-Composition",
       short: "Atomic ERC-1155 Crafting",
+      meta: "Atomic ERC-1155 Crafting",
     },
     description: {
       short:
-        "ERC-1155 crafting case study — burn-then-mint for composites in one call, a rules contract that owns the token ledger, and 38 Foundry tests (Next.js + wagmi).",
+        "ERC-1155 crafting case study on Ethereum Sepolia: burn-then-mint for composites in one call, a rules contract that owns the token ledger, and 38 Foundry tests (Next.js + TypeScript + wagmi).",
+      meta: "ERC-1155 crafting on Ethereum Sepolia: composites burn their parts and mint in one call, a rules contract owns the token ledger, and 38 Foundry tests.",
       problem:
         "ERC-1155 crafting loops need supply rules users cannot route around: inputs burned and outputs minted together, and no way to mint or burn outside the recipes.",
       solution:
@@ -495,7 +560,7 @@ const ALL_PROJECTS: Project[] = [
       overview: `
       Forge is an experiment in keeping composition rules and supply mutations honest on **ERC-1155**. The ledger (**FToken**) stays supply-focused; the rules (**Forge**) encode cooldowns, recipes, trade constraints, and burn permissions. Every supply change routes through **Forge**, which is the immutable owner of **FToken** after deploy.
       For forged token IDs 3–6, **Forge.mint** calls **burnBatch** then **mint** in one call. Because **FToken** has no public mint or burn, users cannot mint or burn outside these recipes. Basic mints (0–2) are cooldown-gated; the **Next.js** UI listens to **Forge** events over **Alchemy WebSockets** with **wagmi** and invalidates **TanStack Query** keys instead of polling.
-      The same split between rules and balances shows up in other domains (crafting loops, inventory-like state machines, enforced burn-mint flows) — spelled out under transferable patterns below rather than as product claims here.
+      The same split between rules and balances shows up in other domains (crafting loops, inventory-like state machines, enforced burn-mint flows), spelled out under transferable patterns below rather than as product claims here.
       `,
     },
 
@@ -542,32 +607,32 @@ const ALL_PROJECTS: Project[] = [
     Event-driven UI updates required **TanStack Query** keys per token ID, so a **Forge** event invalidates only the balances for the IDs it touched.
   `,
     outcome: `
-    Forge on **Sepolia** shows atomic **ERC-1155** composition with verified contracts and a small single-page **Next.js** client — a focused case study, not a shipped game economy.
+    Forge on **Sepolia** shows atomic **ERC-1155** composition with verified contracts and a small single-page **Next.js** and **TypeScript** client: a focused case study, not a shipped game economy.
   `,
     outcomeMetrics: [
       "**Tests:** 38 Foundry unit tests; `forge coverage` reports 100% of lines (95/95), statements, branches (21/21) and functions across Forge.sol, FToken.sol and the deploy scripts",
       "**Sepolia addresses:** [Forge](https://sepolia.etherscan.io/address/0x7d8A16168D337B2241fCbA1cc5bd196479DF1F0C#code) · [FToken](https://sepolia.etherscan.io/address/0xa6D68eDA0993364481C2c5DA8d6cd43e03f592bA#code)",
-      "**Deployment:** Sepolia — Forge & FToken verified on Etherscan",
+      "**Deployment:** Sepolia, Forge & FToken verified on Etherscan",
       "**Architecture:** Forge is immutable owner of FToken; only Forge mutates supply; forged IDs use burnBatch + mint in one tx",
     ],
     transferablePatterns:
       "DeFi-style position composition, supply-chain traceability metaphors, on-chain cooldowns as simple rate limits, **ERC-1155** batch operations for atomic multi-token updates.",
 
     limitations: [
-      "**Admin can stop basic mints** — `setCoolDownDelay` has no bounds and the owner is a single EOA: a huge value overflows the timer so every basic mint reverts, and 0 turns the cooldown off.",
-      "**Recipes are hard-coded** — the maximum token ID is a constructor parameter while recipes stop at 6; a deploy with a higher maximum would let ID 7 mint for free (the live deploy uses 6).",
-      "**Trade rules** — `trade` does not bound-check the ID to burn and allows basic-to-basic swaps with no cooldown.",
-      "**UI cooldown is local** — the countdown starts from the browser clock and never reads `userCoolDownTimer`, so after a refresh it can show ready while the chain still reverts.",
-      "**Event filtering** — the event watchers do not filter by user and read only the first log, so another user's event triggers a refetch and a multi-log batch is only partly handled.",
-      "**Single network** — Sepolia deployment for learning; no mainnet or multi-chain story in this repo.",
-      "**Cooldown model** — One global delay for basic mints (IDs 0–2); no per-token issuance curves yet.",
-      "**Marketplace** — No secondary marketplace integration beyond the on-chain **trade** helper into basics.",
+      "**Admin can stop basic mints:** `setCoolDownDelay` has no bounds and the owner is a single EOA: a huge value overflows the timer so every basic mint reverts, and 0 turns the cooldown off.",
+      "**Recipes are hard-coded:** the maximum token ID is a constructor parameter while recipes stop at 6; a deploy with a higher maximum would let ID 7 mint for free (the live deploy uses 6).",
+      "**Trade rules:** `trade` does not bound-check the ID to burn and allows basic-to-basic swaps with no cooldown.",
+      "**UI cooldown is local:** the countdown starts from the browser clock and never reads `userCoolDownTimer`, so after a refresh it can show ready while the chain still reverts.",
+      "**Event filtering:** the event watchers do not filter by user and read only the first log, so another user's event triggers a refetch and a multi-log batch is only partly handled.",
+      "**Single network:** Sepolia deployment for learning; no mainnet or multi-chain story in this repo.",
+      "**Cooldown model:** One global delay for basic mints (IDs 0–2); no per-token issuance curves yet.",
+      "**Marketplace:** No secondary marketplace integration beyond the on-chain **trade** helper into basics.",
     ],
     roadmap: [
-      "**L2 comparison** — Deploy the same **Forge**/**FToken** pattern to an L2 testnet and compare gas on **burnBatch** + **mint** paths vs Sepolia.",
-      "**Bounded admin** — Cap `setCoolDownDelay` and derive recipes from `I_MAX_TOKEN_ID` (or fix it at 6).",
-      "**Progressive cooldowns** — Per-id or tiered cooldown tuning instead of a single mapping.",
-      "**Marketplace hooks** — Pair the contracts with standard **ERC-1155** marketplace flows.",
+      "**L2 comparison:** Deploy the same **Forge**/**FToken** pattern to an L2 testnet and compare gas on **burnBatch** + **mint** paths vs Sepolia.",
+      "**Bounded admin:** Cap `setCoolDownDelay` and derive recipes from `I_MAX_TOKEN_ID` (or fix it at 6).",
+      "**Progressive cooldowns:** Per-id or tiered cooldown tuning instead of a single mapping.",
+      "**Marketplace hooks:** Pair the contracts with standard **ERC-1155** marketplace flows.",
     ],
 
     stack: {
@@ -660,11 +725,11 @@ const ALL_PROJECTS: Project[] = [
       category: "Smart Contract Patterns & Testing",
       subtitle: "Sepolia",
       summary:
-        "An experiment in ERC-1155 crafting rules: the ledger (FToken) handles balances while the rules contract (Forge) encodes recipes, cooldowns, and burn-then-mint in one call — with 38 Foundry tests.",
+        "An experiment in ERC-1155 crafting rules: the ledger (FToken) handles balances while the rules contract (Forge) encodes recipes, cooldowns, and burn-then-mint in one call, with 38 Foundry tests.",
       bullets: [
-        "**Atomic forging** — Composite tokens (IDs 3–6) are created by burning their inputs and minting the result in a single transaction (**burnBatch** + **mint**), one wallet confirmation.",
-        "**Factory-owned ledger** — **Forge** deploys **FToken** (ERC-1155) in its constructor and is its immutable owner, so users cannot mint or burn outside the recipes and ownership can never change.",
-        "**Foundry tests** — 38 unit tests through the real deploy script, asserting exact custom errors and events; contracts verified on Sepolia.",
+        "**Atomic forging:** Composite tokens (IDs 3–6) are created by burning their inputs and minting the result in a single transaction (**burnBatch** + **mint**), one wallet confirmation.",
+        "**Factory-owned ledger:** **Forge** deploys **FToken** (ERC-1155) in its constructor and is its immutable owner, so users cannot mint or burn outside the recipes and ownership can never change.",
+        "**Foundry tests:** 38 unit tests through the real deploy script, asserting exact custom errors and events; contracts verified on Sepolia.",
       ],
     },
 
@@ -678,15 +743,33 @@ const ALL_PROJECTS: Project[] = [
     slug: "gavl",
     languages: ["TypeScript"],
     constructionPeriod: "Sep–Nov 2025",
+    mediaAlt: {
+      "/projects/gavl/images/gavl-table-flat.webp":
+        "GavL dashboard: auction, bid and user counts above the auctions table",
+      "/projects/gavl/images/gavl-landing.png":
+        "GavL landing page with the Browse Auctions and Create Auction buttons",
+      "/projects/gavl/videos/gavl-create-auctions.mp4":
+        "GavL screen recording: creating an auction",
+      "/projects/gavl/videos/gavl-bid-2-users.mp4":
+        "GavL screen recording: a buyer places the first bid and the seller is notified live",
+      "/projects/gavl/videos/gavl-bid-3-users.mp4":
+        "GavL screen recording: a second buyer outbids the first, and each is told live whether they hold the highest bid",
+      "/projects/gavl/videos/gavl-auction-won-notifications.mp4":
+        "GavL screen recording: the auction closes and the winner is notified",
+      "/projects/gavl/videos/gavl-stripe-flow.mp4":
+        "GavL screen recording: the winner pays through Stripe Checkout in test mode",
+    },
     title: {
       h1: "GavL — Next Auctions",
       h2: "Bidding · Stripe Settlement · Postgres Triggers · Realtime Notifications",
       short: "Auctions with Supabase and Stripe",
+      meta: "Supabase and Stripe",
     },
 
     description: {
       short:
-        "Full-stack auction case study — Postgres triggers that track the highest bid and send per-user Realtime notifications, RLS, a scheduled Edge Function that closes auctions, and Stripe (Next.js, Supabase, TypeScript). Known bid-integrity gaps documented below.",
+        "Full-stack auction case study: Postgres triggers that track the highest bid and send per-user Realtime notifications, RLS, a scheduled Edge Function that closes auctions, and Stripe (Next.js, TypeScript, Supabase). Known bid-integrity gaps, listed under Known limitations.",
+      meta: "Next.js, TypeScript and Supabase auctions: triggers track the top bid, Realtime notifies each user, an Edge Function closes them. Known bid-integrity gaps.",
       problem:
         "Auction platforms need bidding, automatic closure at the deadline, notifications to the people involved, and payment settlement without exposing privileged database access to the browser.",
       solution:
@@ -737,7 +820,7 @@ const ALL_PROJECTS: Project[] = [
     ],
     challenges: `
         Designing a bidding flow that stayed understandable while triggers, the scheduled Edge Function and **Stripe** webhooks all touched related rows.
-        **RLS** had to protect normal clients while the webhook used a **service-role** client safely — no privileged paths exposed to the browser.
+        **RLS** had to protect normal clients while the webhook used a **service-role** client safely, with no privileged paths exposed to the browser.
         Keeping notifications, auction state and payment flags aligned: the payment trigger fires only when paid_at goes from NULL to set, so a webhook retry does not notify twice.
     `,
 
@@ -748,23 +831,23 @@ const ALL_PROJECTS: Project[] = [
     outcomeMetrics: [
       "**Live demo:** next-auctions.vercel.app",
       "**i18n:** French / English / German (Lingui)",
-      "**Architecture:** ports and adapters — services behind repository interfaces; URL-driven filters via nuqs; 66 Jest unit tests in CI",
+      "**Architecture:** ports and adapters, services behind repository interfaces; URL-driven filters via nuqs; 66 Jest unit tests in CI",
       "**Automation:** pg_cron calls the close-auctions Edge Function every 5 minutes; signature-verified Stripe webhook → server-only service-role write",
     ],
     transferablePatterns:
       "Payments + webhooks, workflow rules in Postgres triggers and RLS, per-user notification channels, and scheduled lifecycle jobs.",
 
     limitations: [
-      "**Known bugs, bid integrity** — the server does not check that a bid beats the current highest (only the form does); RLS lets bidders edit or delete their own bids while an auction is open; owners can bid on their own auctions; bids are accepted between **endAt** and the next scheduled close, up to 5 minutes later; and the highest-bid trigger reads `MAX` without a lock, so two near-simultaneous bids can store a stale highest bid. The fix is a `place_bid` RPC that locks the auction row and checks amount and deadline, with no update or delete on bids.",
-      "**Payment checks are UI-only** — creating a checkout session does not check on the server that the caller is the winner or that the auction is closed and unpaid; the webhook then trusts the auction ID in the session metadata.",
+      "**Known bugs, bid integrity:** the server does not check that a bid beats the current highest (only the form does); RLS lets bidders edit or delete their own bids while an auction is open; owners can bid on their own auctions; bids are accepted between **endAt** and the next scheduled close, up to 5 minutes later; and the highest-bid trigger reads `MAX` without a lock, so two near-simultaneous bids can store a stale highest bid. The fix is a `place_bid` RPC that locks the auction row and checks amount and deadline, with no update or delete on bids.",
+      "**Payment checks are UI-only:** creating a checkout session does not check on the server that the caller is the winner or that the auction is closed and unpaid; the webhook then trusts the auction ID in the session metadata.",
       "**Webhook retries** are not deduplicated by `event.id`; a retry rewrites `paidAt`, but the payment notification still fires once.",
-      "**Testing depth** — 66 **Jest** tests cover services and mappers with mocked repositories; triggers, RLS, the webhook, the Edge Function and the server actions are untested, and there is no end-to-end browser harness yet.",
-      "**Service role** — the Stripe webhook and the Edge Function bypass **RLS** with a server-only key. One server action that writes through it has no auth check of its own; today only the webhook route imports it.",
-      "**Closing cadence** — the pg_cron job runs every 5 minutes, so an auction can stay open up to 5 minutes past **endAt**.",
+      "**Testing depth:** 66 **Jest** tests cover services and mappers with mocked repositories; triggers, RLS, the webhook, the Edge Function and the server actions are untested, and there is no end-to-end browser harness yet.",
+      "**Service role:** the Stripe webhook and the Edge Function bypass **RLS** with a server-only key. One server action that writes through it has no auth check of its own; today only the webhook route imports it.",
+      "**Closing cadence:** the pg_cron job runs every 5 minutes, so an auction can stay open up to 5 minutes past **endAt**.",
     ],
     roadmap: [
-      "**Cypress E2E** — Cover login, bidding, closure, and Stripe test-mode flows in a browser.",
-      "**Admin dashboards** — Richer operational views for support-style tasks.",
+      "**Cypress E2E:** Cover login, bidding, closure, and Stripe test-mode flows in a browser.",
+      "**Admin dashboards:** Richer operational views for support-style tasks.",
     ],
 
     stack: {
@@ -809,7 +892,7 @@ const ALL_PROJECTS: Project[] = [
         {
           key: "Internationalization",
           description:
-            "**Lingui** — French / English / German with locale-aware routes.",
+            "**Lingui:** French / English / German with locale-aware routes.",
         },
         {
           key: "File Uploads",
@@ -863,9 +946,9 @@ const ALL_PROJECTS: Project[] = [
       summary:
         "A learning build for full-stack auction flows: Postgres triggers that track the highest bid and write notifications sent over private Supabase Realtime channels, RLS, scheduled closure via an Edge Function, and Stripe settlement through a signature-verified webhook.",
       bullets: [
-        "**Stripe settlement** — a signature-verified **Stripe** webhook records payment through a server-only **Supabase** service role; the payment notification fires once.",
-        "**Postgres-native workflow** — triggers track the highest bid and write notifications, pushed to each user over **Supabase Realtime**; a scheduled **close-auctions Edge Function** closes due auctions.",
-        "**i18n + layering** — **French**, **English**, and **German** via **Lingui**; services behind repository interfaces with **Jest** unit tests in CI.",
+        "**Stripe settlement:** a signature-verified **Stripe** webhook records payment through a server-only **Supabase** service role; the payment notification fires once.",
+        "**Postgres-native workflow:** triggers track the highest bid and write notifications, pushed to each user over **Supabase Realtime**; a scheduled **close-auctions Edge Function** closes due auctions.",
+        "**i18n + layering:** **French**, **English**, and **German** via **Lingui**; services behind repository interfaces with **Jest** unit tests in CI.",
       ],
     },
 

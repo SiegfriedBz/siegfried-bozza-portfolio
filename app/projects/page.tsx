@@ -6,7 +6,7 @@ import { Projects } from "../_components/projects";
 
 const PROJECTS_TITLE = `Projects | ${SITE_NAME}`;
 const PROJECTS_DESCRIPTION =
-  "Projects I've built: LabsTrail (DeSci ratings), Wallet Watcher (custody backend), BioVerify (agentic peer review), Bet2Gether, Forge and GavL.";
+  "Personal projects on testnets: LabsTrail (DeSci), Wallet Watcher (custody), BioVerify (agentic peer review), Bet2Gether, Forge. Plus GavL, an auction app.";
 
 export const metadata: Metadata = {
   title: PROJECTS_TITLE,
@@ -40,7 +40,8 @@ export default function Page() {
           Projects
         </h1>
         <p className="text-muted-foreground">
-          End-to-end builds, each with its code, tests and known limitations.
+          Personal end-to-end builds, the Web3 ones on testnets, each with its
+          code, tests and known limitations.
         </p>
       </div>
       <Projects />

@@ -22,9 +22,14 @@ export const Projects: FC<Props> = ({ heading }) => {
         </h2>
       ) : null}
       <ul className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-8">
-        {PROJECTS.map((p) => (
+        {PROJECTS.map((p, index) => (
           <li key={p.slug}>
-            <ProjectCard project={p} titleAs={heading ? "h3" : "h2"} />
+            <ProjectCard
+              project={p}
+              titleAs={heading ? "h3" : "h2"}
+              // On /projects the first card is above the fold; on the landing page the hero is.
+              eagerImage={!heading && index === 0}
+            />
           </li>
         ))}
       </ul>

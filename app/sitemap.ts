@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const articleRoutes: MetadataRoute.Sitemap = ARTICLES.map((a) => ({
     url: `${base}${a.href}`,
-    lastModified: a.date,
+    lastModified: a.updated ?? a.date,
   }));
 
   return [...staticRoutes, ...projectRoutes, ...articleRoutes];

@@ -27,7 +27,12 @@ export const BookCallBadge: FC = () => {
           className="bg-transparent rounded-full translate-x-1 cursor-pointer"
           asChild
         >
-          <a href={calendly} target="_blank" rel="noopener noreferrer">
+          <a
+            href={calendly}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Book a call"
+          >
             <ChevronRightIcon className="size-4 font-extrabold group-hover:text-accent-blue" />
           </a>
         </Button>

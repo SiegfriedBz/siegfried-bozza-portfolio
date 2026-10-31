@@ -1,11 +1,10 @@
+import { ExternalLinkIcon } from "lucide-react";
 import { RichText } from "@/app/_components/rich-text";
 import { TypographyH2 } from "@/app/_components/typography/h2";
 import { TypographyH3 } from "@/app/_components/typography/h3";
 import { TypographyH5 } from "@/app/_components/typography/h5";
 import { EDUCATION } from "@/app/_constants/education";
 import { ICONS } from "@/app/_constants/icons";
-import { Badge } from "@/components/ui/badge";
-import { ExternalLinkIcon } from "lucide-react";
 
 const EDUCATION_SECTIONS = [
   { section: "software" as const, label: "Software & Web3" },
@@ -30,7 +29,6 @@ export const Education = () => {
               <ul className="flex flex-col gap-y-8">
                 {entries.map((ed) => {
                   const { id, title, location, description, year, link } = ed;
-                  const publications = ed.publications ?? [];
 
                   return (
                     <li key={id} className="space-y-2">
@@ -54,26 +52,6 @@ export const Education = () => {
                         <TypographyH5>
                           <RichText text={description} />
                         </TypographyH5>
-
-                        {publications.length > 0 ? (
-                          <ul className="mt-2 flex flex-wrap gap-2 list-none ps-0">
-                            {publications.map((pub) => (
-                              <li key={pub.href}>
-                                <Badge variant="outline" asChild>
-                                  <a
-                                    href={pub.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-xs font-medium text-accent-blue hover:underline"
-                                  >
-                                    {pub.label}
-                                    <ExternalLinkIcon className="ms-1 inline size-3" />
-                                  </a>
-                                </Badge>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : null}
 
                         {link?.href?.trim()
                           ? (() => {

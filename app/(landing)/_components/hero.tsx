@@ -12,6 +12,7 @@ import { PROFILE_LINKS } from "@/app/_constants/links";
 import {
   AVAILABILITY,
   CORE_STACK,
+  DAY_JOB,
   PITCH,
   ROLE,
 } from "@/app/_lib/site-metadata";
@@ -39,27 +40,32 @@ export const Hero: FC<Props> = ({ proof }) => {
       <LightGlow className="-left-1/4 right-1/4" />
 
       <div className="relative z-10 flex flex-col gap-6">
-        <p className="font-mono text-sm text-accent-blue">Siegfried Bozza</p>
-
-        <h1 className="text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
-          {/* Real spaces between the inline-block words, so the H1 text reads
-              "Full-Stack Web3 Engineer" to crawlers and screen readers. */}
-          {ROLE.split(" ").map((word, index, all) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: static words
-            <Fragment key={index}>
-              <span
-                className="hero-word"
-                style={{ "--i": index } as CSSProperties}
-              >
-                {word}
-              </span>
-              {index < all.length - 1 ? " " : null}
-            </Fragment>
-          ))}
+        {/* The name and the role form one H1 (the query recruiters type is the name),
+            styled as before: the name small above, the role large below. */}
+        <h1 className="flex flex-col gap-6">
+          <span className="font-mono text-sm text-accent-blue">
+            Siegfried Bozza
+          </span>{" "}
+          <span className="text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl">
+            {/* Real spaces between the inline-block words, so the role reads
+                "Full-Stack Web3 Engineer" to crawlers and screen readers. */}
+            {ROLE.split(" ").map((word, index, all) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: static words
+              <Fragment key={index}>
+                <span
+                  className="hero-word"
+                  style={{ "--i": index } as CSSProperties}
+                >
+                  {word}
+                </span>
+                {index < all.length - 1 ? " " : null}
+              </Fragment>
+            ))}
+          </span>
         </h1>
 
         <p className="max-w-[58ch] text-pretty text-lg leading-relaxed text-foreground/80">
-          {PITCH}
+          {DAY_JOB} {PITCH}
         </p>
 
         <ul className="flex flex-wrap gap-2" aria-label="Core stack">
@@ -78,7 +84,8 @@ export const Hero: FC<Props> = ({ proof }) => {
           style={{ "--delay": "200ms" } as CSSProperties}
         >
           <div className="flex flex-wrap items-center gap-3">
-            <Button asChild size="lg">
+            {/* 44 px tap targets on phones (size lg is 40 px). */}
+            <Button asChild size="lg" className="max-sm:h-11">
               <a
                 href={PROFILE_LINKS.calendly}
                 target="_blank"
@@ -88,13 +95,13 @@ export const Hero: FC<Props> = ({ proof }) => {
                 Book a call
               </a>
             </Button>
-            <Button asChild size="lg" variant="outline">
+            <Button asChild size="lg" variant="outline" className="max-sm:h-11">
               <Link href="/about">
                 <SiegAvatar className="size-5" alt="" />
                 About me
               </Link>
             </Button>
-            <Button asChild size="lg" variant="ghost">
+            <Button asChild size="lg" variant="outline" className="max-sm:h-11">
               <a href={CV_HREF} target="_blank" rel="noopener noreferrer">
                 <FileDownIcon className="size-4" />
                 CV
@@ -130,7 +137,7 @@ export const Hero: FC<Props> = ({ proof }) => {
                     <p className="text-sm leading-snug text-muted-foreground">
                       {p.pitch}
                     </p>
-                    <p className="font-mono text-xs text-muted-foreground/80">
+                    <p className="font-mono text-xs text-muted-foreground">
                       {p.period}
                     </p>
                   </div>

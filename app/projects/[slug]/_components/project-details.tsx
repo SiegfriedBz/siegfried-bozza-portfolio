@@ -38,6 +38,7 @@ export const ProjectDetails: FC<Props> = (props) => {
     roadmap,
     diagram,
     constructionPeriod,
+    testnet,
     images,
     videos,
     terminal,
@@ -80,9 +81,16 @@ export const ProjectDetails: FC<Props> = (props) => {
         <TypographyH1 className="w-full max-w-prose tracking-tight text-balance sm:w-auto">
           {title.h1}
         </TypographyH1>
-        <Badge className="w-fit shrink-0 font-normal" variant="outline">
-          Built {constructionPeriod}
-        </Badge>
+        <div className="flex shrink-0 items-center gap-2">
+          <Badge className="w-fit shrink-0 font-normal" variant="outline">
+            Built {constructionPeriod}
+          </Badge>
+          {testnet ? (
+            <Badge className="w-fit shrink-0 font-normal" variant="outline">
+              Testnet
+            </Badge>
+          ) : null}
+        </div>
       </div>
       <TypographyH2 className="-mt-2 text-center text-xl font-medium tracking-normal text-balance text-muted-foreground sm:-mt-4 sm:text-2xl">
         {title.h2}
@@ -103,6 +111,7 @@ export const ProjectDetails: FC<Props> = (props) => {
           images={images}
           videos={videos}
           projectName={title.h1}
+          alts={project.mediaAlt}
         />
       ) : terminal ? (
         <div className="aspect-video w-full">
