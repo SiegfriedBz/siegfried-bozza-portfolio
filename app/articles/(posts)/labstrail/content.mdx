@@ -2,8 +2,6 @@ Before software, I spent years as a molecular-biology researcher and published t
 
 LabsTrail publishes life-science and health papers to the OriginTrail Decentralized Knowledge Graph (DKG) and gives each one a rating that anyone can request with a wallet and check against the paper. It is under construction: everything runs on testnets, production has its first published papers and settled ratings, and transparent human review is the next phase. Most of the engineering is off-chain, in a workflow that has to finish a rating correctly when a webhook is lost, a mint is retried, a transaction sticks, or the model answers differently the second time.
 
-Until October 2026 the project was called VeriSci. Another science tool already had that name, so I renamed it; graph and asset names still say `verisci`, for old and new records alike ([ADR 0042](https://github.com/SiegfriedBz/labstrail/blob/main/docs/adr/0042-the-project-is-named-labstrail.md)).
-
 <TLDR>
 
 - LabsTrail rates how completely a life-science paper reports its work. The evidence lives on the OriginTrail DKG, the score on a Base Sepolia contract.
@@ -261,7 +259,7 @@ A misconfigured deployment fails at startup. The checksum rule exists because, g
 
 ## A graph the network kept dormant
 
-Production's first publish stopped after five attempts. OriginTrail's cores declined every mint into its new context graph, `verisci-prod`: a core activates a limited number of graphs it does not host and keeps the rest dormant. The run reported the node as unreachable, so the paper's page blamed LabsTrail's own node. A mint the network still declines on the run's last attempt now stops it as `network-refused`, and the page says the network has not accepted the record yet. A day later the graph was still dormant, so production moved to a newly registered one, `verisci-main-prod`, which minted in its first publish run. Because every write converges, publishing the same PDF again picks up where a stopped run left off ([domain notes](https://github.com/SiegfriedBz/labstrail/blob/main/docs/domain.md)).
+Production's first publish stopped after five attempts. OriginTrail's cores declined every mint into production's new context graph: a core activates a limited number of graphs it does not host and keeps the rest dormant. The run reported the node as unreachable, so the paper's page blamed LabsTrail's own node. A mint the network still declines on the run's last attempt now stops it as `network-refused`, and the page says the network has not accepted the record yet. A day later the graph was still dormant, so production moved to a newly registered one, which minted in its first publish run. Because every write converges, publishing the same PDF again picks up where a stopped run left off ([domain notes](https://github.com/SiegfriedBz/labstrail/blob/main/docs/domain.md)).
 
 ## How it's tested
 

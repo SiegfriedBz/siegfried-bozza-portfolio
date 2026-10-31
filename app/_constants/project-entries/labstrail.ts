@@ -1,4 +1,4 @@
-/** LabsTrail (renamed from VeriSci) — figures verified against main (3df9e7e, v0.8.1) on 2026-10-26; limitations matched to the README's (1c738ba) on 2026-10-30. */
+/** LabsTrail — figures verified against main (3df9e7e, v0.8.1) on 2026-10-26; limitations matched to the README's (1c738ba) on 2026-10-30. */
 import { STACK } from "@/app/_constants/stack";
 import type { Project } from "@/app/_types/project";
 
@@ -25,7 +25,7 @@ export const labstrailProject: Project = {
     overview: `LabsTrail is a DeSci app under construction that rates how completely a life-science or health paper reports its work, a score it calls **reproducibility readiness**. The first phase, a machine score, runs on testnets, and production already has published papers and settled ratings. Human review, with reviewers drawn by **Chainlink VRF**, comes next.
 The rating's evidence (rationale, kinds of study, every check with its quote) lives in a Knowledge Asset on the **OriginTrail DKG**; the score and which asset counts live on the **RatingController** contract on **Base Sepolia**. The contract is never ahead of the DKG, and the UI flags any gap between them.
 Most of the engineering is off-chain. Chain events arrive through an **HMAC**-verified **Alchemy Notify** webhook, a cron reconciler restarts stuck requests from the contract's own pending set, every store, mint, fulfil and cancel reads state before writing, and a single serialized **Inngest** function sends every oracle transaction.
-The project is a rebuild of an earlier prototype, desci-rating-dapp, and its 36 ADRs start from what that prototype taught. It was called VeriSci until October 2026.`,
+The project is a rebuild of an earlier prototype, desci-rating-dapp, and its 36 ADRs start from what that prototype taught.`,
   },
 
   features: [
