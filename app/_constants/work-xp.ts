@@ -24,7 +24,7 @@ export const WORK_EXPERIENCE: WorkExperienceEntry[] = [
     to: "Present",
     section: "software",
     description: [
-      "**Product features end to end** in a **Next.js** (App Router, Server Actions) + **Supabase** monorepo (pnpm, Turborepo): an HR process builder, a training-management module (catalog, sessions, approvals, budgets) and HR dashboards with KPIs.",
+      "**Product features end to end** in a **Next.js**, **TypeScript** and **Supabase** monorepo (App Router, Server Actions, pnpm, Turborepo): an HR process builder, a training-management module (catalog, sessions, approvals, budgets) and HR dashboards with KPIs.",
       "**Postgres and Supabase:** SQL migrations, row-level security policies, RPC functions, triggers, **pg_cron** jobs, Realtime notifications, and Deno Edge Functions for ETL.",
       "**Architecture:** a hexagonal, event-driven core (commands, queries, handlers, repositories, domain events), with CQRS on top of Supabase.",
       "**Quality:** **Vitest** unit and integration tests, **Cypress** end-to-end tests, GitHub Actions CI, Biome, and conventional commits with semantic-release. Role-based permissions and FR/EN i18n (**Lingui**).",
@@ -40,7 +40,7 @@ export const WORK_EXPERIENCE: WorkExperienceEntry[] = [
     to: "08/2024",
     section: "software",
     description: [
-      "Studied full-stack and Web3 development while travelling, building my own **React/Next.js** projects with **Tailwind CSS**, **shadcn/ui**, **MongoDB** and **Jest** tests.",
+      "Studied full-stack and Web3 development while travelling, building my own **React**, **Next.js** and **TypeScript** projects with **Tailwind CSS**, **shadcn/ui**, **MongoDB** and **Jest** tests.",
       "Contributed front-end features to [DeXter-on-Radix](https://github.com/DeXter-on-Radix/website), an open-source order-book DEX.",
     ],
   },
