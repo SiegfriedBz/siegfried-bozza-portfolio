@@ -5,9 +5,9 @@ import type { ComponentProps, FC } from "react";
 import { LuGithub } from "react-icons/lu";
 import { posterFor } from "@/app/_components/autoplay-video";
 import { ProjectLinks } from "@/app/_components/project-links";
-import { getStackRecord } from "@/app/_components/stack-badge";
+import { getStackRecord } from "@/app/_components/stack-tile";
 import { TerminalCover } from "@/app/_components/terminal-cover";
-import type { STACK } from "@/app/_constants/stack";
+import { type STACK, sortStack } from "@/app/_constants/stack";
 import type { Project } from "@/app/_types/project";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -41,7 +41,7 @@ export const ProjectCard: FC<Props> = (props) => {
   const [img] = images;
   const [video] = videos;
 
-  const chips = stack.all
+  const chips = sortStack(stack.all)
     .map((s) => getStackRecord(s as STACK)?.name)
     .filter((name): name is string => Boolean(name));
   const extra = chips.length - MAX_CHIPS;

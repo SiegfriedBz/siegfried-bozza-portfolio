@@ -1,44 +1,61 @@
+/**
+ * Declaration order is the display order on cards, project pages and About: the core stack
+ * first (CORE_STACK in site-metadata.ts), then what a project is about, then libraries, then
+ * testing.
+ */
 export enum STACK {
-  REACT = "REACT",
+  // core stack
   NEXT = "NEXT",
   TYPESCRIPT = "TYPESCRIPT",
-  RHF = "RHF",
-  TANSTACK_TABLE = "TANSTACK_TABLE",
-  TANSTACK_QUERY = "TANSTACK_QUERY",
-  ZOD = "ZOD",
-  SHADCN = "SHADCN",
-  TAILWIND = "TAILWIND",
-  LINGUI = "LINGUI",
-  NUQS = "NUQS",
-  RECHARTS = "RECHARTS",
-  FRAMER_MOTION = "FRAMER_MOTION",
-  SUPABASE = "SUPABASE",
-  STRIPE = "STRIPE",
-  JEST = "JEST",
-  VITEST = "VITEST",
-  CYPRESS = "CYPRESS",
-  INNGEST = "INNGEST",
-  EXA_AI = "EXA_AI",
-  GEMINI = "GEMINI",
-  LANGGRAPH = "LANGGRAPH",
-  DRIZZLE = "DRIZZLE",
-  NEON = "NEON",
-  MONGODB = "MONGODB",
   NODE = "NODE",
-  HONO = "HONO",
-  SQLITE = "SQLITE",
-  UPSTASH = "UPSTASH",
-  // web3 specific
   SOLIDITY = "SOLIDITY",
   FOUNDRY = "FOUNDRY",
-  WAGMI = "WAGMI",
-  VIEM = "VIEM",
-  RAINBOW_KIT = "RAINBOW_KIT",
-  REOWN = "REOWN",
+  // protocols, agents and platforms
   CHAINLINK = "CHAINLINK",
-  OPEN_ZEPPELIN = "OPEN_ZEPPELIN",
-  TENDERLY = "TENDERLY",
-  ALCHEMY = "ALCHEMY",
-  IPFS = "IPFS",
   ORIGINTRAIL = "ORIGINTRAIL",
+  LANGGRAPH = "LANGGRAPH",
+  INNGEST = "INNGEST",
+  SUPABASE = "SUPABASE",
+  STRIPE = "STRIPE",
+  // web3 libraries and infrastructure
+  OPEN_ZEPPELIN = "OPEN_ZEPPELIN",
+  VIEM = "VIEM",
+  WAGMI = "WAGMI",
+  REOWN = "REOWN",
+  RAINBOW_KIT = "RAINBOW_KIT",
+  IPFS = "IPFS",
+  ALCHEMY = "ALCHEMY",
+  TENDERLY = "TENDERLY",
+  // AI
+  GEMINI = "GEMINI",
+  EXA_AI = "EXA_AI",
+  // backend and data
+  HONO = "HONO",
+  DRIZZLE = "DRIZZLE",
+  NEON = "NEON",
+  SQLITE = "SQLITE",
+  UPSTASH = "UPSTASH",
+  MONGODB = "MONGODB",
+  // frontend
+  REACT = "REACT",
+  TANSTACK_QUERY = "TANSTACK_QUERY",
+  TANSTACK_TABLE = "TANSTACK_TABLE",
+  RHF = "RHF",
+  ZOD = "ZOD",
+  NUQS = "NUQS",
+  LINGUI = "LINGUI",
+  RECHARTS = "RECHARTS",
+  SHADCN = "SHADCN",
+  TAILWIND = "TAILWIND",
+  FRAMER_MOTION = "FRAMER_MOTION",
+  // testing
+  VITEST = "VITEST",
+  JEST = "JEST",
+  CYPRESS = "CYPRESS",
 }
+
+const STACK_ORDER: readonly string[] = Object.values(STACK);
+
+/** A copy of `items` in display order. */
+export const sortStack = <T extends string>(items: readonly T[]): T[] =>
+  [...items].sort((a, b) => STACK_ORDER.indexOf(a) - STACK_ORDER.indexOf(b));

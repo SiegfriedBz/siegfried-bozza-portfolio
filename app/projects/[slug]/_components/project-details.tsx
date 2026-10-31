@@ -6,14 +6,13 @@ import { ProjectCarousel } from "@/app/_components/project-carousel";
 import { ProjectLinks } from "@/app/_components/project-links";
 import { RichText } from "@/app/_components/rich-text";
 import { SiegAvatar } from "@/app/_components/sieg-avatar";
-import { StackBadge } from "@/app/_components/stack-badge";
+import { StackTiles } from "@/app/_components/stack-tile";
 import { TerminalCover } from "@/app/_components/terminal-cover";
 import { TypographyH1 } from "@/app/_components/typography/h1";
 import { TypographyH2 } from "@/app/_components/typography/h2";
 import { TypographyH3 } from "@/app/_components/typography/h3";
 import { TypographyP } from "@/app/_components/typography/p";
 import { PROJECTS } from "@/app/_constants/projects";
-import type { STACK } from "@/app/_constants/stack";
 import type { Project } from "@/app/_types/project";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
@@ -184,15 +183,7 @@ export const ProjectDetails: FC<Props> = (props) => {
               </CardDescription>
             </div>
 
-            <ul className="flex flex-wrap gap-2">
-              {stack?.all?.map((s) => {
-                return (
-                  <li key={`${title}-${s}`}>
-                    <StackBadge stack={s as STACK} />
-                  </li>
-                );
-              })}
-            </ul>
+            <StackTiles items={stack?.all ?? []} />
 
             <ul className="pl-4 space-y-2">
               {stack?.main?.map((stack) => {
