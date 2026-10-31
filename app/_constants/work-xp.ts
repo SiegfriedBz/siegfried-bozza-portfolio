@@ -77,19 +77,19 @@ export const WORK_EXPERIENCE: WorkExperienceEntry[] = [
     to: "2009",
     section: "earlier",
     description: [
-      "Conducted genomic research and co-authored three peer-reviewed studies in J. Neurosci. Res., Fungal Genet. Biol., Dev. Biol.",
+      "Conducted genomic research on neural stem cells and epigenetics, and co-authored three peer-reviewed studies.",
     ],
     references: [
       {
-        label: "Dromard et al. (with Bozza S), J. Neurosci. Res. 2008",
+        label: "J. Neurosci. Res. 2008",
         href: "https://pubmed.ncbi.nlm.nih.gov/18335522/",
       },
       {
-        label: "Tanguay, Bozza & Breuil, Fungal Genet. Biol. 2006",
+        label: "Fungal Genet. Biol. 2006",
         href: "https://pubmed.ncbi.nlm.nih.gov/16859936/",
       },
       {
-        label: "Fisher et al. (with Bozza S), Dev. Biol. 2010",
+        label: "Dev. Biol. 2010",
         href: "https://pubmed.ncbi.nlm.nih.gov/19833123/",
       },
     ],

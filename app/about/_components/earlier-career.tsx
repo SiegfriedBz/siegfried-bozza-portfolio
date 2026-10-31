@@ -66,13 +66,7 @@ export const EarlierCareer = () => {
 
                 {references?.map((ref) => (
                   <li key={ref.href} className="list-none -ms-4 sm:-ms-6">
-                    {/* Citations are long: they wrap on narrow phones instead of running off
-                        the edge (set on the Badge so it overrides its whitespace-nowrap). */}
-                    <Badge
-                      variant="outline"
-                      asChild
-                      className="max-w-full justify-start whitespace-normal rounded-2xl text-left"
-                    >
+                    <Badge variant="outline" asChild>
                       <a
                         href={ref.href}
                         target="_blank"
