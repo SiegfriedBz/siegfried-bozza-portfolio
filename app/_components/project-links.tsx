@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
 import type { LucideIcon } from "lucide-react";
 import Link from "next/link";
 import type { ComponentProps, FC } from "react";
 import type { IconType } from "react-icons/lib";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 
 type Base = {
   href: string;
@@ -19,10 +19,18 @@ type Props = ComponentProps<typeof ButtonGroup> & {
   links: LinkT[];
   /** When true, the verb prefix is always visible. Defaults to false (responsive hide). */
   alwaysShowVerb?: boolean;
+  /** Project name read after each label by screen readers, where cards repeat the same labels. */
+  context?: string;
 };
 
 export const ProjectLinks: FC<Props> = (props) => {
-  const { links = [], className, alwaysShowVerb = false, ...rest } = props;
+  const {
+    links = [],
+    className,
+    alwaysShowVerb = false,
+    context,
+    ...rest
+  } = props;
 
   return (
     <ButtonGroup {...rest} className={className}>
@@ -57,6 +65,7 @@ export const ProjectLinks: FC<Props> = (props) => {
                   </span>
                 ) : null}
                 <span className="font-semibold">{title}</span>
+                {context ? <span className="sr-only"> ({context})</span> : null}
               </span>
               <Icon className="size-5 text-accent-blue group-hover:text-accent-foreground dark:group-hover:text-white transition-colors duration-200" />
             </As>

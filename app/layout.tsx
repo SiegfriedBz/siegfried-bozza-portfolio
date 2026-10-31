@@ -56,8 +56,19 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar />
-          <main className="flex-1">{children}</main>
+          {/* Visible only on keyboard focus, above the fixed navbar (z-999). */}
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-1000 focus:rounded-md focus:bg-background focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:shadow-md focus:outline-2 focus:outline-accent-blue"
+          >
+            Skip to content
+          </a>
+          <header>
+            <Navbar />
+          </header>
+          <main id="main" className="flex-1">
+            {children}
+          </main>
           <Footer />
         </ThemeProvider>
         <Analytics />

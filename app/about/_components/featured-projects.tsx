@@ -81,6 +81,7 @@ export const FeaturedProjects = () => {
                         className="inline-flex items-center gap-1 text-sm font-medium text-accent-blue hover:underline"
                       >
                         View project
+                        <span className="sr-only"> ({project.title.h1})</span>
                         <MoveRightIcon className="size-4" />
                       </Link>
 

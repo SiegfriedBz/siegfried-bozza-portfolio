@@ -12,7 +12,10 @@ import { ToggleThemeButton } from "./toggle-theme-button";
 
 export const Navbar: FC = () => {
   return (
-    <div className="fixed z-999 top-8 left-1/2 -translate-x-1/2 flex gap-8 bg-background rounded-l-full rounded-r-full">
+    <nav
+      aria-label="Main"
+      className="fixed z-999 top-8 left-1/2 -translate-x-1/2 flex gap-8 bg-background rounded-l-full rounded-r-full"
+    >
       <ButtonGroup>
         <Button
           variant="outline"
@@ -56,6 +59,6 @@ export const Navbar: FC = () => {
 
         <ToggleThemeButton />
       </ButtonGroup>
-    </div>
+    </nav>
   );
 };
