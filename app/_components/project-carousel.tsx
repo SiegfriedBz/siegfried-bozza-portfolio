@@ -14,10 +14,12 @@ type Props = {
   videos: string[];
   /** Used for descriptive alt text on each slide. */
   projectName: string;
+  /** What each slide shows, keyed by its path; slides without one get a numbered fallback. */
+  alts?: Record<string, string>;
 };
 
 export const ProjectCarousel: FC<Props> = (props) => {
-  const { images, videos, projectName } = props;
+  const { images, videos, projectName, alts } = props;
 
   const slides = [
     ...images.map((src) => ({ kind: "image" as const, src })),
@@ -42,7 +44,10 @@ export const ProjectCarousel: FC<Props> = (props) => {
                 <Image
                   src={slide.src}
                   fill
-                  alt={`${projectName} — screenshot ${index + 1}`}
+                  alt={
+                    alts?.[slide.src] ??
+                    `${projectName} — screenshot ${index + 1}`
+                  }
                   sizes="(min-width: 1024px) 1024px, 100vw"
                   // The first slide is the page's LCP element (Next 16 deprecates `priority`).
                   loading={index === 0 ? "eager" : "lazy"}
@@ -52,7 +57,10 @@ export const ProjectCarousel: FC<Props> = (props) => {
               ) : (
                 <AutoplayVideo
                   src={slide.src}
-                  label={`${projectName} — screen recording ${index + 1}`}
+                  label={
+                    alts?.[slide.src] ??
+                    `${projectName} — screen recording ${index + 1}`
+                  }
                   className="object-contain"
                 />
               )}

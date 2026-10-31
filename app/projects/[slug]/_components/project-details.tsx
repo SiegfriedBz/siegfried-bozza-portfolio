@@ -111,6 +111,7 @@ export const ProjectDetails: FC<Props> = (props) => {
           images={images}
           videos={videos}
           projectName={title.h1}
+          alts={project.mediaAlt}
         />
       ) : terminal ? (
         <div className="aspect-video w-full">

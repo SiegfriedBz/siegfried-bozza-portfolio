@@ -10,6 +10,10 @@ export const labstrailProject: Project = {
   languages: ["TypeScript", "Solidity"],
   constructionPeriod: "Oct 2026",
   testnet: true,
+  mediaAlt: {
+    "/projects/labstrail/images/labstrail-landing.png":
+      "LabsTrail landing page: publish a life-science paper, with its steps read, saved off-chain, minted on-chain and published",
+  },
   title: {
     h1: "LabsTrail",
     h2: "Open Reproducibility-Readiness Ratings for Life-Science Papers on the OriginTrail DKG and Base",

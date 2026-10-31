@@ -12,15 +12,9 @@ import {
   websiteNode,
 } from "@/app/_lib/json-ld";
 import type { Article } from "@/app/_types/article";
+import { formatDate } from "@/app/articles/_lib/format-date";
 
 type Props = PropsWithChildren<{ article: Article }>;
-
-const formatDate = (iso: string) =>
-  new Date(iso).toLocaleDateString("en-GB", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
 
 /** Header + prose body + footer links shared by every MDX article. */
 export const PostShell: FC<Props> = ({ article, children }) => {
@@ -75,6 +69,17 @@ export const PostShell: FC<Props> = ({ article, children }) => {
           </span>
           <span aria-hidden>·</span>
           <time dateTime={article.date}>{formatDate(article.date)}</time>
+          {article.updated ? (
+            <>
+              <span aria-hidden>·</span>
+              <span>
+                Updated{" "}
+                <time dateTime={article.updated}>
+                  {formatDate(article.updated)}
+                </time>
+              </span>
+            </>
+          ) : null}
           <span aria-hidden>·</span>
           <span>{article.readingMinutes} min read</span>
           {project ? (

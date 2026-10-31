@@ -14,6 +14,8 @@ export type Project = {
   constructionPeriod: string;
   /** Runs on testnets only: a "Testnet" badge sits next to the build window */
   testnet?: boolean;
+  /** What each carousel image or video shows, keyed by its path in `images` / `videos` */
+  mediaAlt?: Record<string, string>;
   title: {
     h1: string;
     h2: string;

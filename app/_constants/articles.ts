@@ -43,7 +43,7 @@ const ALL_ARTICLES: Article[] = [
     href: "/articles/bioverify",
     cover: BIOVERIFY_LINKS.ogImage?.trim() || undefined,
     tags: ["DeSci", "Web3", "Agentic AI", "BioVerify"],
-    readingMinutes: 28,
+    readingMinutes: 24,
     relatedProjectSlug: "bioverify",
   },
 ];
