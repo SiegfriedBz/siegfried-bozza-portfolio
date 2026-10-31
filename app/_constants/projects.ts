@@ -686,7 +686,7 @@ const ALL_PROJECTS: Project[] = [
 
     description: {
       short:
-        "Full-stack auction case study — bidding rules in Postgres triggers and RLS, real-time notifications, a scheduled Edge Function that closes auctions, and Stripe (Next.js, Supabase, TypeScript). Known bid-integrity gaps documented below.",
+        "Full-stack auction case study — Postgres triggers that track the highest bid and send per-user Realtime notifications, RLS, a scheduled Edge Function that closes auctions, and Stripe (Next.js, Supabase, TypeScript). Known bid-integrity gaps documented below.",
       problem:
         "Auction platforms need bidding, automatic closure at the deadline, notifications to the people involved, and payment settlement without exposing privileged database access to the browser.",
       solution:
@@ -861,7 +861,7 @@ const ALL_PROJECTS: Project[] = [
       category: "Full-Stack Web2",
       subtitle: "Sep–Nov 2025",
       summary:
-        "A learning build for full-stack auction flows: bidding rules in Postgres triggers and RLS, real-time notifications over private Supabase Realtime channels, scheduled closure via an Edge Function, and Stripe settlement through a signature-verified webhook.",
+        "A learning build for full-stack auction flows: Postgres triggers that track the highest bid and write notifications sent over private Supabase Realtime channels, RLS, scheduled closure via an Edge Function, and Stripe settlement through a signature-verified webhook.",
       bullets: [
         "**Stripe settlement** — a signature-verified **Stripe** webhook records payment through a server-only **Supabase** service role; the payment notification fires once.",
         "**Postgres-native workflow** — triggers track the highest bid and write notifications, pushed to each user over **Supabase Realtime**; a scheduled **close-auctions Edge Function** closes due auctions.",

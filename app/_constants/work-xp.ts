@@ -41,7 +41,7 @@ export const WORK_EXPERIENCE: WorkExperienceEntry[] = [
     section: "software",
     description: [
       "Studied full-stack and Web3 development while travelling, building my own **React/Next.js** projects with **Tailwind CSS**, **shadcn/ui**, **MongoDB** and **Jest** tests.",
-      "Contributed front-end features to [DeXter-on-Radix](https://github.com/DeXter-on-Radix/website), an open-source order-book DEX: CSV order export, a stats widget, mobile navigation and a DaisyUI v4 upgrade.",
+      "Contributed front-end features to [DeXter-on-Radix](https://github.com/DeXter-on-Radix/website), an open-source order-book DEX.",
     ],
   },
   {

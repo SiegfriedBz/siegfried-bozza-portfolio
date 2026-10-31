@@ -46,7 +46,7 @@ export const SITE_DESCRIPTION_SHORT =
 
 /** Richer copy for Open Graph / Twitter. */
 export const SITE_DESCRIPTION_LONG =
-  "Full-Stack Web3 Engineer working in TypeScript and Solidity, in production since 2024 on a Next.js / Supabase SaaS. Personal projects, on testnets: LabsTrail (open paper ratings on the OriginTrail DKG), Wallet Watcher (a custody backend slice with an append-only ledger, each withdrawal booked from its receipt), BioVerify (agentic DeSci peer review with Chainlink VRF), plus Bet2Gether, Forge and GavL. Open to relocation (Asia-Pacific first) or full-time remote.";
+  "Full-Stack Web3 Engineer, in production since 2024 on a Next.js / TypeScript / Supabase SaaS. Personal Web3 projects, on testnets: LabsTrail (open paper ratings on the OriginTrail DKG; Solidity, Foundry, Inngest, Gemini), Wallet Watcher (a custody backend slice; Node.js, TypeScript, viem, Hono, SQLite), BioVerify (agentic DeSci peer review; Solidity, Foundry, Chainlink VRF, LangGraph, Inngest), Bet2Gether (prediction market; Solidity, Foundry, Chainlink) and Forge (ERC-1155 crafting; Solidity, Foundry). Also GavL, an auction app (Next.js, Supabase, Stripe). Open to relocation (Asia-Pacific first) or full-time remote.";
 
 export const DEFAULT_KEYWORDS = [
   "Siegfried Bozza",
@@ -93,7 +93,7 @@ export const DEFAULT_OG_IMAGES = [
 ];
 
 /** Date the static pages' content last changed (sitemap lastModified). Update with content changes. */
-export const SITE_LAST_UPDATED = "2026-10-30";
+export const SITE_LAST_UPDATED = "2026-10-31";
 
 /** Meta description that fits search snippets: cut at a word boundary, never mid-word. */
 export const toMetaDescription = (text: string, max = 155) => {
