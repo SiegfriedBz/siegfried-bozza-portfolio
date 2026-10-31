@@ -19,10 +19,21 @@ type Props = ComponentProps<typeof Card> & {
   project: Project;
   /** h3 under a section H2 (landing); h2 straight under the page H1 (/projects). */
   titleAs?: "h2" | "h3";
+  /** Load the cover eagerly at high priority: the first card on /projects is the LCP element. */
+  eagerImage?: boolean;
 };
 
 export const ProjectCard: FC<Props> = (props) => {
-  const { project, titleAs: Title = "h3", className, ...rest } = props;
+  const {
+    project,
+    titleAs: Title = "h3",
+    eagerImage = false,
+    className,
+    ...rest
+  } = props;
+  const imageLoading = eagerImage
+    ? ({ loading: "eager", fetchPriority: "high" } as const)
+    : ({ loading: "lazy" } as const);
 
   const { slug, title, description, images, videos, terminal, stack, links } =
     project;
@@ -87,6 +98,7 @@ export const ProjectCard: FC<Props> = (props) => {
             fill
             alt=""
             sizes="(min-width: 1024px) 560px, 100vw"
+            {...imageLoading}
             className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
           />
         ) : terminal ? (
@@ -101,6 +113,7 @@ export const ProjectCard: FC<Props> = (props) => {
             fill
             alt=""
             sizes="(min-width: 1024px) 560px, 100vw"
+            {...imageLoading}
             className="object-cover"
           />
         ) : null}
@@ -142,7 +155,7 @@ export const ProjectCard: FC<Props> = (props) => {
         </ul>
 
         <div className="mt-auto pt-2">
-          <ProjectLinks links={linksTo} />
+          <ProjectLinks links={linksTo} context={title.h1} />
         </div>
       </div>
     </Card>

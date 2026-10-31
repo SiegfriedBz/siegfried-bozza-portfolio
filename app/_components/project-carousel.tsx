@@ -44,7 +44,9 @@ export const ProjectCarousel: FC<Props> = (props) => {
                   fill
                   alt={`${projectName} — screenshot ${index + 1}`}
                   sizes="(min-width: 1024px) 1024px, 100vw"
-                  priority={index === 0}
+                  // The first slide is the page's LCP element (Next 16 deprecates `priority`).
+                  loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : "auto"}
                   className="object-cover"
                 />
               ) : (
