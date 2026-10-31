@@ -439,7 +439,7 @@ const ALL_PROJECTS: Project[] = [
             "Core game logic, payout calculations, VRF integration, and 65 Foundry tests.",
         },
         {
-          key: "Next.js + Wagmi",
+          key: "Next.js + wagmi",
           description:
             "Frontend framework with wallet integration and event-driven data flow.",
         },
@@ -661,7 +661,7 @@ const ALL_PROJECTS: Project[] = [
             "Implements ERC-1155 minting, forging, burning and trading logic, with custom errors carrying context and an indexed event per action; 38 tests.",
         },
         {
-          key: "Next.js + Wagmi",
+          key: "Next.js + wagmi",
           description:
             "Frontend framework with wallet integration, event listeners, and reactive state management.",
         },
@@ -883,11 +883,11 @@ const ALL_PROJECTS: Project[] = [
         },
         {
           key: "UI & Form Handling",
-          description: "Shadcn/UI, React Hook Form, Zod",
+          description: "shadcn/ui, React Hook Form, Zod",
         },
         {
           key: "Filtering & Data Display",
-          description: "Nuqs, TanStack Table, Recharts (payments dashboards)",
+          description: "nuqs, TanStack Table, Recharts (payments dashboards)",
         },
         {
           key: "Internationalization",

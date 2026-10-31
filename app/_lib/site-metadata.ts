@@ -17,6 +17,7 @@ export const PITCH =
 export const DAY_JOB =
   "Full-stack engineer at Prismo.io since 2024, on a Next.js, TypeScript and Supabase SaaS.";
 
+/** Also the first group of the STACK enum (app/_constants/stack.ts), in the same order. */
 export const CORE_STACK = [
   "Next.js",
   "TypeScript",

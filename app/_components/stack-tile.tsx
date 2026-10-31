@@ -12,8 +12,8 @@ export type StackRecord = {
  * Marks: Simple Icons 16.36.0 (CC0). The ones it lacks come from each project's own site or
  * repo, reduced to one colour: Foundry (getfoundry.sh), OriginTrail (origintrail.io), Inngest
  * (inngest.com), viem (viem.sh), Reown (reown.com), RainbowKit, Lingui and nuqs (their repos),
- * Tenderly (its GitHub avatar), Exa (the SVG Logos set). Recharts publishes no mark, so its
- * tile shows a letter. The marks belong to their owners.
+ * Tenderly (its GitHub avatar), Exa (the SVG Logos set). Recharts and Motion have no mark here,
+ * so their tiles show a letter. The marks belong to their owners.
  */
 const stackMap: Record<STACK, StackRecord> = {
   [STACK.NEXT]: { name: "Next.js", icon: "/logos/next.svg" },
@@ -57,11 +57,11 @@ const stackMap: Record<STACK, StackRecord> = {
   [STACK.REACT]: { name: "React", icon: "/logos/react.svg" },
   [STACK.TANSTACK_QUERY]: {
     name: "TanStack Query",
-    icon: "/logos/tanstack-query.svg",
+    icon: "/logos/tanstack.svg",
   },
   [STACK.TANSTACK_TABLE]: {
     name: "TanStack Table",
-    icon: "/logos/tanstack-table.svg",
+    icon: "/logos/tanstack.svg",
   },
   [STACK.RHF]: { name: "React Hook Form", icon: "/logos/react-hook-form.svg" },
   [STACK.ZOD]: { name: "Zod", icon: "/logos/zod.svg" },
@@ -86,7 +86,8 @@ type Props = {
 
 // Soft hyphens between the words of camel-cased names, so narrow tiles break "Open-Zeppelin"
 // rather than mid-word.
-const breakable = (name: string) => name.replace(/([a-z])([A-Z])/g, "$1­$2");
+const breakable = (name: string) =>
+  name.replace(/([a-z])([A-Z])/g, "$1\u00AD$2");
 
 /** One technology in an equal-size tile: its mark (or initial) over its name. */
 export const StackTile: FC<Props> = ({ stack }) => {
@@ -118,11 +119,11 @@ export const StackTile: FC<Props> = ({ stack }) => {
 };
 
 type TilesProps = {
-  items: readonly string[];
+  items: readonly STACK[];
   className?: string;
 };
 
-/** Equal tiles in STACK order: three columns on phones, wider tiles from `sm`. */
+/** Equal tiles in STACK order: two to four columns on phones, wider tiles from `sm`. */
 export const StackTiles: FC<TilesProps> = ({ items, className }) => (
   <ul
     className={cn(
@@ -132,7 +133,7 @@ export const StackTiles: FC<TilesProps> = ({ items, className }) => (
   >
     {sortStack(items).map((item) => (
       <li key={item}>
-        <StackTile stack={item as STACK} />
+        <StackTile stack={item} />
       </li>
     ))}
   </ul>
