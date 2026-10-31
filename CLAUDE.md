@@ -48,8 +48,8 @@ The reviewer agent checks these on every branch:
   numbers.
 - Say what is testnet, early or limited; keep the "Known limitations" sections honest.
   Testnet-only projects set `testnet: true` (the badge on their page); the testnet wording in
-  `site-metadata.ts`, the hero, `/projects` and llms.txt is written by hand, so update it if a
-  project goes to mainnet.
+  `site-metadata.ts`, the hero, About, `/projects` and llms.txt is written by hand, so update it
+  if a project goes to mainnet.
 - Pages agree with each other: About, project pages, articles, README and the CV tell the
   same story (dates, chains, roles).
 - Voice: plain, specific, first person. Avoid AI-writing tells (staged "not X but Y"
