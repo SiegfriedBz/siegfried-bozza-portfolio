@@ -4,7 +4,7 @@
  * Vercel's system variables) they 404 and appear in no list, link, sitemap or llms.txt.
  * Empty this list to publish them.
  */
-const HELD_ARTICLE_SLUGS: readonly string[] = ["labstrail", "wallet-watcher"];
+const HELD_ARTICLE_SLUGS: readonly string[] = ["labstrail"];
 
 // Fails closed: held unless this is clearly a dev server or a Vercel preview.
 const SHOW_HELD =
