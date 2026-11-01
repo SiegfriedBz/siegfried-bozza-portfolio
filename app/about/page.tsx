@@ -9,8 +9,8 @@ import {
 } from "@/app/_lib/json-ld";
 import {
   AVAILABILITY,
-  CORE_STACK,
   DEFAULT_OG_IMAGES,
+  HEADLINE_STACK,
   PERSON_SUMMARY,
   ROLE,
   SITE_NAME,
@@ -32,7 +32,7 @@ import { SelfIntro } from "./_components/self-intro";
 import { WorkXP } from "./_components/work-xp";
 
 const ABOUT_TITLE = `About ${SITE_NAME} | ${ROLE}`;
-const ABOUT_DESCRIPTION = `${ROLE}: Next.js, TypeScript and Supabase at Prismo.io since 2024, Solidity and Foundry projects on testnets. Open to relocation or remote.`;
+const ABOUT_DESCRIPTION = `${ROLE}, in software since 2022: Next.js, TypeScript and Supabase at Prismo.io, Solidity and Foundry on testnets. Open to relocation or remote.`;
 
 export const metadata: Metadata = {
   title: ABOUT_TITLE,
@@ -104,8 +104,7 @@ export default function Page() {
                 <TypographyH2 className="text-center text-muted-foreground sm:text-xl md:text-2xl lg:text-3xl lg:text-left text-balance">
                   <span className="whitespace-nowrap">{ROLE}</span>{" "}
                   <span className="whitespace-nowrap">
-                    <span aria-hidden="true">·</span>{" "}
-                    {CORE_STACK.slice(0, 2).join(" & ")}
+                    <span aria-hidden="true">·</span> {HEADLINE_STACK}
                   </span>
                 </TypographyH2>
               </div>

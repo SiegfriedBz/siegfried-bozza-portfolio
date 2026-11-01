@@ -11,11 +11,14 @@ export const SITE_NAME = "Siegfried Bozza";
 export const ROLE = "Full-Stack Web3 Engineer";
 
 export const PITCH =
-  "On my own time I build Web3 projects on testnets, mostly the off-chain side: contract events projected into Postgres, AI-agent workflows that settle on-chain, and the dApps on top.";
+  "On my own time I build Web3 projects end to end on testnets: Solidity contracts tested with Foundry, contract events projected into Postgres, AI-agent workflows that settle on-chain, and the dApps on top.";
 
 /** The day job, before the pitch in the hero (the CV summary opens the same way). */
 export const DAY_JOB =
-  "Full-stack engineer at Prismo.io since 2024, on a Next.js, TypeScript and Supabase SaaS.";
+  "In software since 2022, now a full-stack engineer at Prismo.io, a B2B SaaS built with Next.js, TypeScript and Supabase.";
+
+/** The About header's stack after the role: the app side and the chain side. */
+export const HEADLINE_STACK = "Next.js, TypeScript & Solidity";
 
 /** Also the first group of the STACK enum (app/_constants/stack.ts), in the same order. */
 export const CORE_STACK = [
@@ -29,7 +32,7 @@ export const CORE_STACK = [
 export const AVAILABILITY = {
   headline: "Open to relocation or full-time remote",
   detail:
-    "Based in France (CET). I'd happily move for the right full-time role, Asia-Pacific most of all. Remote works for me too.",
+    "Based in France (CET). I'd happily move for the right full-time role, Asia-Pacific most of all. Remote works for me too, and I'm flexible with time zones.",
   /** Short forms for the About header. */
   label: "Open to relocation",
   location: "France (CET) · APAC preferred · or remote",
@@ -41,30 +44,30 @@ export const AVAILABILITY = {
  * Keep it factual and current.
  */
 export const PERSON_SUMMARY =
-  "I'm Siegfried Bozza, a Full-Stack Web3 Engineer. I spent fifteen years in molecular-biology research and environmental engineering in France, Canada and Switzerland, then moved to software in 2022, starting at Renuo AG in Zurich. From mid-2023 to mid-2024 I studied full-stack and Web3 development while travelling, partly in Vietnam and Indonesia. Since 2024 I've been a full-stack engineer at Prismo.io, a production SaaS built with Next.js, TypeScript and Supabase. On my own time I build Web3 projects on testnets in TypeScript and Solidity, mostly the backend around the contracts. Two of them, LabsTrail and BioVerify, are decentralized-science (DeSci) apps. I'd relocate for the right full-time role, ideally in Asia-Pacific, and I'm also open to remote work.";
+  "I'm Siegfried Bozza, a Full-Stack Web3 Engineer. I spent fifteen years in molecular-biology research and environmental engineering in France, Canada and Switzerland, then moved to software in 2022, starting at Renuo AG in Zurich. From mid-2023 to mid-2024 I studied full-stack and Web3 development while travelling, partly in Vietnam and Indonesia. Since 2024 I've been a full-stack engineer at Prismo.io, a B2B SaaS built with Next.js, TypeScript and Supabase. On my own time I build Web3 projects on testnets in TypeScript and Solidity, from the contracts to the backend and the app. Two of them, LabsTrail and BioVerify, are decentralized-science (DeSci) apps. I'd relocate for the right full-time role, ideally in Asia-Pacific, and I'm also open to remote work.";
 
 export const DEFAULT_TITLE = `${SITE_NAME} | ${ROLE}`;
 
 /** SERP-friendly (≤160 chars). */
 export const SITE_DESCRIPTION_SHORT =
-  "Full-Stack Web3 Engineer (Next.js, TypeScript, Solidity, Foundry): production SaaS since 2024, Web3 projects on testnets. Relocation (APAC preferred) or remote.";
+  "Full-Stack Web3 Engineer (Next.js, TypeScript, Solidity, Foundry), in software since 2022, Web3 projects on testnets. Relocation (APAC preferred) or remote.";
 
 /** Richer copy for Open Graph / Twitter. */
 export const SITE_DESCRIPTION_LONG =
-  "Full-Stack Web3 Engineer, in production since 2024 on a Next.js / TypeScript / Supabase SaaS. Personal Web3 projects, on testnets: LabsTrail (open paper ratings on the OriginTrail DKG; Solidity, Foundry, Inngest, Gemini), Wallet Watcher (a custody backend slice; Node.js, TypeScript, viem, Hono, SQLite), BioVerify (agentic DeSci peer review; Solidity, Foundry, Chainlink VRF, LangGraph, Inngest), Bet2Gether (prediction market; Solidity, Foundry, Chainlink) and Forge (ERC-1155 crafting; Solidity, Foundry). Also GavL, an auction app (Next.js, TypeScript, Supabase, Stripe). Open to relocation (Asia-Pacific first) or full-time remote.";
+  "Full-Stack Web3 Engineer, in software since 2022, now on a B2B SaaS at Prismo.io (Next.js, TypeScript, Supabase). Personal Web3 projects, on testnets: LabsTrail (open paper ratings on the OriginTrail DKG; Solidity, Foundry, Inngest, Gemini), Wallet Watcher (a custody backend slice; Node.js, TypeScript, viem, Hono, SQLite), BioVerify (agentic DeSci peer review; Solidity, Foundry, Chainlink VRF, LangGraph, Inngest), Bet2Gether (prediction market; Solidity, Foundry, Chainlink) and Forge (ERC-1155 crafting; Solidity, Foundry). Also GavL, an auction app (Next.js, TypeScript, Supabase, Stripe). Open to relocation (Asia-Pacific first) or full-time remote.";
 
 export const DEFAULT_KEYWORDS = [
   "Siegfried Bozza",
   "Full-Stack Web3 Engineer",
   "Web3 backend engineer",
-  "TypeScript",
-  "Solidity",
-  "Node.js",
   "Next.js",
+  "TypeScript",
+  "Node.js",
+  "Solidity",
+  "Foundry",
   "React",
   "viem",
   "wagmi",
-  "Foundry",
   "Chainlink",
   "custody backend",
   "HD wallets",

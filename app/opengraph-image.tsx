@@ -1,5 +1,11 @@
 import { ImageResponse } from "next/og";
-import { AVAILABILITY, CORE_STACK, PITCH, ROLE } from "./_lib/site-metadata";
+import {
+  AVAILABILITY,
+  CORE_STACK,
+  DAY_JOB,
+  PITCH,
+  ROLE,
+} from "./_lib/site-metadata";
 
 export const alt = `Siegfried Bozza, ${ROLE}`;
 export const size = { width: 1200, height: 630 };
@@ -50,18 +56,18 @@ export default function OpenGraphImage() {
           marginTop: 20,
           fontSize: 26,
           color: "#cbd5e1",
-          maxWidth: 1000,
+          maxWidth: 1040,
           lineHeight: 1.4,
         }}
       >
-        {PITCH}
+        {`${DAY_JOB} ${PITCH}`}
       </div>
       <div
         style={{
           marginTop: 40,
           fontSize: 22,
           color: "#94a3b8",
-          maxWidth: 800,
+          maxWidth: 1040,
           lineHeight: 1.4,
         }}
       >

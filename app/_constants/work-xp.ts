@@ -24,7 +24,7 @@ export const WORK_EXPERIENCE: WorkExperienceEntry[] = [
     to: "Present",
     section: "software",
     description: [
-      "**Product features end to end** in a **Next.js**, **TypeScript** and **Supabase** monorepo (App Router, Server Actions, pnpm, Turborepo): an HR process builder, a training-management module (catalog, sessions, approvals, budgets) and HR dashboards with KPIs.",
+      "**Product features end to end** in a **Next.js**, **TypeScript** and **Supabase** monorepo (App Router, Server Actions, pnpm, Turborepo): a process builder, a training-management module (catalog, sessions, approvals, budgets) and dashboards with KPIs.",
       "**Postgres and Supabase:** SQL migrations, row-level security policies, RPC functions, triggers, **pg_cron** jobs, Realtime notifications, and Deno Edge Functions for ETL.",
       "**Architecture:** a hexagonal, event-driven core (commands, queries, handlers, repositories, domain events), with CQRS on top of Supabase.",
       "**Quality:** **Vitest** unit and integration tests, **Cypress** end-to-end tests, GitHub Actions CI, Biome, and conventional commits with semantic-release. Role-based permissions and FR/EN i18n (**Lingui**).",
