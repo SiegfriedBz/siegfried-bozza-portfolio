@@ -15,19 +15,19 @@ export const walletWatcherProject: Project = {
   title: {
     h1: "Wallet Watcher",
     h2: "Custody Backend Slice: HD Wallets, ETH Ledger and Signed Withdrawals",
-    short: "Each Withdrawal Booked Once, From Its Receipt",
+    short: "Withdrawals Booked From Their Receipts",
     meta: "Custody Backend Slice",
   },
   description: {
     short:
-      "Custody backend slice on Sepolia: HD wallets, an append-only ETH ledger, and EIP-1559 withdrawals, each booked once from its receipt.",
+      "Custody backend slice on Sepolia: HD wallets, an append-only ETH ledger, and EIP-1559 withdrawals booked from their receipts.",
     problem:
       "Backends that move money fail in boring ways: a withdrawal counted twice, wei rounded through a float, a spend approved on a stale balance, an RPC key leaked into a log, a transaction signed for the wrong chain. None of them needs an attacker.",
     solution:
-      "**Wallet Watcher** derives N wallets from one BIP-39 mnemonic, polls their ETH balances into an append-only **SQLite** ledger, and builds and signs **EIP-1559** withdrawals behind a localhost admin API. Each withdrawal is booked once, from its **transaction receipt**, amounts stay **bigint** wei end to end, balances come from one **Multicall3** snapshot pinned to its block, and only **signer.ts** ever signs.",
-    overview: `Wallet Watcher is a single **Node.js** and **TypeScript** service on **Ethereum Sepolia**, built to a written spec. It derives 1 to 20 wallets at the BIP-44 path m/44'/60'/0'/0/i, polls every balance at startup and then every 8 minutes, and exposes a localhost API to list wallets, read each wallet's ledger, and build, sign and optionally broadcast withdrawals.
+      "**Wallet Watcher** derives N wallets from one BIP-39 mnemonic, polls their ETH balances into an append-only **SQLite** ledger, and builds and signs **EIP-1559** withdrawals behind a localhost admin API. Each withdrawal is booked from its **transaction receipt** (once, within one running process), amounts stay **bigint** wei end to end, balances come from one **Multicall3** snapshot pinned to its block, and only **signer.ts** ever signs.",
+    overview: `Wallet Watcher is a single **Node.js** and **TypeScript** service that talks to **Ethereum Sepolia** through one RPC endpoint. It derives 1 to 20 wallets at the BIP-44 path m/44'/60'/0'/0/i, polls every balance at startup and then every 8 minutes, and exposes a localhost API to list wallets, read each wallet's ledger, and build and sign withdrawals; a withdrawal is sent only when the request sets **broadcast** to true.
 The money logic sits in three pure modules with no I/O (withdrawal planning, settlement, change detection), and everything that touches the chain, the database or HTTP stays at the edges. A broadcast is recorded as **pending**; the poller later writes at most **one** outflow for it, from the receipt, never from a balance diff.
-The repo documents its own limits (no confirmation depth, one withdrawal in flight per wallet, keys in process memory, a known balance-after bug listed below) and a path to production: KMS/MPC signing, finality and reorg checks, nonce management, withdrawal policy and per-operator access.`,
+The repo documents its own limits (no confirmation depth, one withdrawal in flight per wallet, keys in process memory, a known balance-after bug listed below) and a path to production: signing keys kept out of the service (KMS, HSM or MPC), finality and reorg checks, nonce management, withdrawal policy and per-operator access.`,
   },
 
   features: [
@@ -73,7 +73,7 @@ Reading one consistent state through a load-balanced RPC. Separate calls can rea
 Keeping amounts exact end to end. **JSON.parse** rounds numbers before validation runs and SQLite integers stop at 2^63 wei, so amounts travel as strings and TEXT and are **bigint** everywhere in code.
 The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first transfer to a never-used address estimates at **207,391 gas** instead of 21,000; the withdrawal path already relied on **eth_estimateGas**, so it kept working.`,
 
-  outcome: `A working service on Sepolia, exercised end to end with a real deposit and a broadcast withdrawal: the poller wrote one outflow equal to the amount plus the fee from the receipt, and wallet #0's on-chain balance still matches its last ledger row. The README states what is missing for production and how each gap would be closed.`,
+  outcome: `A working service, exercised end to end on Sepolia with a real deposit and a broadcast withdrawal: the poller wrote one outflow equal to the amount plus the fee from the receipt, and wallet #0's on-chain balance still matches its last ledger row. The README states what is missing for production and how each gap would be closed.`,
 
   outcomeMetrics: [
     "**156 tests in 12 files** (Vitest), offline and without secrets; typecheck, Biome lint and tests green in CI on **main**",
@@ -85,7 +85,7 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
   ],
 
   transferablePatterns:
-    "**Receipt-driven settlement** for any system that books on-chain spends; **block-pinned snapshots** (one eth_call plus a block floor) for indexers and pollers behind load-balanced RPCs; **worst-case cost checks** on fresh state before signing; and **injecting capabilities instead of secrets** (sign, broadcast, read as functions), which turns a later move to KMS or MPC signing into a one-function change.",
+    "**Receipt-driven settlement** for any system that books on-chain spends; **block-pinned snapshots** (one eth_call plus a block floor) for indexers and pollers behind load-balanced RPCs; **worst-case cost checks** on fresh state before signing; and **injecting capabilities instead of secrets** (sign, broadcast, read as functions), so moving signing out of the process later (to a KMS, an HSM or MPC signers) changes one function.",
 
   limitations: [
     "**Known bug, balance-after:** if a deposit lands and a withdrawal settles before the poller has seen the deposit, the outflow row's balance-after is computed from the stale stored balance and can be too low, even negative, until the same round books the deposit as an inflow (or a later round, up to 8 minutes, if the balance read fails or the node is behind). The ledger's deltas stay right. The fix is to book the unseen inflow before the outflow.",
@@ -100,7 +100,7 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
   ],
 
   roadmap: [
-    "**Keys out of the process:** KMS/HSM or MPC signing, and watch-only address derivation from the account xpub.",
+    "**Keys out of the process:** sign in a hardware-backed key store (KMS or HSM) or split the key across several signers (MPC), so no key enters the service; derive watch-only addresses from the account's extended public key (xpub).",
     "**Finality:** credit deposits after N confirmations or at safe/finalized, show pending and available balances apart, re-check settled receipts against reorgs, and store each snapshot's block number with its rows.",
     "**Transaction lifecycle:** a per-wallet nonce manager and lock, with replace-by-fee or cancellation for stuck transactions.",
     "**Withdrawal policy and access:** idempotency keys, limits, destination allowlists, a second approver above a threshold, an audit log, and per-operator identity instead of one shared key.",
@@ -181,7 +181,7 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
     category: "Web3 Backend & Infrastructure",
     subtitle: "Sepolia · Node.js",
     summary:
-      "A custody backend slice built to a written spec: HD wallets, an append-only ETH ledger and signed EIP-1559 withdrawals, with an HTTP layer that never receives the mnemonic.",
+      "A custody backend slice: HD wallets, an append-only ETH ledger and signed EIP-1559 withdrawals, with an HTTP layer that never receives the mnemonic.",
     bullets: [
       "**Receipt-driven settlement:** a broadcast is stored as pending, and the poller writes one outflow from the receipt (amount + real fee), never from a balance diff.",
       "**Consistent, exact reads:** every balance in one **Multicall3** eth_call pinned to its block, **bigint** wei end to end, and a worst-case fee check before signing.",

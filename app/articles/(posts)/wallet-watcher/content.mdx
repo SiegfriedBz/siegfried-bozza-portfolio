@@ -1,6 +1,6 @@
 Most bugs in a backend that moves money are boring. A withdrawal gets counted twice because two code paths both noticed the balance drop. An amount passes through a JavaScript `number` and loses its last few wei. Spends get approved against a balance read five minutes earlier, provider API keys end up in log files because the RPC URL was part of an error message, and transactions get signed for a chain nobody meant to touch. None of this needs an attacker.
 
-Wallet Watcher is a small service I built to a written spec: the wallet-and-ledger core of a custody backend, on Ethereum Sepolia, in Node.js and TypeScript. Most of my time went into those failure modes, so that each one is either impossible in the code or shows up in the ledger.
+Wallet Watcher is a small Node.js and TypeScript service I built: the wallet-and-ledger core of a custody backend, running against Ethereum Sepolia. Most of my time went into those failure modes, so that each one is either impossible in the code or shows up in the ledger.
 
 <TLDR>
 
@@ -231,7 +231,7 @@ const app = createApi({
 
 [`src/index.ts`](https://github.com/SiegfriedBz/wallet-watcher/blob/HEAD/src/index.ts)
 
-Moving signing to a KMS or an MPC service then means replacing one function in the composition root, with no change to `api.ts`. The RPC client is a viem public client with no account, so it can relay a signed transaction but has no key to sign one.
+Moving signing out of the process, to a hardware-backed key store (KMS or HSM) or to several signers that each hold part of the key (MPC), then means replacing one function in the composition root, with no change to `api.ts`. The RPC client is a viem public client with no account, so it can relay a signed transaction but has no key to sign one.
 
 A signed transaction is a bearer instrument, since whoever holds the bytes can broadcast them. So `POST /withdrawals` requires the admin key even without `broadcast`, compared in constant time by Hono's `bearerAuth`. The API binds to `127.0.0.1`, and request logs never include bodies or headers. Errors from viem are logged through [`safeErrorMessage`](https://github.com/SiegfriedBz/wallet-watcher/blob/HEAD/src/shared/errors.ts), which keeps only viem's `shortMessage`: the full message contains the RPC URL, and providers put the API key in it. A test checks that a key present in a viem error's `message` never reaches the log.
 
@@ -287,7 +287,7 @@ The README lists what a production custody system would add. Four of those chang
 
 ### Keys out of the process
 
-Signing moves to a KMS, an HSM or an MPC service, with a policy engine between request and signature. The service itself only needs to watch: the last two levels of `m/44'/60'/0'/0/i` are non-hardened, so every address derives from the account xpub at `m/44'/60'/0'`. That xpub still needs protecting. It reveals every address, and with any single leaked child private key it gives back the account's private key.
+Signing moves out of the service, to a hardware-backed key store (a KMS or an HSM) or to several signers that each hold part of the key (MPC), with a policy engine between request and signature. The service itself only needs to watch: the last two levels of `m/44'/60'/0'/0/i` are non-hardened, so every address derives from the account xpub at `m/44'/60'/0'`. That xpub still needs protecting. It reveals every address, and with any single leaked child private key it gives back the account's private key.
 
 ### Record the intent before the send
 
