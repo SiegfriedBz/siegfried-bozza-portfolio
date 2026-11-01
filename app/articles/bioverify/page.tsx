@@ -52,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
             images: [
               {
                 url: ogImage,
-                alt: "BioVerify Protocol hero artwork",
+                alt: "BioVerify landing page with the Submit Research and View Dashboard buttons",
               },
             ],
           }

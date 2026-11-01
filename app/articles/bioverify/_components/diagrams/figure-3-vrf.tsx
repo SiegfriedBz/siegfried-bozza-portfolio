@@ -142,7 +142,7 @@ export const Figure3Vrf: FC = () => {
       <g className="dn-green">
         <rect x="420" y="174" width="260" height="52" rx="8" />
         <text x="550" y="204" textAnchor="middle" className="node-title">
-          Agent_PickReviewers event→ pipeline
+          Agent_PickReviewers event → pipeline
         </text>
       </g>
     </svg>

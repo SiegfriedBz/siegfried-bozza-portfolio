@@ -40,7 +40,7 @@ const ALL_ARTICLES: Article[] = [
     excerpt:
       "Peer review as a coordination game: IPFS manifests, Chainlink VRF, LangGraph + Inngest agents, EIP-712 verdicts, and a getter-light contract projected into Neon Postgres — end to end on Base Sepolia and Ethereum Sepolia.",
     date: "2026-05-18",
-    updated: "2026-10-30",
+    updated: "2026-11-01",
     href: "/articles/bioverify",
     cover: BIOVERIFY_LINKS.ogImage?.trim() || undefined,
     tags: ["DeSci", "Web3", "Agentic AI", "BioVerify"],

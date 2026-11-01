@@ -1,6 +1,6 @@
+import type { FC } from "react";
 import { BIOVERIFY_LINKS } from "@/app/_constants/projects";
 import { cn } from "@/lib/utils";
-import type { FC } from "react";
 
 const BIOVERIFY_GITHUB = BIOVERIFY_LINKS.github?.trim() ?? "";
 const BIOVERIFY_LIVE = BIOVERIFY_LINKS.live?.trim() ?? "";
@@ -61,7 +61,8 @@ export const ArticleCta: FC<Props> = (props) => {
         )}
       >
         The chain records what happened. Agents coordinate what happens next.
-        And humans? They make the calls that matter.
+        People write the reviews, and when Gemini escalates, a senior reviewer
+        decides.
       </p>
     </div>
   );

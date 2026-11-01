@@ -21,9 +21,9 @@ export const ArticleHeader: FC<Props> = () => {
         When the Chain Is Not Enough: Building a Full-Stack Agentic DApp
       </h1>
       <p className="font-[family-name:var(--font-serif)] text-xl italic leading-snug text-muted-foreground">
-        A multi-chain DeSci peer-review case study, told as a user journey —
-        where every step in the workflow introduces the piece of the stack that
-        makes it possible.
+        A DeSci peer-review case study, told as a user journey — where every
+        step in the workflow introduces the piece of the stack that makes it
+        possible.
       </p>
       {/* Same byline as the MDX articles (post-shell.tsx). */}
       <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
