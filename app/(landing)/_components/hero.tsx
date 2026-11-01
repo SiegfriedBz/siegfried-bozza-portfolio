@@ -64,11 +64,14 @@ export const Hero: FC<Props> = ({ proof }) => {
           </span>
         </h1>
 
-        <p className="max-w-[58ch] text-pretty text-lg leading-relaxed text-foreground/80">
+        <p className="max-w-[58ch] text-pretty text-lg leading-relaxed text-foreground/80 max-sm:order-2">
           {DAY_JOB} {PITCH}
         </p>
 
-        <ul className="flex flex-wrap gap-2" aria-label="Core stack">
+        <ul
+          className="flex flex-wrap gap-2 max-sm:order-2"
+          aria-label="Core stack"
+        >
           {CORE_STACK.map((tech) => (
             <li
               key={tech}
@@ -79,42 +82,45 @@ export const Hero: FC<Props> = ({ proof }) => {
           ))}
         </ul>
 
+        {/* On phones the buttons come right after the title so they stay in the first
+            screen; the pitch, the stack and the availability follow (visual order only). */}
         <div
-          className="hero-reveal flex flex-col gap-4"
+          className="hero-reveal flex flex-wrap items-center gap-3 max-sm:order-1"
           style={{ "--delay": "200ms" } as CSSProperties}
         >
-          <div className="flex flex-wrap items-center gap-3">
-            {/* 44 px tap targets on phones (size lg is 40 px). */}
-            <Button asChild size="lg" className="max-sm:h-11">
-              <a
-                href={PROFILE_LINKS.calendly}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <CalendarClockIcon className="size-4" />
-                Book a call
-              </a>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="max-sm:h-11">
-              <Link href="/about">
-                <SiegAvatar className="size-5" alt="" />
-                About me
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="max-sm:h-11">
-              <a href={CV_HREF} target="_blank" rel="noopener noreferrer">
-                <FileDownIcon className="size-4" />
-                CV
-              </a>
-            </Button>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            <span className="font-medium text-foreground">
-              {AVAILABILITY.headline}.
-            </span>{" "}
-            {AVAILABILITY.detail}
-          </p>
+          {/* 44 px tap targets on phones (size lg is 40 px). */}
+          <Button asChild size="lg" className="max-sm:h-11">
+            <a
+              href={PROFILE_LINKS.calendly}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <CalendarClockIcon className="size-4" />
+              Book a call
+            </a>
+          </Button>
+          <Button asChild size="lg" variant="outline" className="max-sm:h-11">
+            <Link href="/about">
+              <SiegAvatar className="size-5" alt="" />
+              About me
+            </Link>
+          </Button>
+          <Button asChild size="lg" variant="outline" className="max-sm:h-11">
+            <a href={CV_HREF} target="_blank" rel="noopener noreferrer">
+              <FileDownIcon className="size-4" />
+              CV
+            </a>
+          </Button>
         </div>
+        <p
+          className="hero-reveal text-sm text-muted-foreground max-sm:order-2 sm:-mt-2"
+          style={{ "--delay": "200ms" } as CSSProperties}
+        >
+          <span className="font-medium text-foreground">
+            {AVAILABILITY.headline}.
+          </span>{" "}
+          {AVAILABILITY.detail}
+        </p>
       </div>
 
       {proof.length > 0 ? (

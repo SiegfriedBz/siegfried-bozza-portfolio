@@ -14,7 +14,7 @@ export const BookCallBadge: FC = () => {
   return (
     <Badge
       variant="outline"
-      className="group border border-accent-blue/50 ps-2 py-1 mb-3 rounded-l-full rounded-r-full dark:bg-linear-to-r dark:from-accent-glow dark:to-transparent min-[425px]:ps-3 min-[425px]:py-1.5 min-[425px]:mb-4"
+      className="group border border-accent-blue/50 ps-2 py-1 mb-2 rounded-l-full rounded-r-full dark:bg-linear-to-r dark:from-accent-glow dark:to-transparent min-[425px]:ps-3 min-[425px]:py-1.5 min-[425px]:mb-4"
     >
       <span className="inline-flex items-center">
         <ClipboardClockIcon className="size-4 text-accent-blue min-[425px]:size-6" />

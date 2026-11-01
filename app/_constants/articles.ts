@@ -22,10 +22,11 @@ const ALL_ARTICLES: Article[] = [
     title:
       "Booking Every Withdrawal From Its Receipt: A Wallet Backend on Sepolia",
     subtitle:
-      "Outflows booked from receipts, bigint wei end to end, Multicall3 snapshots pinned to their block, and an HTTP layer that never holds the mnemonic.",
+      "Outflows booked from receipts, bigint wei end to end, Multicall3 snapshots pinned to their block, and an HTTP layer that never receives the mnemonic.",
     excerpt:
-      "A Node.js and TypeScript service on Sepolia that derives HD wallets, keeps an append-only ETH ledger and signs EIP-1559 withdrawals. The write-up covers the boring failure modes it rules out, how it is tested, and what production would change.",
+      "A Node.js and TypeScript service that derives HD wallets, keeps an append-only ETH ledger and signs EIP-1559 withdrawals on Sepolia. The write-up covers the boring failure modes it guards against, how it is tested, and what production would change.",
     date: "2026-10-18",
+    updated: "2026-11-01",
     href: "/articles/wallet-watcher",
     tags: ["Web3 Backend", "Custody", "Ethereum", "viem", "TypeScript"],
     readingMinutes: 13,
@@ -39,7 +40,7 @@ const ALL_ARTICLES: Article[] = [
     excerpt:
       "Peer review as a coordination game: IPFS manifests, Chainlink VRF, LangGraph + Inngest agents, EIP-712 verdicts, and a getter-light contract projected into Neon Postgres — end to end on Base Sepolia and Ethereum Sepolia.",
     date: "2026-05-18",
-    updated: "2026-10-30",
+    updated: "2026-11-01",
     href: "/articles/bioverify",
     cover: BIOVERIFY_LINKS.ogImage?.trim() || undefined,
     tags: ["DeSci", "Web3", "Agentic AI", "BioVerify"],

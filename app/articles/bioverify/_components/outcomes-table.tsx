@@ -101,9 +101,8 @@ export const OutcomesTable: FC<Props> = (props) => {
               colSpan={5}
             >
               <strong className="font-medium text-foreground">
-                Honesty is measured against the binding verdict (Gemini&apos;s,
-                or the senior&apos;s after escalation), not the paper&apos;s
-                outcome.
+                Honesty means matching the binding verdict (Gemini&apos;s, or
+                the senior&apos;s after escalation), pass or fail.
               </strong>{" "}
               The senior reviewer is always classified as honest at settlement.
             </td>

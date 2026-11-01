@@ -8,6 +8,3 @@ export const PROFILE_LINKS = {
   email: "siegfried.bozza@protonmail.com",
   calendly: "https://calendly.com/siegfried-bozza/30min",
 } as const;
-
-/** BioVerify's public Telegram bot, as linked from the BioVerify README. */
-export const BIOVERIFY_TELEGRAM_URL = "https://t.me/BioVerifyBot";

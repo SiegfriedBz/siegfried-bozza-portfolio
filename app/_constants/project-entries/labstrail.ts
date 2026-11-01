@@ -1,4 +1,4 @@
-/** LabsTrail — figures verified against main (3df9e7e, v0.8.1) on 2026-10-26; limitations matched to the README's (1c738ba) on 2026-10-30. */
+/** LabsTrail — figures verified against main (3df9e7e, v0.8.1) on 2026-10-26; limitations matched to the README's (1c738ba) on 2026-10-30; page re-checked against develop (1c738ba) on 2026-11-01. */
 import { STACK } from "@/app/_constants/stack";
 import type { Project } from "@/app/_types/project";
 
@@ -16,14 +16,14 @@ export const labstrailProject: Project = {
   },
   title: {
     h1: "LabsTrail",
-    h2: "Open Reproducibility-Readiness Ratings for Life-Science Papers on the OriginTrail DKG and Base",
-    short: "Traceable Paper Ratings on the OriginTrail DKG and Base",
+    h2: "Open Reproducibility-Readiness Ratings for Life-Science Papers on the OriginTrail DKG and Base Sepolia",
+    short: "Traceable Paper Ratings on the OriginTrail DKG and Base Sepolia",
     meta: "Traceable Paper Ratings",
   },
 
   description: {
     short:
-      "Open ratings for life-science papers: evidence on the OriginTrail DKG, scores on Base Sepolia, and a pipeline where every write is safe to retry.",
+      "Open ratings for life-science papers, under construction: evidence on the OriginTrail DKG, scores on Base Sepolia, and every write safe to retry.",
     problem:
       "Trust in a scientific paper is mostly inferred from the journal it appeared in, and the reviews behind that judgement are rarely public. Reporting guidelines such as CONSORT and ARRIVE list what a paper must state for others to repeat the work, yet compliance is rarely checked in the open. In a 2016 Nature survey of more than 1,500 researchers, more than 70% had tried and failed to reproduce another scientist's experiments.",
     solution:
@@ -65,7 +65,7 @@ The project is a rebuild of an earlier prototype, desci-rating-dapp, and its 36 
     {
       key: "Checklist scoring with checked quotes",
       description:
-        "**Gemini** lists the kinds of study a paper reports and answers their checklists (built from CONSORT 2025, STROBE, ARRIVE 2.0, MDAR and PRISMA 2020) with a quote per answer. Code awards a point only when the quote is found in the paper's text and computes the 0 to 100 score with integer rounding; the model never gives the number.",
+        "**Gemini** lists the kinds of study a paper reports and answers their checklists (built from CONSORT 2025, STROBE, ARRIVE 2.0, MDAR, PRISMA 2020, SANRA and DOME), quoting the passage behind each point. Code counts an answer only when its quote is found in the paper's text (a point for shown, half for partly) and computes the 0 to 100 score with integer rounding; the model never gives the number.",
     },
     {
       key: "Isolated environments",
@@ -93,10 +93,10 @@ The project is a rebuild of an earlier prototype, desci-rating-dapp, and its 36 
 
   challenges: `A DKG mint can succeed while its response is lost: in a spike against the project's own node, three concurrent mints of one asset produced one mint, one reverted transaction that still paid gas and one token approval, and a mint whose client disconnected landed seconds later. Every write therefore reads state first, and mints are started and then polled in short steps.
 A hosted LLM gives different answers to the same paper, even with temperature set to 0 (deprecated for Gemini 3.8 Flash). The score is computed once from checked quotes, stored in the rating's Knowledge Asset and read back by every retry, so the score on chain always equals the one on the DKG.
-That keeps the record consistent, not the score steady: the same staging paper scored 54, then 75, on one day. Over 16 measured runs on 3 papers, the model classed a fly genetics paper as an animal study in some runs and as lab work in others, a spread of 21 points. Scorer version 4 defines the kinds of study more precisely, lets a paper report several, gives eight checks a rule per answer and tells the model how to quote long passages. Over 14 more runs, one paper scored the same every time and the other two moved by 7 and 9 points.
+The record stays consistent, but the score still moves: the same staging paper scored 54, then 75, on one day. Over 16 measured runs on 3 papers, the model classed a fly genetics paper as an animal study in some runs and as lab work in others, a spread of 21 points. Scorer version 4 defines the kinds of study more precisely, lets a paper report several, gives eight checks a rule per answer and tells the model how to quote long passages. Over 14 more runs, one paper scored the same every time and the other two moved by 7 and 9 points.
 Webhooks arrive at least once, can be lost, and after a reorg may describe a log that is no longer on chain; Inngest deduplicates event ids for 24 hours only, and its concurrency limits count steps, not sleeping runs. Recovery combines request-derived event ids, a singleton run per request, on-chain reads before every write, and a reconciler that reads the contract's pending set.
 The free RPC tier caps eth_getLogs at 10 blocks, so the prototype could only recover a stuck rating from the browser that requested it. The rebuilt contract stores everything recovery needs, readable a page at a time.
-Production's first context graph never became active: OriginTrail's network kept it dormant, every mint was declined, and the run blamed LabsTrail's own node. A declined mint now stops as network-refused and the paper's page says the network has not accepted the record yet. Production moved to a newly registered graph, which minted its first paper on the first try.`,
+Production's first context graph stayed dormant on OriginTrail's network: every mint was declined, and the run blamed LabsTrail's own node. A declined mint now stops as network-refused and the paper's page says the network has not accepted the record yet. Production moved to a newly registered graph, which minted its first paper on the first try.`,
 
   outcome: `Both flows (publish a paper, request and settle a rating) run on separate staging and production environments on Base Sepolia, with the DKG node, GROBID and an RPC proxy on a dedicated server. A webhook starts each rating and a cron restarts a stuck one, and production has its first published papers and settled ratings. LabsTrail is still under construction: human review is the next phase on the roadmap below.
 The project is mostly evidence of engineering habits: decisions recorded in ADRs that the feature plans cite, behaviour observed on real systems written down as dated domain facts, and a test suite that drives whole durable workflows with fake step tools.
@@ -106,7 +106,7 @@ I built the repo in about three weeks, alongside my full-time job, and I could n
     "**36 ADRs** on main (numbered to 0042, with 6 folded into others), each amendment logged with a dated History line",
     "**1,841 Vitest tests** in 143 files across 7 workspaces, all passing",
     "**74 Foundry tests**: 61 unit and fuzz tests on RatingController, 12 on the deploy script, and an invariant suite of 6 properties; CI runs each fuzz test 5,000 times",
-    "**Domain core coverage:** 100% of lines and 96.4% of branches, with CI failing below 90% of branches",
+    "**Domain core coverage:** 100% of lines and 96.4% of branches (local run, 26 Oct 2026), with CI failing below 90% of branches",
     "**14 reference papers** (12 in the field across every kind of study, 2 outside it) with expected answers written before the scorer first read them",
     "**3 RatingController deployments per environment** on Base Sepolia, past ones still read by the backend",
   ],
@@ -135,7 +135,7 @@ I built the repo in about three weeks, alongside my full-time job, and I could n
     "**An API for AI agents**, to read papers and ratings and to request ratings without the web app.",
     "**A lasting, decentralized copy of every PDF**, then **mainnet**.",
     "**Phase 3, wet-lab replication:** a lab repeats the experiments and a second round of human review checks its results before the oracle scores them.",
-    "**Engineering:** end-to-end tests with Playwright, oracle signing in a KMS or dedicated signer, and one DKG token per graph.",
+    "**Engineering:** end-to-end tests with Playwright, and one DKG token per graph once the node supports it.",
   ],
 
   stack: {
@@ -144,7 +144,6 @@ I built the repo in about three weeks, alongside my full-time job, and I could n
       STACK.NEXT,
       STACK.REACT,
       STACK.ZOD,
-      STACK.TANSTACK_QUERY,
       STACK.TANSTACK_TABLE,
       STACK.SHADCN,
       STACK.TAILWIND,
@@ -189,14 +188,14 @@ I built the repo in about three weeks, alongside my full-time job, and I could n
           "HMAC-verified webhooks for request logs; viem for contract reads, Multicall3 batching on the pages, and the oracle's transactions.",
       },
       {
-        key: "Next.js + wagmi + Reown AppKit",
+        key: "Next.js + TypeScript + wagmi + Reown AppKit",
         description:
           "Publish and paper pages, wallet connection, EIP-712 signing of submissions and on-chain rating requests from the visitor's wallet.",
       },
       {
         key: "Vitest + fast-check",
         description:
-          "1,841 tests across the monorepo, with durable workflows driven through fake step tools and property-based tests for UAL parsing and asset names.",
+          "Tests across the monorepo, with durable workflows driven through fake step tools and property-based tests for UAL parsing and asset names.",
       },
     ],
   },
@@ -222,9 +221,8 @@ I built the repo in about three weeks, alongside my full-time job, and I could n
 
   featured: {
     category: "Web3 Backend & Infrastructure",
-    subtitle: "OriginTrail DKG & Base Sepolia",
     summary:
-      "An open, verifiable rating for life-science papers, built by a former molecular biologist. The evidence lives on the **OriginTrail DKG**, the score on a **Base Sepolia** contract, and the off-chain pipeline between them is built to survive lost webhooks, retried mints and stuck transactions. Under construction: the machine score runs on testnets, and human review with **Chainlink VRF** is next.",
+      "An open, verifiable rating for life-science papers. The evidence lives on the **OriginTrail DKG**, the score on a **Base Sepolia** contract, and the off-chain pipeline between them is built to survive lost webhooks, retried mints and stuck transactions. Under construction: the machine score runs on testnets, and human review with **Chainlink VRF** is next.",
     bullets: [
       "**Every write converges:** stores, mints, fulfils and cancels read state first, and the LLM's score is computed once and read back from the minted asset, so retries and restarts never write twice.",
       "**At-least-once ingestion with recovery:** HMAC-verified **Alchemy Notify** webhooks, request-derived **Inngest** event ids, and a cron reconciler that reads the contract's pending set instead of scanning logs.",

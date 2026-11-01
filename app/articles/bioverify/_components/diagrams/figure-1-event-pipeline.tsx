@@ -216,7 +216,7 @@ export const Figure1EventPipeline: FC = () => {
           · fast and rich queries
         </text>
         <text x="103" y="280" textAnchor="middle" className="node-sub">
-          · no eth_call
+          · no eth_call fan-out
         </text>
       </g>
     </svg>

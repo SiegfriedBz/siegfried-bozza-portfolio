@@ -1,14 +1,14 @@
-Most bugs in a backend that moves money are boring. A withdrawal gets counted twice because two code paths both noticed the balance drop. An amount passes through a JavaScript `number` and loses its last few wei. Spends get approved against a balance read five minutes earlier, provider API keys end up in log files because the RPC URL was part of an error message, and transactions get signed for a chain nobody meant to touch. None of this needs an attacker, and each one leaves the books disagreeing with the chain.
+Most bugs in a backend that moves money are boring. A withdrawal gets counted twice because two code paths both noticed the balance drop. An amount passes through a JavaScript `number` and loses its last few wei. Spends get approved against a balance read five minutes earlier, provider API keys end up in log files because the RPC URL was part of an error message, and transactions get signed for a chain nobody meant to touch. None of this needs an attacker.
 
-Wallet Watcher is a small service I built to a written spec: the wallet-and-ledger core of a custody backend, on Ethereum Sepolia, in Node.js and TypeScript. Most of my time went into those failure modes, so that each one is either impossible in the code or shows up loudly in the ledger.
+Wallet Watcher is a small Node.js and TypeScript service I built: the wallet-and-ledger core of a custody backend, running against Ethereum Sepolia. Most of my time went into those failure modes, so that each one is either impossible in the code or shows up in the ledger.
 
 <TLDR>
 
-- Each withdrawal is booked once, by the poller, from its transaction receipt: amount plus `gasUsed × effectiveGasPrice`. A balance diff never books a withdrawal; anything the service did not record shows up as `external_outflow`.
+- Each withdrawal is booked once, by the poller, from its transaction receipt: amount plus `gasUsed × effectiveGasPrice`. A balance diff never books a withdrawal; anything the service did not record shows up as `external_outflow`. This holds within one running process.
 - Amounts are `bigint` wei in code, `TEXT` in SQLite and strings in JSON. The API rejects amounts sent as JSON numbers.
 - All balances come from one Multicall3 `eth_call` that also returns its block number, and the poller never compares against a block older than one it already relied on.
 - A withdrawal is signed only if `balance ≥ value + gasLimit × maxFeePerGas`, on a balance read from the chain just before signing.
-- Only `signer.ts` signs, deriving one wallet's key per signature. The HTTP layer receives functions and never sees the mnemonic or the RPC client.
+- Only `signer.ts` signs, deriving one wallet's key per signature. The HTTP layer receives functions, never the mnemonic or the RPC client.
 
 </TLDR>
 
@@ -114,11 +114,11 @@ export const AmountEthSchema = z
 
 [`src/shared/schemas.ts`](https://github.com/SiegfriedBz/wallet-watcher/blob/HEAD/src/shared/schemas.ts)
 
-Without `abort: true`, Zod still runs the refinement after the regex fails, `parseEther("abc")` throws, and a bad request becomes a `500` instead of a `400`. The tests cover the inputs that slip through elsewhere (`"1e-3"`, `".5"`, `"1."`, 19 decimals, a JSON number), conversions up to 27 significant digits, and 2⁷⁰ wei written to SQLite and read back exactly.
+Without `abort: true`, Zod still runs the refinement after the regex fails, `parseEther("abc")` throws, and a bad request becomes a `500` instead of a `400`. The tests cover the inputs a looser parser would accept (`"1e-3"`, `".5"`, `"1."`, 19 decimals, a JSON number), conversions up to 27 significant digits, and 2⁷⁰ wei written to SQLite and read back exactly.
 
 ## Block-consistent reads with Multicall3
 
-The first version of the poller called `eth_getBalance` once per wallet. That is fine against one node, but most RPC URLs front a pool of nodes, and two consecutive calls can land a block apart.
+The first version of the poller called `eth_getBalance` once per wallet. That is fine against one node, but provider RPC URLs often front a pool of nodes, and two consecutive calls can land a block apart.
 
 Combined with settlement, that produces false rows. The poller gets a receipt from a node at block 100 and writes the outflow. The balance read then hits a node at block 99, where the withdrawal has not happened, so the diff books the difference as an `inflow`, and the next round cancels it with an `external_outflow`. I never saw this on Sepolia; it surfaced in a review of the poller, and it was cheap to close.
 
@@ -200,7 +200,7 @@ export const planWithdrawal = (input: WithdrawalInputs): WithdrawalPlan => {
 
 [`src/withdrawal.ts`](https://github.com/SiegfriedBz/wallet-watcher/blob/HEAD/src/withdrawal.ts)
 
-The function is pure; its inputs are read fresh just before it runs. The nonce comes from `eth_getTransactionCount` with the `pending` tag, so a transaction still in the mempool is not reused. Fees come from viem's `estimateFeesPerGas` (`maxFeePerGas` = 1.2 × base fee + priority fee), and gas from `eth_estimateGas`. The balance in SQLite can be minutes old, so it never decides a spend.
+The function is pure; its inputs are read fresh just before it runs. The nonce comes from `eth_getTransactionCount` with the `pending` tag, so the nonce of a transaction still in the mempool is not reused. Fees come from viem's `estimateFeesPerGas` (`maxFeePerGas` = 1.2 × base fee + priority fee), and gas from `eth_estimateGas`. The balance in SQLite can be minutes old, so it never decides a spend.
 
 As a result, sending a wallet's whole balance always fails: the fee comes on top. The API answers `422` with `maxSendableWei`, and the [tests](https://github.com/SiegfriedBz/wallet-watcher/blob/HEAD/test/withdrawal.test.ts) check, on fixed chain inputs, that exactly that amount passes and one wei more fails. Live, fees are read again on every request, so a `maxSendableWei` can be refused a block later. In the Sepolia run, the bound checked before signing was 0.000024728757984 ETH (21,000 gas at a `maxFeePerGas` of 1.177559904 gwei); the fee paid was 0.000023183071527 ETH.
 
@@ -231,7 +231,7 @@ const app = createApi({
 
 [`src/index.ts`](https://github.com/SiegfriedBz/wallet-watcher/blob/HEAD/src/index.ts)
 
-Moving signing to a KMS or an MPC service then means replacing one function in the composition root, with no change to `api.ts`. The RPC client is a viem public client with no account, so it can relay a signed transaction but has no key to sign one.
+Moving signing out of the process, to a hardware-backed key store (KMS or HSM) or to several signers that each hold part of the key (MPC), then means replacing one function in the composition root, with no change to `api.ts`. The RPC client is a viem public client with no account, so it can relay a signed transaction but has no key to sign one.
 
 A signed transaction is a bearer instrument, since whoever holds the bytes can broadcast them. So `POST /withdrawals` requires the admin key even without `broadcast`, compared in constant time by Hono's `bearerAuth`. The API binds to `127.0.0.1`, and request logs never include bodies or headers. Errors from viem are logged through [`safeErrorMessage`](https://github.com/SiegfriedBz/wallet-watcher/blob/HEAD/src/shared/errors.ts), which keeps only viem's `shortMessage`: the full message contains the RPC URL, and providers put the API key in it. A test checks that a key present in a viem error's `message` never reaches the log.
 
@@ -255,8 +255,6 @@ The balance never misses funds; only the per-deposit detail is lost. On Sepolia 
 
 The suite has 156 tests in 12 files and runs with no network and no secrets.
 
-I typed the code myself, with Claude Code reviewing and explaining, except for the last branch, which Claude Code wrote at my request: the ledger endpoint, the self-send guard, the Multicall3 snapshot and the README rewrite ([PR #8](https://github.com/SiegfriedBz/wallet-watcher/pull/8)).
-
 | Area | Tests | What they prove |
 |---|---|---|
 | Request schemas | 42 | Amount formats, checksums, index range, self-send and unknown fields refused |
@@ -270,7 +268,7 @@ Derivation, signing and SQLite are real. Tests use Hardhat's public mnemonic (`t
 
 Only the chain is faked. The [poller tests](https://github.com/SiegfriedBz/wallet-watcher/blob/HEAD/test/poller.test.ts) use a client exposing just `multicall` and `getTransactionReceipt`, driven by a small state object, so a test can move the chain between calls or during the wait. The one I would show a reviewer first settles a withdrawal, runs an identical second round, and asserts the ledger still has two rows. API tests inject the chain functions as `vi.fn()` and call the Hono app with `app.request`, with no port.
 
-Not covered: the startup wiring in `index.ts` and real RPC behavior; the end-to-end path was run by hand on Sepolia. CI runs typecheck, Biome and tests on every pull request and push to `main`.
+Not covered: the startup wiring in `index.ts`, the poller's timer loop (`startPoller`), the chain reads before a withdrawal (`readWithdrawalInputs`, including the 21,000-gas fallback) and real RPC behavior; the end-to-end path was run by hand on Sepolia. CI runs typecheck, Biome and tests on every pull request and push to `main`.
 
 ## Known limitations
 
@@ -280,7 +278,7 @@ Not covered: the startup wiring in `index.ts` and real RPC behavior; the end-to-
 - A transaction that is never mined keeps its wallet pending. No new broadcast is allowed and no diff runs, so a deposit to that wallet goes unrecorded too.
 - The one-pending check is not atomic, so two simultaneous broadcasts can both pass. Usually the node rejects the second for its nonce, but one with a high enough fee replaces the first, which then stays pending forever.
 - A failed broadcast is ambiguous. A `502` records nothing, yet the node may have accepted the transaction and only the response was lost. The poller would then book it as `external_outflow`, and a retry signs a new transaction with the next nonce, so both go through.
-- The 10-minute freshness bound assumes a responsive RPC: viem's timeouts and retries (about 41 seconds at worst for one request) and a 12-second wait for a lagging node can push a round past its margin.
+- The 10-minute freshness bound assumes a responsive RPC: viem's timeouts and retries (about 41 seconds at worst for one request) and a 12-second wait for a lagging node can push a round past the 2-minute margin.
 - One admin key is shared by every operator.
 
 ## Path to production
@@ -289,7 +287,7 @@ The README lists what a production custody system would add. Four of those chang
 
 ### Keys out of the process
 
-Signing moves to a KMS, an HSM or an MPC service, with a policy engine between request and signature. The service itself only needs to watch: the last two levels of `m/44'/60'/0'/0/i` are non-hardened, so every address derives from the account xpub at `m/44'/60'/0'`. That xpub still needs protecting. It reveals every address, and with any single leaked child private key it gives back the account's private key.
+Signing moves out of the service, to a hardware-backed key store (a KMS or an HSM) or to several signers that each hold part of the key (MPC), with a policy engine between request and signature. The service itself only needs to watch: the last two levels of `m/44'/60'/0'/0/i` are non-hardened, so every address derives from the account xpub at `m/44'/60'/0'`. That xpub still needs protecting. It reveals every address, and with any single leaked child private key it gives back the account's private key.
 
 ### Record the intent before the send
 

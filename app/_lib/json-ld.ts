@@ -3,6 +3,7 @@ import { EDUCATION } from "@/app/_constants/education";
 import { PROFILE_LINKS } from "@/app/_constants/links";
 import { PROJECTS } from "@/app/_constants/projects";
 import {
+  CORE_STACK,
   PERSON_SUMMARY,
   ROLE,
   SITE_LAST_UPDATED,
@@ -26,12 +27,8 @@ export const WEBSITE_ID = `${base}/#website`;
 
 /** Curated topics (not the meta keywords, which include the name and "remote"). */
 const KNOWS_ABOUT = [
-  "TypeScript",
-  "Solidity",
-  "Node.js",
-  "Next.js",
+  ...CORE_STACK,
   "Smart contracts",
-  "Foundry",
   "Chainlink",
   "viem",
   "Event-driven architecture",

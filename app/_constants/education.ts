@@ -18,12 +18,12 @@ export const EDUCATION: EducationEntry[] = [
   {
     id: 1,
     year: "2025",
-    title: "EVM Architecture & Smart Contract Security Specialization",
+    title: "EVM Architecture & Smart Contract Security (core curriculum)",
     institution: "Metana",
     location: "Remote",
     section: "software",
     description:
-      "Metana — 5-month intensive on Solidity. Completed core curriculum focused on EVM architecture, advanced Foundry testing, and oracle integration.",
+      "Metana: 5-month intensive on Solidity, focused on EVM architecture, advanced Foundry testing and oracle integration.",
   },
   {
     id: 2,
@@ -37,7 +37,7 @@ export const EDUCATION: EducationEntry[] = [
       label: "Read my No-Loss Gaming article",
     },
     description:
-      "University of Barcelona — decentralized architectures, cryptography, and smart-contract protocol design. Completed part-time alongside the Le Wagon bootcamp (2022) and first engineering roles (Renuo AG, 2022–2023). GBI scholarship recipient (Global Blockchain Initiative Local Hub — France, Dec 2021 – Apr 2023).",
+      "University of Barcelona: decentralized architectures, cryptography, and smart-contract protocol design. Completed part-time alongside the Le Wagon bootcamp (2022) and first engineering roles (Renuo AG, 2022–2023). GBI scholarship recipient (Global Blockchain Initiative Local Hub, France, Dec 2021 – Apr 2023).",
   },
   {
     id: 3,
@@ -47,7 +47,7 @@ export const EDUCATION: EducationEntry[] = [
     location: "Zurich, Switzerland",
     section: "software",
     description:
-      "Le Wagon — 2-month intensive on JavaScript, React, Rails, and modern web tooling. Continued as Teaching Assistant in Zurich after graduating.",
+      "Le Wagon: 2-month intensive on JavaScript, React, Rails, and modern web tooling. Continued as Teaching Assistant in Zurich after graduating.",
   },
   {
     id: 4,
@@ -57,7 +57,7 @@ export const EDUCATION: EducationEntry[] = [
     location: "France",
     section: "earlier",
     description:
-      "École des Mines — Civil and Environmental Engineering curriculum.",
+      "École des Mines: Civil and Environmental Engineering curriculum.",
   },
   {
     id: 5,
@@ -67,6 +67,6 @@ export const EDUCATION: EducationEntry[] = [
     location: "France",
     section: "earlier",
     description:
-      "University of Montpellier — Molecular Biology & Genetics. Followed by research roles in France (INSERM, Institute for Neurosciences of Montpellier) and Canada (University of British Columbia, Vancouver).",
+      "University of Montpellier: Molecular Biology & Genetics. Followed by research roles in France (INSERM, Institute for Neurosciences of Montpellier) and Canada (University of British Columbia, Vancouver).",
   },
 ];

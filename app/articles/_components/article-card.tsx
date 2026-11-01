@@ -32,7 +32,7 @@ export const ArticleCard: FC<Props> = ({ article, className }) => {
           <div className="relative aspect-[16/7] w-full overflow-hidden bg-muted">
             <Image
               src={cover}
-              alt={`${title} — cover`}
+              alt=""
               fill
               className="object-cover opacity-90 transition-opacity duration-300 group-hover:opacity-100"
               sizes="(max-width: 768px) 100vw, 50vw"
