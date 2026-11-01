@@ -18,12 +18,12 @@ export const EDUCATION: EducationEntry[] = [
   {
     id: 1,
     year: "2025",
-    title: "EVM Architecture & Smart Contract Security Specialization",
+    title: "EVM Architecture & Smart Contract Security (core curriculum)",
     institution: "Metana",
     location: "Remote",
     section: "software",
     description:
-      "Metana: 5-month intensive on Solidity. Completed core curriculum focused on EVM architecture, advanced Foundry testing, and oracle integration.",
+      "Metana: 5-month intensive on Solidity, focused on EVM architecture, advanced Foundry testing and oracle integration.",
   },
   {
     id: 2,
