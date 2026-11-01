@@ -9,7 +9,7 @@ const SEPOLIA_TX =
 export const walletWatcherProject: Project = {
   slug: "wallet-watcher",
   languages: ["TypeScript"],
-  // First commit 30 Sep 2026, last merge (PR #8) 17 Oct 2026: shown as Oct 2026 (Siegfried, 2026-10-31).
+  // First commit 30 Sep 2026, last code merge (PR #8) 17 Oct 2026, README refresh (PR #9) 30 Oct 2026: shown as Oct 2026 (Siegfried, 2026-10-31).
   constructionPeriod: "Oct 2026",
   testnet: true,
   title: {
@@ -22,11 +22,11 @@ export const walletWatcherProject: Project = {
     short:
       "Custody backend slice on Sepolia: HD wallets, an append-only ETH ledger, and EIP-1559 withdrawals, each booked once from its receipt.",
     problem:
-      "Backends that move money fail in boring ways: a withdrawal counted twice, wei rounded through a float, a spend approved on a stale balance, an RPC key leaked into a log, a transaction signed for the wrong chain. None of them needs an attacker, and each one leaves the books disagreeing with the chain.",
+      "Backends that move money fail in boring ways: a withdrawal counted twice, wei rounded through a float, a spend approved on a stale balance, an RPC key leaked into a log, a transaction signed for the wrong chain. None of them needs an attacker.",
     solution:
       "**Wallet Watcher** derives N wallets from one BIP-39 mnemonic, polls their ETH balances into an append-only **SQLite** ledger, and builds and signs **EIP-1559** withdrawals behind a localhost admin API. Each withdrawal is booked once, from its **transaction receipt**, amounts stay **bigint** wei end to end, balances come from one **Multicall3** snapshot pinned to its block, and only **signer.ts** ever signs.",
     overview: `Wallet Watcher is a single **Node.js** and **TypeScript** service on **Ethereum Sepolia**, built to a written spec. It derives 1 to 20 wallets at the BIP-44 path m/44'/60'/0'/0/i, polls every balance at startup and then every 8 minutes, and exposes a localhost API to list wallets, read each wallet's ledger, and build, sign and optionally broadcast withdrawals.
-The money logic sits in three pure modules with no I/O (withdrawal planning, settlement, change detection), and everything that touches the chain, the database or HTTP stays at the edges. A broadcast is recorded as **pending**; the poller later writes **one** outflow from the receipt, never from a balance diff, so the poller cannot book the same withdrawal twice.
+The money logic sits in three pure modules with no I/O (withdrawal planning, settlement, change detection), and everything that touches the chain, the database or HTTP stays at the edges. A broadcast is recorded as **pending**; the poller later writes at most **one** outflow for it, from the receipt, never from a balance diff.
 The repo documents its own limits (no confirmation depth, one withdrawal in flight per wallet, keys in process memory, a known balance-after bug listed below) and a path to production: KMS/MPC signing, finality and reorg checks, nonce management, withdrawal policy and per-operator access.`,
   },
 
@@ -34,7 +34,7 @@ The repo documents its own limits (no confirmation depth, one withdrawal in flig
     {
       key: "One Outflow per Withdrawal, From the Receipt",
       description:
-        "A broadcast is stored as **pending** and the ledger is left alone. The poller writes **one** outflow from the receipt (amount + **gasUsed × effectiveGasPrice**, or the fee alone if reverted), together with the status and new balance in a single SQLite transaction. While a withdrawal is pending, that wallet's balance diff is skipped, so the drop is not booked twice. An outflow the service did not record (a lost 502, a transaction sent by hand) shows up as its own **external_outflow** type: a built-in alarm. This holds within one running process.",
+        "A broadcast is stored as **pending** and the ledger is left alone. The poller writes **one** outflow from the receipt (amount + **gasUsed × effectiveGasPrice**, or the fee alone if reverted), together with the status and new balance in a single SQLite transaction. While a withdrawal is pending, that wallet's balance diff is skipped, so the drop is not booked twice. An outflow the service did not record (a lost 502, a transaction sent by hand) shows up as its own **external_outflow** type, so the event is flagged. This holds within one running process.",
     },
     {
       key: "Exact Amounts, No Floats",
@@ -92,10 +92,10 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
     "**At most one outflow per broadcast, in one process:** a crash between send and insert, or a 502 that actually went through, is booked as an external outflow; a receipt later reorged out stays booked.",
     "**No confirmation depth:** balances are read at latest and a withdrawal settles on its first receipt, so a reorg could undo a recorded change.",
     "**One withdrawal in flight per wallet**, and the pending check is not atomic: two simultaneous broadcasts can both pass.",
-    "**A never-mined transaction** keeps its wallet pending; there is no replacement or cancellation yet.",
-    "**A failed broadcast is ambiguous:** a 502 records nothing, but the node may have accepted the transaction, and a retry gets the next nonce.",
+    "**A never-mined transaction** keeps its wallet pending: no new broadcast and no balance diff, so a deposit to that wallet is not recorded either. There is no replacement or cancellation yet.",
+    "**A failed broadcast is ambiguous:** a 502 records nothing, but the node may have accepted the transaction, and a retry gets the next nonce, so both are sent.",
     "**The block floor lives in memory** and is lost on restart.",
-    "**The 10-minute bound assumes a responsive RPC:** viem's timeouts and retries (about 41 s at worst for one request) and a 12-second wait for a lagging node can push a round past its margin.",
+    "**The 10-minute bound assumes a responsive RPC:** viem's timeouts and retries (about 41 s at worst for one request) and a 12-second wait for a lagging node can push a round past the 2-minute margin.",
     "**Deposits are merged per poll interval** and carry no transaction hash, and the ledger endpoint has no pagination; one admin key is shared by every operator.",
   ],
 
@@ -104,7 +104,7 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
     "**Finality:** credit deposits after N confirmations or at safe/finalized, show pending and available balances apart, re-check settled receipts against reorgs, and store each snapshot's block number with its rows.",
     "**Transaction lifecycle:** a per-wallet nonce manager and lock, with replace-by-fee or cancellation for stuck transactions.",
     "**Withdrawal policy and access:** idempotency keys, limits, destination allowlists, a second approver above a threshold, an audit log, and per-operator identity instead of one shared key.",
-    "**Deposit attribution:** EIP-7708 Transfer logs where the chain emits them, indexers, traces or provider webhooks elsewhere.",
+    "**Deposits:** attribution from EIP-7708 Transfer logs where the chain emits them (indexers, traces or provider webhooks elsewhere), and sweeping deposit wallets into a hot/cold structure.",
     "**Operations:** Postgres with migrations, RPC failover, metrics, an alert on every external outflow, and a `/health` that reports poller freshness.",
     "**More assets and chains:** ERC-20 and L2s.",
   ],
@@ -121,7 +121,7 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
     ],
     main: [
       {
-        key: "Node.js 22.13+ + TypeScript (strict)",
+        key: "Node.js 22.13+ and TypeScript (strict)",
         description:
           "One process with a composition root, pure money modules and I/O at the edges; strict mode with **noUncheckedIndexedAccess**; CI runs on Node 24.",
       },
@@ -181,7 +181,7 @@ The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first tr
     category: "Web3 Backend & Infrastructure",
     subtitle: "Sepolia · Node.js",
     summary:
-      "A small custody backend built to a written spec: HD wallets, an append-only ETH ledger and signed EIP-1559 withdrawals, where each withdrawal is booked once from its receipt and the HTTP layer never holds the mnemonic.",
+      "A custody backend slice built to a written spec: HD wallets, an append-only ETH ledger and signed EIP-1559 withdrawals, with an HTTP layer that never receives the mnemonic.",
     bullets: [
       "**Receipt-driven settlement:** a broadcast is stored as pending, and the poller writes one outflow from the receipt (amount + real fee), never from a balance diff.",
       "**Consistent, exact reads:** every balance in one **Multicall3** eth_call pinned to its block, **bigint** wei end to end, and a worst-case fee check before signing.",
