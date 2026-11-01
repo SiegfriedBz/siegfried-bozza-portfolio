@@ -67,28 +67,32 @@ export default function Page() {
       <AboutSidebar className="max-sm:hidden" />
 
       <div className="sm:ml-32 lg:ml-48 2xl:ml-0 grid grid-cols-1 lg:grid-cols-5 lg:gap-x-8 xl:gap-x-16">
-        <div className="max-sm:pt-10 max-sm:pb-6 gap-y-4 sm:gap-y-2 flex z-10 flex-col  justify-center items-center lg:fixed lg:left-48 min-[1135px]:left-54! min-[1285px]:left-64! lg:top-1/4 lg:-translate-y-1/4 lg:max-w-40 col-span-1">
-          <SiegAvatar className="size-28 sm:size-32" />
+        {/* On phones the avatar sits beside the availability lines, so the intro's first
+            paragraph still fits in the first screen. */}
+        <div className="max-sm:flex-row max-sm:gap-x-4 max-sm:pt-6 max-sm:pb-2 gap-y-4 sm:gap-y-2 flex z-10 flex-col justify-center items-center lg:fixed lg:left-48 min-[1135px]:left-54! min-[1285px]:left-64! lg:top-1/4 lg:-translate-y-1/4 lg:max-w-40 col-span-1">
+          <SiegAvatar className="size-20 shrink-0 sm:size-32" />
 
-          <div className="flex gap-x-3 items-center">
-            <EarthIcon className="text-amber-500 size-5" />
-            <TypographyH6 className="font-semibold">
-              {AVAILABILITY.label}
+          <div className="flex flex-col gap-y-2 items-start sm:items-center">
+            <div className="flex gap-x-3 items-center">
+              <EarthIcon className="text-amber-500 size-5" />
+              <TypographyH6 className="font-semibold">
+                {AVAILABILITY.label}
+              </TypographyH6>
+            </div>
+
+            <TypographyH6 className="font-semibold -mt-2 text-left text-pretty sm:text-center text-muted-foreground">
+              {AVAILABILITY.location}
             </TypographyH6>
-          </div>
 
-          <TypographyH6 className="font-semibold -mt-2 text-center text-muted-foreground">
-            {AVAILABILITY.location}
-          </TypographyH6>
-
-          <div className="flex flex-wrap justify-center gap-2">
-            <Badge className="font-bold">French</Badge>
-            <Badge className="font-bold">English</Badge>
+            <div className="flex flex-wrap sm:justify-center gap-2">
+              <Badge className="font-bold">French</Badge>
+              <Badge className="font-bold">English</Badge>
+            </div>
           </div>
         </div>
 
         <div className="z-10 flex flex-col gap-2 items-center lg:items-start col-span-1 max-sm:mt-0 max-lg:mt-8 lg:col-span-4 lg:col-start-2 2xl:ml-8">
-          <div className="flex flex-col gap-y-12 max-sm:px-4 text-left w-full">
+          <div className="flex flex-col gap-y-12 text-left w-full">
             <div
               id="introduction"
               className="scroll-mt-26 sm:scroll-mt-32 flex flex-col gap-2 items-center lg:items-start w-full"
@@ -98,10 +102,10 @@ export default function Page() {
                   <BookCallBadge />
                 </div>
 
-                <TypographyH1 className="my-2 max-[424px]:text-3xl sm:text-4xl md:text-5xl lg:text-left">
+                <TypographyH1 className="my-2 max-sm:my-1 max-[424px]:text-3xl sm:text-4xl md:text-5xl lg:text-left">
                   Siegfried Bozza
                 </TypographyH1>
-                <TypographyH2 className="text-center text-muted-foreground sm:text-xl md:text-2xl lg:text-3xl lg:text-left text-balance">
+                <TypographyH2 className="text-center text-muted-foreground max-sm:text-lg max-sm:leading-snug max-sm:pb-1 sm:text-xl md:text-2xl lg:text-3xl lg:text-left text-balance">
                   <span className="whitespace-nowrap">{ROLE}</span>{" "}
                   <span className="whitespace-nowrap">
                     <span aria-hidden="true">·</span> {HEADLINE_STACK}
@@ -109,11 +113,11 @@ export default function Page() {
                 </TypographyH2>
               </div>
 
-              <div className="mt-2 mb-4">
+              <div className="mt-2 mb-4 max-sm:mt-1 max-sm:mb-2">
                 <BadgeExternalLinks />
               </div>
 
-              <p className="w-full text-left text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-1">
+              <p className="w-full text-left text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-1 max-sm:hidden">
                 From wet labs to Web3
               </p>
 
