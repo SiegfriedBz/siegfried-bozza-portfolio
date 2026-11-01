@@ -3,7 +3,6 @@ import { RichText } from "@/app/_components/rich-text";
 import { TypographyH2 } from "@/app/_components/typography/h2";
 import { TypographyH3 } from "@/app/_components/typography/h3";
 import { TypographyH5 } from "@/app/_components/typography/h5";
-import { TypographyP } from "@/app/_components/typography/p";
 import { WORK_EXPERIENCE } from "@/app/_constants/work-xp";
 import { Badge } from "@/components/ui/badge";
 
@@ -15,12 +14,6 @@ export const EarlierCareer = () => {
       <TypographyH2 className="font-extrabold">
         Earlier career (pre-software)
       </TypographyH2>
-
-      <TypographyP className="mt-4 text-sm sm:text-base leading-relaxed text-muted-foreground">
-        Before transitioning to software engineering, I spent roughly fifteen
-        years performing molecular biology research and environmental
-        engineering fieldwork across France, Canada, and Switzerland.
-      </TypographyP>
 
       <ul className="mt-6 flex flex-col gap-y-6 text-sm sm:text-base">
         {entries.map((w) => {
