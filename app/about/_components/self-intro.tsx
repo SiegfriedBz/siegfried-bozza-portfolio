@@ -1,7 +1,7 @@
 import { RichText } from "@/app/_components/rich-text";
 
 const ORIGIN =
-  "I transitioned to software in **2022**, after an **M.Sc.** in Molecular Biology, an **M.Eng.** in Civil and Environmental Engineering, three peer-reviewed papers, and roughly fifteen years of research and field engineering in **France**, **Canada**, and **Switzerland**.";
+  "I transitioned to software in **2022**, after an **M.Sc.** in Molecular Biology, an **M.Eng.** in Civil and Environmental Engineering, three peer-reviewed papers, and fifteen years of research and field engineering in **France**, **Canada**, and **Switzerland**.";
 
 const REALIZATION =
   "Research and engineering showed me the same problem. In the lab, peer review was opaque: reviewers stayed anonymous and their incentives didn't match the work. In the field, compliance depended on each person's diligence. Neither system enforced integrity.";
