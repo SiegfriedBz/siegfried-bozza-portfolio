@@ -73,7 +73,7 @@ Reading one consistent state through a load-balanced RPC. Separate calls can rea
 Keeping amounts exact end to end. **JSON.parse** rounds numbers before validation runs and SQLite integers stop at 2^63 wei, so amounts travel as strings and TEXT and are **bigint** everywhere in code.
 The testnet changed mid-project. After Sepolia's Glamsterdam upgrade, a first transfer to a never-used address estimates at **207,391 gas** instead of 21,000; the withdrawal path already relied on **eth_estimateGas**, so it kept working.`,
 
-  outcome: `A working service, exercised end to end on Sepolia with a real deposit and a broadcast withdrawal: the poller wrote one outflow equal to the amount plus the fee from the receipt, and wallet #0's on-chain balance still matches its last ledger row. The README states what is missing for production and how each gap would be closed.`,
+  outcome: `A working service, exercised end to end on Sepolia with a real deposit and a broadcast withdrawal: the poller wrote one outflow equal to the amount plus the fee from the receipt, and wallet #0's on-chain balance still matches its last ledger row. The README states what is missing for production and how each gap would be closed. I built it with **Claude Code**.`,
 
   outcomeMetrics: [
     "**156 tests in 12 files** (Vitest), offline and without secrets; typecheck, Biome lint and tests green in CI on **main**",
