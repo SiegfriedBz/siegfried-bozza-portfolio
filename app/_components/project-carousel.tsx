@@ -1,19 +1,32 @@
+import Image from "next/image";
+import type { FC } from "react";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
-import type { FC } from "react";
+import { AutoplayVideo } from "./autoplay-video";
 
 type Props = {
   images: string[];
-  /** Used for descriptive alt text on each slide. */
+  videos: string[];
+  /** Names the numbered fallback ("Forge — screenshot 2") for slides without an `alts` entry. */
   projectName: string;
+  /** What each slide shows, keyed by its path; slides without one get a numbered fallback. */
+  alts?: Record<string, string>;
 };
 
 export const ProjectCarousel: FC<Props> = (props) => {
-  const { images, projectName } = props;
+  const { images, videos, projectName, alts } = props;
+
+  const slides = [
+    ...images.map((src) => ({ kind: "image" as const, src })),
+    ...videos.map((src) => ({ kind: "video" as const, src })),
+  ];
+
+  if (slides.length === 0) return null;
 
   return (
     <Carousel
@@ -24,20 +37,43 @@ export const ProjectCarousel: FC<Props> = (props) => {
       }}
     >
       <CarouselContent>
-        {images.map((img, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: stable order
-          <CarouselItem key={index}>
-            <div className="relative w-full aspect-video rounded-lg overflow-hidden cursor-pointer">
-              <Image
-                src={img}
-                fill
-                alt={`${projectName} — screenshot ${index + 1}`}
-                className="object-cover"
-              />
+        {slides.map((slide, index) => (
+          <CarouselItem key={slide.src}>
+            <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-muted/30">
+              {slide.kind === "image" ? (
+                <Image
+                  src={slide.src}
+                  fill
+                  alt={
+                    alts?.[slide.src] ??
+                    `${projectName} — screenshot ${index + 1}`
+                  }
+                  sizes="(min-width: 1024px) 1024px, 100vw"
+                  // The first slide is the page's LCP element (Next 16 deprecates `priority`).
+                  loading={index === 0 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : "auto"}
+                  className="object-cover"
+                />
+              ) : (
+                <AutoplayVideo
+                  src={slide.src}
+                  label={
+                    alts?.[slide.src] ??
+                    `${projectName} — screen recording ${index + 1}`
+                  }
+                  className="object-contain"
+                />
+              )}
             </div>
           </CarouselItem>
         ))}
       </CarouselContent>
+      {slides.length > 1 ? (
+        <>
+          <CarouselPrevious className="left-2 max-sm:size-10" />
+          <CarouselNext className="right-2 max-sm:size-10" />
+        </>
+      ) : null}
     </Carousel>
   );
 };

@@ -1,95 +1,123 @@
-import { SITE_NAME } from "@/app/_lib/site-metadata"
-import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { EarthIcon } from "lucide-react"
-import type { Metadata } from "next"
-import { SiegAvatar } from "../_components/sieg-avatar"
-import { TypographyH1 } from "../_components/typography/h1"
-import { TypographyH2 } from "../_components/typography/h2"
-import { TypographyH6 } from "../_components/typography/h6"
-import { AboutSidebar } from "./_components/about-sidebar"
-import { AllSkillsBadges } from "./_components/all-skills-badges"
-import { BadgeExternalLinks } from "./_components/badge-external-links"
-import { BookCallBadge } from "./_components/book-call-badge"
-import { EarlierCareer } from "./_components/earlier-career"
-import { Education } from "./_components/education"
-import { FeaturedProjects } from "./_components/featured-projects"
-import { SelfIntro } from "./_components/self-intro"
-import { WorkXP } from "./_components/work-xp"
+import { EarthIcon } from "lucide-react";
+import type { Metadata } from "next";
+import { JsonLd } from "@/app/_components/json-ld";
+import {
+  breadcrumbNode,
+  personNode,
+  profilePageNode,
+  websiteNode,
+} from "@/app/_lib/json-ld";
+import {
+  AVAILABILITY,
+  DEFAULT_OG_IMAGES,
+  HEADLINE_STACK,
+  PERSON_SUMMARY,
+  ROLE,
+  SITE_NAME,
+} from "@/app/_lib/site-metadata";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { SiegAvatar } from "../_components/sieg-avatar";
+import { TypographyH1 } from "../_components/typography/h1";
+import { TypographyH2 } from "../_components/typography/h2";
+import { TypographyH6 } from "../_components/typography/h6";
+import { AboutSidebar } from "./_components/about-sidebar";
+import { AllSkillsBadges } from "./_components/all-skills-badges";
+import { BadgeExternalLinks } from "./_components/badge-external-links";
+import { BookCallBadge } from "./_components/book-call-badge";
+import { EarlierCareer } from "./_components/earlier-career";
+import { Education } from "./_components/education";
+import { FeaturedProjects } from "./_components/featured-projects";
+import { SelfIntro } from "./_components/self-intro";
+import { WorkXP } from "./_components/work-xp";
 
-const ABOUT_TITLE = `About | ${SITE_NAME}`
-const ABOUT_DESCRIPTION =
-  "Full-stack engineer · Next.js, TypeScript, Web3 · Renuo AG & Prismo.io · open to remote or global relocation."
+const ABOUT_TITLE = `About ${SITE_NAME} | ${ROLE}`;
+const ABOUT_DESCRIPTION = `${ROLE}, in software since 2022: Next.js, TypeScript and Supabase at Prismo.io, Solidity and Foundry on testnets. Open to relocation or remote.`;
 
 export const metadata: Metadata = {
   title: ABOUT_TITLE,
   description: ABOUT_DESCRIPTION,
   alternates: { canonical: "/about" },
   openGraph: {
+    images: DEFAULT_OG_IMAGES,
     title: ABOUT_TITLE,
     description: ABOUT_DESCRIPTION,
     url: "/about",
+    siteName: SITE_NAME,
+    type: "profile",
   },
   twitter: {
+    images: DEFAULT_OG_IMAGES.map((i) => i.url),
     title: ABOUT_TITLE,
     description: ABOUT_DESCRIPTION,
   },
-}
+};
 
 export default function Page() {
   return (
-    <main className="w-full max-w-6xl mx-auto">
+    <div className="w-full max-w-6xl mx-auto">
+      <JsonLd
+        nodes={[
+          personNode(),
+          websiteNode(),
+          profilePageNode(),
+          breadcrumbNode([{ name: "Home", path: "/" }, { name: "About" }]),
+        ]}
+      />
       <AboutSidebar className="max-sm:hidden" />
 
       <div className="sm:ml-32 lg:ml-48 2xl:ml-0 grid grid-cols-1 lg:grid-cols-5 lg:gap-x-8 xl:gap-x-16">
-        <div className="max-sm:min-h-[60svh] gap-y-4 sm:gap-y-2 flex z-10 flex-col  justify-center items-center lg:fixed lg:left-48 min-[1135px]:left-54! min-[1285px]:left-64! lg:top-1/4 lg:-translate-y-1/4 lg:max-w-40 col-span-1">
-          <SiegAvatar className="size-28 sm:size-32" />
+        {/* On phones the avatar sits beside the availability lines, so the intro's first
+            paragraph still fits in the first screen. */}
+        <div className="max-sm:flex-row max-sm:gap-x-4 gap-y-4 sm:gap-y-2 flex z-10 flex-col justify-center items-center lg:fixed lg:left-48 min-[1135px]:left-54! min-[1285px]:left-64! lg:top-1/4 lg:-translate-y-1/4 lg:max-w-40 col-span-1">
+          <SiegAvatar className="size-20 shrink-0 sm:size-32" />
 
-          <div className="flex gap-x-3 items-center">
-            <EarthIcon className="text-amber-500 size-5" />
-            <TypographyH6 className="font-semibold">EU</TypographyH6>
-          </div>
+          <div className="flex flex-col gap-y-2 items-start sm:items-center">
+            <div className="flex gap-x-3 items-center">
+              <EarthIcon className="text-amber-500 size-5" />
+              <TypographyH6 className="font-semibold">
+                {AVAILABILITY.label}
+              </TypographyH6>
+            </div>
 
-          <TypographyH6 className="font-semibold -mt-2">
-            Open to global relocation
-          </TypographyH6>
+            <TypographyH6 className="font-semibold -mt-2 text-left text-pretty sm:text-center text-muted-foreground">
+              {AVAILABILITY.location}
+            </TypographyH6>
 
-          <div className="flex gap-x-6">
-            <Badge className="font-bold">French</Badge>
-            <Badge className="font-bold">English</Badge>
+            <div className="flex flex-wrap sm:justify-center gap-2">
+              <Badge className="font-bold">French</Badge>
+              <Badge className="font-bold">English</Badge>
+            </div>
           </div>
         </div>
 
-        <div className="z-10 flex flex-col gap-2 items-center lg:items-start col-span-1 max-sm:mt-0 max-lg:mt-8 lg:col-span-4 lg:col-start-2 2xl:ml-8">
-          <div className="flex flex-col gap-y-12 max-sm:px-4 text-left w-full">
+        <div className="z-10 flex flex-col gap-2 items-center lg:items-start col-span-1 max-sm:mt-[calc(var(--u)*2.618)] max-lg:mt-8 lg:col-span-4 lg:col-start-2 2xl:ml-8">
+          <div className="flex flex-col gap-y-12 text-left w-full">
             <div
               id="introduction"
-              className="scroll-mt-26 sm:scroll-mt-32 flex flex-col gap-2 items-center lg:items-start w-full"
+              className="scroll-mt-26 sm:scroll-mt-32 flex flex-col gap-2 max-sm:gap-0 items-center lg:items-start w-full"
             >
-              <div className="max-sm:min-h-[32svh]">
+              <div>
                 <div className="flex justify-center lg:justify-start">
                   <BookCallBadge />
                 </div>
 
-                <TypographyH1 className="my-2 max-[424px]:text-3xl sm:text-4xl md:text-5xl lg:text-left">
+                <TypographyH1 className="my-2 max-sm:mt-[calc(var(--u)*1.618)] max-sm:mb-0 max-[424px]:text-3xl sm:text-4xl md:text-5xl lg:text-left">
                   Siegfried Bozza
                 </TypographyH1>
-                <TypographyH2 className="text-center text-muted-foreground sm:text-xl md:text-2xl lg:text-3xl lg:text-left text-balance">
-                  <span className="whitespace-nowrap">Full-stack engineer</span>{" "}
+                <TypographyH2 className="text-center text-muted-foreground max-sm:text-lg max-sm:leading-snug max-sm:mt-[var(--u)] max-sm:pb-0 sm:text-xl md:text-2xl lg:text-3xl lg:text-left text-balance">
+                  <span className="whitespace-nowrap">{ROLE}</span>{" "}
                   <span className="whitespace-nowrap">
-                    <span aria-hidden="true">·</span> Web3
-                  </span>{" "}
-                  <span className="whitespace-nowrap">
-                    <span aria-hidden="true">·</span> AI integrations
+                    <span aria-hidden="true">·</span> {HEADLINE_STACK}
                   </span>
                 </TypographyH2>
               </div>
 
-              <div className="mt-2 mb-4">
+              <div className="mt-2 mb-4 max-sm:mt-[calc(var(--u)*2.618)] max-sm:mb-[calc(var(--u)*4.236)]">
                 <BadgeExternalLinks />
               </div>
 
-              <p className="w-full text-left text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-1">
+              <p className="w-full text-left text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-1 max-sm:hidden">
                 From wet labs to Web3
               </p>
 
@@ -126,9 +154,16 @@ export default function Page() {
               </TypographyH2>
               <AllSkillsBadges />
             </div>
+
+            <div id="bio" className="scroll-mt-24">
+              <TypographyH2 className="font-extrabold">Short bio</TypographyH2>
+              <p className="mt-3 max-w-prose text-sm text-muted-foreground sm:text-base">
+                {PERSON_SUMMARY}
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </main>
-  )
+    </div>
+  );
 }

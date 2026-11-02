@@ -1,37 +1,35 @@
-import { TypographyP } from "@/app/_components/typography/p"
-import { BIOVERIFY_LINKS } from "@/app/_constants/projects"
-import type { FC } from "react"
-import { ArticleCta } from "./article-cta"
-import { ArticleFooterLinks } from "./article-footer-links"
-import { ArticleGif } from "./article-gif"
-import { ArticleHeader } from "./article-header"
-import { CalloutCard } from "./callout-card"
-import { DiagramWrap } from "./diagram-wrap"
-import { Figure1EventPipeline } from "./diagrams/figure-1-event-pipeline"
-import { Figure2SubmissionAgent } from "./diagrams/figure-2-submission-agent"
-import { Figure3Vrf } from "./diagrams/figure-3-vrf"
-import { Figure4ReviewAgent } from "./diagrams/figure-4-review-agent"
-import { OutcomesTable } from "./outcomes-table"
-import { PhaseCard } from "./phase-card"
-import { PullQuote } from "./pull-quote"
-import { RecapCard } from "./recap-card"
-import { TechTag } from "./tech-tag"
-import { TldrCard } from "./tldr-card"
+import type { FC } from "react";
+import { TypographyP } from "@/app/_components/typography/p";
+import { BIOVERIFY_LINKS } from "@/app/_constants/projects";
+import { ArticleCta } from "./article-cta";
+import { ArticleFooterLinks } from "./article-footer-links";
+import { ArticleGif } from "./article-gif";
+import { ArticleHeader } from "./article-header";
+import { CalloutCard } from "./callout-card";
+import { DiagramWrap } from "./diagram-wrap";
+import { Figure1EventPipeline } from "./diagrams/figure-1-event-pipeline";
+import { Figure2SubmissionAgent } from "./diagrams/figure-2-submission-agent";
+import { Figure3Vrf } from "./diagrams/figure-3-vrf";
+import { Figure4ReviewAgent } from "./diagrams/figure-4-review-agent";
+import { OutcomesTable } from "./outcomes-table";
+import { PhaseCard } from "./phase-card";
+import { PullQuote } from "./pull-quote";
+import { RecapCard } from "./recap-card";
+import { TechTag } from "./tech-tag";
+import { TldrCard } from "./tldr-card";
 
 const h2 =
-  "mb-5 mt-14 border-b border-border pb-3 font-[family-name:var(--font-serif)] text-[clamp(1.5rem,4vw,1.75rem)] font-normal leading-snug text-foreground first:mt-0 dark:border-white/10"
+  "mb-5 mt-14 border-b border-border pb-3 font-[family-name:var(--font-serif)] text-[clamp(1.5rem,4vw,1.75rem)] font-normal leading-snug text-foreground first:mt-0 dark:border-white/10";
 
 const h3 =
-  "mb-3.5 mt-9 text-[15px] font-medium uppercase tracking-wide text-accent-blue dark:text-[#2dd4bf]"
+  "mb-3.5 mt-9 text-[15px] font-medium uppercase tracking-wide text-accent-blue dark:text-[#2dd4bf]";
 
 const dashList =
-  "mb-6 list-none space-y-2 pl-0 [&>li]:relative [&>li]:pl-6 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:text-teal-600 [&>li]:before:content-['—'] dark:[&>li]:before:text-[#2dd4bf]"
+  "mb-6 list-none space-y-2 pl-0 [&>li]:relative [&>li]:pl-6 [&>li]:before:absolute [&>li]:before:left-0 [&>li]:before:text-teal-700 [&>li]:before:content-['—'] dark:[&>li]:before:text-[#2dd4bf]";
 
 export const BioVerifyArticle: FC = () => {
-  const BIOVERIFY_GITHUB = BIOVERIFY_LINKS.github
-  const BIOVERIFY_LIVE = BIOVERIFY_LINKS.live
-  const TELEGRAM_URL =
-    process.env.NEXT_PUBLIC_BIOVERIFY_TELEGRAM_URL?.trim() ?? ""
+  const BIOVERIFY_GITHUB = BIOVERIFY_LINKS.github;
+  const BIOVERIFY_LIVE = BIOVERIFY_LINKS.live;
 
   return (
     <>
@@ -54,17 +52,17 @@ export const BioVerifyArticle: FC = () => {
             <strong>BioVerify</strong>
           )}
           : a full-stack agentic DApp where authors stake ETH on their research,
-          reviewers are selected by Chainlink VRF, every artifact is
-          content-addressed on <strong>IPFS</strong>, and AI agents coordinate
-          the rest — with humans making every verdict call. You can try it on
-          the{" "}
+          reviewers are selected by Chainlink VRF, the submission and its final
+          verdict are content-addressed on <strong>IPFS</strong>, and AI agents
+          coordinate the rest, with people writing the reviews and Gemini or a
+          senior reviewer setting the verdict. You can try it on the{" "}
           {BIOVERIFY_LIVE ? (
             <a href={BIOVERIFY_LIVE}>live demo</a>
           ) : (
             "live demo"
           )}{" "}
-          (Base Sepolia and Ethereum Sepolia, no setup), and the architecture
-          and source are{" "}
+          (Base Sepolia and Ethereum Sepolia, no local setup), and the
+          architecture and source are{" "}
           {BIOVERIFY_GITHUB ? (
             <a href={BIOVERIFY_GITHUB}>open on GitHub</a>
           ) : (
@@ -74,18 +72,20 @@ export const BioVerifyArticle: FC = () => {
         </TypographyP>
 
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          This is a case study in trust-minimised coordination: the chain
-          records what happened, and agents orchestrate what happens next.
-          Having spent fifteen years in Molecular Biology and
-          Civil/Environmental Engineering before software — and having been on
-          the author side of peer review myself — I had a specific reason to
-          care. Rather than describe the stack in the abstract, this article
-          follows the system as a user experiences it, and introduces each piece
-          of technology precisely at the moment the story needs it.
+          This is a case study in on-chain coordination: the chain records what
+          happened, and agents orchestrate what happens next. One agent key
+          still settles every outcome, so it is not yet trust-minimised. Having
+          spent fifteen years in Molecular Biology and Civil/Environmental
+          Engineering before software — and having been on the author side of
+          peer review myself — I had a specific reason to care. Rather than
+          describe the stack in the abstract, this article follows the system as
+          a user experiences it, and introduces each piece of technology
+          precisely at the moment the story needs it.
         </TypographyP>
 
         <PullQuote>
-          &quot;Truth on-chain, orchestration off-chain — with humans involved in verdict calls.&quot;
+          &quot;Truth on-chain, orchestration off-chain — with humans involved
+          in verdict calls.&quot;
         </PullQuote>
 
         <h2 className={h2}>Why decentralised peer review — and why now</h2>
@@ -95,8 +95,8 @@ export const BioVerifyArticle: FC = () => {
           processes, inconsistent conflict disclosure, and reviewers who are
           rarely compensated. Blockchain cannot fix science, but it can make
           parts of the process verifiable — stakes and outcomes settle on-chain,
-          participants can prove what they signed, and for one specific
-          subproblem (selecting reviewers fairly){" "}
+          reviewers sign their reviews, which are checked off-chain, and for one
+          specific subproblem (drawing reviewers at random){" "}
           <TechTag variant="amber">Chainlink VRF</TechTag> attaches a
           cryptographic proof to the randomness so the draw can be audited.
         </TypographyP>
@@ -115,8 +115,8 @@ export const BioVerifyArticle: FC = () => {
               content: (
                 <>
                   <strong>What it is</strong> — a DeSci peer-review case study:
-                  stake, verifiable reviewer selection, AI screening, human
-                  verdicts, on-chain settlement.
+                  stake, verifiable reviewer selection, AI screening, signed
+                  human reviews, on-chain settlement.
                 </>
               ),
             },
@@ -125,8 +125,9 @@ export const BioVerifyArticle: FC = () => {
               content: (
                 <>
                   <strong>CQRS as a first principle</strong> — the contract
-                  emits events (writes); an off-chain Postgres projection
-                  handles all reads. The chain is truth, not a database.
+                  emits events (writes); an off-chain Postgres projection serves
+                  the reads of publications and members. The chain is truth, not
+                  a database.
                 </>
               ),
             },
@@ -134,11 +135,10 @@ export const BioVerifyArticle: FC = () => {
               key: "durable",
               content: (
                 <>
-                  <strong>Durable coordination</strong> — Inngest wraps agents
-                  in durable <code>step.run</code> with retries and crash-resume
-                  on serverless; LangGraph <code>interrupt()</code> pauses for
-                  human signatures, and Postgres checkpointers persist graph
-                  state between resumes.
+                  <strong>Durable coordination</strong> — Inngest starts each
+                  agent run and retries it on failure; LangGraph{" "}
+                  <code>interrupt()</code> pauses for human signatures, and
+                  Postgres checkpointers persist graph state between resumes.
                 </>
               ),
             },
@@ -146,9 +146,11 @@ export const BioVerifyArticle: FC = () => {
               key: "hitl",
               content: (
                 <>
-                  <strong>Human-in-the-loop</strong> — AI agents coordinate the
-                  workflow, but reviewers make every verdict call; agents record
-                  and settle, they never override.
+                  <strong>Human-in-the-loop</strong> — human reviewers sign the
+                  peer verdicts and the senior reviewer has the final word after
+                  an escalation; an agent records and settles them. The
+                  plagiarism screen, the call to escalate and the verdict when
+                  there is no escalation are Gemini&apos;s.
                 </>
               ),
             },
@@ -172,10 +174,9 @@ export const BioVerifyArticle: FC = () => {
           own contract address, reward and slash pools, and reviewer pool. The
           same Solidity source is deployed to both networks, producing the same
           ABI on each — only per-chain parameters such as the Chainlink VRF
-          coordinator and subscription differ. This multi-chain design is
-          deliberate: BioVerify is chain-agnostic across EVM-compatible
-          networks; the same coordination patterns work without modifying
-          application logic.
+          coordinator and subscription differ. The two networks are hardcoded in
+          the app, though: adding a chain means a new deployment plus changes in
+          several places.
         </TypographyP>
 
         <h3 className={h3}>
@@ -184,30 +185,30 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           The author fills a form with the components of their research: title,
           abstract, authors, body content, and any supporting files. Before
-          anything touches the blockchain, each of these components is uploaded
-          to <strong>IPFS</strong> — the InterPlanetary File System.
+          anything touches the blockchain, these components go to{" "}
+          <strong>IPFS</strong> — the InterPlanetary File System.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           IPFS addresses files by content, not location: a <strong>CID</strong>{" "}
-          (Content IDentifier) is a cryptographic hash of the bytes. Change a
-          single byte and the CID changes — once recorded on-chain, it is a
-          commitment to exactly those bytes.
+          (Content IDentifier) is derived from a cryptographic hash of the
+          content. Change a single byte and the CID changes — once recorded
+          on-chain, it is a commitment to exactly those bytes.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           BioVerify uses <TechTag>Pinata</TechTag> as the IPFS pinning service.
-          Each component is uploaded individually, producing its own CID. The
-          frontend then assembles a final <strong>research manifest</strong> — a
-          structured JSON object containing all the component CIDs — and pins
-          that too. The manifest&apos;s CID becomes the single identifier for
-          the whole submission.
+          The title, abstract, body and each attached file are uploaded
+          individually, each with its own CID. The server then pins a{" "}
+          <strong>research manifest</strong>, a JSON object with those CIDs plus
+          the authors and the license. The manifest&apos;s CID becomes the
+          single identifier for the whole submission.
         </TypographyP>
 
         <h3 className={h3}>Calling the contract: stake and submission fee</h3>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           With the manifest CID in hand, the author calls{" "}
           <code>submitPublication(cid)</code> on the{" "}
-          <TechTag variant="blue">BioVerifyV3</TechTag> contract — alongside two
-          distinct ETH amounts:
+          <TechTag variant="blue">BioVerifyV3</TechTag> contract — with one
+          payment that covers two amounts:
         </TypographyP>
         <ul className={dashList}>
           <li>
@@ -225,10 +226,12 @@ export const BioVerifyArticle: FC = () => {
             publisher stake; callers may overpay so spikes in gas or VRF costs
             stay covered. When <code>pickReviewers</code> runs, the contract
             forwards <code>paidSubmissionFee</code> into the VRF subscription
-            via <code>fundSubscriptionWithNative</code>, so each submission
-            directly tops up the oracle budget. The frontend can estimate that
-            fee in real time from current conditions while the contract enforces
-            a minimum.
+            via <code>fundSubscriptionWithNative</code>, so each submission that
+            passes screening tops up the oracle budget. An early-slashed
+            submission never reaches that call: its fee stays in the contract,
+            outside both pools, and nothing in the normal flow moves it. The
+            frontend can estimate that fee in real time from current conditions
+            while the contract enforces a minimum.
           </li>
         </ul>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
@@ -246,7 +249,7 @@ export const BioVerifyArticle: FC = () => {
           title="From on-chain event to off-chain intelligence"
         />
 
-        <h3 className={h3}>Getter-less contract: CQRS as a first principle</h3>
+        <h3 className={h3}>Getter-light contract: CQRS as a first principle</h3>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <code>BioVerifyV3</code> is deliberately getter-light. It emits a
           granular event for every state transition and avoids exposing view
@@ -256,14 +259,15 @@ export const BioVerifyArticle: FC = () => {
           read model.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          The contract benefits: smaller bytecode means cheaper deployment,
-          lower ongoing interaction gas where it matters, and a smaller attack
-          surface to audit. The frontend benefits: the UI reads a fast Postgres
-          projection rather than orchestrating dozens of <code>eth_call</code>{" "}
-          requests against the chain — work the EVM is not optimised for product
-          lists — while Drizzle-backed queries support rich filtering, sorting,
-          and pagination. The chain is the source of truth; Postgres reflects
-          that truth and is the source of responsiveness, lowering UI latency.
+          The contract benefits: smaller bytecode means cheaper deployment and a
+          smaller surface to audit (every write emits events, so writes cost a
+          little more gas, not less). The frontend benefits: the UI reads a fast
+          Postgres projection rather than orchestrating dozens of{" "}
+          <code>eth_call</code> requests against the chain (the chain is not
+          built for product lists), while Drizzle-backed queries support rich
+          filtering, sorting, and pagination. The chain is the source of truth;
+          Postgres reflects that truth and is the source of responsiveness,
+          lowering UI latency.
         </TypographyP>
 
         <h3 className={h3}>Alchemy Notify: from block to webhook</h3>
@@ -272,11 +276,11 @@ export const BioVerifyArticle: FC = () => {
           webhook service. For each network, BioVerify configures one webhook
           scoped to a single contract address — the deployed{" "}
           <code>BioVerifyV3</code> — so Alchemy POSTs a signed payload
-          containing the event logs that contract emitted in each new confirmed
-          block. Two such webhooks run in parallel — one for Base Sepolia, one
-          for Ethereum Sepolia — both reacting to the same set of{" "}
-          <code>BioVerifyV3</code> events and both POSTing to the Next.js API
-          route at <code>/api/webhooks/alchemy/all-events</code>.
+          containing the event logs that contract emitted in each new block. Two
+          such webhooks run in parallel — one for Base Sepolia, one for Ethereum
+          Sepolia — both reacting to the same set of <code>BioVerifyV3</code>{" "}
+          events and both POSTing to the Next.js API route at{" "}
+          <code>/api/webhooks/alchemy/all-events</code>.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           That route runs as a <strong>Vercel serverless function</strong>. The
@@ -305,29 +309,32 @@ export const BioVerifyArticle: FC = () => {
           deliveries can repeat; they cannot roll the read model backward. A{" "}
           <TechTag variant="blue">viem</TechTag> WebSocket subscription to{" "}
           <code>NewPublicationStatus</code> invalidates the matching TanStack
-          Query keys the moment the event is mined, so open lists update without
-          polling.
+          Query keys about three seconds after the event is mined (a delay that
+          gives the webhook time to update Postgres), so open lists update
+          without polling.
         </TypographyP>
 
         <CalloutCard label="Optimistic concurrency (OCC)">
           Webhooks can replay or arrive out of chronological order — that is
           intrinsic to networked indexers and retries. BioVerify attaches a
-          deterministic ordering stamp from Ethereum —{" "}
+          deterministic ordering stamp from the chain —{" "}
           <strong>block number plus log index</strong> — to each upsert. An
           update applies only when the inbound event sorts strictly newer than
           what is already stored. Duplicates converge idempotently; stale
-          deliveries cannot rewind fresher projections. That guards the
-          projection against duplication and reorder chaos that webhook
-          pipelines naturally introduce.
+          deliveries cannot rewind fresher projections. There is one stamp per
+          row, though, so a late event that touches a different column is
+          dropped, and a projection that fails after the webhook&apos;s 200 is
+          lost.
         </CalloutCard>
 
         <DiagramWrap
           label="Figure 1 — Event pipeline: from contract event to read model and agents"
           caption={
             <>
-              Every event from the contract flows through the same pipeline —
-              decoded, verified, projected to Postgres. Only two specific
-              contract events also dispatch an Inngest event that wraps a{" "}
+              Every event from the contract goes through the same webhook:
+              verified, decoded and, for sixteen of the nineteen, projected to
+              Postgres. Only two specific contract events also dispatch an
+              Inngest event that wraps a{" "}
               <TechTag variant="purple">LangGraph</TechTag> agent.
             </>
           }
@@ -350,8 +357,10 @@ export const BioVerifyArticle: FC = () => {
           <code>Agent_FinalizePublication</code>, treasury moves (
           <code>Agent_TransferSlashPoolToTreasury</code>,{" "}
           <code>Agent_MoveSlashPoolToRewardPool</code>). The projector in{" "}
-          <code>@packages/cqrs</code> folds these into three Drizzle-backed
-          tables: protocol, member, publication.
+          <code>@packages/cqrs</code> folds sixteen of them into three
+          Drizzle-backed tables: protocol, member, publication.{" "}
+          <code>Claim</code>, <code>MemberLockedStakeOnPubId</code> and{" "}
+          <code>Agent_RequestVRF</code> are not projected.
         </CalloutCard>
 
         <h3 className={h3}>
@@ -380,9 +389,10 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Why Inngest?</strong> Vercel serverless functions have tight
           per-invocation time limits and no guaranteed in-memory state between
-          invocations. Inngest wraps each agent run in a durable execution
-          shell: automatic retries, step isolation so successful steps are not
-          replayed, and clean crash-recovery if a worker dies mid-run. It is{" "}
+          invocations. Inngest starts each agent run and retries it on failure.
+          Each agent runs inside one <code>step.run</code>, so a retry re-runs
+          the whole agent, which still has to finish within one function call,
+          and its commands read state before writing where they can. It is{" "}
           <em>not</em> the mechanism that waits days for a reviewer — that pause
           lives in LangGraph.
         </TypographyP>
@@ -440,17 +450,17 @@ export const BioVerifyArticle: FC = () => {
           it does, step by step.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          <strong>Fetch from IPFS.</strong> The agent retrieves the full
-          publication manifest by its CID. This is the same content the author
-          uploaded — content-addressed, so the agent is guaranteed to read
-          exactly what was submitted, unchanged.
+          <strong>Fetch from IPFS.</strong> The agent fetches the manifest by
+          its CID, then the abstract it points to. This is the same content the
+          author uploaded, addressed by its CID. The agent fetches it through
+          the Pinata gateway without re-hashing it, so this relies on trusting
+          the gateway.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Plagiarism check with Exa.</strong> The agent passes the
-          abstract to <TechTag>Exa AI</TechTag> — a semantic web search API
-          optimised for research literature. Exa returns a ranked list of
-          potentially similar publications from across the public web and
-          academic databases.
+          abstract to <TechTag>Exa AI</TechTag>, a neural web search API,
+          limited to its &quot;research paper&quot; category. Exa returns up to
+          five similar papers, each with its text and a relevance score.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>LLM synthesis with Gemini.</strong> The raw Exa results are
@@ -508,8 +518,9 @@ export const BioVerifyArticle: FC = () => {
           </em>
         </TypographyP>
         <ArticleGif
-          src="/projects/bioverify/gifs/early-slash-01-submit.gif"
-          alt="User B on tablet submits a publication that duplicates existing literature; transaction confirmed on Base Sepolia"
+          src="/projects/bioverify/videos/early-slash-01-submit.mp4"
+          height={418}
+          alt="User B on a tablet copies a published paper's abstract from PubMed into the BioVerify form on Base Sepolia and reaches the submit step"
           label="Step 1 — User B submits on Base Sepolia"
           caption={
             <>
@@ -519,8 +530,9 @@ export const BioVerifyArticle: FC = () => {
         />
         <ArticleGif
           className="mt-4"
-          src="/projects/bioverify/gifs/early-slash-02-realtime.gif"
-          alt="User A on mobile sees the new publication row appear in real time over WebSocket without a wallet; status ends at EARLY_SLASHED"
+          src="/projects/bioverify/videos/early-slash-02-realtime.mp4"
+          height={418}
+          alt="User B's submission is confirmed on Base Sepolia; User A on mobile sees the new publication row appear in real time over WebSocket without a wallet; status ends at EARLY_SLASHED"
           label="Step 2 — Realtime list → EARLY_SLASHED"
           caption={
             <>
@@ -537,7 +549,7 @@ export const BioVerifyArticle: FC = () => {
         <PhaseCard
           number="04"
           label="Verifiable randomness"
-          title="Fair reviewer selection via Chainlink VRF"
+          title="Verifiable reviewer selection via Chainlink VRF"
         />
 
         <h3 className={h3}>The reviewer pool: anyone can join by staking</h3>
@@ -546,10 +558,11 @@ export const BioVerifyArticle: FC = () => {
           <strong>reviewer stake</strong> into the contract. This stake is the
           reviewer&apos;s skin in the game: if a reviewer delivers a verdict
           that is later deemed negligent (more on this below), their stake is
-          slashed. Staking is also what makes Sybil attacks expensive: each fake
-          reviewer account costs real ETH, and VRF only draws a handful of
-          reviewers per publication, so the probability that any given fake
-          account is drawn falls as the honest pool grows.
+          slashed. Staking also puts a price on Sybil attacks: each fake
+          reviewer account has to keep a reviewer stake deposited to stay in the
+          pool (0.001 test ETH on the current deployments), and VRF only draws a
+          handful of reviewers per publication, so the probability that any
+          given fake account is drawn falls as the honest pool grows.
         </TypographyP>
 
         <h3 className={h3}>Why VRF, and why it matters when stakes are real</h3>
@@ -562,11 +575,13 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <TechTag variant="amber">Chainlink VRF v2.5</TechTag> follows the
           usual hybrid smart-contract pattern: random words are produced
-          off-chain together with a cryptographic proof; the consumer contract
-          verifies that proof on-chain before consuming the words. The draw is
-          not merely opaque — it is <strong>verifiable</strong>. Think of it as
-          a public lottery where you do not have to trust the organiser: anyone
-          can re-check the draw afterward.
+          off-chain together with a cryptographic proof; the Chainlink VRF
+          coordinator verifies that proof on-chain before calling back the
+          consumer contract. The draw is not merely opaque — it is{" "}
+          <strong>verifiable</strong>. Think of it as a public lottery that
+          anyone can re-check afterward. One caveat: the contract owner can
+          change the VRF coordinator, so the draw is only as neutral as the
+          coordinator it points to (listed under known edge cases).
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           In BioVerify&apos;s flow: the agent calls <code>pickReviewers()</code>{" "}
@@ -575,12 +590,12 @@ export const BioVerifyArticle: FC = () => {
           reviewers from the staked pool and emits{" "}
           <code>Agent_PickReviewers</code>. That event re-enters the exact same
           event pipeline — Alchemy Notify, HMAC-verified webhook, Neon Postgres
-          projection — closing the loop without any special-casing.
+          projection — closing the loop through the same webhook and projector.
         </TypographyP>
 
         <DiagramWrap
           label="Figure 3 — Chainlink VRF: verifiable reviewer selection"
-          caption="Random words come back with a cryptographic proof; the contract verifies the proof on-chain before drawing reviewers from the staked pool."
+          caption="Random words come back with a cryptographic proof; the VRF coordinator verifies it on-chain, then calls back BioVerifyV3, which draws reviewers from the staked pool."
         >
           <Figure3Vrf />
         </DiagramWrap>
@@ -593,7 +608,8 @@ export const BioVerifyArticle: FC = () => {
           </em>
         </TypographyP>
         <ArticleGif
-          src="/projects/bioverify/gifs/submit-success-01-form.gif"
+          src="/projects/bioverify/videos/submit-success-01-form.mp4"
+          height={442}
           alt="Author fills the publication form on the DApp with metadata and IPFS manifest, ready to submit"
           label="Step 1 — Fill the publication form"
           caption={
@@ -605,20 +621,22 @@ export const BioVerifyArticle: FC = () => {
         />
         <ArticleGif
           className="mt-4"
-          src="/projects/bioverify/gifs/submit-success-02-tx.gif"
-          alt="Author confirms the on-chain submitPublication transaction; the Telegram bot mirrors SUBMITTED then IN_REVIEW as the events are mined"
+          src="/projects/bioverify/videos/submit-success-02-tx.mp4"
+          height={442}
+          alt="Author confirms the on-chain submitPublication transaction; the Telegram bot posts the agents' alerts as the publication moves from SUBMITTED to IN_REVIEW"
           label="Step 2 — Submitted → In Review"
           caption={
             <>
-              The author confirms the on-chain transaction. The bot receives
-              status notifications as the publication moves from{" "}
+              The author confirms the on-chain transaction. The bot posts status
+              notifications as the publication moves from{" "}
               <strong>SUBMITTED</strong> to <strong>IN_REVIEW</strong>.
             </>
           }
         />
         <ArticleGif
           className="mt-4"
-          src="/projects/bioverify/gifs/submit-success-03-in-review.gif"
+          src="/projects/bioverify/videos/submit-success-03-in-review.mp4"
+          height={442}
           alt="Publication detail page on the DApp showing IN_REVIEW status and the Chainlink VRF–selected reviewer addresses"
           label="Step 3 — VRF reviewers on the publication detail"
           caption={
@@ -678,29 +696,17 @@ export const BioVerifyArticle: FC = () => {
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           The signed payload is posted to the backend off-chain. After viem
-          verifies the signature and confirms the signer is exactly the reviewer
-          assigned to this publication, the agent calls{" "}
+          verifies the signature and confirms the signer is one of the reviewers
+          drawn for this publication, the agent calls{" "}
           <code>recordReview(pubId, reviewer)</code> through the agent wallet.
           On-chain, that call only records that this reviewer has submitted
           their review for this publication; the qualitative verdict stays in
           LangGraph until settlement encodes honest versus negligent addresses.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          Anyone can also follow the public{" "}
-          {TELEGRAM_URL ? (
-            <a
-              href={TELEGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-teal-700 underline underline-offset-4 hover:underline dark:text-[#2dd4bf]"
-            >
-              BioVerify Telegram bot
-            </a>
-          ) : (
-            <strong>BioVerify Telegram bot</strong>
-          )}
-          , which broadcasts contract state transitions in real time across both
-          Base Sepolia and Ethereum Sepolia.
+          A Telegram bot also posts an alert to one chat at each step
+          (screening, review and settlement, on both networks); the split-view
+          demos show it.
         </TypographyP>
 
         <h3 className={h3}>
@@ -716,34 +722,35 @@ export const BioVerifyArticle: FC = () => {
         <ul className={dashList}>
           <li>
             <strong>Peer reviewers.</strong> The non-senior members of the VRF
-            draw. They submit independent pass/fail verdicts. When both agree,
-            the graph routes straight to settlement —{" "}
-            <code>publishPublication</code> if the shared verdict is pass,{" "}
-            <code>slashPublication</code> if it is fail; in that branch the
-            settlement helper classifies both peers as honest: each gets their
-            stake back, the reviewer reward, and a reputation bump — the senior
-            reviewer is not invoked.
+            draw. They submit independent pass/fail verdicts, and Gemini reads
+            them and returns pass, fail or escalate. When it settles —{" "}
+            <code>publishPublication</code> on pass,{" "}
+            <code>slashPublication</code> on fail — each peer whose verdict
+            matches Gemini&apos;s is honest and gets their stake back, the
+            reviewer reward and a reputation bump; a peer who disagrees is
+            negligent and is slashed. The senior reviewer is not asked.
           </li>
           <li>
             <strong>Senior reviewer.</strong> Drawn alongside peers but
-            designated as the highest-reputation reviewer of the three. If peers
-            disagree, the workflow escalates to the senior reviewer (tie-break
-            assisted by Gemini), who signs a binding verdict. The peer who
-            aligned with the senior is honest; the dissenting peer is negligent
-            and is slashed (stake to the slash pool, reputation drop). Even when
-            peers agree, the senior remains economically aligned: settlement
-            code unconditionally credits them as honest — their locked stake
-            unlocks and they still receive the reviewer reward, on the grounds
-            that they served as the standby escalation authority.
+            designated as the highest-reputation reviewer of the three. If
+            Gemini escalates (its prompt asks for that when the peers split, but
+            the code does not force it), the senior reviewer signs a binding
+            verdict: the code enforces it, and Gemini only rewrites the
+            reasoning. The peer who aligned with the senior is honest; the
+            dissenting peer is negligent and is slashed (stake to the slash
+            pool, reputation drop). Settlement always counts the senior as
+            honest, with or without escalation: their locked stake unlocks and
+            they get the reviewer reward for standing by as the escalation
+            authority, so the senior is never slashed.
           </li>
         </ul>
 
         <h3 className={h3}>Possible outcomes and what triggers settlement</h3>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           The review agent settles the publication once the binding verdict is
-          established — either by peer reviewer consensus or senior reviewer
-          decision. It calls one of two contract functions through the agent
-          address:
+          established — Gemini&apos;s verdict or, after escalation, the senior
+          reviewer&apos;s. It calls one of two contract functions through the
+          agent address:
         </TypographyP>
         <ul className={dashList}>
           <li>
@@ -780,11 +787,11 @@ export const BioVerifyArticle: FC = () => {
           label="Figure 4 — Review agent: HITL, escalation, and settlement"
           caption={
             <>
-              The review agent runs under Inngest for durable{" "}
-              <code>step.run</code> boundaries while LangGraph owns human
-              pauses: the checkpointer restores state after each{" "}
-              <code>interrupt()</code> so the graph knows both what it last knew
-              and what must happen next.
+              Inngest starts the review agent and retries that first run; later
+              reviews resume it from a Next.js server action, with no retry.
+              LangGraph owns the human pauses: the checkpointer restores state
+              after each <code>interrupt()</code> so the graph knows both what
+              it last knew and what must happen next.
             </>
           }
         >
@@ -800,7 +807,8 @@ export const BioVerifyArticle: FC = () => {
           <strong>PUBLISHED</strong>.
         </TypographyP>
         <ArticleGif
-          src="/projects/bioverify/gifs/peer-review-01-pass.gif"
+          src="/projects/bioverify/videos/peer-review-01-pass.mp4"
+          height={446}
           alt="First peer reviewer signs an EIP-712 pass verdict off-chain in their wallet; the agent records the review on-chain"
           label="Step 1 — First peer reviewer: PASS (EIP-712 signature)"
           caption={
@@ -812,7 +820,8 @@ export const BioVerifyArticle: FC = () => {
         />
         <ArticleGif
           className="mt-4"
-          src="/projects/bioverify/gifs/peer-review-02-fail.gif"
+          src="/projects/bioverify/videos/peer-review-02-fail.mp4"
+          height={446}
           alt="Second peer reviewer submits a fail verdict; the two reviews now conflict and the workflow escalates"
           label="Step 2 — Second peer reviewer: FAIL → conflict, escalation"
           caption={
@@ -824,30 +833,33 @@ export const BioVerifyArticle: FC = () => {
         />
         <ArticleGif
           className="mt-4"
-          src="/projects/bioverify/gifs/peer-review-03-senior-pass.gif"
-          alt="Split view: Telegram bot shows both peer reviews and the agent's escalation decision; the senior reviewer submits a tie-breaking pass"
+          src="/projects/bioverify/videos/peer-review-03-senior-pass.mp4"
+          height={452}
+          alt="Split view: Telegram bot shows both peer reviews recorded and Gemini's ESCALATE decision; the senior reviewer fills in a tie-breaking pass"
           label="Step 3 — Senior reviewer breaks the tie (PASS)"
           caption={
             <>
               <em>
                 Split view: Telegram bot (left) and senior reviewer (right).
               </em>{" "}
-              The bot shows both peer reviews and the agent&apos;s decision to
-              escalate. The senior reviewer submits a tie-breaking{" "}
+              The bot shows both peer reviews recorded and the agent&apos;s
+              decision to escalate. The senior reviewer fills in a tie-breaking{" "}
               <strong>pass</strong>.
             </>
           }
         />
         <ArticleGif
           className="mt-4"
-          src="/projects/bioverify/gifs/peer-review-04-published.gif"
-          alt="Telegram bot shows PUBLISHED status; the publication detail page resolves the final verdict CID from IPFS after the senior reviewer's tie-break"
+          src="/projects/bioverify/videos/peer-review-04-published.mp4"
+          height={452}
+          alt="The senior reviewer signs the pass; Telegram bot reports that the publication passed review; the publication detail page resolves the final verdict CID from IPFS after the senior reviewer's tie-break"
           label="Step 4 — PUBLISHED with the verdict resolved from IPFS"
           caption={
             <>
-              After the senior review, Telegram reflects{" "}
-              <strong>PUBLISHED</strong> and the detail page shows the final
-              verdict resolved from IPFS.
+              After the senior review, Telegram reports that the publication
+              passed review, and the detail page shows{" "}
+              <strong>PUBLISHED</strong> with the final verdict resolved from
+              IPFS.
             </>
           }
         />
@@ -894,8 +906,8 @@ export const BioVerifyArticle: FC = () => {
               content: (
                 <>
                   Review Agent: LangGraph <code>interrupt()</code> while
-                  reviewers sign EIP-712 payloads → consensus or escalation →{" "}
-                  <code>publishPublication</code> /{" "}
+                  reviewers sign EIP-712 payloads → Gemini verdict or escalation
+                  → <code>publishPublication</code> /{" "}
                   <code>slashPublication</code>
                 </>
               ),
@@ -918,26 +930,27 @@ export const BioVerifyArticle: FC = () => {
         <h2 className={h2}>Incentives: making honesty the rational choice</h2>
 
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          The economic mechanics aim for honest participation to be the dominant
-          strategy inside a trust-minimised system — not by assuming
-          participants are virtuous, but by making dishonesty costly in every
-          scenario the contract can observe.
+          The economic mechanics aim to make careful reviewing pay: a reviewer
+          who matches the binding verdict gets their stake back plus a reward,
+          and one who does not is slashed. The contract never sees the verdicts;
+          it applies the honest and negligent lists the agent sends.
         </TypographyP>
 
         <OutcomesTable />
 
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>
-            Honesty is measured against the binding verdict, not the
-            paper&apos;s outcome.
+            Honesty means matching the binding verdict, whichever way it goes.
           </strong>{" "}
-          When peer reviewers agree, both peers aligned with that verdict are
-          rewarded; the senior is always credited as honest at settlement so
-          their standby stake and reward settle cleanly. When peers conflict,
-          the senior reviewer&apos;s verdict is binding: the matching peer is
-          honest; the dissenting peer is negligent. The system is intentionally
-          simple, with a clear limitation: a wrong or compromised senior
-          reviewer gets the final word — the roadmap addresses this with
+          Without escalation, Gemini&apos;s verdict is binding: each peer who
+          matches it is rewarded, and a peer who disagrees is negligent. After
+          escalation, the senior reviewer&apos;s verdict is binding: the
+          matching peer is honest; the dissenting peer is negligent. The senior
+          is always credited as honest at settlement so their standby stake and
+          reward settle cleanly. The system is intentionally simple, with clear
+          limitations: without escalation, Gemini&apos;s reading of the reviews
+          decides who is slashed, and after escalation a wrong or compromised
+          senior reviewer gets the final word — the roadmap addresses this with
           weighted majority voting based on on-chain reputation.
         </TypographyP>
 
@@ -946,11 +959,12 @@ export const BioVerifyArticle: FC = () => {
         <h2 className={h2}>Security as a first-class concern</h2>
 
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          <strong>CEI pattern</strong> (Checks–Effects–Interactions) is applied
-          consistently across external state-mutating functions in{" "}
-          <code>BioVerifyV3</code>. OpenZeppelin <code>nonReentrant</code>{" "}
-          additionally guards ETH-out paths: <code>claim</code> and{" "}
-          <code>transferSlashPoolToTreasury</code>.
+          <code>claim</code> and <code>transferSlashPoolToTreasury</code>, the
+          two functions that send ETH to members or the treasury, follow the{" "}
+          <strong>CEI pattern</strong> (Checks–Effects–Interactions) and carry
+          OpenZeppelin <code>nonReentrant</code>. <code>pickReviewers</code>{" "}
+          stores the VRF request ID after calling the coordinator, because the
+          coordinator returns it.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Pull payments.</strong> As described above, pushing ETH to
@@ -962,12 +976,14 @@ export const BioVerifyArticle: FC = () => {
           agent.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          <strong>Contract test coverage.</strong> <code>BioVerifyV3</code>{" "}
-          ships with full coverage in Foundry: 50 tests across 12 suites — 100%
-          lines, statements, branches, and functions. VRF flows use{" "}
+          <strong>Contract test coverage.</strong> <code>BioVerifyV3</code> has
+          50 Foundry tests in 12 suites, across 11 test files;{" "}
+          <code>forge coverage</code> on 24 October 2026 shows 100% of lines
+          (240/240), branches (37/37) and functions. VRF flows use{" "}
           <code>VRFCoordinatorV2_5Mock</code> with deterministic fulfillment
           overrides and log assertions, including edge cases such as colliding
-          random words.
+          random words. Only the contract has tests; the agents, the read model
+          and the frontend have none.
         </TypographyP>
 
         <hr className="my-14 border-border dark:border-white/10" />
@@ -978,8 +994,8 @@ export const BioVerifyArticle: FC = () => {
           Peer review is the domain BioVerify is grounded in, but the
           coordination pattern is not specific to science. The same problems
           show up wherever multiple <strong>mutually untrusting actors</strong>{" "}
-          need a trust-minimised process, with verifiable selection,
-          long-running human-in-the-loop steps, and on-chain settlement.
+          need a shared process, with verifiable selection, long-running
+          human-in-the-loop steps, and on-chain settlement.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           These are not claims I have validated — they are domains where I see
@@ -1027,6 +1043,11 @@ export const BioVerifyArticle: FC = () => {
         </TypographyP>
         <ul className={dashList}>
           <li>
+            <strong>Less trust in the agent</strong>: separate the agent, the
+            treasury and the owner, and record each review&apos;s signature
+            on-chain so the contract can check who voted what.
+          </li>
+          <li>
             <strong>Author escalation path</strong> — today a plagiarism false
             positive from the submission agent (or a peer-review verdict the
             author believes is wrong) is terminal: settlement runs immediately
@@ -1046,12 +1067,12 @@ export const BioVerifyArticle: FC = () => {
           <li>
             <strong>Weighted majority voting</strong> — replaces the
             single-senior-reviewer tie-break with reputation-weighted consensus,{" "}
-            <strong>removing the single point of failure</strong>.
+            <strong>so no single reviewer has the final word</strong>.
           </li>
           <li>
             <strong>ZK reputation via Reclaim Protocol</strong> — lets reviewers
-            prove off-chain credentials (ORCID, h-index, institutional
-            affiliation) without doxxing themselves,{" "}
+            prove off-chain credentials (for example h-index or affiliation)
+            without doxxing themselves,{" "}
             <strong>
               enabling credentialed review without exposing identity
             </strong>
@@ -1061,8 +1082,8 @@ export const BioVerifyArticle: FC = () => {
             <strong>
               Encrypted access (Lit Protocol) and monetisation (x402)
             </strong>{" "}
-            — manuscript confidentiality during review; post-publication
-            micropayment gate routing revenue to researchers,{" "}
+            — manuscript confidentiality during review; micropayments to open
+            datasets and supplementary material,{" "}
             <strong>closing the privacy and monetisation gaps</strong>.
           </li>
           <li>
@@ -1074,8 +1095,19 @@ export const BioVerifyArticle: FC = () => {
             <strong>Known edge cases</strong> — empty or malformed IPFS payloads
             can leave a publication stuck in <code>SUBMITTED</code>; a gas spike
             during settlement can strand a publication in <code>IN_REVIEW</code>{" "}
-            with no retry. The README documents these at the file level,
-            including specific nodes and commands affected.
+            with no retry. <code>pickReviewers</code> checks{" "}
+            <code>status != IN_REVIEW</code> instead of{" "}
+            <code>== SUBMITTED</code>, so the agent could re-open a finished
+            publication; if the reviewer pool shrinks or rewards run out between
+            the VRF request and the callback, the callback reverts and the
+            publication stays <code>IN_REVIEW</code>; and linear probing on
+            collisions slightly biases the draw. The webhook compares its HMAC
+            with <code>===</code>, not in constant time, and the projection
+            follows the chain tip with no confirmation depth. One agent key,
+            which is also the treasury and the owner on both deployments,
+            settles every outcome, and as owner it can change the VRF
+            coordinator. The README documents these at the file level, including
+            specific nodes and commands affected.
           </li>
         </ul>
 
@@ -1093,8 +1125,8 @@ export const BioVerifyArticle: FC = () => {
           </li>
           <li>
             <strong>Agents &amp; orchestration</strong> — LangGraph (graph state
-            + HITL interrupts), Inngest (durable step.run, retries, crash
-            recovery)
+            + HITL interrupts), Inngest (starts and retries the agent runs that
+            chain events trigger)
           </li>
           <li>
             <strong>Data &amp; storage</strong> — Neon Postgres (CQRS read model
@@ -1104,8 +1136,8 @@ export const BioVerifyArticle: FC = () => {
             <strong>LLM &amp; search</strong> — Gemini, Exa AI
           </li>
           <li>
-            <strong>Frontend</strong> — Next.js, wagmi, viem, Reown AppKit,
-            TanStack Query, TanStack Table, nuqs
+            <strong>Frontend</strong> — Next.js, TypeScript, wagmi, viem, Reown
+            AppKit, TanStack Query, TanStack Table, nuqs
           </li>
           <li>
             <strong>Schema validation</strong> — Zod
@@ -1142,5 +1174,5 @@ export const BioVerifyArticle: FC = () => {
         <ArticleFooterLinks />
       </div>
     </>
-  )
-}
+  );
+};

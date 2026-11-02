@@ -14,7 +14,8 @@ export const Tooltip: FC<PropsWithChildren<Props>> = (props) => {
 
   return (
     <TTip>
-      <TooltipTrigger>{children}</TooltipTrigger>
+      {/* asChild: the child (a link) is the trigger, so no button is nested inside it. */}
+      <TooltipTrigger asChild>{children}</TooltipTrigger>
       <TooltipContent>
         <p>{desc}</p>
       </TooltipContent>

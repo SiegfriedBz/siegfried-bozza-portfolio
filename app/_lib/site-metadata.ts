@@ -1,44 +1,115 @@
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  "https://siegfried-bozza-portfolio-next.vercel.app";
+/** Canonical origin. Hardcoded like every public URL, so previews canonicalize to production. */
+export const SITE_URL = "https://www.siegfriedbozza.com";
 
 export const SITE_NAME = "Siegfried Bozza";
 
-export const DEFAULT_TITLE =
-  "Siegfried Bozza — Full-Stack Engineer · Web3 & AI Agents";
+/**
+ * Positioning. The hero, the About header, metadata, JSON-LD, llms.txt, the OG image and
+ * the manifest read it. The About prose, the CV and the GitHub/LinkedIn copy say the same
+ * things in their own words, so change them together.
+ */
+export const ROLE = "Full-Stack Web3 Engineer";
+
+export const PITCH =
+  "On my own time I build Web3 projects end to end on testnets: Solidity contracts tested with Foundry, contract events projected into Postgres, AI-agent workflows that settle on-chain, and the dApps on top.";
+
+/** The day job, before the pitch in the hero (the CV summary opens the same way). */
+export const DAY_JOB =
+  "In software since 2022, now a full-stack engineer at Prismo.io, a B2B SaaS built with Next.js, TypeScript and Supabase.";
+
+/** The About header's stack after the role: the app side and the chain side. */
+export const HEADLINE_STACK = "Next.js, TypeScript & Solidity";
+
+/** Also the first group of the STACK enum (app/_constants/stack.ts), in the same order. */
+export const CORE_STACK = [
+  "Next.js",
+  "TypeScript",
+  "Node.js",
+  "Solidity",
+  "Foundry",
+];
+
+export const AVAILABILITY = {
+  headline: "Open to relocation or full-time remote",
+  detail:
+    "Based in France (CET). I'd happily move for the right full-time role, Asia-Pacific most of all. Remote works for me too, and I'm flexible with time zones.",
+  /** Short forms for the About header. */
+  label: "Open to relocation",
+  location: "France (CET) · APAC preferred · or remote",
+};
+
+/**
+ * Short bio, in the first person like the rest of the site. The first sentence carries the
+ * name so it still works when quoted alone (search, AI answers, llms.txt, JSON-LD).
+ * Keep it factual and current.
+ */
+export const PERSON_SUMMARY =
+  "I'm Siegfried Bozza, a Full-Stack Web3 Engineer. I spent fifteen years in molecular-biology research and environmental engineering in France, Canada and Switzerland, then moved to software in 2022, starting at Renuo AG in Zurich. From mid-2023 to mid-2024 I studied full-stack and Web3 development while travelling, partly in Vietnam and Indonesia. Since 2024 I've been a full-stack engineer at Prismo.io, a B2B SaaS built with Next.js, TypeScript and Supabase. On my own time I build Web3 projects on testnets in TypeScript and Solidity, from the contracts to the backend and the app. Two of them, LabsTrail and BioVerify, are decentralized-science (DeSci) apps. I'd relocate for the right full-time role, ideally in Asia-Pacific, and I'm also open to remote work.";
+
+export const DEFAULT_TITLE = `${SITE_NAME} | ${ROLE}`;
 
 /** SERP-friendly (≤160 chars). */
 export const SITE_DESCRIPTION_SHORT =
-  "Full-Stack Engineer · React, Next.js, Solidity. BioVerify DeSci case study, agentic DApps. Open to remote or global relocation.";
+  "Full-Stack Web3 Engineer (Next.js, TypeScript, Solidity, Foundry), in software since 2022, Web3 projects on testnets. Relocation (APAC preferred) or remote.";
 
 /** Richer copy for Open Graph / Twitter. */
 export const SITE_DESCRIPTION_LONG =
-  "Full-Stack Engineer specializing in React, Next.js, TypeScript, and Solidity. Creator of BioVerify — a DeSci peer-review case study with durable AI agents (LangGraph, Inngest), Chainlink VRF, and on-chain staking. Also built GavL (real-time auctions with Supabase & Stripe), Bet2Gether (Chainlink prediction games), and Forge (ERC-1155 crafting). Open to remote roles or global relocation.";
+  "Full-Stack Web3 Engineer, in software since 2022, now on a B2B SaaS at Prismo.io (Next.js, TypeScript, Supabase). Personal Web3 projects, on testnets: LabsTrail (open paper ratings on the OriginTrail DKG; Solidity, Foundry, Inngest, Gemini), Wallet Watcher (a custody backend slice; Node.js, TypeScript, viem, Hono, SQLite), BioVerify (agentic DeSci peer review; Solidity, Foundry, Chainlink VRF, LangGraph, Inngest), Bet2Gether (prediction market; Solidity, Foundry, Chainlink) and Forge (ERC-1155 crafting; Solidity, Foundry). Also GavL, an auction app (Next.js, TypeScript, Supabase, Stripe). Open to relocation (Asia-Pacific first) or full-time remote.";
 
 export const DEFAULT_KEYWORDS = [
   "Siegfried Bozza",
-  "Full-Stack Engineer",
-  "React",
+  "Full-Stack Web3 Engineer",
+  "Web3 backend engineer",
   "Next.js",
   "TypeScript",
+  "Node.js",
   "Solidity",
-  "Web3",
+  "Foundry",
+  "React",
+  "viem",
+  "wagmi",
+  "Chainlink",
+  "custody backend",
+  "HD wallets",
+  "event-driven architecture",
+  "CQRS",
   "DeSci",
+  "decentralized science",
+  "OriginTrail DKG",
+  "LabsTrail",
   "BioVerify",
-  "AI Agents",
+  "AI agents",
   "LangGraph",
   "Inngest",
-  "Chainlink",
-  "Foundry",
-  "wagmi",
-  "viem",
-  "Drizzle ORM",
-  "Neon Postgres",
-  "Supabase",
-  "Tailwind CSS",
-  "shadcn/ui",
-  "DApp",
-  "decentralized science",
-  "peer review",
   "smart contracts",
+  "remote",
+  "relocation",
 ] as const;
+
+/**
+ * Default social preview (generated by app/opengraph-image.tsx). Pages that define
+ * their own `openGraph` / `twitter` objects must spread these in: a page-level
+ * object replaces the inherited one, so the file convention alone is not enough.
+ */
+export const DEFAULT_OG_IMAGES = [
+  {
+    url: "/opengraph-image",
+    width: 1200,
+    height: 630,
+    alt: DEFAULT_TITLE,
+  },
+];
+
+/**
+ * Date the static pages' content last changed: sitemap lastModified for the static and
+ * project pages, and the About page's JSON-LD dateModified. Update with content changes.
+ */
+export const SITE_LAST_UPDATED = "2026-11-02";
+
+/** Meta description that fits search snippets: cut at a word boundary, never mid-word. */
+export const toMetaDescription = (text: string, max = 155) => {
+  const clean = text.replace(/\*\*/g, "").replace(/\s+/g, " ").trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max);
+  return `${cut.slice(0, cut.lastIndexOf(" ")).replace(/[,;:.\s]+$/, "")}…`;
+};

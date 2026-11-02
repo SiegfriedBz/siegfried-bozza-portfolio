@@ -1,0 +1,64 @@
+/* MDX article body — typography plugin defaults, tuned to match the BioVerify article. */
+
+.post-prose {
+  --tw-prose-links: var(--accent-blue);
+  --tw-prose-invert-links: var(--accent-blue);
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.post-prose :where(h2, h3) {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.post-prose :where(h2) {
+  margin-top: 3rem;
+  font-size: 1.75rem;
+}
+
+.post-prose :where(h3) {
+  font-size: 1.3rem;
+}
+
+.post-prose :where(h2, h3) a {
+  color: inherit;
+  font-weight: inherit;
+}
+
+.post-prose :where(a) {
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+/* Inline code: no backticks, subtle pill */
+.post-prose :where(:not(pre) > code) {
+  border-radius: 0.375rem;
+  background: color-mix(in oklab, var(--muted) 85%, transparent);
+  padding: 0.1em 0.35em;
+  font-size: 0.875em;
+  font-weight: 500;
+}
+.post-prose :where(:not(pre) > code)::before,
+.post-prose :where(:not(pre) > code)::after {
+  content: none;
+}
+
+.post-prose :where(table) {
+  font-size: 0.9rem;
+}
+
+/* sugar-high token colours (code blocks are always on a dark surface) */
+.post-prose pre,
+.not-prose pre {
+  --sh-class: #79c0ff;
+  --sh-identifier: #e6edf3;
+  --sh-sign: #8b949e;
+  --sh-property: #d2a8ff;
+  --sh-entity: #7ee787;
+  --sh-jsxliterals: #a5d6ff;
+  --sh-string: #a5d6ff;
+  --sh-keyword: #ff7b72;
+  --sh-comment: #8b949e;
+}

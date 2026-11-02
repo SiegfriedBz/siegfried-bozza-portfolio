@@ -1,8 +1,19 @@
-import { BIOVERIFY_ARTICLE_HERO, PROJECTS } from "@/app/_constants/projects";
-import { SITE_NAME } from "@/app/_lib/site-metadata";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import type { FC } from "react";
+import { JsonLd } from "@/app/_components/json-ld";
+import { BIOVERIFY_ARTICLE_HERO, PROJECTS } from "@/app/_constants/projects";
+import {
+  breadcrumbNode,
+  personNode,
+  projectNode,
+  websiteNode,
+} from "@/app/_lib/json-ld";
+import {
+  DEFAULT_OG_IMAGES,
+  SITE_NAME,
+  toMetaDescription,
+} from "@/app/_lib/site-metadata";
 import { ProjectDetails } from "./_components/project-details";
 
 type Params = { slug: string };
@@ -12,6 +23,9 @@ export async function generateStaticParams() {
     return { slug: p.slug };
   });
 }
+
+// Unknown slugs get the prerendered 404 page instead of a page rendered on demand.
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
@@ -25,8 +39,11 @@ export async function generateMetadata({
     return { title: `Project | ${SITE_NAME}` };
   }
 
-  const title = `${project.title.h1} | ${SITE_NAME}`;
-  const description = project.description.short.slice(0, 160);
+  const title = project.title.meta
+    ? `${project.title.h1}: ${project.title.meta} | ${SITE_NAME}`
+    : `${project.title.h1} | ${SITE_NAME}`;
+  const description =
+    project.description.meta ?? toMetaDescription(project.description.short);
   const ogImage =
     project.links.ogImage?.trim() ||
     project.images[0] ||
@@ -40,13 +57,17 @@ export async function generateMetadata({
       title,
       description,
       url: `/projects/${slug}`,
-      ...(ogImage ? { images: [{ url: ogImage, alt: project.title.h1 }] } : {}),
+      siteName: SITE_NAME,
+      type: "website",
+      images: ogImage
+        ? [{ url: ogImage, alt: project.title.h1 }]
+        : DEFAULT_OG_IMAGES,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      ...(ogImage ? { images: [ogImage] } : {}),
+      images: ogImage ? [ogImage] : DEFAULT_OG_IMAGES.map((i) => i.url),
     },
   };
 }
@@ -65,9 +86,22 @@ const Page: FC<Props> = async (props) => {
   }
 
   return (
-    <main className="flex flex-col gap-8">
+    // Full width under the layout's items-center, so the page column never shrinks to its content.
+    <div className="flex w-full flex-col gap-8">
+      <JsonLd
+        nodes={[
+          personNode(),
+          websiteNode(),
+          projectNode(slug),
+          breadcrumbNode([
+            { name: "Home", path: "/" },
+            { name: "Projects", path: "/projects" },
+            { name: project.title.h1 },
+          ]),
+        ]}
+      />
       <ProjectDetails project={project} />
-    </main>
+    </div>
   );
 };
 

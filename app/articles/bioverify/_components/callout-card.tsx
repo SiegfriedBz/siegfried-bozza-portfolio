@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import type { FC, PropsWithChildren } from "react";
+import { cn } from "@/lib/utils";
 
 type Props = PropsWithChildren<{
   label: string;
@@ -16,7 +16,7 @@ export const CalloutCard: FC<Props> = (props) => {
         className,
       )}
     >
-      <span className="mb-2.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-amber-600 dark:text-[#f0b429]">
+      <span className="mb-2.5 block font-mono text-[10px] uppercase tracking-[0.14em] text-amber-700 dark:text-[#f0b429]">
         {label}
       </span>
       <div className="text-[15px] leading-relaxed [&_code]:text-[13px] [&_strong]:font-medium [&_strong]:text-foreground">

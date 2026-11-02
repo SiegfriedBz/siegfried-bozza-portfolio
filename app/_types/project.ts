@@ -1,22 +1,34 @@
 import type { IconName } from "@/app/_constants/icons";
+import type { STACK } from "@/app/_constants/stack";
 
 export type FeaturedCategory =
+  | "Web3 Backend & Infrastructure"
   | "Web3 Architecture & Coordination"
   | "Smart Contract Patterns & Testing"
   | "Full-Stack Web2";
 
 export type Project = {
   slug: string;
+  /** Programming languages in the repo (structured data). */
+  languages: string[];
   /** Human-facing build window, e.g. "Mar–Apr 2026" (badge) */
   constructionPeriod: string;
+  /** Runs on testnets only: a "Testnet" badge sits next to the build window */
+  testnet?: boolean;
+  /** What each carousel image or video shows, keyed by its path in `images` / `videos` */
+  mediaAlt?: Record<string, string>;
   title: {
     h1: string;
     h2: string;
     /** Punchy pitch for about page; falls back to title.h2 when omitted */
     short?: string;
+    /** Descriptor in the page title, "<h1>: <meta> | Siegfried Bozza" (≤ 60 characters in all) */
+    meta?: string;
   };
   description: {
     short: string;
+    /** Hand-written search and link-preview description (≤ 155 characters); without it, `short` is cut to fit. */
+    meta?: string;
     /** Business-context lead-in for project detail pages (markdown **bold** supported) */
     problem?: string;
     solution?: string;
@@ -40,7 +52,7 @@ export type Project = {
   roadmap?: string[];
 
   stack: {
-    all: string[];
+    all: STACK[];
     main: {
       key: string;
       description: string;
@@ -55,7 +67,13 @@ export type Project = {
   };
 
   images: string[];
-  gifs: string[];
+  /** Screen recordings (.mp4). A same-name .jpg next to each file is used as the poster. */
+  videos: string[];
+  /** Cover for projects without a UI (e.g. a backend service): a short terminal transcript. */
+  terminal?: {
+    title: string;
+    lines: string[];
+  };
 
   links: {
     page: string;

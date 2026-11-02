@@ -382,13 +382,13 @@
 
   /* Inline prose links inside article */
   .bioverify-article .article-prose a {
-    color: #0d9488;
+    color: #0f766e;
     text-decoration: none;
     border-bottom: 1px solid rgba(13, 148, 136, 0.45);
     transition: border-color 0.2s;
   }
   .bioverify-article .article-prose a:hover {
-    border-color: #0d9488;
+    border-color: #0f766e;
   }
   .dark .bioverify-article .article-prose a {
     color: #2dd4bf;
@@ -402,7 +402,7 @@
     font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.8125rem;
     background: oklch(0.97 0 0);
-    color: #0d9488;
+    color: #0f766e;
     padding: 2px 6px;
     border-radius: 4px;
     border: 1px solid oklch(0.922 0 0);
@@ -567,13 +567,13 @@
 
 /* Inline prose links inside article */
 .bioverify-article .article-prose a {
-  color: #0d9488;
+  color: #0f766e;
   text-decoration: none;
   border-bottom: 1px solid rgba(13, 148, 136, 0.45);
   transition: border-color 0.2s;
 }
 .bioverify-article .article-prose a:hover {
-  border-color: #0d9488;
+  border-color: #0f766e;
 }
 .dark .bioverify-article .article-prose a {
   color: #2dd4bf;
@@ -587,7 +587,7 @@
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 0.8125rem;
   background: oklch(0.97 0 0);
-  color: #0d9488;
+  color: #0f766e;
   padding: 2px 6px;
   border-radius: 4px;
   border: 1px solid oklch(0.922 0 0);
@@ -612,4 +612,29 @@
 }
 .dark .bioverify-article .article-prose em {
   color: #b0bac4;
+}
+
+/* Scroll cue for the wide table on phones: an edge shadow shows while there is more to
+   scroll. The two covers move with the content (local) and hide each shadow at its end. */
+.bioverify-article .table-scroll-cue {
+  background:
+    linear-gradient(to right, var(--background) 30%, transparent) left center /
+    40px 100% no-repeat local,
+    linear-gradient(to left, var(--background) 30%, transparent) right center /
+    40px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgb(0 0 0 / 0.16), transparent) left
+    center / 14px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgb(0 0 0 / 0.16), transparent)
+    right center / 14px 100% no-repeat scroll;
+}
+.dark .bioverify-article .table-scroll-cue {
+  background:
+    linear-gradient(to right, var(--background) 30%, transparent) left center /
+    40px 100% no-repeat local,
+    linear-gradient(to left, var(--background) 30%, transparent) right center /
+    40px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgb(0 0 0 / 0.55), transparent) left
+    center / 14px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgb(0 0 0 / 0.55), transparent)
+    right center / 14px 100% no-repeat scroll;
 }

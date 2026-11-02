@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import type { FC } from "react";
+import { cn } from "@/lib/utils";
 
 type Props = {
   className?: string;
@@ -11,7 +11,7 @@ export const OutcomesTable: FC<Props> = (props) => {
   return (
     <div
       className={cn(
-        "my-8 overflow-x-auto rounded-xl border border-border dark:border-[rgba(139,148,158,0.3)]",
+        "table-scroll-cue my-8 overflow-x-auto rounded-xl border border-border dark:border-[rgba(139,148,158,0.3)]",
         className,
       )}
     >
@@ -62,7 +62,7 @@ export const OutcomesTable: FC<Props> = (props) => {
               </span>
             </td>
             <td className="px-4 py-3 align-top leading-relaxed text-foreground">
-              Peer review consensus: pass
+              Final verdict: pass
             </td>
             <td className="px-4 py-3 align-top leading-relaxed text-foreground">
               Stake returned · rep boost
@@ -81,7 +81,7 @@ export const OutcomesTable: FC<Props> = (props) => {
               </span>
             </td>
             <td className="px-4 py-3 align-top leading-relaxed text-foreground">
-              Peer review consensus: fail
+              Final verdict: fail
             </td>
             <td className="px-4 py-3 align-top leading-relaxed text-foreground">
               Stake slashed · rep penalty
@@ -101,8 +101,8 @@ export const OutcomesTable: FC<Props> = (props) => {
               colSpan={5}
             >
               <strong className="font-medium text-foreground">
-                Honesty is measured against the binding verdict (peer consensus
-                or senior tie-break), not the paper&apos;s outcome.
+                Honesty means matching the binding verdict (Gemini&apos;s, or
+                the senior&apos;s after escalation), pass or fail.
               </strong>{" "}
               The senior reviewer is always classified as honest at settlement.
             </td>

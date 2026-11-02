@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { ButtonGroup } from "@/components/ui/button-group";
 import {
   CircleUserRoundIcon,
   Grid2x2Icon,
@@ -8,11 +6,16 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import type { FC } from "react";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { ToggleThemeButton } from "./toggle-theme-button";
 
 export const Navbar: FC = () => {
   return (
-    <div className="fixed z-999 top-8 left-1/2 -translate-x-1/2 flex gap-8 bg-background rounded-l-full rounded-r-full">
+    <nav
+      aria-label="Main"
+      className="fixed z-999 top-8 left-1/2 -translate-x-1/2 flex gap-8 bg-background rounded-l-full rounded-r-full"
+    >
       <ButtonGroup>
         <Button
           variant="outline"
@@ -20,7 +23,7 @@ export const Navbar: FC = () => {
           className="rounded-full p-2 cursor-pointer"
           asChild
         >
-          <Link href="/">
+          <Link href="/" aria-label="Home">
             <span className="inline-flex justify-between items-center rounded-full bg-muted p-1">
               <HouseIcon />
             </span>
@@ -56,6 +59,6 @@ export const Navbar: FC = () => {
 
         <ToggleThemeButton />
       </ButtonGroup>
-    </div>
+    </nav>
   );
 };
