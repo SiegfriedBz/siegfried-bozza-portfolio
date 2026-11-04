@@ -930,6 +930,8 @@ const ALL_PROJECTS: Project[] = [
       page: "/projects/gavl",
       live: "https://next-auctions.vercel.app/en",
       github: "https://github.com/SiegfriedBz/Next-Auctions",
+      // PNG copy of the cover: LinkedIn's preview showed the WebP blurred.
+      ogImage: "/projects/gavl/images/gavl-table-flat.png",
     },
   },
 ];
