@@ -79,7 +79,7 @@ export type Project = {
     page: string;
     live: string;
     github: string;
-    /** Open Graph / article hero image (absolute URL); optional, BioVerify article only */
+    /** Open Graph image path when it differs from `images[0]` (BioVerify and its article, GavL); optional */
     ogImage?: string;
     /** README architecture deep-link; optional, BioVerify article only */
     architectureDoc?: string;
