@@ -79,7 +79,10 @@ export type Project = {
     page: string;
     live: string;
     github: string;
-    /** Open Graph image path when it differs from `images[0]` (BioVerify and its article, GavL); optional */
+    /**
+     * Link-preview image path (og:image, twitter:image), used instead of `images[0]`; optional.
+     * BioVerify's also serves its article: preview, /articles card cover and JSON-LD image.
+     */
     ogImage?: string;
     /** README architecture deep-link; optional, BioVerify article only */
     architectureDoc?: string;
