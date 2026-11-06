@@ -3,13 +3,18 @@
 # and say what to do instead.
 set -uo pipefail
 
-root="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+project="${CLAUDE_PROJECT_DIR:-$(pwd)}"
 file=$(jq -r '.tool_input.file_path // empty')
 [ -n "$file" ] || exit 0
-case "$file" in
-  "$root"/*) rel="${file#"$root"/}" ;;
-  *) exit 0 ;; # outside the repo
-esac
+
+# Judge the checkout that holds the file, not $CLAUDE_PROJECT_DIR: in a worktree under
+# .claude/worktrees/ the hooks still run from the main checkout, which may be on another branch.
+dir=$(dirname "$file")
+while [ ! -d "$dir" ]; do dir=$(dirname "$dir"); done # a new file's folder may not exist yet
+common=$(git -C "$dir" rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || exit 0
+[ "$common" = "$(git -C "$project" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)" ] ||
+  exit 0 # outside this repository and its worktrees
+rel="$(git -C "$dir" rev-parse --show-prefix)${file#"$dir"/}"
 
 deny() {
   jq -n --arg reason "$1" '{
@@ -33,7 +38,7 @@ case "$rel" in
   docs/plans/*) exit 0 ;; # gitignored local plans may be written before branching
 esac
 
-branch=$(git -C "$root" branch --show-current 2>/dev/null)
+branch=$(git -C "$dir" branch --show-current 2>/dev/null)
 case "$branch" in
   develop | main)
     deny "You are on $branch. Work happens on a branch: run \`git switch -c <type>/<slug> develop\` (see CLAUDE.md → Workflow), then edit." ;;

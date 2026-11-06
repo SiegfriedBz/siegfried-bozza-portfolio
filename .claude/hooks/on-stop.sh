@@ -4,11 +4,22 @@
 # let Claude stop so it can report instead.
 set -uo pipefail
 
-root="${CLAUDE_PROJECT_DIR:-$(pwd)}"
-cd "$root" || exit 0
-session=$(jq -r '.session_id // "unknown"')
+input=$(cat)
+project="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+session=$(jq -r '.session_id // "unknown"' <<<"$input")
+cwd=$(jq -r '.cwd // empty' <<<"$input")
 counter="${TMPDIR:-/tmp}/portfolio-stop-${session}"
 max_blocks=3
+
+# Check the checkout the session works in (the hook input's cwd): in a worktree under
+# .claude/worktrees/, $CLAUDE_PROJECT_DIR is still the main checkout.
+root="$project"
+if [ -n "$cwd" ] && top=$(git -C "$cwd" rev-parse --show-toplevel 2>/dev/null) &&
+  [ "$(git -C "$top" rev-parse --path-format=absolute --git-common-dir)" = \
+    "$(git -C "$project" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)" ]; then
+  root="$top"
+fi
+cd "$root" || exit 0
 
 base=$(git merge-base HEAD develop 2>/dev/null || git rev-parse HEAD)
 changed=$(

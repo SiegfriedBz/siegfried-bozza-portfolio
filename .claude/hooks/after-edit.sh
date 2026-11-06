@@ -3,19 +3,28 @@
 # Exit 2 sends stderr back to Claude in the same turn; exit 0 means nothing to report.
 set -uo pipefail
 
-root="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+project="${CLAUDE_PROJECT_DIR:-$(pwd)}"
 file=$(jq -r '.tool_input.file_path // empty')
 
 [ -n "$file" ] && [ -f "$file" ] || exit 0
-case "$file" in
-  "$root"/*) rel="${file#"$root"/}" ;;
-  *) exit 0 ;;
-esac
+
+# Run Biome in the checkout that holds the file: a worktree under .claude/worktrees/ has its
+# own biome.json and node_modules, while the hooks still run from the main checkout.
+dir=$(dirname "$file")
+common=$(git -C "$dir" rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || exit 0
+[ "$common" = "$(git -C "$project" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)" ] ||
+  exit 0 # outside this repository and its worktrees
+root=$(git -C "$dir" rev-parse --show-toplevel)
+rel="$(git -C "$dir" rev-parse --show-prefix)${file##*/}"
 
 cd "$root" || exit 0
 
 case "$rel" in
   *.ts | *.tsx | *.js | *.mjs | *.json | *.jsonc | *.css)
+    if [ ! -x node_modules/.bin/biome ]; then
+      printf '%s: Biome is not installed in %s. Run pnpm install there, then pnpm exec biome check --write %s.\n' "$rel" "$root" "$rel" >&2
+      exit 2
+    fi
     if ! out=$(node_modules/.bin/biome check --write --no-errors-on-unmatched "$rel" 2>&1); then
       printf 'Biome found problems it cannot fix in %s:\n%s\n' "$rel" "$out" >&2
       exit 2
