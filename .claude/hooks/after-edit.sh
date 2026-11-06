@@ -11,11 +11,19 @@ file=$(jq -r '.tool_input.file_path // empty')
 # Run Biome in the checkout that holds the file: a worktree under .claude/worktrees/ has its
 # own biome.json and node_modules, while the hooks still run from the main checkout.
 dir=$(dirname "$file")
-common=$(git -C "$dir" rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || exit 0
-[ "$common" = "$(git -C "$project" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)" ] ||
-  exit 0 # outside this repository and its worktrees
-root=$(git -C "$dir" rev-parse --show-toplevel)
-rel="$(git -C "$dir" rev-parse --show-prefix)${file##*/}"
+common=$(git -C "$dir" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)
+if [ -n "$common" ]; then
+  [ "$common" = "$(git -C "$project" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)" ] ||
+    exit 0 # another repository
+  root=$(git -C "$dir" rev-parse --show-toplevel 2>/dev/null) || exit 0 # e.g. a file in .git/
+  rel="$(git -C "$dir" rev-parse --show-prefix)${file##*/}"
+else
+  # Git could not answer (too old, or an unsafe directory): run from the project folder.
+  case "$file" in
+    "$project"/*) root="$project" rel="${file#"$project"/}" ;;
+    *) exit 0 ;; # outside the repo
+  esac
+fi
 
 cd "$root" || exit 0
 
