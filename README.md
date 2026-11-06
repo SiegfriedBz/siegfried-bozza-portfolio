@@ -42,7 +42,8 @@ pnpm build       # production build, as on Vercel (held articles are hidden, as 
 
 CI (`.github/workflows/ci.yml`) runs the same three on every PR to `develop` or `main`.
 Working with Claude Code: see `CLAUDE.md` (workflow, content rules, hooks) and the
-`/plan-change` and `/review-branch` skills in `.claude/skills/`. The hooks need `jq`.
+`/plan-change` and `/review-branch` skills in `.claude/skills/`. The hooks need `jq` and
+Git 2.31 or later.
 
 ## Build
 
