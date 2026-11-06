@@ -90,5 +90,10 @@ Branches: `<type>/<slug>` from `develop` (`feat`, `fix`, `perf`, `chore`, `conte
 - Env files other than `.env.example` are blocked for Read and Grep.
 - On stop: if TypeScript or MDX changed on the branch, `pnpm typecheck` must pass, or the
   stop is blocked with the errors (three attempts, then report instead).
-- The hooks need `jq` and only see the Edit, Write, Read and Grep tools. Shell commands are
-  not checked, so do not edit files through the shell on `develop` or `main` either.
+- In a worktree (`.claude/worktrees/<name>`), they check the worktree's branch and files
+  and run its Biome and `tsc`, so run `pnpm install` there first. The scripts that run are
+  the main folder's copies, so a change to `.claude/hooks/` reaches worktree sessions once
+  the main folder has it.
+- The hooks need `jq` and Git 2.31 or later, and only see the Edit, Write, Read and Grep
+  tools. Shell commands are not checked, so do not edit files through the shell on `develop`
+  or `main` either.

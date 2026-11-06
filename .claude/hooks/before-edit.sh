@@ -3,13 +3,27 @@
 # and say what to do instead.
 set -uo pipefail
 
-root="${CLAUDE_PROJECT_DIR:-$(pwd)}"
+project="${CLAUDE_PROJECT_DIR:-$(pwd)}"
 file=$(jq -r '.tool_input.file_path // empty')
 [ -n "$file" ] || exit 0
-case "$file" in
-  "$root"/*) rel="${file#"$root"/}" ;;
-  *) exit 0 ;; # outside the repo
-esac
+
+# Judge the checkout that holds the file, not $CLAUDE_PROJECT_DIR: in a worktree under
+# .claude/worktrees/ the hooks still run from the main checkout, which may be on another branch.
+dir=$(dirname "$file")
+while [ ! -d "$dir" ]; do dir=$(dirname "$dir"); done # a new file's folder may not exist yet
+common=$(git -C "$dir" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)
+if [ -n "$common" ]; then
+  [ "$common" = "$(git -C "$project" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)" ] ||
+    exit 0 # another repository
+  top=$(git -C "$dir" rev-parse --show-toplevel 2>/dev/null)
+  rel="$(git -C "$dir" rev-parse --show-prefix 2>/dev/null)${file#"$dir"/}"
+else
+  # Git could not answer (too old, or an unsafe directory): keep the file-name rules by path.
+  case "$file" in
+    "$project"/*) top="$project" rel="${file#"$project"/}" ;;
+    *) exit 0 ;; # outside the repo
+  esac
+fi
 
 deny() {
   jq -n --arg reason "$1" '{
@@ -33,10 +47,10 @@ case "$rel" in
   docs/plans/*) exit 0 ;; # gitignored local plans may be written before branching
 esac
 
-branch=$(git -C "$root" branch --show-current 2>/dev/null)
+branch=$(git -C "${top:-$project}" branch --show-current 2>/dev/null)
 case "$branch" in
   develop | main)
-    deny "You are on $branch. Work happens on a branch: run \`git switch -c <type>/<slug> develop\` (see CLAUDE.md → Workflow), then edit." ;;
+    deny "$rel is in the checkout at $top, which is on $branch. If your session works in a worktree, edit the copy under that worktree; otherwise create a branch first: \`git switch -c <type>/<slug> develop\` (see CLAUDE.md → Workflow)." ;;
 esac
 
 exit 0
