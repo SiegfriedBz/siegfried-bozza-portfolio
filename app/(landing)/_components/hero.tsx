@@ -5,8 +5,10 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { type CSSProperties, type FC, Fragment } from "react";
+import { LuGithub, LuLinkedin } from "react-icons/lu";
 import { LightGlow } from "@/app/_components/light-glow";
 import { SiegAvatar } from "@/app/_components/sieg-avatar";
+import { Tooltip } from "@/app/_components/tooltip";
 import { CV_HREF } from "@/app/_constants/cv";
 import { PROFILE_LINKS } from "@/app/_constants/links";
 import {
@@ -111,6 +113,44 @@ export const Hero: FC<Props> = ({ proof }) => {
               CV
             </a>
           </Button>
+          {/* Icons only, so on phones they fit beside CV and the row stays two lines.
+              Grouped so they wrap together; the tooltip and the aria-label name them. */}
+          <div className="flex gap-3">
+            <Tooltip desc="GitHub">
+              <Button
+                asChild
+                size="icon-lg"
+                variant="outline"
+                className="max-sm:size-11"
+              >
+                <a
+                  href={PROFILE_LINKS.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                >
+                  <LuGithub className="size-4" />
+                </a>
+              </Button>
+            </Tooltip>
+            <Tooltip desc="LinkedIn">
+              <Button
+                asChild
+                size="icon-lg"
+                variant="outline"
+                className="max-sm:size-11"
+              >
+                <a
+                  href={PROFILE_LINKS.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="LinkedIn"
+                >
+                  <LuLinkedin className="size-4" />
+                </a>
+              </Button>
+            </Tooltip>
+          </div>
         </div>
         <p
           className="hero-reveal text-sm text-muted-foreground max-sm:order-2 sm:-mt-2"
