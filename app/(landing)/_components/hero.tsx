@@ -113,8 +113,9 @@ export const Hero: FC<Props> = ({ proof }) => {
               CV
             </a>
           </Button>
-          {/* Icons only, so on phones they fit beside CV and the row stays two lines.
-              Grouped so they wrap together; the tooltip and the aria-label name them. */}
+          {/* Icons only, so on phones 360 px and wider they sit beside CV and the row
+              stays two lines. Grouped so they wrap together; the tooltip and the
+              aria-label name them. */}
           <div className="flex gap-3">
             <Tooltip desc="GitHub">
               <Button
