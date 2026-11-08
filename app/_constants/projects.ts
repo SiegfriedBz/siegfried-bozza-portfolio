@@ -8,7 +8,7 @@ const bioVerifyGithub = "https://github.com/SiegfriedBz/BioVerify_Agentic_DApp";
 
 /** Bundled article hero + OG fallback (works with next/image without remotePatterns). */
 export const BIOVERIFY_ARTICLE_HERO =
-  "/projects/bioverify/images/bioverify-landing.webp";
+  "/projects/bioverify/images/bioverify_publications.jpg";
 
 const bioVerifyProject: Project = {
   slug: "bioverify",
@@ -47,7 +47,7 @@ const bioVerifyProject: Project = {
     overview: `
         BioVerify separates concerns across two layers. On-chain, **BioVerifyV3** is the source of truth for stakes, publication status, reviewer selection, and settlement. Off-chain, **LangGraph** runs the submission and review graphs and its **Postgres checkpointer** carries pauses that can span days, while **Inngest** retries the agent runs that chain events start.
         Chain events drive the app: the contract emits rich events instead of view-heavy reads for product state. **Alchemy Notify** POSTs logs to a verified webhook (**HMAC-SHA256**); **processContractEvent** projects into **Neon Postgres** with optimistic concurrency on (blockNumber, logIndex). The frontend reads the projection and uses a **viem** WebSocket subscription to **NewPublicationStatus** so open lists refetch 3 seconds after a status event, giving the projection time to catch up.
-        Security patterns used include **CEI** and **OpenZeppelin** **nonReentrant** on \`claim\` and \`transferSlashPoolToTreasury\`, pull-style claims for reviewers, verified webhooks, and **EIP-712**-signed peer verdicts verified server-side before on-chain recording.
+        Security patterns used include **CEI** and **OpenZeppelin** **nonReentrant** on \`claim\` and \`transferSlashPoolToTreasury\`, pull-style claims for reviewers, verified webhooks, and **EIP-712**-signed peer verdicts, verified server-side before the agent records on-chain that the reviewer has reviewed.
       `,
   },
 
@@ -65,7 +65,7 @@ const bioVerifyProject: Project = {
     {
       key: "VRF Reviewer Selection",
       description:
-        "If the submission passes AI screening, **Chainlink VRF** draws `I_VRF_NUM_WORDS = 3` candidates from the staked reviewer pool; the Chainlink coordinator verifies the randomness proof on-chain before calling back **BioVerifyV3**. The submission fee funds the VRF subscription when screening passes, and rewards are reserved before selection. The **Senior Reviewer** is whichever drawn reviewer has the highest on-chain reputation.",
+        "If the submission passes AI screening, **Chainlink VRF** draws `I_VRF_NUM_WORDS = 3` candidates from the staked reviewer pool; the Chainlink coordinator verifies the randomness proof on-chain before calling back **BioVerifyV3**. The submission fee funds the VRF subscription when screening passes, and rewards are reserved before selection. The **Senior Reviewer** is whichever drawn reviewer has the highest on-chain reputation (the first one drawn on a tie).",
     },
     {
       key: "Human-in-the-Loop Peer Review",
@@ -90,7 +90,7 @@ const bioVerifyProject: Project = {
     {
       key: "Durable Agent Orchestration",
       description:
-        "**LangGraph** checkpointers (Postgres) let the review graph pause for days at a human-in-the-loop interrupt and resume where it left off; **Inngest** starts each agent run and retries it on failure.",
+        "**LangGraph** checkpointers (Postgres) let the review graph pause for days at a human-in-the-loop interrupt and resume where it left off; **Inngest** starts each agent run and retries the start; after the first pause, the review agent resumes in a server action with no retry.",
     },
     {
       key: "Live Telegram Notifications",
@@ -101,8 +101,8 @@ const bioVerifyProject: Project = {
 
   challenges: `
         Orchestrating durable agents across asynchronous human review: **LangGraph** checkpointers let the workflow pause for days and resume at the same human-in-the-loop interrupt.
-        A getter-light, event-emitted contract required tight alignment between on-chain emissions and **Neon Postgres** projections via **Alchemy Notify**; optimistic concurrency on (blockNumber, logIndex) makes a repeated webhook delivery harmless.
-        I kept **Inngest** to retries around each agent run and the pause itself in **LangGraph** state; a retry re-runs the whole agent, so its commands read state before writing where they can.
+        A getter-light, event-emitted contract required tight alignment between on-chain emissions and **Neon Postgres** projections via **Alchemy Notify**; optimistic concurrency on (blockNumber, logIndex) keeps a repeated webhook delivery from changing the read model, though a repeated SubmitPublication would start a second screening run.
+        I kept **Inngest** to starting the agent runs and retrying those starts, and the pause itself in **LangGraph** state; a retried screening re-runs the whole agent, so its commands read state before writing where they can.
     `,
 
   outcome: `
@@ -111,7 +111,7 @@ const bioVerifyProject: Project = {
     `,
   outcomeMetrics: [
     "**Deployments:** Base Sepolia and Ethereum Sepolia, contract source verified on the block explorers (addresses in the README)",
-    "**Tests:** BioVerifyV3, 50 Foundry tests across 12 suites, in 11 files, including VRF edge cases (collisions, pool shrinking and rewards running out during VRF); `forge coverage` on 24 October 2026: 100% of lines (240/240), branches (37/37) and functions",
+    "**Tests:** BioVerifyV3, 50 Foundry tests across 12 suites, in 11 files, including VRF edge cases (collisions, pool shrinking and rewards running out during VRF); `forge coverage` on 24 October 2026: 100% of the lines (240/240), branches (37/37) and functions of `src/BioVerifyV3.sol`",
     "**Read path:** Product queries served from the Neon Postgres projection; lists update over WebSocket, the detail view polls every 10 s until the publication is final",
   ],
   transferablePatterns:
@@ -126,6 +126,7 @@ const bioVerifyProject: Project = {
     "**No author recourse against false positives:** The submission agent can produce a false plagiarism verdict, and peer review can reach a binding decision the author considers incorrect. Today both paths are terminal (immediate `earlySlashPublication` or `slashPublication`); there is no contract-level mechanism for the author to contest, post an escalation stake, or trigger a second human-only review.",
     "**IPFS / manifest edge cases:** A syntactically valid CID that resolves to an empty or malformed manifest can leave the submission graph without a clean pass/fail path; after **Inngest**'s 3 retries the publication stays stuck in SUBMITTED.",
     "**Agent transaction failures:** On-chain commands use simulate-then-write with no gas bump or nonce recovery. Settlement runs in the Next.js server action that resumes the last review, with no retry, so a gas spike can leave a publication in IN_REVIEW after the last human review is recorded.",
+    "**No reviewer deadline:** the review graph waits for every reviewer and the contract has no timeout, so a reviewer who never answers leaves the publication IN_REVIEW, with every stake locked.",
     "**Chain support is hardcoded:** the two networks are a fixed enum used across the codebase; adding a chain means a new deployment plus changes in several places.",
     "**Testing depth:** only the contract has automated tests; the agents, the read model and the frontend have none.",
   ],
@@ -189,7 +190,7 @@ const bioVerifyProject: Project = {
       {
         key: "Inngest",
         description:
-          "Retries around each agent run that a chain event starts: the submission agent (screening, then the reviewer draw) and the start of the review agent.",
+          "Retries around each agent run that a chain event starts: the submission agent (screening, then the pickReviewers call that requests the draw) and the start of the review agent.",
       },
       {
         key: "Drizzle ORM + Neon Postgres",
@@ -224,8 +225,8 @@ const bioVerifyProject: Project = {
   },
 
   images: [
-    "/projects/bioverify/images/bioverify-landing.webp",
     "/projects/bioverify/images/bioverify_publications.jpg",
+    "/projects/bioverify/images/bioverify-landing.webp",
   ],
 
   videos: [
