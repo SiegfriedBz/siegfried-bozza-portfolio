@@ -114,9 +114,9 @@ export const BioVerifyArticle: FC = () => {
               key: "what",
               content: (
                 <>
-                  <strong>What it is</strong>: a DeSci peer-review case study:
-                  stake, verifiable reviewer selection, AI screening, signed
-                  human reviews, on-chain settlement.
+                  <strong>What it is</strong>: a DeSci peer-review case study
+                  with stakes, verifiable reviewer selection, AI screening,
+                  signed human reviews and on-chain settlement.
                 </>
               ),
             },
@@ -136,7 +136,8 @@ export const BioVerifyArticle: FC = () => {
               content: (
                 <>
                   <strong>Durable coordination</strong>: Inngest starts each
-                  agent run and retries the start if it fails; LangGraph{" "}
+                  agent run and retries it if it fails (all of the screening,
+                  and the review agent up to its first pause); LangGraph{" "}
                   <code>interrupt()</code> pauses for human signatures, and
                   Postgres checkpointers persist graph state between resumes,
                   which run in a server action with no retry.
@@ -306,7 +307,7 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           The correctness mechanism is{" "}
           <strong>Optimistic Concurrency Control (OCC)</strong>: each event
-          carries a position stamp from the blockchain: its block number and log
+          carries a position stamp from the blockchain, its block number and log
           index. The projector only applies an update if the incoming event is
           more recent than what it has already stored. Late webhook deliveries
           can repeat; they cannot roll the read model backward. A{" "}
@@ -392,15 +393,14 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Why Inngest:</strong> Vercel serverless functions have tight
           per-invocation time limits and no guaranteed in-memory state between
-          invocations. Inngest starts each agent run and retries the start if it
-          fails. The screening agent runs entirely inside one{" "}
-          <code>step.run</code>, so a retry re-runs all of it, and it still has
-          to finish within one function call. The review agent runs there only
-          until its first <code>interrupt()</code>; every later step, settlement
-          included, runs in the server action that resumes it, with no retry.
-          The commands read state before writing where they can. It is{" "}
-          <em>not</em> the mechanism that waits days for a reviewer: that pause
-          lives in LangGraph.
+          invocations. Inngest starts each agent run and retries it if it fails.
+          The screening agent runs entirely inside one <code>step.run</code>, so
+          a retry re-runs all of it, and it still has to finish within one
+          function call. The review agent runs there only until its first{" "}
+          <code>interrupt()</code>; every later step, settlement included, runs
+          in the server action that resumes it, with no retry. The commands read
+          state before writing where they can. It is <em>not</em> the mechanism
+          that waits days for a reviewer: that pause lives in LangGraph.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Why LangGraph:</strong> Human review needs real suspension
@@ -1039,8 +1039,8 @@ export const BioVerifyArticle: FC = () => {
         </ul>
 
         <blockquote className="my-8 rounded-r-lg border-l-[3px] border-teal-500 bg-teal-500/10 py-5 pl-7 pr-7 font-[family-name:var(--font-serif)] text-lg italic leading-relaxed text-muted-foreground dark:border-[#2dd4bf] dark:bg-[rgba(45,212,191,0.1)]">
-          A verifiable draw, stakes and long pauses keep coming back. In
-          BioVerify the draw is verifiable; the verdict still rests on the
+          These domains share a verifiable draw, stakes and long human pauses.
+          In BioVerify the draw is verifiable; the verdict still rests on the
           agent.
         </blockquote>
 
@@ -1062,7 +1062,7 @@ export const BioVerifyArticle: FC = () => {
           <li>
             <strong>Author escalation path</strong>: today a plagiarism false
             positive from the submission agent (or a peer-review verdict the
-            author believes is wrong) is terminal: settlement runs immediately
+            author believes is wrong) is terminal; settlement runs immediately
             and the author has no contractual recourse. The roadmap addresses
             this with an opt-in escalation: the author posts a larger escalation
             stake within a bounded window, which triggers a second review cycle
@@ -1107,25 +1107,23 @@ export const BioVerifyArticle: FC = () => {
           <li>
             <strong>Known edge cases</strong>: empty or malformed IPFS payloads
             can leave a publication stuck in <code>SUBMITTED</code>; after the
-            review agent&apos;s first pause, nothing is retried: if a later step
-            or the settlement transaction fails, for example on a gas spike, the
-            publication stays <code>IN_REVIEW</code>. <code>pickReviewers</code>{" "}
-            checks <code>status != IN_REVIEW</code> instead of{" "}
-            <code>== SUBMITTED</code>, so the agent could re-open a finished
-            publication; if the reviewer pool shrinks or rewards run out between
-            the VRF request and the callback, the callback reverts and the
-            publication stays <code>IN_REVIEW</code>; and linear probing on
-            collisions slightly biases the draw. The webhook compares its HMAC
-            with <code>===</code>, not in constant time, and the projection
+            review agent&apos;s first pause, nothing is retried, so if a later
+            step or the settlement transaction fails, for example on a gas
+            spike, the publication stays <code>IN_REVIEW</code>.{" "}
+            <code>pickReviewers</code> checks <code>status != IN_REVIEW</code>{" "}
+            instead of <code>== SUBMITTED</code>, so the agent could re-open a
+            finished publication; if the reviewer pool shrinks or rewards run
+            out between the VRF request and the callback, the callback reverts
+            and the publication stays <code>IN_REVIEW</code>; and linear probing
+            on collisions slightly biases the draw. The webhook compares its
+            HMAC with <code>===</code>, not in constant time, and the projection
             follows the chain tip with no confirmation depth. One agent key,
             which is also the treasury and the owner on both deployments,
             settles every outcome, and as owner it can change the VRF
             coordinator. Reviewers also have no deadline: one who never answers
             leaves the paper <code>IN_REVIEW</code>, with every stake locked.
-            The README lists the rest, with links to the files involved: the
-            read model can drop a late event, IPFS reads trust the Pinata
-            gateway, agent transactions use simulate-then-write with no gas bump
-            or nonce recovery, and chain support is hardcoded.
+            The README covers the rest, including agent transactions that use
+            simulate-then-write with no gas bump or nonce recovery.
           </li>
         </ul>
 
@@ -1143,8 +1141,8 @@ export const BioVerifyArticle: FC = () => {
           </li>
           <li>
             <strong>Agents &amp; orchestration</strong>: LangGraph (graph state
-            + HITL interrupts), Inngest (starts the agent runs that chain events
-            trigger, and retries the start)
+            + HITL interrupts), Inngest (starts and retries the agent runs that
+            chain events trigger; the review agent only up to its first pause)
           </li>
           <li>
             <strong>Data &amp; storage</strong>: Neon Postgres (CQRS read model

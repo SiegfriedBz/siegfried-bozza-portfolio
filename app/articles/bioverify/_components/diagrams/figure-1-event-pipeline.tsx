@@ -142,7 +142,7 @@ export const Figure1EventPipeline: FC = () => {
         fill="#a78bfa"
         style={{ opacity: 0.8 }}
       >
-        · retries run starts
+        · starts, retries runs
       </text>
       <text
         x="607"

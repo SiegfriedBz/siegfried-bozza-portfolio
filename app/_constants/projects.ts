@@ -16,8 +16,6 @@ const bioVerifyProject: Project = {
   constructionPeriod: "Jan–Apr 2026",
   testnet: true,
   mediaAlt: {
-    "/projects/bioverify/images/bioverify-landing.webp":
-      "BioVerify landing page with the Submit Research and View Dashboard buttons",
     "/projects/bioverify/images/bioverify_publications.jpg":
       "BioVerify protocol overview: reward and slashed pools, research and member counts, and the publication ledger",
     "/projects/bioverify/videos/submit-success-01-form.mp4":
@@ -90,7 +88,7 @@ const bioVerifyProject: Project = {
     {
       key: "Durable Agent Orchestration",
       description:
-        "**LangGraph** checkpointers (Postgres) let the review graph pause for days at a human-in-the-loop interrupt and resume where it left off; **Inngest** starts each agent run and retries the start; after the first pause, the review agent resumes in a server action with no retry.",
+        "**LangGraph** checkpointers (Postgres) let the review graph pause for days at a human-in-the-loop interrupt and resume where it left off; **Inngest** starts each agent run and retries it if it fails (all of the screening, and the review agent up to its first pause); after that pause, the review agent resumes in a server action with no retry.",
     },
     {
       key: "Live Telegram Notifications",
@@ -102,7 +100,7 @@ const bioVerifyProject: Project = {
   challenges: `
         Orchestrating durable agents across asynchronous human review: **LangGraph** checkpointers let the workflow pause for days and resume at the same human-in-the-loop interrupt.
         A getter-light, event-emitted contract required tight alignment between on-chain emissions and **Neon Postgres** projections via **Alchemy Notify**; optimistic concurrency on (blockNumber, logIndex) keeps a repeated webhook delivery from changing the read model, though a repeated SubmitPublication would start a second screening run.
-        I kept **Inngest** to starting the agent runs and retrying those starts, and the pause itself in **LangGraph** state; a retried screening re-runs the whole agent, so its commands read state before writing where they can.
+        I kept **Inngest** to starting and retrying the agent runs that chain events trigger, and the pause itself in **LangGraph** state; a retried screening re-runs the whole agent, so its commands read state before writing where they can.
     `,
 
   outcome: `
@@ -190,7 +188,7 @@ const bioVerifyProject: Project = {
       {
         key: "Inngest",
         description:
-          "Retries around each agent run that a chain event starts: the submission agent (screening, then the pickReviewers call that requests the draw) and the start of the review agent.",
+          "Retries around each agent run that a chain event starts: the submission agent (screening, then the earlySlash call or the pickReviewers call that requests the draw) and the start of the review agent.",
       },
       {
         key: "Drizzle ORM + Neon Postgres",
@@ -224,10 +222,7 @@ const bioVerifyProject: Project = {
       SLASHED --> [*]`,
   },
 
-  images: [
-    "/projects/bioverify/images/bioverify_publications.jpg",
-    "/projects/bioverify/images/bioverify-landing.webp",
-  ],
+  images: ["/projects/bioverify/images/bioverify_publications.jpg"],
 
   videos: [
     "/projects/bioverify/videos/submit-success-01-form.mp4",
