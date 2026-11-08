@@ -5,11 +5,11 @@ export const Figure2SubmissionAgent: FC = () => {
     <svg
       className="diag-svg"
       role="img"
-      aria-label="Flowchart: Submission agent — fetch IPFS manifest, run Exa plagiarism search, Gemini schema-constrained verdict, then branch to earlySlashPublication or pickReviewers."
+      aria-label="Flowchart of the submission agent: fetch IPFS manifest, run Exa plagiarism search, Gemini schema-constrained verdict, then branch to earlySlashPublication or pickReviewers."
       viewBox="0 0 700 340"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Figure 2 — Submission agent</title>
+      <title>Figure 2. Submission agent</title>
       <defs>
         <marker
           id="bioverify-f2-m"

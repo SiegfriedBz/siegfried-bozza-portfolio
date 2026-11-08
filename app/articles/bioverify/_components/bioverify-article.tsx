@@ -37,9 +37,9 @@ export const BioVerifyArticle: FC = () => {
 
       <div className="article-prose text-[17px] font-light leading-[1.8] text-foreground [&>p]:mb-[1.6em]">
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          Peer review is broken: opaque, unpaid, and riddled with conflicts of
-          interest. What if we could make it verifiable, fair, and economically
-          aligned?
+          Peer review is often opaque, reviewers are rarely paid, and conflicts
+          of interest are hard to see. I wanted to find out which parts of it
+          could be made verifiable and fairly paid.
         </TypographyP>
 
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
@@ -76,25 +76,25 @@ export const BioVerifyArticle: FC = () => {
           happened, and agents orchestrate what happens next. One agent key
           still settles every outcome, so it is not yet trust-minimised. Having
           spent fifteen years in Molecular Biology and Civil/Environmental
-          Engineering before software — and having been on the author side of
-          peer review myself — I had a specific reason to care. Rather than
+          Engineering before software, and having been on the author side of
+          peer review myself, I had a specific reason to care. Rather than
           describe the stack in the abstract, this article follows the system as
           a user experiences it, and introduces each piece of technology
           precisely at the moment the story needs it.
         </TypographyP>
 
         <PullQuote>
-          &quot;Truth on-chain, orchestration off-chain — with humans involved
-          in verdict calls.&quot;
+          &quot;Truth on-chain, orchestration off-chain, with humans involved in
+          verdict calls.&quot;
         </PullQuote>
 
-        <h2 className={h2}>Why decentralised peer review — and why now</h2>
+        <h2 className={h2}>Why decentralised peer review, and why now</h2>
 
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           Peer review is a coordination game with a trust deficit: opaque
           processes, inconsistent conflict disclosure, and reviewers who are
           rarely compensated. Blockchain cannot fix science, but it can make
-          parts of the process verifiable — stakes and outcomes settle on-chain,
+          parts of the process verifiable: stakes and outcomes settle on-chain,
           reviewers sign their reviews, which are checked off-chain, and for one
           specific subproblem (drawing reviewers at random){" "}
           <TechTag variant="amber">Chainlink VRF</TechTag> attaches a
@@ -114,9 +114,9 @@ export const BioVerifyArticle: FC = () => {
               key: "what",
               content: (
                 <>
-                  <strong>What it is</strong> — a DeSci peer-review case study:
-                  stake, verifiable reviewer selection, AI screening, signed
-                  human reviews, on-chain settlement.
+                  <strong>What it is</strong>: a DeSci peer-review case study
+                  with stakes, verifiable reviewer selection, AI screening,
+                  signed human reviews and on-chain settlement.
                 </>
               ),
             },
@@ -124,10 +124,10 @@ export const BioVerifyArticle: FC = () => {
               key: "cqrs",
               content: (
                 <>
-                  <strong>CQRS as a first principle</strong> — the contract
-                  emits events (writes); an off-chain Postgres projection serves
-                  the reads of publications and members. The chain is truth, not
-                  a database.
+                  <strong>CQRS as a first principle</strong>: the contract emits
+                  events (writes); an off-chain Postgres projection serves the
+                  reads of publications and members. The chain is truth, not a
+                  database.
                 </>
               ),
             },
@@ -135,10 +135,12 @@ export const BioVerifyArticle: FC = () => {
               key: "durable",
               content: (
                 <>
-                  <strong>Durable coordination</strong> — Inngest starts each
-                  agent run and retries it on failure; LangGraph{" "}
+                  <strong>Durable coordination</strong>: Inngest starts each
+                  agent run and retries it if it fails (all of the screening,
+                  and the review agent up to its first pause); LangGraph{" "}
                   <code>interrupt()</code> pauses for human signatures, and
-                  Postgres checkpointers persist graph state between resumes.
+                  Postgres checkpointers persist graph state between resumes,
+                  which run in a server action with no retry.
                 </>
               ),
             },
@@ -146,7 +148,7 @@ export const BioVerifyArticle: FC = () => {
               key: "hitl",
               content: (
                 <>
-                  <strong>Human-in-the-loop</strong> — human reviewers sign the
+                  <strong>Human-in-the-loop</strong>: human reviewers sign the
                   peer verdicts and the senior reviewer has the final word after
                   an escalation; an agent records and settles them. The
                   plagiarism screen, the call to escalate and the verdict when
@@ -173,7 +175,7 @@ export const BioVerifyArticle: FC = () => {
           <code>BioVerifyV3</code> independently on both testnets, each with its
           own contract address, reward and slash pools, and reviewer pool. The
           same Solidity source is deployed to both networks, producing the same
-          ABI on each — only per-chain parameters such as the Chainlink VRF
+          ABI on each; only per-chain parameters such as the Chainlink VRF
           coordinator and subscription differ. The two networks are hardcoded in
           the app, though: adding a chain means a new deployment plus changes in
           several places.
@@ -186,13 +188,13 @@ export const BioVerifyArticle: FC = () => {
           The author fills a form with the components of their research: title,
           abstract, authors, body content, and any supporting files. Before
           anything touches the blockchain, these components go to{" "}
-          <strong>IPFS</strong> — the InterPlanetary File System.
+          <strong>IPFS</strong>, the InterPlanetary File System.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           IPFS addresses files by content, not location: a <strong>CID</strong>{" "}
           (Content IDentifier) is derived from a cryptographic hash of the
-          content. Change a single byte and the CID changes — once recorded
-          on-chain, it is a commitment to exactly those bytes.
+          content. Change a single byte and the CID changes, so a CID recorded
+          on-chain is a commitment to exactly those bytes.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           BioVerify uses <TechTag>Pinata</TechTag> as the IPFS pinning service.
@@ -207,7 +209,7 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           With the manifest CID in hand, the author calls{" "}
           <code>submitPublication(cid)</code> on the{" "}
-          <TechTag variant="blue">BioVerifyV3</TechTag> contract — with one
+          <TechTag variant="blue">BioVerifyV3</TechTag> contract, with one
           payment that covers two amounts:
         </TypographyP>
         <ul className={dashList}>
@@ -217,11 +219,11 @@ export const BioVerifyArticle: FC = () => {
             stake is slashed. If it passes, the stake is returned plus a
             reputation boost. That alignment makes the incentive structure
             legible: the author is incentivised to submit only non-plagiarised
-            work and only work they believe will survive human peer review.
+            work and only work they believe will pass review.
           </li>
           <li>
-            <strong>A submission fee.</strong> This is not a platform fee — it
-            funds <strong>Chainlink VRF</strong> (Verifiable Random Function).
+            <strong>A submission fee.</strong> It funds{" "}
+            <strong>Chainlink VRF</strong> (Verifiable Random Function).
             On-chain, the fee is <code>msg.value</code> minus the fixed
             publisher stake; callers may overpay so spikes in gas or VRF costs
             stay covered. When <code>pickReviewers</code> runs, the contract
@@ -230,8 +232,9 @@ export const BioVerifyArticle: FC = () => {
             passes screening tops up the oracle budget. An early-slashed
             submission never reaches that call: its fee stays in the contract,
             outside both pools, and nothing in the normal flow moves it. The
-            frontend can estimate that fee in real time from current conditions
-            while the contract enforces a minimum.
+            frontend estimates that fee from the current gas price and a fixed
+            gas budget, and sends the larger of that and the minimum the
+            contract enforces.
           </li>
         </ul>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
@@ -253,8 +256,8 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <code>BioVerifyV3</code> is deliberately getter-light. It emits a
           granular event for every state transition and avoids exposing view
-          functions for UI queries. This is <strong>CQRS</strong> — Command
-          Query Responsibility Segregation — applied at the chain boundary: the
+          functions for UI queries. This is <strong>CQRS</strong> (Command Query
+          Responsibility Segregation) applied at the chain boundary: the
           contract is the write model; an off-chain Postgres projection is the
           read model.
         </TypographyP>
@@ -264,21 +267,22 @@ export const BioVerifyArticle: FC = () => {
           little more gas, not less). The frontend benefits: the UI reads a fast
           Postgres projection rather than orchestrating dozens of{" "}
           <code>eth_call</code> requests against the chain (the chain is not
-          built for product lists), while Drizzle-backed queries support rich
-          filtering, sorting, and pagination. The chain is the source of truth;
-          Postgres reflects that truth and is the source of responsiveness,
-          lowering UI latency.
+          built for product lists), while Drizzle queries filter the list by
+          network and status and page through it, newest first. The chain is the
+          source of truth; Postgres reflects that truth and is the source of
+          responsiveness, lowering UI latency.
         </TypographyP>
 
         <h3 className={h3}>Alchemy Notify: from block to webhook</h3>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <TechTag variant="amber">Alchemy Notify</TechTag> is Alchemy&apos;s
-          webhook service. For each network, BioVerify configures one webhook
-          scoped to a single contract address — the deployed{" "}
-          <code>BioVerifyV3</code> — so Alchemy POSTs a signed payload
-          containing the event logs that contract emitted in each new block. Two
-          such webhooks run in parallel — one for Base Sepolia, one for Ethereum
-          Sepolia — both reacting to the same set of <code>BioVerifyV3</code>{" "}
+          webhook service. For each network, BioVerify configures one webhook,
+          filtered in Alchemy&apos;s dashboard to the deployed{" "}
+          <code>BioVerifyV3</code> address, so Alchemy POSTs a signed payload
+          containing the event logs that contract emitted in each new block; the
+          route itself does not re-check which contract emitted a log. Two such
+          webhooks run in parallel, one for Base Sepolia and one for Ethereum
+          Sepolia, both reacting to the same set of <code>BioVerifyV3</code>{" "}
           events and both POSTing to the Next.js API route at{" "}
           <code>/api/webhooks/alchemy/all-events</code>.
         </TypographyP>
@@ -295,7 +299,7 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           Once the signature is verified, the raw log is decoded with{" "}
           <TechTag variant="blue">viem</TechTag> and dispatched to{" "}
-          <code>processContractEvent()</code> — the core projector in the{" "}
+          <code>processContractEvent()</code>, the core projector in the{" "}
           <code>@packages/cqrs</code> layer. This function translates on-chain
           events into typed updates and writes them into{" "}
           <TechTag variant="amber">Neon Postgres</TechTag>.
@@ -303,10 +307,10 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           The correctness mechanism is{" "}
           <strong>Optimistic Concurrency Control (OCC)</strong>: each event
-          carries a position stamp from the blockchain — its block number and
-          log index. The projector only applies an update if the incoming event
-          is more recent than what it has already stored. Late webhook
-          deliveries can repeat; they cannot roll the read model backward. A{" "}
+          carries a position stamp from the blockchain, its block number and log
+          index. The projector only applies an update if the incoming event is
+          more recent than what it has already stored. Late webhook deliveries
+          can repeat; they cannot roll the read model backward. A{" "}
           <TechTag variant="blue">viem</TechTag> WebSocket subscription to{" "}
           <code>NewPublicationStatus</code> invalidates the matching TanStack
           Query keys about three seconds after the event is mined (a delay that
@@ -315,10 +319,10 @@ export const BioVerifyArticle: FC = () => {
         </TypographyP>
 
         <CalloutCard label="Optimistic concurrency (OCC)">
-          Webhooks can replay or arrive out of chronological order — that is
-          intrinsic to networked indexers and retries. BioVerify attaches a
-          deterministic ordering stamp from the chain —{" "}
-          <strong>block number plus log index</strong> — to each upsert. An
+          Webhooks can replay or arrive out of chronological order; that comes
+          with networked indexers and retries. BioVerify attaches a
+          deterministic ordering stamp from the chain, the{" "}
+          <strong>block number plus log index</strong>, to each upsert. An
           update applies only when the inbound event sorts strictly newer than
           what is already stored. Duplicates converge idempotently; stale
           deliveries cannot rewind fresher projections. There is one stamp per
@@ -328,7 +332,7 @@ export const BioVerifyArticle: FC = () => {
         </CalloutCard>
 
         <DiagramWrap
-          label="Figure 1 — Event pipeline: from contract event to read model and agents"
+          label="Figure 1. Event pipeline: from contract event to read model and agents"
           caption={
             <>
               Every event from the contract goes through the same webhook:
@@ -370,34 +374,36 @@ export const BioVerifyArticle: FC = () => {
           Almost every BioVerify contract event exists to update the Postgres
           read model. Only two events also mean{" "}
           <em>new long-running off-chain work must begin</em>:{" "}
-          <code>SubmitPublication</code> kicks off plagiarism screening for a
-          manuscript; <code>Agent_PickReviewers</code> means VRF has finished,
-          reviewers for that submitted publication have been picked, and human
-          verdict collection must start. Everything else — stake movements,
-          status transitions after settlement, treasury plumbing — is
-          bookkeeping the projector already knows how to fold into Drizzle
-          tables.
+          <code>SubmitPublication</code> kicks off plagiarism screening of the
+          submission&apos;s abstract; <code>Agent_PickReviewers</code> means VRF
+          has finished, reviewers for that submitted publication have been
+          picked, and human verdict collection must start. Everything else
+          (stake movements, status transitions after settlement, treasury
+          plumbing) is bookkeeping the projector already knows how to fold into
+          Drizzle tables.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           Those two moments map to Inngest events{" "}
           <code>CHAIN_SUBMISSION_RECEIVED</code> (submission agent) and{" "}
           <code>CHAIN_PICKED_REVIEWERS_RECEIVED</code> (review agent). Each
           handler wraps a <TechTag variant="purple">LangGraph</TechTag>{" "}
-          invocation inside a durable{" "}
-          <TechTag variant="purple">Inngest</TechTag> <code>step.run</code>.
+          invocation inside an <TechTag variant="purple">Inngest</TechTag>{" "}
+          <code>step.run</code>.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          <strong>Why Inngest?</strong> Vercel serverless functions have tight
+          <strong>Why Inngest:</strong> Vercel serverless functions have tight
           per-invocation time limits and no guaranteed in-memory state between
-          invocations. Inngest starts each agent run and retries it on failure.
-          Each agent runs inside one <code>step.run</code>, so a retry re-runs
-          the whole agent, which still has to finish within one function call,
-          and its commands read state before writing where they can. It is{" "}
-          <em>not</em> the mechanism that waits days for a reviewer — that pause
-          lives in LangGraph.
+          invocations. Inngest starts each agent run and retries it if it fails.
+          The screening agent runs entirely inside one <code>step.run</code>, so
+          a retry re-runs all of it, and it still has to finish within one
+          function call. The review agent runs there only until its first{" "}
+          <code>interrupt()</code>; every later step, settlement included, runs
+          in the server action that resumes it, with no retry. The commands read
+          state before writing where they can. It is <em>not</em> the mechanism
+          that waits days for a reviewer: that pause lives in LangGraph.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          <strong>Why LangGraph?</strong> Human review needs real suspension
+          <strong>Why LangGraph:</strong> Human review needs real suspension
           inside the graph: <code>interrupt()</code> stops execution until a
           verified EIP-712 payload arrives, while the Postgres checkpointer
           remembers partial progress (who already reviewed, whether escalation
@@ -407,7 +413,7 @@ export const BioVerifyArticle: FC = () => {
         </TypographyP>
 
         <RecapCard
-          label="Recap — what has happened so far"
+          label="Recap: what has happened so far"
           items={[
             {
               key: "r1",
@@ -440,14 +446,14 @@ export const BioVerifyArticle: FC = () => {
 
         <PhaseCard
           number="03"
-          label="Agent 1 — Submission screening"
+          label="Agent 1: Submission screening"
           title="Plagiarism check, then pick or slash"
         />
 
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          The submission agent runs a linear sequence of nodes — no branching
-          until the very end, which keeps the logic easy to follow. Here is what
-          it does, step by step.
+          The submission agent runs a linear sequence of nodes, with no
+          branching until the very end, which keeps the logic easy to follow.
+          Here is what it does, step by step.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Fetch from IPFS.</strong> The agent fetches the manifest by
@@ -467,10 +473,10 @@ export const BioVerifyArticle: FC = () => {
           passed to a <TechTag>Gemini</TechTag> language model, which
           synthesises the similarity signals and produces a structured verdict
           inside the graph: pass (continue to review) or fail (plagiarism). The
-          LLM node itself never touches the chain — no contract calls happen
-          inside that step. Crucially, the output is schema-constrained; after
-          the graph finishes, <code>agent-start.ts</code> maps pass/fail to
-          exactly one CQRS command path.
+          LLM node itself never touches the chain: no contract calls happen
+          inside that step. The output is schema-constrained; after the graph
+          finishes, <code>agent-start.ts</code> maps pass/fail to exactly one
+          CQRS command path.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Branch: plagiarism detected → </strong>
@@ -487,30 +493,30 @@ export const BioVerifyArticle: FC = () => {
           <code>pickReviewers()</code>. On pass,{" "}
           <code>pickReviewersCommand</code> calls{" "}
           <code>pickReviewers(pubId)</code> on the contract. This triggers the
-          Chainlink VRF request — which is where the randomness story begins.
+          Chainlink VRF request, where the randomness story begins.
         </TypographyP>
 
         <h3 className={h3}>Access control: agent-gated transitions</h3>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          Only the agent&apos;s immutable wallet address — set once at contract
-          deployment and unchangeable afterwards — can call{" "}
+          Only the agent&apos;s immutable wallet address, set once at contract
+          deployment and unchangeable afterwards, can call{" "}
           <code>earlySlashPublication</code>, <code>pickReviewers</code>,{" "}
           <code>recordReview</code>, <code>publishPublication</code>,{" "}
           <code>slashPublication</code>, and pool-management moves guarded by{" "}
           <code>onlyAgent</code>. Arbitrary callers cannot trigger those
-          transitions — the contract simply checks <code>msg.sender</code>{" "}
-          against the immutable agent address.
+          transitions: the contract checks <code>msg.sender</code> against the
+          immutable agent address.
         </TypographyP>
 
         <DiagramWrap
-          label="Figure 2 — Submission agent: linear screening → branch to earlySlash or pickReviewers"
+          label="Figure 2. Submission agent: linear screening → branch to earlySlash or pickReviewers"
           caption="The submission agent's nodes run in sequence; only the final command branches. Schema-constraining the LLM output ensures only two valid on-chain actions are possible."
         >
           <Figure2SubmissionAgent />
         </DiagramWrap>
 
         <TypographyP className="mb-4 mt-10 text-[17px] font-light leading-[1.8]">
-          <strong>Demo — AI plagiarism detection and early slashing.</strong>{" "}
+          <strong>Demo: AI plagiarism detection and early slashing.</strong>{" "}
           <em>
             Dual-device view: User A (left, mobile, no wallet) on{" "}
             <code>/publications</code>; User B (right, tablet, wallet on{" "}
@@ -521,7 +527,7 @@ export const BioVerifyArticle: FC = () => {
           src="/projects/bioverify/videos/early-slash-01-submit.mp4"
           height={418}
           alt="User B on a tablet copies a published paper's abstract from PubMed into the BioVerify form on Base Sepolia and reaches the submit step"
-          label="Step 1 — User B submits on Base Sepolia"
+          label="Step 1. User B submits on Base Sepolia"
           caption={
             <>
               User B submits a publication that duplicates existing literature.
@@ -533,11 +539,11 @@ export const BioVerifyArticle: FC = () => {
           src="/projects/bioverify/videos/early-slash-02-realtime.mp4"
           height={418}
           alt="User B's submission is confirmed on Base Sepolia; User A on mobile sees the new publication row appear in real time over WebSocket without a wallet; status ends at EARLY_SLASHED"
-          label="Step 2 — Realtime list → EARLY_SLASHED"
+          label="Step 2. Realtime list → EARLY_SLASHED"
           caption={
             <>
-              User A sees the row appear in real time over WebSocket — no
-              wallet, no refresh. The publication ends at{" "}
+              User A sees the row appear in real time over WebSocket, with no
+              wallet and no refresh. The publication ends at{" "}
               <strong>EARLY_SLASHED</strong> with the AI verdict loaded from
               IPFS.
             </>
@@ -569,7 +575,7 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           Blockchains are deterministic. Any randomness derived from public
           on-chain fields (<code>blockhash</code>, <code>block.timestamp</code>)
-          is predictable or influenceable in principle — not sufficient when
+          is predictable or influenceable in principle, which is not enough when
           selection has economic consequences.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
@@ -577,31 +583,31 @@ export const BioVerifyArticle: FC = () => {
           usual hybrid smart-contract pattern: random words are produced
           off-chain together with a cryptographic proof; the Chainlink VRF
           coordinator verifies that proof on-chain before calling back the
-          consumer contract. The draw is not merely opaque — it is{" "}
-          <strong>verifiable</strong>. Think of it as a public lottery that
-          anyone can re-check afterward. One caveat: the contract owner can
-          change the VRF coordinator, so the draw is only as neutral as the
-          coordinator it points to (listed under known edge cases).
+          consumer contract. The draw is <strong>verifiable</strong>. Think of
+          it as a public lottery that anyone can re-check afterward. One caveat:
+          the contract owner can change the VRF coordinator, so the draw is only
+          as neutral as the coordinator it points to (listed under known edge
+          cases).
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           In BioVerify&apos;s flow: the agent calls <code>pickReviewers()</code>{" "}
           → the contract calls <code>requestRandomWords()</code> → Chainlink
           fulfills via <code>fulfillRandomWords()</code> → the callback selects
           reviewers from the staked pool and emits{" "}
-          <code>Agent_PickReviewers</code>. That event re-enters the exact same
-          event pipeline — Alchemy Notify, HMAC-verified webhook, Neon Postgres
-          projection — closing the loop through the same webhook and projector.
+          <code>Agent_PickReviewers</code>. That event re-enters the same event
+          pipeline (Alchemy Notify, the HMAC-verified webhook, the Neon Postgres
+          projection), closing the loop through the same webhook and projector.
         </TypographyP>
 
         <DiagramWrap
-          label="Figure 3 — Chainlink VRF: verifiable reviewer selection"
+          label="Figure 3. Chainlink VRF: verifiable reviewer selection"
           caption="Random words come back with a cryptographic proof; the VRF coordinator verifies it on-chain, then calls back BioVerifyV3, which draws reviewers from the staked pool."
         >
           <Figure3Vrf />
         </DiagramWrap>
 
         <TypographyP className="mb-4 mt-10 text-[17px] font-light leading-[1.8]">
-          <strong>Demo — Submitting a publication (success path).</strong>{" "}
+          <strong>Demo: Submitting a publication (success path).</strong>{" "}
           <em>
             Split view: <strong>BioVerify Telegram bot</strong> (left) and DApp
             (right).
@@ -610,12 +616,13 @@ export const BioVerifyArticle: FC = () => {
         <ArticleGif
           src="/projects/bioverify/videos/submit-success-01-form.mp4"
           height={442}
-          alt="Author fills the publication form on the DApp with metadata and IPFS manifest, ready to submit"
-          label="Step 1 — Fill the publication form"
+          alt="Author fills in the publication form on the DApp, ready to submit"
+          label="Step 1. Fill the publication form"
           caption={
             <>
-              The author fills in the publication form (metadata and IPFS
-              manifest) and prepares to submit.
+              The author fills in the publication form and prepares to submit;
+              on submit, the app pins the form&apos;s content to IPFS as a
+              manifest.
             </>
           }
         />
@@ -624,7 +631,7 @@ export const BioVerifyArticle: FC = () => {
           src="/projects/bioverify/videos/submit-success-02-tx.mp4"
           height={442}
           alt="Author confirms the on-chain submitPublication transaction; the Telegram bot posts the agents' alerts as the publication moves from SUBMITTED to IN_REVIEW"
-          label="Step 2 — Submitted → In Review"
+          label="Step 2. Submitted → In Review"
           caption={
             <>
               The author confirms the on-chain transaction. The bot posts status
@@ -638,7 +645,7 @@ export const BioVerifyArticle: FC = () => {
           src="/projects/bioverify/videos/submit-success-03-in-review.mp4"
           height={442}
           alt="Publication detail page on the DApp showing IN_REVIEW status and the Chainlink VRF–selected reviewer addresses"
-          label="Step 3 — VRF reviewers on the publication detail"
+          label="Step 3. VRF reviewers on the publication detail"
           caption={
             <>
               The publication detail page shows <strong>IN_REVIEW</strong> and
@@ -651,7 +658,7 @@ export const BioVerifyArticle: FC = () => {
 
         <PhaseCard
           number="05"
-          label="Agent 2 — Human-in-the-loop review"
+          label="Agent 2: Human-in-the-loop review"
           title="Verdicts, escalation, and settlement"
         />
 
@@ -659,8 +666,8 @@ export const BioVerifyArticle: FC = () => {
           After projection, <code>Agent_PickReviewers</code> fires{" "}
           <code>CHAIN_PICKED_REVIEWERS_RECEIVED</code> into Inngest, which kicks
           off the second LangGraph agent. This agent is the most complex part of
-          the system — it manages a workflow that can pause for days, handles
-          human escalation, and ultimately settles the publication on-chain.
+          the system: it manages a workflow that can pause for days, handles
+          human escalation, and settles the publication on-chain.
         </TypographyP>
 
         <h3 className={h3}>
@@ -670,7 +677,7 @@ export const BioVerifyArticle: FC = () => {
           HITL is wired directly into the LangGraph itself. When the review
           workflow reaches <code>humanReviewsNode</code>, the graph calls{" "}
           <code>interrupt()</code> and stops. The Inngest step that wrapped the
-          agent invocation finishes normally — the work is paused, not blocked —
+          agent invocation finishes normally (the work is paused, not blocked),
           and LangGraph&apos;s Postgres checkpointer persists the partial graph
           state in Neon. Days later, when a reviewer signs their verdict, a
           Next.js server action verifies the EIP-712 payload and calls{" "}
@@ -685,10 +692,10 @@ export const BioVerifyArticle: FC = () => {
           How reviewers submit verdicts: EIP-712 gasless signing
         </h3>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          Reviewers are not push-notified by the system — they check the
-          reviewer dashboard at <code>/publications/assignments</code>, find the
+          Reviewers are not push-notified by the system: they check the reviewer
+          dashboard at <code>/publications/assignments</code>, find the
           publication they have been assigned to review, and step through the
-          flow from there. They read the manuscript and submit their verdict —
+          flow from there. They read the manuscript and submit their verdict
           without paying gas for the review transaction itself. Instead, they
           sign using <TechTag variant="blue">EIP-712</TechTag>: typed structured
           data that yields a standard cryptographic signature without
@@ -716,39 +723,40 @@ export const BioVerifyArticle: FC = () => {
           BioVerify distinguishes two reviewer roles within a publication cycle
           (current Base Sepolia and Ethereum Sepolia deployments draw{" "}
           <code>I_VRF_NUM_WORDS = 3</code> candidates so there are two explicit
-          peers plus one senior; the senior is whichever drawn reviewer has the
-          highest on-chain reputation):
+          peers plus one senior; the senior is the drawn reviewer with the
+          highest on-chain reputation, or the first one drawn on a tie):
         </TypographyP>
         <ul className={dashList}>
           <li>
             <strong>Peer reviewers.</strong> The non-senior members of the VRF
             draw. They submit independent pass/fail verdicts, and Gemini reads
-            them and returns pass, fail or escalate. When it settles —{" "}
+            them and returns pass, fail or escalate. When it settles (
             <code>publishPublication</code> on pass,{" "}
-            <code>slashPublication</code> on fail — each peer whose verdict
+            <code>slashPublication</code> on fail), each peer whose verdict
             matches Gemini&apos;s is honest and gets their stake back, the
             reviewer reward and a reputation bump; a peer who disagrees is
             negligent and is slashed. The senior reviewer is not asked.
           </li>
           <li>
             <strong>Senior reviewer.</strong> Drawn alongside peers but
-            designated as the highest-reputation reviewer of the three. If
-            Gemini escalates (its prompt asks for that when the peers split, but
-            the code does not force it), the senior reviewer signs a binding
+            designated as the highest-reputation reviewer of the three (the
+            first drawn on a tie). If Gemini escalates (its prompt asks for that
+            when the peers split or one flags a fraud risk the others missed,
+            but the code does not force it), the senior reviewer signs a binding
             verdict: the code enforces it, and Gemini only rewrites the
-            reasoning. The peer who aligned with the senior is honest; the
-            dissenting peer is negligent and is slashed (stake to the slash
-            pool, reputation drop). Settlement always counts the senior as
-            honest, with or without escalation: their locked stake unlocks and
-            they get the reviewer reward for standing by as the escalation
-            authority, so the senior is never slashed.
+            reasoning. Each peer whose verdict matches the senior&apos;s is
+            honest; a peer who disagrees is negligent and is slashed (stake to
+            the slash pool, reputation drop). Settlement always counts the
+            senior as honest, with or without escalation: their locked stake
+            unlocks and they get the reviewer reward for standing by as the
+            escalation authority, so the senior is never slashed.
           </li>
         </ul>
 
         <h3 className={h3}>Possible outcomes and what triggers settlement</h3>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           The review agent settles the publication once the binding verdict is
-          established — Gemini&apos;s verdict or, after escalation, the senior
+          established: Gemini&apos;s verdict or, after escalation, the senior
           reviewer&apos;s. It calls one of two contract functions through the
           agent address:
         </TypographyP>
@@ -768,23 +776,23 @@ export const BioVerifyArticle: FC = () => {
           <li>
             <code>slashPublication(pubId, honest, negligent, verdictCid)</code>{" "}
             → <code>SLASHED</code>. The publisher is slashed the same way as
-            other failure paths. Honest reviewers — including those who caught
-            the failure — still receive stake, reward, and reputation; negligent
+            other failure paths. Honest reviewers, including those who caught
+            the failure, still receive stake, reward, and reputation; negligent
             reviewers are slashed.
           </li>
         </ul>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           Settlement deliberately uses a <strong>pull payment pattern</strong>:
           instead of pushing ETH to every participant inside the settlement
-          transaction — where one malicious or buggy <code>receive()</code> hook
+          transaction, where one malicious or buggy <code>receive()</code> hook
           could revert and grief the entire cohort (a denial-of-service against
-          honest actors) — the contract moves value into internal balances and
+          honest actors), the contract moves value into internal balances and
           lets each party call <code>claim()</code> on their own schedule. Gas
           isolates per claimant; failures stay local.
         </TypographyP>
 
         <DiagramWrap
-          label="Figure 4 — Review agent: HITL, escalation, and settlement"
+          label="Figure 4. Review agent: HITL, escalation, and settlement"
           caption={
             <>
               Inngest starts the review agent and retries that first run; later
@@ -800,21 +808,22 @@ export const BioVerifyArticle: FC = () => {
 
         <TypographyP className="mb-4 mt-10 text-[17px] font-light leading-[1.8]">
           <strong>
-            Demo — Peer review with human-in-the-loop conflict resolution.
+            Demo: Peer review with human-in-the-loop conflict resolution.
           </strong>{" "}
-          Two peer reviewers return conflicting verdicts; the senior reviewer
-          breaks the tie and settlement flips the publication to{" "}
-          <strong>PUBLISHED</strong>.
+          Two peer reviewers return conflicting verdicts; Gemini escalates, the
+          senior reviewer breaks the tie, and settlement flips the publication
+          to <strong>PUBLISHED</strong>.
         </TypographyP>
         <ArticleGif
           src="/projects/bioverify/videos/peer-review-01-pass.mp4"
           height={446}
-          alt="First peer reviewer signs an EIP-712 pass verdict off-chain in their wallet; the agent records the review on-chain"
-          label="Step 1 — First peer reviewer: PASS (EIP-712 signature)"
+          alt="First peer reviewer signs an EIP-712 pass verdict off-chain in their wallet; the agent records on-chain that the review was submitted"
+          label="Step 1. First peer reviewer: PASS (EIP-712 signature)"
           caption={
             <>
-              The first peer reviewer submits a <strong>pass</strong> verdict —
-              signed off-chain via EIP-712 before the agent records it on-chain.
+              The first peer reviewer submits a <strong>pass</strong> verdict,
+              signed off-chain with EIP-712; the agent then records on-chain
+              that this reviewer has reviewed.
             </>
           }
         />
@@ -822,12 +831,13 @@ export const BioVerifyArticle: FC = () => {
           className="mt-4"
           src="/projects/bioverify/videos/peer-review-02-fail.mp4"
           height={446}
-          alt="Second peer reviewer submits a fail verdict; the two reviews now conflict and the workflow escalates"
-          label="Step 2 — Second peer reviewer: FAIL → conflict, escalation"
+          alt="Second peer reviewer picks a fail verdict, writes a justification and signs it with EIP-712 in their wallet; the publication is still in review"
+          label="Step 2. Second peer reviewer: FAIL (EIP-712 signature)"
           caption={
             <>
-              The second peer reviewer submits a <strong>fail</strong> verdict.
-              The two reviews now conflict, which triggers the escalation path.
+              The second peer reviewer submits a <strong>fail</strong> verdict,
+              also signed off-chain with EIP-712. The two reviews now conflict;
+              Gemini reads both and decides whether to escalate.
             </>
           }
         />
@@ -836,7 +846,7 @@ export const BioVerifyArticle: FC = () => {
           src="/projects/bioverify/videos/peer-review-03-senior-pass.mp4"
           height={452}
           alt="Split view: Telegram bot shows both peer reviews recorded and Gemini's ESCALATE decision; the senior reviewer fills in a tie-breaking pass"
-          label="Step 3 — Senior reviewer breaks the tie (PASS)"
+          label="Step 3. Senior reviewer breaks the tie (PASS)"
           caption={
             <>
               <em>
@@ -853,7 +863,7 @@ export const BioVerifyArticle: FC = () => {
           src="/projects/bioverify/videos/peer-review-04-published.mp4"
           height={452}
           alt="The senior reviewer signs the pass; Telegram bot reports that the publication passed review; the publication detail page resolves the final verdict CID from IPFS after the senior reviewer's tie-break"
-          label="Step 4 — PUBLISHED with the verdict resolved from IPFS"
+          label="Step 4. PUBLISHED with the verdict resolved from IPFS"
           caption={
             <>
               After the senior review, Telegram reports that the publication
@@ -865,7 +875,7 @@ export const BioVerifyArticle: FC = () => {
         />
 
         <RecapCard
-          label="Recap — full lifecycle"
+          label="Recap: full lifecycle"
           items={[
             {
               key: "l1",
@@ -917,8 +927,8 @@ export const BioVerifyArticle: FC = () => {
               content: (
                 <>
                   Settlement: rewards honest actors and/or slashes negligent
-                  ones; pull payments credit internal balances on-chain — each
-                  party calls <code>claim()</code> themselves
+                  ones; pull payments credit internal balances on-chain, and
+                  each party calls <code>claim()</code> themselves
                 </>
               ),
             },
@@ -932,8 +942,9 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           The economic mechanics aim to make careful reviewing pay: a reviewer
           who matches the binding verdict gets their stake back plus a reward,
-          and one who does not is slashed. The contract never sees the verdicts;
-          it applies the honest and negligent lists the agent sends.
+          and one who does not is slashed. The contract never sees the reviews;
+          it applies the outcome and the honest and negligent lists the agent
+          sends.
         </TypographyP>
 
         <OutcomesTable />
@@ -944,14 +955,15 @@ export const BioVerifyArticle: FC = () => {
           </strong>{" "}
           Without escalation, Gemini&apos;s verdict is binding: each peer who
           matches it is rewarded, and a peer who disagrees is negligent. After
-          escalation, the senior reviewer&apos;s verdict is binding: the
-          matching peer is honest; the dissenting peer is negligent. The senior
-          is always credited as honest at settlement so their standby stake and
-          reward settle cleanly. The system is intentionally simple, with clear
-          limitations: without escalation, Gemini&apos;s reading of the reviews
-          decides who is slashed, and after escalation a wrong or compromised
-          senior reviewer gets the final word — the roadmap addresses this with
-          weighted majority voting based on on-chain reputation.
+          escalation, the senior reviewer&apos;s verdict is binding: each peer
+          who matches it is honest, and each peer who does not is negligent. The
+          senior is always credited as honest at settlement so their standby
+          stake and reward settle cleanly. The system is intentionally simple,
+          with clear limitations: without escalation, Gemini&apos;s reading of
+          the reviews decides who is slashed, and after escalation a wrong or
+          compromised senior reviewer gets the final word. The roadmap replaces
+          the senior tie-break with voting weighted by on-chain reputation;
+          Gemini&apos;s role without escalation has no planned fix yet.
         </TypographyP>
 
         <hr className="my-14 border-border dark:border-white/10" />
@@ -978,8 +990,9 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           <strong>Contract test coverage.</strong> <code>BioVerifyV3</code> has
           50 Foundry tests in 12 suites, across 11 test files;{" "}
-          <code>forge coverage</code> on 24 October 2026 shows 100% of lines
-          (240/240), branches (37/37) and functions. VRF flows use{" "}
+          <code>forge coverage</code> on 24 October 2026 shows 100% of the lines
+          (240/240), branches (37/37) and functions of{" "}
+          <code>src/BioVerifyV3.sol</code>. VRF flows use{" "}
           <code>VRFCoordinatorV2_5Mock</code> with deterministic fulfillment
           overrides and log assertions, including edge cases such as colliding
           random words. Only the contract has tests; the agents, the read model
@@ -998,38 +1011,37 @@ export const BioVerifyArticle: FC = () => {
           human-in-the-loop steps, and on-chain settlement.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
-          These are not claims I have validated — they are domains where I see
-          the same structural ingredients (verifiable selection, long-lived
-          HITL, on-chain settlement) and think the coordination pattern could
-          apply:
+          I have not validated these. They are domains where I see the same
+          structural ingredients (verifiable selection, long-lived HITL,
+          on-chain settlement) and think the coordination pattern could apply:
         </TypographyP>
         <ul className={dashList}>
           <li>
-            <strong>Legal arbitration</strong> — verifiable evidence submission,
+            <strong>Legal arbitration</strong>: verifiable evidence submission,
             randomly selected arbitrators from a staked pool, durable multi-week
             deliberation, tamper-evident record of proceedings.
           </li>
           <li>
-            <strong>Insurance claims</strong> — multi-assessor processing where
+            <strong>Insurance claims</strong>: multi-assessor processing where
             each step needs an audit trail and assessors have economic skin in
             the game.
           </li>
           <li>
-            <strong>DAO governance</strong> — proposal review with randomly
-            drawn delegates, slashing for negligent voters, durable agent
-            coordination across asynchronous human input.
+            <strong>DAO governance</strong>: proposal review with randomly drawn
+            delegates, slashing for negligent voters, durable agent coordination
+            across asynchronous human input.
           </li>
           <li>
-            <strong>Supply chain compliance</strong> — multi-party certification
+            <strong>Supply chain compliance</strong>: multi-party certification
             workflows where documents need content-addressed storage and auditor
             selection needs to be bias-resistant.
           </li>
         </ul>
 
         <blockquote className="my-8 rounded-r-lg border-l-[3px] border-teal-500 bg-teal-500/10 py-5 pl-7 pr-7 font-[family-name:var(--font-serif)] text-lg italic leading-relaxed text-muted-foreground dark:border-[#2dd4bf] dark:bg-[rgba(45,212,191,0.1)]">
-          Verifiable fairness, economic accountability, durable coordination —
-          the throughline is always the same trio. BioVerify is one
-          instantiation.
+          These domains share a verifiable draw, stakes and long human pauses.
+          In BioVerify the draw is verifiable; the verdict still rests on the
+          agent.
         </blockquote>
 
         <hr className="my-14 border-border dark:border-white/10" />
@@ -1048,15 +1060,15 @@ export const BioVerifyArticle: FC = () => {
             on-chain so the contract can check who voted what.
           </li>
           <li>
-            <strong>Author escalation path</strong> — today a plagiarism false
+            <strong>Author escalation path</strong>: today a plagiarism false
             positive from the submission agent (or a peer-review verdict the
-            author believes is wrong) is terminal: settlement runs immediately
+            author believes is wrong) is terminal; settlement runs immediately
             and the author has no contractual recourse. The roadmap addresses
             this with an opt-in escalation: the author posts a larger escalation
             stake within a bounded window, which triggers a second review cycle
             restricted to humans only, drawn from a fresh VRF cohort that
             excludes the original reviewers. The second verdict is binding and
-            reconciles the first — confirmed means an additional slash;
+            reconciles the first: confirmed means an additional slash;
             overturned means prior rewards and slashes are reversed and
             recomputed.{" "}
             <strong>
@@ -1065,12 +1077,12 @@ export const BioVerifyArticle: FC = () => {
             </strong>
           </li>
           <li>
-            <strong>Weighted majority voting</strong> — replaces the
+            <strong>Weighted majority voting</strong>: replaces the
             single-senior-reviewer tie-break with reputation-weighted consensus,{" "}
             <strong>so no single reviewer has the final word</strong>.
           </li>
           <li>
-            <strong>ZK reputation via Reclaim Protocol</strong> — lets reviewers
+            <strong>ZK reputation via Reclaim Protocol</strong>: lets reviewers
             prove off-chain credentials (for example h-index or affiliation)
             without doxxing themselves,{" "}
             <strong>
@@ -1081,33 +1093,37 @@ export const BioVerifyArticle: FC = () => {
           <li>
             <strong>
               Encrypted access (Lit Protocol) and monetisation (x402)
-            </strong>{" "}
-            — manuscript confidentiality during review; micropayments to open
+            </strong>
+            : manuscript confidentiality during review; micropayments to open
             datasets and supplementary material,{" "}
             <strong>closing the privacy and monetisation gaps</strong>.
           </li>
           <li>
-            <strong>Internal corpus + RAG (Neon + pgvector)</strong> — Exa
-            handles general web plagiarism; an internal pgvector index compares
-            submissions against BioVerify&apos;s own historical publications.
+            <strong>Internal corpus + RAG (Neon + pgvector)</strong>: Exa
+            searches research papers for text close to the abstract; an internal
+            pgvector index would compare submissions with BioVerify&apos;s own
+            past publications.
           </li>
           <li>
-            <strong>Known edge cases</strong> — empty or malformed IPFS payloads
-            can leave a publication stuck in <code>SUBMITTED</code>; a gas spike
-            during settlement can strand a publication in <code>IN_REVIEW</code>{" "}
-            with no retry. <code>pickReviewers</code> checks{" "}
-            <code>status != IN_REVIEW</code> instead of{" "}
-            <code>== SUBMITTED</code>, so the agent could re-open a finished
-            publication; if the reviewer pool shrinks or rewards run out between
-            the VRF request and the callback, the callback reverts and the
-            publication stays <code>IN_REVIEW</code>; and linear probing on
-            collisions slightly biases the draw. The webhook compares its HMAC
-            with <code>===</code>, not in constant time, and the projection
+            <strong>Known edge cases</strong>: empty or malformed IPFS payloads
+            can leave a publication stuck in <code>SUBMITTED</code>; after the
+            review agent&apos;s first pause, nothing is retried, so if a later
+            step or the settlement transaction fails, for example on a gas
+            spike, the publication stays <code>IN_REVIEW</code>.{" "}
+            <code>pickReviewers</code> checks <code>status != IN_REVIEW</code>{" "}
+            instead of <code>== SUBMITTED</code>, so the agent could re-open a
+            finished publication; if the reviewer pool shrinks or rewards run
+            out between the VRF request and the callback, the callback reverts
+            and the publication stays <code>IN_REVIEW</code>; and linear probing
+            on collisions slightly biases the draw. The webhook compares its
+            HMAC with <code>===</code>, not in constant time, and the projection
             follows the chain tip with no confirmation depth. One agent key,
             which is also the treasury and the owner on both deployments,
             settles every outcome, and as owner it can change the VRF
-            coordinator. The README documents these at the file level, including
-            specific nodes and commands affected.
+            coordinator. Reviewers also have no deadline: one who never answers
+            leaves the paper <code>IN_REVIEW</code>, with every stake locked.
+            The README covers the rest, including agent transactions that use
+            simulate-then-write with no gas bump or nonce recovery.
           </li>
         </ul>
 
@@ -1116,31 +1132,32 @@ export const BioVerifyArticle: FC = () => {
         <h2 className={h2}>Tech stack at a glance</h2>
         <ul className={dashList}>
           <li>
-            <strong>Blockchain &amp; contracts</strong> — Foundry, Solidity,
-            Chainlink VRF v2.5, EIP-712
+            <strong>Blockchain &amp; contracts</strong>: Foundry, Solidity,
+            Chainlink VRF v2.5
           </li>
           <li>
-            <strong>Infrastructure</strong> — Alchemy Notify (contract-scoped
+            <strong>Infrastructure</strong>: Alchemy Notify (contract-scoped
             webhooks), Vercel serverless functions
           </li>
           <li>
-            <strong>Agents &amp; orchestration</strong> — LangGraph (graph state
+            <strong>Agents &amp; orchestration</strong>: LangGraph (graph state
             + HITL interrupts), Inngest (starts and retries the agent runs that
-            chain events trigger)
+            chain events trigger; the review agent only up to its first pause)
           </li>
           <li>
-            <strong>Data &amp; storage</strong> — Neon Postgres (CQRS read model
+            <strong>Data &amp; storage</strong>: Neon Postgres (CQRS read model
             + LangGraph checkpointer), Drizzle ORM, IPFS via Pinata
           </li>
           <li>
-            <strong>LLM &amp; search</strong> — Gemini, Exa AI
+            <strong>LLM &amp; search</strong>: Gemini, Exa AI
           </li>
           <li>
-            <strong>Frontend</strong> — Next.js, TypeScript, wagmi, viem, Reown
-            AppKit, TanStack Query, TanStack Table, nuqs
+            <strong>Frontend</strong>: Next.js, TypeScript, wagmi, viem, Reown
+            AppKit, TanStack Query, TanStack Table, nuqs, EIP-712 signing
+            (checked on the server)
           </li>
           <li>
-            <strong>Schema validation</strong> — Zod
+            <strong>Schema validation</strong>: Zod
           </li>
         </ul>
 
@@ -1151,19 +1168,19 @@ export const BioVerifyArticle: FC = () => {
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           What drew me into this build was the interplay between two layers with
           distinct responsibilities: the chain as the{" "}
-          <strong>Truth layer</strong> — where stakes settle, agent-gated
-          transitions execute, and VRF proofs are verified — and agents as the{" "}
-          <strong>Orchestration layer</strong> — where multi-actor, multi-day
-          workflows actually play out.
+          <strong>Truth layer</strong>, where stakes settle, agent-gated
+          transitions execute and VRF proofs are verified, and agents as the{" "}
+          <strong>Orchestration layer</strong>, where multi-actor, multi-day
+          workflows play out.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           BioVerify is the case study I used to wire that idea end-to-end. The
-          interesting work lives in the seams — between Inngest and LangGraph,
-          between Alchemy webhooks and the OCC projector, between EIP-712
-          signatures and on-chain settlement — and in the contract incentives
-          themselves: tuning staking, rewards, and slashing so that long-running
-          review cycles stay economically coherent over days. That is what I
-          want to keep building.
+          interesting work lives in the seams: between Inngest and LangGraph,
+          between Alchemy webhooks and the OCC projector, and between
+          server-checked EIP-712 reviews and the settlement the agent sends on
+          chain. It also lives in the contract incentives: tuning staking,
+          rewards, and slashing so that long-running review cycles stay
+          economically coherent over days. That is what I want to keep building.
         </TypographyP>
         <TypographyP className="mb-[1.6em] text-[17px] font-light leading-[1.8]">
           The contracts are deployed on Base Sepolia and Ethereum Sepolia, and

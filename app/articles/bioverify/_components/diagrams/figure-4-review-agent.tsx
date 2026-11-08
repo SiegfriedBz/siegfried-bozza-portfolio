@@ -5,11 +5,11 @@ export const Figure4ReviewAgent: FC = () => {
     <svg
       className="diag-svg"
       role="img"
-      aria-label="Flowchart: Review agent — LangGraph rehydrates from checkpointer, pauses for HITL EIP-712 signatures, Gemini verdict or escalation to the senior reviewer, then publishPublication or slashPublication."
+      aria-label="Flowchart of the review agent: LangGraph rehydrates from checkpointer, pauses for HITL EIP-712 signatures, Gemini verdict or escalation to the senior reviewer, then publishPublication or slashPublication."
       viewBox="0 0 700 420"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Figure 4 — Review agent</title>
+      <title>Figure 4. Review agent</title>
       <defs>
         <marker
           id="bioverify-f4-m"
@@ -40,7 +40,7 @@ export const Figure4ReviewAgent: FC = () => {
         className="band-green"
       />
       <text x="38" y="34" className="band-label-green">
-        REVIEW AGENT (Inngest + LangGraph — HITL)
+        REVIEW AGENT (Inngest + LangGraph, HITL)
       </text>
 
       <g className="dn-teal">
@@ -92,7 +92,7 @@ export const Figure4ReviewAgent: FC = () => {
         fontFamily="var(--font-geist-mono), monospace"
         fontSize="8px"
       >
-        LangGraph interrupt() — Inngest step exits
+        LangGraph interrupt(): step or action returns
       </text>
       <text
         x="350"
