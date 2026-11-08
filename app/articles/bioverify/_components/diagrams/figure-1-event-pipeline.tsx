@@ -1,6 +1,6 @@
 import type { FC } from "react";
 
-/** Figure 1 — Event pipeline (marker id scoped to avoid clashes with other SVGs on page) */
+/** Figure 1: event pipeline (marker id scoped to avoid clashes with other SVGs on page) */
 export const Figure1EventPipeline: FC = () => {
   return (
     <svg
@@ -10,7 +10,7 @@ export const Figure1EventPipeline: FC = () => {
       viewBox="0 0 700 300"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <title>Figure 1 — Event pipeline</title>
+      <title>Figure 1. Event pipeline</title>
       <defs>
         <marker
           id="bioverify-f1-m"
@@ -142,7 +142,7 @@ export const Figure1EventPipeline: FC = () => {
         fill="#a78bfa"
         style={{ opacity: 0.8 }}
       >
-        · Durable execution
+        · starts, retries runs
       </text>
       <text
         x="607"
@@ -213,7 +213,7 @@ export const Figure1EventPipeline: FC = () => {
           UI read model
         </text>
         <text x="103" y="266" textAnchor="middle" className="node-sub">
-          · fast and rich queries
+          · fast filtered queries
         </text>
         <text x="103" y="280" textAnchor="middle" className="node-sub">
           · no eth_call fan-out

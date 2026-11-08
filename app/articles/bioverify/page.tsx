@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const title = "BioVerify Case Study: When the Chain Is Not Enough";
   const description =
-    "A DeSci peer-review case study: where every step in the workflow introduces the piece of the stack that makes it possible.";
+    "A DeSci peer-review case study, told as a user journey where every step introduces the stack that makes it possible.";
 
   return {
     title,
@@ -52,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
             images: [
               {
                 url: ogImage,
-                alt: "BioVerify landing page with the Submit Research and View Dashboard buttons",
+                alt: "BioVerify protocol overview: reward and slashed pools, research and member counts, and the publication ledger",
               },
             ],
           }

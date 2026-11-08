@@ -36,11 +36,11 @@ const ALL_ARTICLES: Article[] = [
     slug: "bioverify",
     title: "When the Chain Is Not Enough: Building a Full-Stack Agentic DApp",
     subtitle:
-      "A DeSci peer-review case study, told as a user journey — where every step introduces the stack that makes it possible.",
+      "A DeSci peer-review case study, told as a user journey where every step introduces the stack that makes it possible.",
     excerpt:
-      "Peer review as a coordination game: IPFS manifests, Chainlink VRF, LangGraph + Inngest agents, EIP-712 verdicts, and a getter-light contract projected into Neon Postgres — end to end on Base Sepolia and Ethereum Sepolia.",
+      "Peer review as a coordination game: IPFS manifests, Chainlink VRF, LangGraph + Inngest agents, EIP-712 verdicts, and a getter-light contract projected into Neon Postgres, end to end on Base Sepolia and Ethereum Sepolia.",
     date: "2026-05-18",
-    updated: "2026-11-01",
+    updated: "2026-11-08",
     href: "/articles/bioverify",
     cover: BIOVERIFY_LINKS.ogImage?.trim() || undefined,
     tags: ["DeSci", "Web3", "Agentic AI", "BioVerify"],

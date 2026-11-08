@@ -49,7 +49,7 @@ export const OutcomesTable: FC<Props> = (props) => {
               Stake slashed · rep penalty
             </td>
             <td className="px-4 py-3 align-top leading-relaxed text-foreground">
-              None selected yet
+              None selected
             </td>
             <td className="px-4 py-3 align-top leading-relaxed text-muted-foreground">
               N/A
